@@ -1,6 +1,6 @@
 
 /**
- * \page install Installation Guide
+ * \page install_on_ubuntu Installation Guide (Ubuntu)
 
 The ASIBOT software is available from https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot
 
@@ -19,7 +19,7 @@ For additional options use ccmake instead of cmake.
 Here are the more general steps needed to install the ASIBOT software:
 
   \li \ref install_cmake "Install CMake" \endref
-  \li Install YARP
+  \li \ref install_yarp "Install YARP" \endref
   \li Install OpenRAVE (needed for simulator)
 
  * @section install_cmake Installing CMake
@@ -79,12 +79,12 @@ The generated file "CMakeCache.txt" contains all settings stored by CMake. It ca
 \li For more examples, and details, see: http://www.linuxjournal.com/article/6700 
 
 
+ * @section install_yarp Installing YARP
 
- * @section install_ubuntu The ASIBOT installation guide (Ubuntu)
+<a href="http://eris.liralab.it/yarp"> YARP</a>: The official installation page of YARP can be found at: http://eris.liralab.it/yarpdoc/install.html.
 
-Install basic dependencies:
+A quick summary of installation for Ubuntu users (note that you will be prompted for your password upon using '''sudo''' a couple of times):
 
-<a href="http://eris.liralab.it/yarp"> YARP</a>: The official installation page of YARP can be found at: http://eris.liralab.it/yarpdoc/install.html . Normally, you can just: 
 \verbatim
   sudo apt-get install cmake libace-dev subversion
   svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
