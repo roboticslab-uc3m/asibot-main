@@ -1,0 +1,17 @@
+/**
+  * \mainpage <a href="http://sourceforge.net/projects/roboticslab">Robotics Lab</a> YARPMODS Software Repository Documentation 
+
+\image html logoroboticslab.jpg
+
+This is the Robotics Lab YARPMODS online code documentation. This is the result of an automatic process that parses the doxygen documentation in the repository. For this reason the information here at times can be innaccurate or completely broken!
+
+Installation guides can be found at:
+https://sourceforge.net/apps/trac/roboticslab/wiki/WikiYarpmods
+
+Release notes:
+As of Revision 218, grabRedCan uses RaveBot compiled against Revision 2545 of OpenRAVE.
+Going to test 2497 (1st setstatic), also interested in 2520 (fixed model scaling issue)
+M uses 2161.
+Demo vid will be Revision 2545 of OpenRAVE, 465 of *THIS, and 1080 of RCGv04.
+Can at Final 32.104469, 113.770125
+*/

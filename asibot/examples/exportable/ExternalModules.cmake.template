@@ -1,0 +1,13 @@
+# ExternalModules.cmake template file.
+
+# MODULES' symbolic name:
+SET(EXTERNAL_MODULES yarpmods)
+
+
+# For each MODULE above add a variable named MODULE_DIR which specifies its
+# location on your disk (set to the origin directory of this cmake.template).
+
+SET(yarpmods_DIR "~/yarpmods/examples/exportable")
+# SET(yarpmods_DIR "c:/yarpmods/examples/exportable")
+
+

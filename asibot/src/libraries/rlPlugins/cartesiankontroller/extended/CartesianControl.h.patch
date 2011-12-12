@@ -1,0 +1,70 @@
+Index: CartesianControl.h
+===================================================================
+--- CartesianControl.h	(revision 8530)
++++ CartesianControl.h	(working copy)
+@@ -472,6 +472,65 @@
+     *       the trajectory time and so on.
+     */
+     virtual bool restoreContext(const int id)=0;
++
++    /**
++    * Move the end-effector to a specified pose (position
++    * and orientation) in cartesian space in relation to the end-effector.
++    * [do not wait for reply]
++    * @param xd a 3-d vector which contains the desired position 
++    *           x,y,z
++    * @param od a 4-d vector which contains the desired orientation
++    * using axis-angle representation (xa, ya, za, theta). 
++    * @param t set the trajectory duration time (seconds). If t<=0 
++    *         (as by default) the current execution time is kept.
++    * @return true/false on success/failure. 
++    *  
++    * @note Intended for streaming mode. 
++    */
++    virtual bool goToRelativePose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
++                          const double t=0.0)=0;
++
++    /**
++    * Move the end-effector to a specified position in cartesian 
++    * space in relation to the end-effector, ignore the orientation.
++    * [do not wait for reply] 
++    * @param xd a 3-d vector which contains the desired position 
++    *          x,y,z (meters).
++    * @param t set the trajectory duration time (seconds). If t<=0 
++    *         (as by default) the current execution time is kept. 
++    * @return true/false on success/failure. 
++    *  
++    * @note Intended for streaming mode. 
++    */
++    virtual bool goToRelativePosition(const yarp::sig::Vector &xd, const double t=0.0)=0;
++
++    /**
++    * Move the end-effector to a specified pose (position
++    * and orientation) in cartesian space in relation to the end-effector.
++    * [wait for reply]
++    * @param xd a 3-d vector which contains the desired position 
++    *          x,y,z (meters).
++    * @param od a 4-d vector which contains the desired orientation
++    * using axis-angle representation (xa, ya, za, theta). 
++    * @param t set the trajectory duration time (seconds). If t<=0 
++    *         (as by default) the current execution time is kept.
++    * @return true/false on success/failure.
++    */
++    virtual bool goToRelativePoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
++                              const double t=0.0)=0;
++
++    /**
++    * Move the end-effector to a specified position in cartesian 
++    * space in relation to the end-effector, ignore the orientation.
++    * [wait for reply] 
++    * @param xd a 3-d vector which contains the desired position 
++    *          x,y,z (meters).
++    * @param t set the trajectory duration time (seconds). If t<=0 
++    *         (as by default) the current execution time is kept. 
++    * @return true/false on success/failure.
++    */
++    virtual bool goToRelativePositionSync(const yarp::sig::Vector &xd, const double t=0.0)=0;
++
+ };
+ 
+ #endif
