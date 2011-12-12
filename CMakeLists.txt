@@ -13,11 +13,11 @@ if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
-project(yarpmods)
+project(asibot)
 
 ##### options
-option(enable_YARPMODS_TESTS "Choose if you want to compile test modules" TRUE)
-option(enable_YARPMODS_MODULES "Choose if you want to compile independent modules" TRUE)
+option(enable_ASIBOT_TESTS "Choose if you want to compile test modules" TRUE)
+option(enable_ASIBOT_MODULES "Choose if you want to compile independent modules" TRUE)
 
 if(MSVC)
   MESSAGE(STATUS "Running on windows")    
@@ -35,7 +35,7 @@ endif(MSVC)
 
 ######################
 
-### this makes everything go in $YARPMODS_DIR/lib and $YARPMODS_DIR/bin
+### this makes everything go in $ASIBOT_DIR/lib and $ASIBOT_DIR/bin
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 message(STATUS "Libraries go to ${LIBRARY_OUTPUT_PATH}")
@@ -51,21 +51,21 @@ mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
 ##########################################
 
 # Pick up our scripts - they are all in the conf subdirectory
-set(YARPMODS_MODULE_PATH ${CMAKE_SOURCE_DIR}/conf)
+set(ASIBOT_MODULE_PATH ${CMAKE_SOURCE_DIR}/conf)
 
-#set_property(GLOBAL PROPERTY YARPMODS_LIBRARIES)
-#set_property(GLOBAL PROPERTY YARPMODS_INCLUDE_DIRS)
-#set_property(GLOBAL PROPERTY YARPMODS_TARGETS)
-set(YARPMODS_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
-set(YARPMODS_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
+#set_property(GLOBAL PROPERTY ASIBOT_LIBRARIES)
+#set_property(GLOBAL PROPERTY ASIBOT_INCLUDE_DIRS)
+#set_property(GLOBAL PROPERTY ASIBOT_TARGETS)
+set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
+set(ASIBOT_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
 
 # add main contents
 add_subdirectory(src)
 
-# export our variables to a YARPMODSConfig.cmake creation
-set(YARPMODS_LINK_DIRS ${YARPMODS_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
-configure_file(${CMAKE_SOURCE_DIR}/conf/template/YARPMODSConfig.cmake.in
-               ${CMAKE_BINARY_DIR}/YARPMODSConfig.cmake @ONLY)
+# export our variables to a ASIBOTConfig.cmake creation
+set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
+configure_file(${CMAKE_SOURCE_DIR}/conf/template/ASIBOTConfig.cmake.in
+               ${CMAKE_BINARY_DIR}/ASIBOTConfig.cmake @ONLY)
 
 # create a symbolic link to the shared directory (as contains models and may be heavy)
 # If you want a deep copy, you can use the copy_directory command instead of create_symlink.
@@ -81,5 +81,5 @@ endif(MSVC)
 ##  "${CMAKE_COMMAND}" -E "remove_directory" "${CMAKE_SOURCE_DIR}/bin" ";"
 ##  "${CMAKE_COMMAND}" -E "remove_directory" "${CMAKE_SOURCE_DIR}/lib")
 
-MESSAGE("\nDon't forget to set: " ${CMAKE_BINARY_DIR} " as your \${YARPMODS_DIR} !!!\n")
+MESSAGE("\nDon't forget to set: " ${CMAKE_BINARY_DIR} " as your \${ASIBOT_DIR} !!!\n")
 

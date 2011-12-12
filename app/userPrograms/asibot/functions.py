@@ -63,7 +63,7 @@ class asibot:
         self.dd = yarp.PolyDriver()
         if not self.dd.open(options):
             print "[warning] " + str + " device not available"
-            print "[warning] Please try running $YARPMODS_DIR/bin/test_" + str + "\n"
+            print "[warning] Please try running $ASIBOT_DIR/bin/test_" + str + "\n"
         self.pos = self.dd.viewIPositionControl()
         self.pquit = yarp.Port()
         self.r = DataProcessor()
