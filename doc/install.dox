@@ -1,0 +1,184 @@
+
+/**
+  * \page install Installation Guide
+
+= The ASIBOT installation guide (Ubuntu) =
+
+Note that you will be prompted for your password upon using '''sudo''' a couple of times.
+
+Basic '''asibot''' repo can be downloaded by:
+
+ sudo apt-get install subversion
+
+ svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/yarpmods
+
+Install basic dependencies:
+
+ [http://eris.liralab.it/yarp YARP]: The official installation page of YARP can be found at: http://eris.liralab.it/yarpdoc/install.html . Normally, you can just: 
+
+  sudo apt-get install cmake libace-dev subversion
+
+  svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
+
+  cd yarp2; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
+
+For compiling yarpmods, it is useful to set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
+
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type '''echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.profile'''
+
+ 2) Through ~/.baschrc (parsed inside each terminal). Type '''echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc'''
+
+Finally compile with:
+
+ sudo apt-get install build-essential cmake cmake-curses-gui
+
+ cd yarpmods; mkdir build; cd build; cmake ..; make; cd ../..
+
+It is highly recommended to set the YARPMODS_DIR environment variable to ''yarpmods/build''. There are two ways of doing this:
+
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type '''echo "export YARPMODS_DIR=$PWD/yarpmods/build" >> ~/.profile'''
+
+ 2) Through ~/.baschrc (parsed inside each terminal). Type '''echo "export YARPMODS_DIR=$PWD/yarpmods/build" >> ~/.bashrc'''
+
+The project is organized in such a way that you will find:
+
+ The '''executables''' in build/bin --> will be empty upon basic installation
+
+ The '''shared files''' (models, config files) in build/share
+
+ The '''libraries''' in build/lib
+
+----
+
+= Specific Modules and Dependencies =
+
+You will observe that your newly generated ''build/bin'' is empty. This is normal. In last step, you can use ''ccmake ..'' instead of ''cmake ..'' to activate different module and library compilation. This is:
+
+ cd yarpmods/build
+
+ ccmake ..
+
+Each will require certain dependencies.
+
+=== [http://roboticslab.sourceforge.net/yarpmods/group__PrintBot.html printbot] ===
+
+No special dependencies. Compile with:
+
+ cd yarpmods/build
+
+ ccmake ..
+
+Set ENABLE_rlYarpmods_printbot ON and compile as usual: (c) (c) (g)
+
+ make -j3
+
+You should have '''test_printbot''' in your ''bin'' directory if everything went correctly. You'll need a yarp server running, if you don't, first:
+
+ yarp server
+
+And then, from another terminal, launch:
+
+ $YARPMODS_DIR/bin/test_printbot --help
+
+For help and options, or launch the actual program:
+
+ $YARPMODS_DIR/bin/test_printbot
+
+
+=== [http://roboticslab.sourceforge.net/yarpmods/group__RaveBot.html RaveBot] ===
+
+Install basic dependencies:
+
+ [http://openrave.programmingvision.com/index.php/Main_Page OpenRAVE]: The official installation page of YARP can be found at: http://openrave.programmingvision.com/ordocs/en/html/installation.html . In Ubuntu 10.x, ''libode0-dev'' is actually ''libode-dev''. Normally, you can just:
+
+  sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev libsoqt4-dev libcoin60-dev 
+
+  svn co https://openrave.svn.sourceforge.net/svnroot/openrave/trunk openrave
+
+  cd openrave; mkdir build; cd build; cmake ..; make -j3; sudo make install; cd ../..
+
+ For OpenRAVE to be found by CMake, it is useful to (change ''x.x'' for 2.6, 2.8, or your CMake version):
+
+  sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
+
+Finally compile with:
+
+ cd yarpmods/build
+
+ ccmake ..
+
+Set ENABLE_rlYarpmods_ravebot ON and compile as usual: (c) (c) (g)
+
+ make -j3
+
+You should have '''test_ravebot''' in your ''bin'' directory if everything went correctly.  You'll need a yarp server running, if you don't, first:
+
+ yarp server
+
+And then, from another terminal, launch:
+
+ $YARPMODS_DIR/bin/test_ravebot --help
+
+For help and options, or launch the actual program:
+
+ $YARPMODS_DIR/bin/test_ravebot
+
+=== [http://roboticslab.sourceforge.net/yarpmods/group__CartesianKontroller.html CartesianKontroller] ===
+
+Install basic dependencies:
+
+ [http://eigen.tuxfamily.org/index.php?title=Main_Page Eigen]: For the latest stable release ([http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 Eigen 2.0.15]) no output is set on make with default options. Do not worry, '''sudo make install''' does the job.
+
+ [http://www.orocos.org/kdl KDL]: You can grab the latest [http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz tarball], but best grab from svn. Within the folder structure, you'll find ''conf/FindEigen2.cmake''. Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path as in '''sudo cp conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' Then also '''sudo cp orocos-kdl-config.cmake conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' where ''orocos-kdl-config.cmake'' is in your ''build'' directory (comment the message command out, line 19, with # for commodity). An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
+
+Finally compile with:
+
+ cd yarpmods/build
+
+ ccmake ..
+
+Set ENABLE_rlYarpmods_cartesiankontroller ON and compile as usual: (c) (c) (g)
+
+ make -j3
+
+You should have '''test_cartesiankontroller''' in your ''bin'' directory if everything went correctly. You'll need a yarp server running, if you don't, first:
+
+ yarp server
+
+test_cartesiankontroller tries to connect to a remote_controlboard. If you have compiled RaveBot, then, from another terminal, you can launch:
+
+ $YARPMODS_DIR/bin/test_ravebot
+
+And then, from another terminal, launch:
+
+ $YARPMODS_DIR/bin/test_cartesiankontroller
+
+It opens a YARP RPC port which you can connect to by using, from another terminal:
+
+ yarp rpc /cartesiankontroller/ravebot/rpc:i
+
+Here, you can send either 3 doubles (final position) or 7 doubles (final position and orientation using the vector-angle convention), in absolute base space.
+ 
+
+----
+= YARPMODS installation guide (Windows) =
+Tested and working, installation guides coming soon. Stub:
+
+ Installing OpenRAVE for Windows is straightforward with its latest revision. You may just have to copy all the boost, coin, etc. dll's into the installed openrave bin directory. For correct integration with CMake, find "FindOpenRAVE.cmake" (it should be in something like C:\Program Files\openrave\share\openrave\cppexamples or C:\Archivos de Programa\openrave\share\openrave\cppexamples). Change the file's contents from Program Files to Archivos de programa if applicable. Copy it to the CMake Modules directory (something like C:\Archivos de programa\CMake 2.6\share\cmake-2.6\Modules).
+
+ In "kdl-1.0.2/config" you'll find a file called "FindEigen2.cmake". Edit its contents for it to point to the installed Eigen2 directory, normally from  /usr/include /usr/include/eigen2 to "C:/Archivos de programa/Eigen/include" "C:/Archivos de programa/Eigen/include/eigen2" or "C:/Program Files/Eigen/include" "C:/Program Files/Eigen/include/eigen2". QUOTES ARE MANDATORY. Additionally you must change line 4 to:
+ SET(KDL_CFLAGS "${KDL_CFLAGS} -I\"${EIGEN2_INCLUDE_DIR}\"" CACHE INTERNAL "")
+
+----
+= For using SWIG and therefore Python, Java (-> Matlab), etc... bindings =
+To achieve this, (for now) you must export YARMODS to YARP. This can be done by basically:
+
+ cp ~/yarpmods/examples/exportable/ExternalModules.cmake.template ~/yarp2/conf/ExternalModules.cmake
+
+And recompiling YARP with the YARMODS devices you need.
+
+This page can be edited at $ASIBOT_ROOT/main/doc/install.dox.
+
+*
+*/
+
