@@ -1,10 +1,12 @@
 
 /**
- * \page install_on_ubuntu Installation Guide (Ubuntu)
+ * \page install_on_ubuntu The ASIBOT Software Installation Guide (Ubuntu)
 
   \li \ref install_cmake \endref
   \li \ref install_yarp \endref
   \li \ref install_openrave \endref
+  \li \ref install_eigen2 \endref
+  \li \ref install_kdl \endref
 
   \li \ref install_asibot \endref
 
@@ -15,7 +17,7 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
 
 \verbatim
   sudo apt-get cmake
-  sudo apt-get cmake-curses-gui  # Optional for ccmake.
+  sudo apt-get cmake-curses-gui  # Needed for ccmake.
 \endverbatim
 
 
@@ -24,7 +26,7 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-  sudo apt-get install libace-dev subversion
+  sudo apt-get install build-essential libace-dev subversion
   svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
   cd yarp2; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
 \endverbatim
@@ -37,6 +39,7 @@ Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There
 
  2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc</B>
 
+
  * @section install_openrave Install OpenRAVE (optional, needed for simulator)
 
 \verbatim
@@ -44,6 +47,22 @@ Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There
   sudo apt-get update
   sudo apt-get install openrave
 \endverbatim
+
+
+ * @section install_eigen2 Install Eigen2 (optional, needed for KDL)
+
+\verbatim
+  wget http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 
+  tar xvf 2.0.15.tar.bz2
+  cd eigen-eigen-2.0.15; mkdir build; cd build; cmake ..
+  sudo make install  # Does the job.
+\endverbatim
+
+
+ * @section install_kdl Install KDL (optional, needed for kinematics)
+
+ [http://www.orocos.org/kdl KDL]: You can grab the latest [http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz tarball], but best grab from svn. Within the folder structure, you'll find ''conf/FindEigen2.cmake''. Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path as in '''sudo cp conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' Then also '''sudo cp orocos-kdl-config.cmake conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' where ''orocos-kdl-config.cmake'' is in your ''build'' directory (comment the message command out, line 19, with # for commodity). An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
+
 
  * @section install_asibot Download, Configure, Compile and Install the ASIBOT software
 
@@ -55,7 +74,13 @@ Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There
 
  * @subsection configure_asibot Configure the ASIBOT software repository
 
-Set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
+Set the ASIBOT_ROOT environment variable to ''asibot''. There are two ways of doing this:
+
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.profile</B>
+
+ 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.bashrc</B>
+
+Now let's configure which modules we want to enable:
 
 \verbatim
   cd asibot/main; mkdir build; cd build; ccmake ..
@@ -63,24 +88,20 @@ Set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of 
 
  * @subsection compile_asibot Compile and Install the ASIBOT software repository
 
+Finally compile with:
+
 \verbatim
   make
   make install_applications  # Optional.
 \endverbatim
 
+It is highly recommended to set the ASIBOT_DIR environment variable to ''asibot/main/build''. There are two ways of doing this:
 
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.profile</B>
 
-Finally compile with:
+ 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.bashrc</B>
 
- sudo apt-get install build-essential cmake cmake-curses-gui
-
- cd yarpmods; mkdir build; cd build; cmake ..; make; cd ../..
-
-It is highly recommended to set the YARPMODS_DIR environment variable to ''yarpmods/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type '''echo "export YARPMODS_DIR=$PWD/yarpmods/build" >> ~/.profile'''
-
- 2) Through ~/.baschrc (parsed inside each terminal). Type '''echo "export YARPMODS_DIR=$PWD/yarpmods/build" >> ~/.bashrc'''
+<hr>
 
 The project is organized in such a way that you will find:
 
@@ -169,9 +190,7 @@ For help and options, or launch the actual program:
 
 Install basic dependencies:
 
- [http://eigen.tuxfamily.org/index.php?title=Main_Page Eigen]: For the latest stable release ([http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 Eigen 2.0.15]) no output is set on make with default options. Do not worry, '''sudo make install''' does the job.
 
- [http://www.orocos.org/kdl KDL]: You can grab the latest [http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz tarball], but best grab from svn. Within the folder structure, you'll find ''conf/FindEigen2.cmake''. Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path as in '''sudo cp conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' Then also '''sudo cp orocos-kdl-config.cmake conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' where ''orocos-kdl-config.cmake'' is in your ''build'' directory (comment the message command out, line 19, with # for commodity). An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
 
 Finally compile with:
 
@@ -201,15 +220,6 @@ It opens a YARP RPC port which you can connect to by using, from another termina
 
 Here, you can send either 3 doubles (final position) or 7 doubles (final position and orientation using the vector-angle convention), in absolute base space.
  
-
-----
-= YARPMODS installation guide (Windows) =
-Tested and working, installation guides coming soon. Stub:
-
- Installing OpenRAVE for Windows is straightforward with its latest revision. You may just have to copy all the boost, coin, etc. dll's into the installed openrave bin directory. For correct integration with CMake, find "FindOpenRAVE.cmake" (it should be in something like C:\Program Files\openrave\share\openrave\cppexamples or C:\Archivos de Programa\openrave\share\openrave\cppexamples). Change the file's contents from Program Files to Archivos de programa if applicable. Copy it to the CMake Modules directory (something like C:\Archivos de programa\CMake 2.6\share\cmake-2.6\Modules).
-
- In "kdl-1.0.2/config" you'll find a file called "FindEigen2.cmake". Edit its contents for it to point to the installed Eigen2 directory, normally from  /usr/include /usr/include/eigen2 to "C:/Archivos de programa/Eigen/include" "C:/Archivos de programa/Eigen/include/eigen2" or "C:/Program Files/Eigen/include" "C:/Program Files/Eigen/include/eigen2". QUOTES ARE MANDATORY. Additionally you must change line 4 to:
- SET(KDL_CFLAGS "${KDL_CFLAGS} -I\"${EIGEN2_INCLUDE_DIR}\"" CACHE INTERNAL "")
 
 ----
 = For using SWIG and therefore Python, Java (-> Matlab), etc... bindings =
