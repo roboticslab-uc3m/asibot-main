@@ -31,6 +31,12 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
 
 For additional options use ccmake instead of cmake.
 
+Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
+
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.profile</B>
+
+ 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc</B>
+
  * @section install_openrave Install OpenRAVE (optional, needed for simulator)
 
 \verbatim
@@ -49,6 +55,8 @@ For additional options use ccmake instead of cmake.
 
  * @subsection configure_asibot Configure the ASIBOT software repository
 
+Set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
+
 \verbatim
   cd asibot/main; mkdir build; cd build; ccmake ..
 \endverbatim
@@ -60,13 +68,7 @@ For additional options use ccmake instead of cmake.
   make install_applications  # Optional.
 \endverbatim
 
-For additional options use ccmake instead of cmake.
 
-For compiling yarpmods, it is useful to set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type '''echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.profile'''
-
- 2) Through ~/.baschrc (parsed inside each terminal). Type '''echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc'''
 
 Finally compile with:
 
