@@ -2,16 +2,27 @@
 /**
  * \page install Installation Guide
 
- * @section install_ubuntu The ASIBOT installation guide (Ubuntu)
+The ASIBOT software is available from https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot
 
-Note that you will be prompted for your password upon using '''sudo''' a couple of times.
-
-Basic '''asibot''' repository can be downloaded by:
+A quick summary of installation for Ubuntu users (note that you will be prompted for your password upon using '''sudo''' a couple of times):
 
 \verbatim
   sudo apt-get install subversion
-  svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot
+  svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
+  cd asibot/main; mkdir build; cd build; cmake ..
+  make
+  sudo make install_applications  # Optional.
 \endverbatim
+
+For additional options use ccmake instead of cmake.
+
+Here are the more general steps needed to install the ASIBOT software:
+
+  \li Install CMake
+  \li Install YARP
+  \li Install OpenRAVE (needed for simulator)
+
+ * @section install_ubuntu The ASIBOT installation guide (Ubuntu)
 
 Install basic dependencies:
 
