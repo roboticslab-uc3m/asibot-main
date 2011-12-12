@@ -1,0 +1,7 @@
+<Robot name="uc3m-asibot">
+  <KinBody file="./asibot.kinbody.xml"/>
+  <Manipulator name="arm">
+    <base>link0</base>
+    <effector>link5</effector>
+  </Manipulator>
+</Robot>
