@@ -1,0 +1,7 @@
+
+# Order may be important here
+
+add_subdirectory(findRedCan)
+add_subdirectory(grabRedCan)
+add_subdirectory(webInterface)
+
