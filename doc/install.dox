@@ -1,26 +1,26 @@
 
 /**
-  * \page install Installation Guide
+ * \page install Installation Guide
 
-= The ASIBOT installation guide (Ubuntu) =
+ * @section install_ubuntu The ASIBOT installation guide (Ubuntu)
 
 Note that you will be prompted for your password upon using '''sudo''' a couple of times.
 
-Basic '''asibot''' repo can be downloaded by:
+Basic '''asibot''' repository can be downloaded by:
 
- sudo apt-get install subversion
-
- svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/yarpmods
+\verbatim
+  sudo apt-get install subversion
+  svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot
+\endverbatim
 
 Install basic dependencies:
 
- [http://eris.liralab.it/yarp YARP]: The official installation page of YARP can be found at: http://eris.liralab.it/yarpdoc/install.html . Normally, you can just: 
-
+<a href="http://eris.liralab.it/yarp"> YARP</a>: The official installation page of YARP can be found at: http://eris.liralab.it/yarpdoc/install.html . Normally, you can just: 
+\verbatim
   sudo apt-get install cmake libace-dev subversion
-
   svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
-
   cd yarp2; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
+\endverbatim
 
 For compiling yarpmods, it is useful to set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
 
