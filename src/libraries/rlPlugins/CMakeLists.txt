@@ -12,7 +12,6 @@ begin_plugin_library(rlPlugins)
 add_subdirectory(printbot)
 add_subdirectory(ravebot)
 add_subdirectory(cartesiankontroller)
-add_subdirectory(robotControl)
 end_plugin_library(rlPlugins)
 
 IF (enable_ASIBOT_TESTS)
