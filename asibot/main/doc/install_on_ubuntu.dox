@@ -16,8 +16,8 @@
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-  sudo apt-get cmake
-  sudo apt-get cmake-curses-gui  # Needed for ccmake.
+  sudo apt-get install cmake
+  sudo apt-get install cmake-curses-gui  # Needed for ccmake.
 \endverbatim
 
 
@@ -42,20 +42,36 @@ Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There
 
  * @section install_openrave Install OpenRAVE (optional, needed for simulator)
 
+Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+
 \verbatim
   sudo add-apt-repository ppa:openrave/release
   sudo apt-get update
   sudo apt-get install openrave
 \endverbatim
 
+If nothing happens, it might not be available on your specific Ubuntu version. You can always compile from source:
+
+\verbatim
+  sudo apt-get install libboost-dev  libboost-date-time-dev libboost-thread-dev
+  sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev
+  sudo apt-get install libsoqt4-dev libcoin60-dev
+  sudo apt-get install collada-dom  # Optional collada support.
+  svn co https://openrave.svn.sourceforge.net/svnroot/openrave/tags/latest_stable openrave
+  cd openrave; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
+\endverbatim
+ 
 
  * @section install_eigen2 Install Eigen2 (optional, needed for KDL)
+
+Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
   wget http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 
   tar xvf 2.0.15.tar.bz2
   cd eigen-eigen-2.0.15; mkdir build; cd build; cmake ..
   sudo make install  # Does the job.
+  cd ../..
 \endverbatim
 
 
