@@ -1,9 +1,9 @@
 /**
-  * \mainpage <a href="http://roboticslab.sourceforge.net"><B>Robotics Lab @ SourceForge.net</B></a> - The Asibot Software Repository documentation 
+  * \mainpage <a href="http://roboticslab.sourceforge.net"><B>Robotics Lab @ SourceForge.net</B></a> - The ASIBOT Software Repository documentation 
 
 \image html asibotmix.jpg
 
-Welcome to the Asibot Software Repository documentation.
+Welcome to the ASIBOT Software Repository documentation.
 
 This is the result of an automatic process that parses the doxygen documentation in the repository. For this reason the information here at times can be innaccurate or completely broken!
 
