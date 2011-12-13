@@ -69,14 +69,10 @@ configure_file(${CMAKE_SOURCE_DIR}/conf/template/ASIBOTConfig.cmake.in
 
 # create a symbolic link to the shared directory (as contains models and may be heavy)
 # If you want a deep copy, you can use the copy_directory command instead of create_symlink.
-if(MSVC)
-execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/app
-                                                           $ENV{ASIBOT_ROOT}/app)
-else(MSVC)
-execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/app
-                                                           $ENV{ASIBOT_ROOT}/app)
-endif(MSVC)
+add_custom_target(install_applications
+    "${CMAKE_COMMAND}" -E "create_symlink" "${CMAKE_SOURCE_DIR}/app" "$ENV{ASIBOT_ROOT}/app")
 
+#endif(MSVC)
 ##add_custom_target(nuke
 ##  "${CMAKE_COMMAND}" -E "remove_directory" "${CMAKE_SOURCE_DIR}/bin" ";"
 ##  "${CMAKE_COMMAND}" -E "remove_directory" "${CMAKE_SOURCE_DIR}/lib")
