@@ -24,7 +24,7 @@
 #define MI_PI 3.14159265
 #define UNSTABLE false
 
-#define DEFAULT_ENV_NAME "/share/models/asibot_cocina_entero.env.xml"  // on $YARPMODS_DIR
+#define DEFAULT_ENV_NAME "/app/models/asibot_cocina_entero.env.xml"  // on $ASIBOT_ROO
 
 using namespace std;
 
@@ -501,21 +501,21 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     if(config.check("help")) {
        printf("\n");
        printf("Option: --help  -------> This help\n");
-       printf("Option: --env [env]  --> [env] env name (abs, or rel to YARPMODS_DIR, defaults to %s)\n",DEFAULT_ENV_NAME);
+       printf("Option: --env [env]  --> [env] env name (abs, or rel to ASIBOT_ROOT, defaults to %s)\n",DEFAULT_ENV_NAME);
        printf("\n");
        exit(1);
     }
 
     // Create the name of the scene to load, three options:
-    //   1) User gives us nothing -> we use $YARPMODS/default
+    //   1) User gives us nothing -> we use $ASIBOT_ROOT/default
     //   2) User gives us abs -> we use "env"
-    //   2) User gives us rel -> we use $YARPMODS/"env"
+    //   2) User gives us rel -> we use $ASIBOT_ROOT/"env"
     char *c_yarpmodsdir;
-    c_yarpmodsdir = getenv("YARPMODS_DIR");
+    c_yarpmodsdir = getenv("ASIBOT_ROOT");
     if(c_yarpmodsdir) {
-      printf("$YARPMODS_DIR is set to: %s\n",c_yarpmodsdir);
+      printf("$ASIBOT_DIR is set to: %s\n",c_yarpmodsdir);
     } else {
-      printf("[warning] $YARPMODS_DIR is not set, should look like ~/yarpmods/build ...\n\n");
+      printf("[warning] $ASIBOT_ROOT is not set, should look like ~/asibot ...\n\n");
       if(!config.check("env"))
         printf("[error] no --env [env] parameter found either, leaving...\n");
         exit(1);
