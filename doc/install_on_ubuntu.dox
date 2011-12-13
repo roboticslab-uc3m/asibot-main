@@ -157,58 +157,11 @@ The project is organized in such a way that you will find:
 
  The '''libraries''' in build/lib
 
-----
-
-= Specific Modules and Dependencies =
-
-You will observe that your newly generated ''build/bin'' is empty. This is normal. In last step, you can use ''ccmake ..'' instead of ''cmake ..'' to activate different module and library compilation. This is:
-
- cd yarpmods/build
-
- ccmake ..
-
-Each will require certain dependencies.
-
-=== [http://roboticslab.sourceforge.net/yarpmods/group__PrintBot.html printbot] ===
-
-No special dependencies. Compile with:
-
- cd yarpmods/build
-
- ccmake ..
-
-Set ENABLE_rlYarpmods_printbot ON and compile as usual: (c) (c) (g)
-
- make -j3
-
-You should have '''test_printbot''' in your ''bin'' directory if everything went correctly. You'll need a yarp server running, if you don't, first:
-
- yarp server
-
-And then, from another terminal, launch:
-
- $YARPMODS_DIR/bin/test_printbot --help
-
-For help and options, or launch the actual program:
-
- $YARPMODS_DIR/bin/test_printbot
+<hr>
 
 
 === [http://roboticslab.sourceforge.net/yarpmods/group__RaveBot.html RaveBot] ===
 
-  svn co https://openrave.svn.sourceforge.net/svnroot/openrave/trunk openrave
-
-  cd openrave; mkdir build; cd build; cmake ..; make -j3; sudo make install; cd ../..
-
- For OpenRAVE to be found by CMake, it is useful to (change ''x.x'' for 2.6, 2.8, or your CMake version):
-
-  sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
-
-Finally compile with:
-
- cd yarpmods/build
-
- ccmake ..
 
 Set ENABLE_rlYarpmods_ravebot ON and compile as usual: (c) (c) (g)
 
