@@ -119,13 +119,13 @@ We'll do this from source to assure the CMake file is created.
 
  * @section install_asibot Download, Configure, Compile and Install the ASIBOT software
 
- * @subsection download_asibot Download the ASIBOT software repository
+ * @subsection download_asibot Download the ASIBOT software from the repository
 
 \verbatim
   svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
 \endverbatim
 
- * @subsection configure_asibot Configure the ASIBOT software repository
+ * @subsection configure_asibot Configure the ASIBOT software
 
 Set the ASIBOT_ROOT environment variable to ''asibot''. There are two ways of doing this:
 
@@ -147,7 +147,7 @@ Press 'c' to refresh the cache. A set of options should be available. The follow
 
 Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project.
 
- * @subsection compile_asibot Compile and Install the ASIBOT software repository
+ * @subsection compile_asibot Compile and Install the ASIBOT software
 
 Finally compile with:
 
