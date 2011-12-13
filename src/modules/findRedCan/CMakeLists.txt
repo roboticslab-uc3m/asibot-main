@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (enable_YARPMODS_MODULES)
+IF (enable_ASIBOT_MODULES)
 
 set(KEYWORD "findRedCan")
 
@@ -34,5 +34,5 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
-ENDIF (enable_YARPMODS_MODULES)
+ENDIF (enable_ASIBOT_MODULES)
 
