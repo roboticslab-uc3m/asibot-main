@@ -193,7 +193,7 @@ pxToReal::pxToReal() {
 }
 
 
-void pxToReal::printmatrix(Matrix::Matrix& inmatrix) {
+void pxToReal::printmatrix(Matrix& inmatrix) {
     printf("%s\n\n",inmatrix.toString().c_str());
 }
 
@@ -201,10 +201,10 @@ void pxToReal::printmatrix(Matrix::Matrix& inmatrix) {
 bool pxToReal::localizar(const double centroidx, const double centroidy, double& outx, double& outy) {
     ////////////////////////////////////// localizar ///////////////////////////////////////////
     Punto Centroide(centroidx,centroidy);
-    Matrix::Matrix my(1,h);
-    Matrix::Matrix Dx(1,j);
-    Matrix::Matrix Dy(h,j);
-    Matrix::Matrix dmy(1,j);
+    Matrix my(1,h);
+    Matrix Dx(1,j);
+    Matrix Dy(h,j);
+    Matrix dmy(1,j);
     dmy=500;
 
 //    printf("check2\n");
