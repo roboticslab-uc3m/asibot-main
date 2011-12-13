@@ -20,14 +20,14 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when enable_YARPMODS_MODULES is activated (default). For further
+ * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
  * installation steps refer to http://sourceforge.net/apps/trac/roboticslab/wiki/WikiYarpmods
  *
  * <b>Running</b> (assuming correct installation)
  *
  * yarp server &
  *
- * $YARPMODS_DIR/bin/findRedCan
+ * $ASIBOT_DIR/bin/findRedCan
  *
  * <b>Modify</b>
  *
@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
 
 /*    std::string myEnvironment("");
     char *c_yarpmodsdir;
-    c_yarpmodsdir = getenv("YARPMODS_DIR");
+    c_yarpmodsdir = getenv("ASIBOT_DIR");
     if (c_yarpmodsdir) {
         myEnvironment.append(c_yarpmodsdir);
         myEnvironment.append("/share/pictures/image.jpg");
