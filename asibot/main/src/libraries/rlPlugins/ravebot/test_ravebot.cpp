@@ -19,14 +19,14 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when enable_YARPMODS_MODULES is activated (default). For further
- * installation steps refer to http://sourceforge.net/apps/trac/roboticslab/wiki/WikiYarpmods
+ * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
+ * installation steps refer to <a href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)
  *
  * yarp server &
  *
- * $YARPMODS_DIR/bin/test_ravebot
+ * $ASIBOT_DIR/bin/test_ravebot
  *
  * <b>Modify</b>
  * 
