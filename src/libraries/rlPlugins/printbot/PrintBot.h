@@ -33,7 +33,7 @@ using namespace yarp::dev;
  * <b>Installation</b>
  *
  * The plugin is compiled when ENABLE_rlPlugins_printbot is activated (not default). For further
- * installation steps refer to http://sourceforge.net/apps/trac/roboticslab/wiki/WikiYarpmods
+ * installation steps refer to <a href="pages.html">your own system installation guidelines</a>.
  *
  */
 class PrintBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncoders {
