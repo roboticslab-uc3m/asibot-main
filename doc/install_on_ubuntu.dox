@@ -153,7 +153,7 @@ Finally compile with:
 
 \verbatim
   make
-  make install_applications  # Optional (not implemented yet).
+  make install_applications  # no permissions required.
 \endverbatim
 
 
