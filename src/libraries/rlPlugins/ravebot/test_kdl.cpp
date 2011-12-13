@@ -20,7 +20,7 @@
  * <b>Installation</b>
  *
  * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
- * installation steps refer to <a href="pages.html">you own system installation guidelines</a>.
+ * installation steps refer to <a href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)
  *
