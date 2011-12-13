@@ -77,6 +77,11 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
 
  * @section install_kdl Install KDL (optional, needed for kinematics)
 
+\verbatim
+  wget http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz
+  tar xvf orocos-kdl-svn-src.tar.bz
+\endverbatim
+
  [http://www.orocos.org/kdl KDL]: You can grab the latest [http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz tarball], but best grab from svn. Within the folder structure, you'll find ''conf/FindEigen2.cmake''. Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path as in '''sudo cp conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' Then also '''sudo cp orocos-kdl-config.cmake conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' where ''orocos-kdl-config.cmake'' is in your ''build'' directory (comment the message command out, line 19, with # for commodity). An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
 
 
