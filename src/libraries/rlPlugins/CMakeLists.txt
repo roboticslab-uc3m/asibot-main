@@ -15,10 +15,10 @@ add_subdirectory(cartesiankontroller)
 add_subdirectory(robotControl)
 end_plugin_library(rlPlugins)
 
-IF (enable_YARPMODS_TESTS)
+IF (enable_ASIBOT_TESTS)
   add_plugin_library_executable(test_rlPlugins rlPlugins)
   INSTALL(TARGETS test_rlPlugins DESTINATION bin)
-ENDIF (enable_YARPMODS_TESTS)
+ENDIF (enable_ASIBOT_TESTS)
 
 # For now, test modules are compiled inside each subdir.
 

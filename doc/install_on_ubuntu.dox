@@ -129,8 +129,11 @@ Now let's configure which modules we want to enable:
 
 Press 'c' to refresh the cache. A set of options should be available. The following is a set of the most important ones.
 
-  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to OFF): 
-  
+  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of RaveBot.
+  \li <B>enable_ASIBOT_TESTS</B> (defaults to <B>OFF</B>): Enables the compilation of test modules; i.e. <a href="group__test__ravebot.html"><B>test_ravebot</B></a> if RaveBot is present, etc.
+
+
+Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project.
 
  * @subsection compile_asibot Compile and Install the ASIBOT software repository
 
@@ -138,89 +141,37 @@ Finally compile with:
 
 \verbatim
   make
-  make install_applications  # Optional.
+  make install_applications  # Optional (not implemented yet).
 \endverbatim
 
-It is highly recommended to set the ASIBOT_DIR environment variable to ''asibot/main/build''. There are two ways of doing this:
 
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.profile</B>
+It is highly recommended to set the ASIBOT_DIR environment variable to ''$ASIBOT_ROOT/main/build''. There are two ways of doing this:
 
- 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.bashrc</B>
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.profile</B>
+
+ 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.bashrc</B>
 
 <hr>
 
 The project is organized in such a way that you will find:
 
- The '''executables''' in build/bin --> will be empty upon basic installation
+ The '''executables''' in $ASIBOT_DIR/bin --> will be empty upon basic installation
 
- The '''shared files''' (models, config files) in build/share
+ The '''shared files''' in $ASIBOT_DIR/share --> models, config files
 
- The '''libraries''' in build/lib
+ The '''libraries''' in $ASIBOT_DIR/lib
 
 <hr>
 
+For using SWIG and therefore Python, Java (-> Matlab), etc... bindings
 
-=== [http://roboticslab.sourceforge.net/yarpmods/group__RaveBot.html RaveBot] ===
+To achieve this, (for now) you must export ASIBOT to YARP. This can be done by basically:
 
+ cp ~/asibot/examples/exportable/ExternalModules.cmake.template ~/yarp2/conf/ExternalModules.cmake
 
-Set ENABLE_rlYarpmods_ravebot ON and compile as usual: (c) (c) (g)
+And recompiling YARP with the ASIBOT devices you need.
 
- make -j3
-
-You should have '''test_ravebot''' in your ''bin'' directory if everything went correctly.  You'll need a yarp server running, if you don't, first:
-
- yarp server
-
-And then, from another terminal, launch:
-
- $YARPMODS_DIR/bin/test_ravebot --help
-
-For help and options, or launch the actual program:
-
- $YARPMODS_DIR/bin/test_ravebot
-
-=== [http://roboticslab.sourceforge.net/yarpmods/group__CartesianKontroller.html CartesianKontroller] ===
-
-Install basic dependencies:
-
-
-
-Finally compile with:
-
- cd yarpmods/build
-
- ccmake ..
-
-Set ENABLE_rlYarpmods_cartesiankontroller ON and compile as usual: (c) (c) (g)
-
- make -j3
-
-You should have '''test_cartesiankontroller''' in your ''bin'' directory if everything went correctly. You'll need a yarp server running, if you don't, first:
-
- yarp server
-
-test_cartesiankontroller tries to connect to a remote_controlboard. If you have compiled RaveBot, then, from another terminal, you can launch:
-
- $YARPMODS_DIR/bin/test_ravebot
-
-And then, from another terminal, launch:
-
- $YARPMODS_DIR/bin/test_cartesiankontroller
-
-It opens a YARP RPC port which you can connect to by using, from another terminal:
-
- yarp rpc /cartesiankontroller/ravebot/rpc:i
-
-Here, you can send either 3 doubles (final position) or 7 doubles (final position and orientation using the vector-angle convention), in absolute base space.
- 
-
-----
-= For using SWIG and therefore Python, Java (-> Matlab), etc... bindings =
-To achieve this, (for now) you must export YARMODS to YARP. This can be done by basically:
-
- cp ~/yarpmods/examples/exportable/ExternalModules.cmake.template ~/yarp2/conf/ExternalModules.cmake
-
-And recompiling YARP with the YARMODS devices you need.
+<hr>
 
 This page can be edited at $ASIBOT_ROOT/main/doc/install.dox.
 

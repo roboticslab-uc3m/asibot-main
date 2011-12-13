@@ -9,10 +9,12 @@ PREPARE_DEVICE(ravebot TYPE RaveBot INCLUDE RaveBot.h WRAPPER controlboard)
 IF (NOT SKIP_ravebot)
 
 FIND_PACKAGE(YARP REQUIRED)
-find_package(Boost ${OpenRAVE_Boost_VERSION} EXACT COMPONENTS iostreams python thread)
 
 # Next the OpenRAVE stuff
 FIND_PACKAGE(OpenRAVE)
+
+find_package(Boost ${OpenRAVE_Boost_VERSION} EXACT COMPONENTS iostreams python thread)
+
 #if( NOT OPENRAVE_FOUND )
 #  message(FATAL_ERROR "could not find openrave, check for openrave-config in path")
 #endif( NOT OPENRAVE_FOUND )
@@ -32,8 +34,8 @@ ADD_LIBRARY(ravebot RaveBot.h)
 TARGET_LINK_LIBRARIES(ravebot ${YARP_LIBRARIES} ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY})
 
 # Test-related
-IF (enable_YARPMODS_TESTS)
-    SET(CMAKE_MODULE_PATH ${YARPMODS_MODULE_PATH} ${CMAKE_MODULE_PATH})
+IF (enable_ASIBOT_TESTS)
+    SET(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH} ${CMAKE_MODULE_PATH})
     FIND_PACKAGE(ACE)
     INCLUDE_DIRECTORIES(${ACE_INCLUDE_DIRS})
     add_executable(test_ravebot test_ravebot.cpp) # as server
@@ -46,11 +48,11 @@ IF (enable_YARPMODS_TESTS)
     add_executable(test_kdl test_kdl.cpp) # as server
     target_link_libraries(test_kdl rlPlugins ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
     INSTALL(TARGETS test_kdl DESTINATION bin)
-ENDIF (enable_YARPMODS_TESTS)
+ENDIF (enable_ASIBOT_TESTS)
 
 
-# Exporting dependencies for YARPMODSConfig.cmake quite manually for now... 
-set(YARPMODS_LIBRARIES ${YARPMODS_LIBRARIES} rlPlugins ravebot ${OPENRAVE_CORE_LIBRARY} CACHE INTERNAL "appended libraries") 
-set(YARPMODS_LINK_DIRS ${YARPMODS_LINK_DIRS} ${OPENRAVE_LINK_DIRS} CACHE INTERNAL "appended link dirs")
+# Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins ravebot ${OPENRAVE_CORE_LIBRARY} CACHE INTERNAL "appended libraries") 
+set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${OPENRAVE_LINK_DIRS} CACHE INTERNAL "appended link dirs")
 
 ENDIF (NOT SKIP_ravebot)
