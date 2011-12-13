@@ -81,5 +81,5 @@ endif(MSVC)
 ##  "${CMAKE_COMMAND}" -E "remove_directory" "${CMAKE_SOURCE_DIR}/bin" ";"
 ##  "${CMAKE_COMMAND}" -E "remove_directory" "${CMAKE_SOURCE_DIR}/lib")
 
-MESSAGE("\nDon't forget to set: " ${CMAKE_BINARY_DIR} " as your \${ASIBOT_DIR} !!!\n")
+#MESSAGE("\nDon't forget to set: " ${CMAKE_BINARY_DIR} " as your \${ASIBOT_DIR} !!!\n")
 
