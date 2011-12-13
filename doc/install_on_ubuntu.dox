@@ -61,6 +61,12 @@ If nothing happens, it might not be available on your specific Ubuntu version. Y
   cd openrave; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
 \endverbatim
  
+ For OpenRAVE to be found by CMake, it is useful to (change ''x.x'' for 2.6, 2.8, or your CMake version):
+
+\verbatim
+  sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
+\endverbatim
+
 
  * @section install_eigen2 Install Eigen2 (optional, needed for KDL)
 
@@ -82,7 +88,21 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
   tar xvf orocos-kdl-svn-src.tar.bz
 \endverbatim
 
- [http://www.orocos.org/kdl KDL]: You can grab the latest [http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz tarball], but best grab from svn. Within the folder structure, you'll find ''conf/FindEigen2.cmake''. Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path as in '''sudo cp conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' Then also '''sudo cp orocos-kdl-config.cmake conf/FindEigen2.cmake /usr/share/cmake-x.x/Modules''' where ''orocos-kdl-config.cmake'' is in your ''build'' directory (comment the message command out, line 19, with # for commodity). An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
+In "kdl/config" you'll find a file called "FindEigen2.cmake". Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path (something like /usr/share/cmake-2.x/Modules). This line would be something like (change the x to your cmake version): 
+
+\verbatim
+  sudo cp FindEigen2.cmake /usr/share/cmake-2.x/Modules
+\endverbatim
+
+Then you can:
+
+\verbatim
+  cd kdl; mkdir build; cd build
+  cmake ..; make -j; sudo make install
+  cd ../..
+\endverbatim
+
+An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
 
 
  * @section install_asibot Download, Configure, Compile and Install the ASIBOT software
@@ -106,6 +126,11 @@ Now let's configure which modules we want to enable:
 \verbatim
   cd asibot/main; mkdir build; cd build; ccmake ..
 \endverbatim
+
+Press 'c' to refresh the cache. A set of options should be available. The following is a set of the most important ones.
+
+  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to OFF): 
+  
 
  * @subsection compile_asibot Compile and Install the ASIBOT software repository
 
@@ -170,12 +195,6 @@ For help and options, or launch the actual program:
 
 
 === [http://roboticslab.sourceforge.net/yarpmods/group__RaveBot.html RaveBot] ===
-
-Install basic dependencies:
-
- [http://openrave.programmingvision.com/index.php/Main_Page OpenRAVE]: The official installation page of YARP can be found at: http://openrave.programmingvision.com/ordocs/en/html/installation.html . In Ubuntu 10.x, ''libode0-dev'' is actually ''libode-dev''. Normally, you can just:
-
-  sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev libsoqt4-dev libcoin60-dev 
 
   svn co https://openrave.svn.sourceforge.net/svnroot/openrave/trunk openrave
 
