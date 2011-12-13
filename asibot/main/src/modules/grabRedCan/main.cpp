@@ -7,7 +7,7 @@
  * \image html grabRedCan.png
  *  <center> <a href="http://youtu.be/ePW25V5i8FE" target="_blank"> Watch video on Youtube</a> </center>
  * 
- * The <b>grabRedCan</b> module reads the <b>geom.ini</b> configuration file found in $YARPMODS_DIR/share/conf and the streaming output of <a href="group__findRedCan.html">findRedCan</a> through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> input called <b>/redCan:i</b>. It connects to a <a href="group__test__kdl.html">test_kdl</a> that exposes a YARP remote_controlboard interface and an RPC server for cartesian movements, and makes the robot grab a red can situated at the kitchen environment table using the previously described geometrical information.
+ * The <b>grabRedCan</b> module reads the <b>geom.ini</b> configuration file found in $ASIBOT_DIR/app/conf and the streaming output of <a href="group__findRedCan.html">findRedCan</a> through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> input called <b>/redCan:i</b>. It connects to a <a href="group__test__kdl.html">test_kdl</a> that exposes a YARP remote_controlboard interface and an RPC server for cartesian movements, and makes the robot grab a red can situated at the kitchen environment table using the previously described geometrical information.
  * Figure 1 depicts the port connections made at runtime.
  *
  *  \image html demoSetup.png
@@ -23,18 +23,18 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when enable_YARPMODS_MODULES is activated (default). For further
+ * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
  * installation steps refer to http://sourceforge.net/apps/trac/roboticslab/wiki/WikiYarpmods
  *
  * <b>Running</b> (assuming correct installation)
  *
  * yarp server &
  *
- * $YARPMODS_DIR/bin/findRedCan
+ * $ASIBOT_DIR/bin/findRedCan
  *
- * $YARPMODS_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml
+ * $ASIBOT_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml
  *
- * $YARPMODS_DIR/bin/grabRedCan
+ * $ASIBOT_DIR/bin/grabRedCan
  *
  * <b>Modify</b>
  *
@@ -74,7 +74,7 @@ class cartController {
     bool init() {
         output.open("/grabCan");
         if(!output.addOutput("/ravebot/x/rpc:i")) {
-            printf("[error] I can't find the /ravebot/x/rpc:i port. Please try running $YARPMODS_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
+            printf("[error] I can't find the /ravebot/x/rpc:i port. Please try running $ASIBOT_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
             return false;
         }
         return true;
@@ -149,14 +149,14 @@ int main(int argc, char *argv[]) {
         printf("Option: --help  -------> This help\n");
         printf("\n");
         printf("Dependencies: yarp server\n");
-        printf("Dependencies: $YARPMODS_DIR/bin/findRedCan\n");
-        printf("Dependencies: $YARPMODS_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
+        printf("Dependencies: $ASIBOT_DIR/bin/findRedCan\n");
+        printf("Dependencies: $ASIBOT_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
         printf("\n");
         exit(1);
     }
 
-    ConstString geomConfigFile(getenv("YARPMODS_DIR"));
-    geomConfigFile += "/share/conf/geom.ini";
+    ConstString geomConfigFile(getenv("ASIBOT_DIR"));
+    geomConfigFile += "/app/conf/geom.ini";
     Property geometry;
     if(!geometry.fromConfigFile(geomConfigFile)) {
         printf("[error] Need geom.ini\n");
@@ -183,7 +183,7 @@ int main(int argc, char *argv[]) {
     Port input;
     input.open("/redCan:i");
     if(!yarp.connect("/redCan:o","/redCan:i")) {
-        printf("[error] I can't find the /redCan:o port. Please try running $YARPMODS_DIR/bin/findRedCan\n");
+        printf("[error] I can't find the /redCan:o port. Please try running $ASIBOT_DIR/bin/findRedCan\n");
         input.interrupt();
         input.close();
         Network::fini();
@@ -241,7 +241,7 @@ int main(int argc, char *argv[]) {
     PolyDriver dd(options);
     if(!dd.isValid()) {
       printf("[error] ravebot device not available.\n");
-      printf("[error] Please try running $YARPMODS_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
+      printf("[error] Please try running $ASIBOT_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
 	  dd.close();
       Network::fini();
       return 1;
@@ -284,7 +284,7 @@ int main(int argc, char *argv[]) {
     toolPort.open("/redcan/tool:o");
     if(!yarp.connect("/redcan/tool:o","/ravebot/tool:i")) {
         printf("tool not available on ravebot device.\n");
-        printf("Note: Please try running $YARPMODS_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
+        printf("Note: Please try running $ASIBOT_DIR/bin/test_kdl --env $RCGv04_DIR/share/models/asibot_redCan.env.xml\n");
         toolPort.interrupt();
         toolPort.close();
         Network::fini();

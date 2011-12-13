@@ -16,17 +16,17 @@ ADD_LIBRARY(printbot PrintBot.h)
 TARGET_LINK_LIBRARIES(printbot ${YARP_LIBRARIES}) # Works
 
 # Test-related
-IF (enable_YARPMODS_TESTS)
-    SET(CMAKE_MODULE_PATH ${YARPMODS_MODULE_PATH} ${CMAKE_MODULE_PATH})
+IF (enable_ASIBOT_TESTS)
+    SET(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH} ${CMAKE_MODULE_PATH})
     FIND_PACKAGE(ACE)
     INCLUDE_DIRECTORIES(${ACE_INCLUDE_DIRS})
     add_executable(test_printbot test_printbot.cpp)
     target_link_libraries(test_printbot rlPlugins)
     INSTALL(TARGETS test_printbot DESTINATION bin)
-ENDIF (enable_YARPMODS_TESTS)
+ENDIF (enable_ASIBOT_TESTS)
 
-# Exporting dependencies for YARPMODSConfig.cmake quite manually for now... 
-set(YARPMODS_LIBRARIES ${YARPMODS_LIBRARIES} rlPlugins printbot CACHE INTERNAL "appended libraries") 
+# Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins printbot CACHE INTERNAL "appended libraries") 
 
 ENDIF (NOT SKIP_printbot)
 

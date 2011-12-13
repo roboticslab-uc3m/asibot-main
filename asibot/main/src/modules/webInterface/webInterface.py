@@ -24,14 +24,14 @@
 # 
 # <b>Installation</b>
 #
-# The module is installed when enable_YARPMODS_MODULES is activated (default). For further
+# The module is installed when enable_ASIBOT_MODULES is activated (default). For further
 # installation steps refer to http://sourceforge.net/apps/trac/roboticslab/wiki/WikiYarpmods
 #
 # <b>Running</b> (assuming correct installation)
 #
 # yarp server &
 #
-# $YARPMODS_DIR/bin/webInterface.py
+# $ASIBOT_DIR/bin/webInterface.py
 #
 # <b>Modify</b>
 # 
@@ -569,8 +569,8 @@ class webAsibot:
 
 ##################################### PRE-MAIN ################################
 import os.path
-shared_dir = os.path.join(os.environ['YARPMODS_DIR'],'share','webInterface')
-programs_dir = os.path.join(os.environ['YARPMODS_DIR'],'share','userPrograms')
+shared_dir = os.path.join(os.environ['ASIBOT_DIR'],'app','webInterface')
+programs_dir = os.path.join(os.environ['ASIBOT_DIR'],'app','userPrograms')
 interface_conf = os.path.join(shared_dir,'interface.conf')
 page_format = 'asibot'
 
@@ -619,7 +619,7 @@ if __name__ == '__main__':
     ddSim = yarp.PolyDriver()
     if not ddSim.open(optionsSim):
         print "[warning] ravebot device not available"
-        print "[warning] Please try running $YARPMODS_DIR/bin/test_kdl\n"
+        print "[warning] Please try running $ASIBOT_DIR/bin/test_kdl\n"
     else:
         print "[success] success connecting to ravebot device\n"
     posSim = ddSim.viewIPositionControl()
