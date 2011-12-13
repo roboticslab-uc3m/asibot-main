@@ -27,13 +27,13 @@ class pxToReal {
     //Esta función identifica en qué región se encuentra la lata
     bool localizar(const double centroidx, const double centroidy, double& outx, double& outy);
 
-    void printmatrix(Matrix::Matrix& inmatrix);
+    void printmatrix(Matrix& inmatrix);
   private:
     int h,j; //filas,columnas
-    Matrix::Matrix realx;
-    Matrix::Matrix realy;
-    Matrix::Matrix imrx;
-    Matrix::Matrix imry;
+    Matrix realx;
+    Matrix realy;
+    Matrix imrx;
+    Matrix imry;
 };
 
 
