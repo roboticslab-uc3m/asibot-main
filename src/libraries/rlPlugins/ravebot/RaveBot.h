@@ -65,7 +65,7 @@ class toolPort : public BufferedPort<Bottle> {
  * <b>Installation</b>
  *
  * The plugin is compiled when ENABLE_rlPlugins_ravebot is activated (not default). For further
- * installation steps refer to http://sourceforge.net/apps/trac/roboticslab/wiki/WikiYarpmods
+ * installation steps refer to <a href="pages.html">your own system installation guidelines</a>.
  *
  */
 class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncoders {
