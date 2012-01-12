@@ -275,21 +275,18 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    */
   virtual bool getEncoderAccelerations(double *accs);
 
-
- // ------------------ IVelocityControl Related -------------------------------
   /**
-   * Set position mode. This command
+   *  --------- IVelocityControl Declarations. Implementation in IVelocityImpl.cpp ---------
+   */
+
+  /**
+   * Set velocity mode. This command
    * is required by control boards implementing different
    * control methods (e.g. velocity/torque), in some cases
    * it can be left empty.
    * @return true/false on success failure
    */
-  virtual bool setVelocityMode()  {
-    printf("RaveBot::setVelocityMode()\n");
-    modePosVel = 1;
-    return true;
-  }
-
+  virtual bool setVelocityMode();
 
   /**
    * Start motion at a given speed, single joint.
@@ -297,39 +294,14 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param sp speed value
    * @return bool/false upone success/failure
    */
-  virtual bool velocityMove(int j, double sp) {
-    if(sp>0) target_degrees[j]=180.0; // Must correct for JL
-    else target_degrees[j]=-180.0;
-    if (sp>100) sp=100;
-    else if (sp<-100) sp=-100;
-//    gvels[j]=sp;
-//    joint_vel[motor] = (THREAD_RATE*SPEED_ADJ*gvels[motor]*(deltas[motor])/max_dist)/(100.0);
-    joint_vel[j] = (THREAD_RATE*SPEED_ADJ_V*sp)/(100.0);
-    joint_status[j]=3;
-    return true;
-  }
+  virtual bool velocityMove(int j, double sp);
 
   /**
    * Start motion at a given speed, multiple joints.
    * @param sp pointer to the array containing the new speed values
    * @return true/false upon success/failure
    */
-  virtual bool velocityMove(const double *sp) {
-    double sp_limited[NUM_MOTORS];
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
-      if(sp[i]>0) target_degrees[i]=180.0; // Must correct for JL
-      else target_degrees[i]=-180.0;
-      if (sp[i]>100) sp_limited[i]=100;
-      else if (sp[i]<-100) sp_limited[i]=-100;
-      else sp_limited[i]=sp[i];
-      joint_vel[i] = (THREAD_RATE*SPEED_ADJ_V*sp_limited[i])/(100.0);
-      printf("Vel %d: %f",i,joint_vel[i]);
-      joint_status[i]=3;
-    }
-    printf("\n");
-    return true;
-  }
-
+  virtual bool velocityMove(const double *sp);
 
   /**
    * ------ DeviceDriver declarations. Implementation in IDeviceImpl.cpp ------
