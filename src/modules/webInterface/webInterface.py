@@ -36,7 +36,7 @@
 # <b>Modify</b>
 # 
 # This file can be edited at 
-# src/modules/webInterface/webInterface.py
+# $ASIBOT_ROOT/main/src/modules/webInterface/webInterface.py
 #
 
 # Import CherryPy global namespace (server)
