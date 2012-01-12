@@ -30,7 +30,7 @@ link_directories(${OpenRAVE_LIBRARY_DIRS} ${OPENRAVE_LINK_DIRS}) # All caps -> o
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
-ADD_LIBRARY(ravebot RaveBot.h IDeviceImpl.cpp IPositionImpl.cpp IEncoderImpl.cpp)
+ADD_LIBRARY(ravebot RaveBot.h IDeviceImpl.cpp IPositionImpl.cpp IVelocityImpl.cpp IEncoderImpl.cpp)
 TARGET_LINK_LIBRARIES(ravebot ${YARP_LIBRARIES} ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} ${Boost_THREAD_LIBRARY})
 
 # Test-related
