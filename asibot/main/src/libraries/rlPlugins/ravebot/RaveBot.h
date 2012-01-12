@@ -90,57 +90,20 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * it can be left empty.
    * return true/false on success/failure
    */
-  virtual bool setPositionMode() {
-    printf("RaveBot: setPositionMode().\n");
-    stop();
-    modePosVel = 0;
-    return true;
-  }
+  virtual bool setPositionMode();
 
   /** Set new reference point for a single axis.
    * @param j joint number
    * @param ref specifies the new ref point
    * @return true/false on success/failure
    */
-  virtual bool positionMove(int j, double ref) {
-    //Make sure we are in Position Mode
-    if(modePosVel!=0) {
-        printf("RaveBot: Not in position mode.\n");
-        return false;
-    } else printf("RaveBot::positionMove(%d,%f) [begin]\n",j,ref);
-    // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    joint_status[j]=1;
-    target_degrees[j]=ref;
-    if (ref>real_degrees[j]) joint_vel[j] = (THREAD_RATE*SPEED_ADJ*gvels[j])/100.0;
-    else joint_vel[j] = -(THREAD_RATE*SPEED_ADJ*gvels[j])/100.0;
-    return true;
-  }
-
+  virtual bool positionMove(int j, double ref);
 
   /** Set new reference point for all axes.
    * @param refs array, new reference points.
    * @return true/false on success/failure
    */
-  virtual bool positionMove(const double *refs) {
-    //Make sure we are in Position Mode
-    if(modePosVel!=0) {
-        printf("RaveBot: Not in position mode.\n");
-        return false;
-    } else printf("RaveBot::positionMove() [begin]\n");
-    // Find out the maximum angle to move
-    double max_dist = 0;
-    for(int motor=0;motor<NUM_MOTORS;motor++)
-      if (fabs(refs[motor]-real_degrees[motor])>max_dist)
-        max_dist = fabs(refs[motor]-real_degrees[motor]);
-    // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    for(int motor=0;motor<NUM_MOTORS;motor++) {
-      joint_status[motor]=1;
-      target_degrees[motor]=refs[motor];
-      joint_vel[motor] = (THREAD_RATE*SPEED_ADJ*gvels[motor]*(refs[motor]-real_degrees[motor])/max_dist)/(100.0);
-    }
-    return true;
-  }
-
+  virtual bool positionMove(const double *refs);
 
   /** Set relative position. The command is relative to the 
    * current position of the axis.
@@ -148,66 +111,23 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param delta relative command
    * @return true/false on success/failure
    */
-  virtual bool relativeMove(int j, double delta) {
-    //Make sure we are in Position Mode
-    if(modePosVel!=0) {
-        printf("RaveBot: Not in position mode.\n");
-        return false;
-    } else printf("RaveBot::relativeMove(%d,%f) [begin]\n",j,delta);
-    // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    joint_status[j]=2;
-    target_degrees[j]=real_degrees[j]+delta;
-    if (delta>0) joint_vel[j] = (THREAD_RATE*SPEED_ADJ*gvels[j])/(100.0);
-    else joint_vel[j] = -(THREAD_RATE*SPEED_ADJ*gvels[j])/(100.0);
-    return true;
-  }
-
+  virtual bool relativeMove(int j, double delta);
 
   /** Set relative position, all joints.
    * @param deltas pointer to the relative commands
    * @return true/false on success/failure
    */
-  virtual bool relativeMove(const double *deltas) {
-    if(modePosVel!=0) {
-        printf("RaveBot: Not in position mode.\n");
-        return false;
-    } else printf("RaveBot::relativeMove() [begin]\n");
-    // Find out the maximum angle to move
-    double max_dist = 0;
-    for(int motor=0;motor<5;motor++)
-      if (fabs(deltas[motor])>max_dist)
-        max_dist = fabs(deltas[motor]);
-    // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    for(int motor=0; motor<5; motor++) {
-      joint_status[motor]=2;
-      target_degrees[motor]=real_degrees[motor]+deltas[motor];
-      joint_vel[motor] = (THREAD_RATE*SPEED_ADJ*gvels[motor]*(deltas[motor])/max_dist)/(100.0);
-    }
-    return true;
-  }
-
+  virtual bool relativeMove(const double *deltas);
 
   /** Check if the current trajectory is terminated. Non blocking.
    * @return true if the trajectory is terminated, false otherwise
    */
-  virtual bool checkMotionDone(int j, bool *flag) {
-    if (joint_status[j]<=0) *flag=true;
-    else *flag=false;
-    return true;
-  }
-
+  virtual bool checkMotionDone(int j, bool *flag);
 
   /** Check if the current trajectory is terminated. Non blocking.
    * @return true if the trajectory is terminated, false otherwise
    */
-  virtual bool checkMotionDone(bool *flag) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
-      if (joint_status[i]<=0) flag[i]=true;
-      else flag[i]=false;      
-    }
-    return true;
-  }
-
+  virtual bool checkMotionDone(bool *flag);
 
   /** Set reference speed for a joint, this is the speed used during the
    * interpolation of the trajectory.
@@ -215,28 +135,14 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param sp speed value
    * @return true/false upon success/failure
    */
-  virtual bool setRefSpeed(int j, double sp) {
-    if (sp>100) gvels[j]=100;
-    else if (sp<-100) gvels[j]=-100;
-    else gvels[j]=sp;
-    return true;
-  }
-
+  virtual bool setRefSpeed(int j, double sp);
 
   /** Set reference speed on all joints. These values are used during the
    * interpolation of the trajectory.
    * @param spds pointer to the array of speed values.
    * @return true/false upon success/failure
    */
-  virtual bool setRefSpeeds(const double *spds) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
-      if (spds[i]>100) gvels[i]=100;
-      else if (spds[i]<-100) gvels[i]=-100;
-      else gvels[i]=spds[i];
-    }
-    return true;
-  }
-
+  virtual bool setRefSpeeds(const double *spds);
 
   /** Set reference acceleration for a joint. This value is used during the
    * trajectory generation.
@@ -244,20 +150,14 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param acc acceleration value
    * @return true/false upon success/failure
    */
-  virtual bool setRefAcceleration(int j, double acc) {
-    return true;
-  }
-
+  virtual bool setRefAcceleration(int j, double acc);
 
   /** Set reference acceleration on all joints. This is the valure that is
    * used during the generation of the trajectory.
    * @param accs pointer to the array of acceleration values
    * @return true/false upon success/failure
    */
-  virtual bool setRefAccelerations(const double *accs) {
-    return true;  // Not implemented, its unlimited for now
-  }
-
+  virtual bool setRefAccelerations(const double *accs);
 
   /** Get reference speed for a joint. Returns the speed used to 
    * generate the trajectory profile.
@@ -265,22 +165,13 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param ref pointer to storage for the return value
    * @return true/false on success or failure
    */
-  virtual bool getRefSpeed(int j, double *ref) {
-    *ref=gvels[j];   
-    return true;
-  }
-
+  virtual bool getRefSpeed(int j, double *ref);
 
   /** Get reference speed of all joints. These are the  values used during the
    * interpolation of the trajectory.
    * @param spds pointer to the array that will store the speed values.
    */
-  virtual bool getRefSpeeds(double *spds) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++)
-      spds[i]=gvels[i];
-    return true;
-  }
-
+  virtual bool getRefSpeeds(double *spds);
 
   /** Get reference acceleration for a joint. Returns the acceleration used to 
    * generate the trajectory profile.
@@ -288,43 +179,25 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param acc pointer to storage for the return value
    * @return true/false on success/failure
    */
-  virtual bool getRefAcceleration(int j, double *acc) {
-    return true;
-  }
-
+  virtual bool getRefAcceleration(int j, double *acc);
 
   /** Get reference acceleration of all joints. These are the values used during the
    * interpolation of the trajectory.
    * @param accs pointer to the array that will store the acceleration values.
    * @return true/false on success or failure 
    */
-  virtual bool getRefAccelerations(double *accs) {
-    return true;
-  }
-
+  virtual bool getRefAccelerations(double *accs);
 
   /** Stop motion, single joint
    * @param j joint number
    * @return true/false on success/failure
    */
-  virtual bool stop(int j) {
-    joint_vel[j]=0.0;
-    joint_status[j]=-1;
-    return true;
-  }
-
+  virtual bool stop(int j);
 
   /** Stop motion, multiple joints 
    * @return true/false on success/failure
    */
-  virtual bool stop() {
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
-      joint_vel[i]=0.0;
-      joint_status[i]=-1;
-      theToolPort.status=0;
-    }
-    return true;
-  }
+  virtual bool stop();
 
  // ------------------ IEncoder Related ---------------------------------------
   /**
