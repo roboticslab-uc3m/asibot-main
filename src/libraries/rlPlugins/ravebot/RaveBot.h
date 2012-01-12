@@ -199,27 +199,22 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    */
   virtual bool stop();
 
- // ------------------ IEncoder Related ---------------------------------------
+  /**
+   *  --------- IEncoder Declarations. Implementation in IEncoderImpl.cpp ---------
+   */
+
   /**
    * Reset encoder, single joint. Set the encoder value to zero 
    * @param j encoder number
    * @return true/false
    */
-  virtual bool resetEncoder(int j) {
-    real_degrees[j]=0.0;
-    return true;
-  }
+  virtual bool resetEncoder(int j);
 
   /**
    * Reset encoders. Set the encoders value to zero 
    * @return true/false
    */
-  virtual bool resetEncoders() {
-    for (unsigned int i=0; i<NUM_MOTORS; i++)
-      real_degrees[i]=0.0;
-    return true;
-  }
-
+  virtual bool resetEncoders();
 
   /**
    * Set the value of the encoder for a given joint. 
@@ -227,23 +222,14 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param val new value
    * @return true/false
    */
-  virtual bool setEncoder(int j, double val) {
-    real_degrees[j]=val;
-    return true;
-  }
-
+  virtual bool setEncoder(int j, double val);
 
   /**
    * Set the value of all encoders.
    * @param vals pointer to the new values
    * @return true/false
    */
-  virtual bool setEncoders(const double *vals) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++)
-      real_degrees[i]=vals[i];
-    return true;
-  }
-
+  virtual bool setEncoders(const double *vals);
 
   /**
    * Read the value of an encoder.
@@ -251,22 +237,14 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param v pointer to storage for the return value
    * @return true/false, upon success/failure (you knew it, uh?)
    */
-  virtual bool getEncoder(int j, double *v) {
-    *v=real_degrees[j];
-    return true;
-  }
+  virtual bool getEncoder(int j, double *v);
 
   /**
    * Read the position of all axes.
    * @param encs pointer to the array that will contain the output
    * @return true/false on success/failure
    */
-  virtual bool getEncoders(double *encs) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++)
-      encs[i]=real_degrees[i];
-    return true;
-  }
-
+  virtual bool getEncoders(double *encs);
 
   /**
    * Read the istantaneous speed of an axis.
@@ -274,40 +252,28 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @param sp pointer to storage for the output
    * @return true if successful, false ... otherwise.
    */
-  virtual bool getEncoderSpeed(int j, double *sp) {
-    *sp=joint_vel[j];
-    return true;
-  }
+  virtual bool getEncoderSpeed(int j, double *sp);
 
   /**
    * Read the instantaneous speed of all axes.
    * @param spds pointer to storage for the output values
    * @return guess what? (true/false on success or failure).
    */
-  virtual bool getEncoderSpeeds(double *spds) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++)
-      spds[i]=joint_vel[i];
-    return true;
-  }
-
+  virtual bool getEncoderSpeeds(double *spds);
     
   /**
    * Read the instantaneous acceleration of an axis.
    * @param j axis number
    * @param spds pointer to the array that will contain the output
    */
-  virtual bool getEncoderAcceleration(int j, double *spds) {
-    return true;
-  }
+  virtual bool getEncoderAcceleration(int j, double *spds);
 
   /**
    * Read the instantaneous acceleration of all axes.
    * @param accs pointer to the array that will contain the output
    * @return true if all goes well, false if anything bad happens. 
    */
-  virtual bool getEncoderAccelerations(double *accs) {
-    return true;
-  }
+  virtual bool getEncoderAccelerations(double *accs);
 
 
  // ------------------ IVelocityControl Related -------------------------------
