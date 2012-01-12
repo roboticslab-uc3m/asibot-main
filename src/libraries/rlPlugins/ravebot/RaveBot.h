@@ -1,5 +1,8 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#ifndef __RAVEBOT_H__
+#define __RAVEBOT_H__
+
 #include <yarp/os/all.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 #include <yarp/dev/Drivers.h>
@@ -382,4 +385,5 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
 };
 
+#endif
 
