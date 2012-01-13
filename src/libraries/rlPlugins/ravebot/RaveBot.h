@@ -75,9 +75,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   // Set the Thread Rate in the class constructor
   RaveBot() : RateThread(THREAD_RATE) {}  // In ms
 
-  /**
-   * --- IPositionControl declarations. Implementation in IPositionImpl.cpp ---
-   */
+// ------- IPositionControl declarations. Implementation in IPositionImpl.cpp -------
 
   /**
    * Get the number of controlled axes. This command asks the number of controlled
@@ -202,9 +200,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    */
   virtual bool stop();
 
-  /**
-   *  --------- IEncoder Declarations. Implementation in IEncoderImpl.cpp ---------
-   */
+//  ---------- IEncoder Declarations. Implementation in IEncoderImpl.cpp ----------
 
   /**
    * Reset encoder, single joint. Set the encoder value to zero 
@@ -278,9 +274,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    */
   virtual bool getEncoderAccelerations(double *accs);
 
-  /**
-   *  --------- IVelocityControl Declarations. Implementation in IVelocityImpl.cpp ---------
-   */
+//  --------- IVelocityControl Declarations. Implementation in IVelocityImpl.cpp ---------
 
   /**
    * Set velocity mode. This command
@@ -306,9 +300,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    */
   virtual bool velocityMove(const double *sp);
 
-  /**
-   * ------ DeviceDriver declarations. Implementation in IDeviceImpl.cpp ------
-   */
+// -------- DeviceDriver declarations. Implementation in IDeviceImpl.cpp --------
 
   /**
    * Open the DeviceDriver. 
@@ -331,9 +323,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    */
   virtual bool close();
 
-  /**
-   * ------ RateThread declarations. Implementation in RateThreadImpl.cpp ------
-   */
+// -------- RateThread declarations. Implementation in RateThreadImpl.cpp --------
 
   /**
    * Initialization method. The thread executes this function
@@ -353,9 +343,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    */
   void run();
 
-  /**
-   * ----------------------------- Private ------------------------------------
-   */
+// ------------------------------- Private -------------------------------------
 
  private:
   // General Joint Motion Controller parameters //
