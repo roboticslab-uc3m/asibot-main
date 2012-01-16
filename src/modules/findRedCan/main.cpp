@@ -81,9 +81,10 @@ int main(int argc, char** argv) {
 
 //    CvCapture* inputSource = cvCreateFileCapture("http://root:root@163.117.201.38/mjpg/video.mjpg");
     CvCapture* inputSource = cvCreateFileCapture("http://163.117.201.38/mjpg/video.mjpg");
-    if (!inputSource)
+    if (!inputSource) {
+        printf("[error] NULL inputSource.\n");
         return -1;
-
+    }
     if (conX) {
         cvNamedWindow("Image from camera", CV_WINDOW_AUTOSIZE);
     }
