@@ -7,16 +7,37 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/sig/all.h>
 
+#include <kdl/chain.hpp>
+#include <kdl/chainfksolver.hpp>
+#include <kdl/chainiksolverpos_nr_jl.hpp>
+#include <kdl/chainfksolverpos_recursive.hpp>
+#include <kdl/chainiksolvervel_pinv.hpp>
+#include <kdl/frames_io.hpp>
+#include <kdl/frames.hpp>
+#include <kdl/path_line.hpp>
+#include <kdl/rotational_interpolation_sa.hpp>
+#include <kdl/velocityprofile_rect.hpp>
+#include <kdl/velocityprofile_trap.hpp>
+#include <kdl/trajectory_segment.hpp>
+
 #include <iostream> // only windows
 
 #include <stdlib.h> // for exit()
 
-#define THREAD_RATE 20
-
-using namespace std;
+//using namespace std;
 
 using namespace yarp::os;
 using namespace yarp::dev;
+
+using namespace KDL;
+
+#define NUM_MOTORS 5
+#define THREAD_RATE 30  // In miliseconds
+#define CARTPOS_PRECISION 0.005  // Meter 0.0005
+#define CARTORI_PRECISION 0.5  // Degrees
+#define DEFAULT_DURATION 3  // For Trajectory, 3s?
+#define TIMEINCREMENT 0.03  // For Trajectory, 50ms?
+#define GAIN 75 // 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 /**
  *
@@ -36,6 +57,12 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 
   // Set the Thread Rate in the class constructor
   CartesianBot() : RateThread(THREAD_RATE) {}  // In ms
+
+// --tmp stuff--
+    double toRad(const double inDeg);
+    double toDeg(const double inRad);
+    /* Returns true if all have reached */
+    bool targetReached();
 
 // ------- ICartesianControl declarations. Implementation in ICartesianImpl.cpp -------
 
@@ -522,9 +549,26 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
   void run();
 
  private:
-  // General Joint Motion Controller parameters //
+    Property options;
+    PolyDriver robotDevice;
+    IEncoders *enc;
+    IPositionControl *pos;
+    IVelocityControl *vel;
+    int cmc_status;
+    bool targets[6];
+    Chain theChain;
+    Frame real_cartpos;
+    Frame target_cartpos;
+    JntArray real_rad;  // in radians
+    double vgeneral;
+    RotationalInterpolation_SingleAxis* _orient;
+    double _eqradius;
+    bool _aggregate;
+//  Trajectory_Segment currentTrajectory;
+    Trajectory* currentTrajectory;
+    double currentTime;
+    double duration;
 
-  // YARP
 };
 
 
