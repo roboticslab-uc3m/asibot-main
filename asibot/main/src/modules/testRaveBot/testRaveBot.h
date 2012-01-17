@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __CARTESIAN_SERVER__
-#define __CARTESIAN_SERVER__
+#ifndef __TEST_RAVEBOT__
+#define __TEST_RAVEBOT__
 
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Module.h>
@@ -10,7 +10,6 @@
 #include <yarp/os/BufferedPort.h>
 
 #include <yarp/dev/PolyDriver.h>
-//#include <yarp/dev/CartesianControl.h>
 
 #define DEFAULT_ROBOT_NAME "ravebot"
 
@@ -20,12 +19,6 @@ using namespace yarp::dev;
 class testRaveBot : public RFModule {
 protected:
     yarp::dev::PolyDriver robotDevice;
-
-//	qSetPort qPort;  // to connect to robot arm, encoders
-//	mSetPort mPort;  // to set its mode from outside
-//    sharedArea mem;
-
-//    WBCthread wThread;
 
 //    double getPeriod();
     bool updateModule();

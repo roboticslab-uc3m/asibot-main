@@ -8,7 +8,7 @@
  *
  * <b> Legal </b>
  *
- * Copyright: 2011 (C) Universidad Carlos III de Madrid; 2006 (C) RobotCub Consortium
+ * Copyright: 2012 (C) Universidad Carlos III de Madrid
  *
  * Author: <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>
  *
@@ -31,7 +31,7 @@
  * <b>Modify</b>
  * 
  * This file can be edited at 
- * src/modules/testRaveBot/main.cpp
+ * $ASIBOT_DIR/main/src/modules/testRaveBot/main.cpp
  *
  */
 
