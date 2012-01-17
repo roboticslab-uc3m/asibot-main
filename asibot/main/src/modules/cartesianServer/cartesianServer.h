@@ -30,8 +30,6 @@ public:
 //    }
 };
 
-//YARP_DECLARE_PLUGINS(rlPlugins);
-
 class cartesianServer : public RFModule {
 protected:
     yarp::dev::PolyDriver cartesianDevice;
@@ -41,8 +39,6 @@ protected:
 //	qSetPort qPort;  // to connect to robot arm, encoders
 //	mSetPort mPort;  // to set its mode from outside
 //    sharedArea mem;
-
-//    WBCthread wThread;
 
 //    double getPeriod();
     bool updateModule();
