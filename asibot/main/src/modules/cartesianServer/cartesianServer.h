@@ -12,6 +12,8 @@
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/dev/CartesianControl.h>
 
+#define DEFAULT_CONTROLLER "cartesianbot"
+
 using namespace yarp::os;
 using namespace yarp::dev;
 
