@@ -79,6 +79,9 @@ int main(int argc, char** argv) {
     }*/
 
 //    CvCapture* inputSource = cvCreateFileCapture("http://root:root@163.117.201.38/mjpg/video.mjpg");
+
+    printf("Trying to connect to IP camera. This may take up to 30 seconds, please be patient...\n");
+
     CvCapture* inputSource = cvCreateFileCapture("http://163.117.201.38/mjpg/video.mjpg");
     if (!inputSource) {
         printf("[error] NULL inputSource. Make sure OpenCV has been compiled with Video I/O: -- FFMPEG: YES\n");
