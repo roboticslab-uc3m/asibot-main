@@ -11,6 +11,7 @@ include(${YARP_MODULE_PATH}/YarpPlugin.cmake)
 begin_plugin_library(rlPlugins)
 add_subdirectory(printbot)
 add_subdirectory(ravebot)
+add_subdirectory(cartesianbot)
 end_plugin_library(rlPlugins)
 
 IF (enable_ASIBOT_TESTS)
