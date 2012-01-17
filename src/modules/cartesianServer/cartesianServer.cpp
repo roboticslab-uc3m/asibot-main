@@ -13,9 +13,16 @@ bool cartesianServer::configure(ResourceFinder &rf) {
     printf("================================\n");
     printf("check our device can be accessed\n");
 
-//    rf.put("device","cartesianbot");
+    //-----------------CHECK CONTROLLER NAME------------//
+    ConstString controller_name;
+    if (rf.check("controller"))
+        controller_name = rf.find("controller").asString();
+    else controller_name = DEFAULT_CONTROLLER;
 
-    cartesianDevice.open(rf);
+    Property options;
+    options.put("device","cartesianbot");
+
+    cartesianDevice.open(options);
     
     if (!cartesianDevice.isValid()) {
         printf("[error] Class instantiation not worked.\n\n");
