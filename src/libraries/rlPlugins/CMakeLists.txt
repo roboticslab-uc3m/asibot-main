@@ -15,8 +15,8 @@ add_subdirectory(cartesianbot)
 end_plugin_library(rlPlugins)
 
 IF (enable_ASIBOT_TESTS)
-  add_plugin_library_executable(test_rlPlugins rlPlugins)
-  INSTALL(TARGETS test_rlPlugins DESTINATION bin)
+  add_plugin_library_executable(testRlPlugins rlPlugins)
+  INSTALL(TARGETS testRlPlugins DESTINATION bin)
 ENDIF (enable_ASIBOT_TESTS)
 
 # For now, test modules are compiled inside each subdir.
