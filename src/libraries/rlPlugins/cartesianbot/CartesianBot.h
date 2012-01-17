@@ -438,6 +438,8 @@ class CartesianBot : public DeviceDriver, public RateThread, public IPositionCon
 
  // ------------------- DeviceDriver Related ------------------------------------
   virtual bool open(Searchable& config) {
+    printf("HI I WORK!!!!!\n");
+    return true;
 
     if(config.check("help")) {
        printf("\n");
