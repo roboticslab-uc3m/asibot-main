@@ -32,12 +32,33 @@ bool cartesianServer::configure(ResourceFinder &rf) {
         return false;
     }
 
+    bool ok = cartesianDevice.view(icart);
+    if (!ok) {
+        printf("Problems acquiring interface\n");
+        return false;
+    }
+
+    //---------------------OPEN PORT(s)------------------------//
+    xPort.open("/cartesianServer/x:i");
+
+    //-----------------ACTIVATE THE CALLBACKS ALWAYS-----------//
+    xPort.useCallback();
+
     return true;
 }
 
 /************************************************************************/
 bool cartesianServer::updateModule() {
 //    printf("Alive\n");
+    return true;
+}
+
+/************************************************************************/
+bool cartesianServer::interruptModule() {
+    xPort.disableCallback();
+    xPort.interrupt();
+    cartesianDevice.close();
+    xPort.close();
     return true;
 }
 

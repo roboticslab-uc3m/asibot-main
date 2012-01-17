@@ -17,17 +17,11 @@
 using namespace yarp::os;
 using namespace yarp::dev;
 
-class xPort : public BufferedPort<Bottle> {
+class xCommPort : public BufferedPort<Bottle> {
 protected:
-//    sharedArea *pMem;
     virtual void onRead(Bottle& v) {
-//        printf("[Debug] Data arrived on qSetPort\n");
-//        pMem->setQ(v);
+        printf("[Debug] Data arrived on xCommPort\n");
     }
-public:
-//    void setSharedArea(sharedArea* _pMem) {
-//        pMem = _pMem;
-//    }
 };
 
 class cartesianServer : public RFModule {
@@ -36,13 +30,11 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
 
-//	qSetPort qPort;  // to connect to robot arm, encoders
-//	mSetPort mPort;  // to set its mode from outside
-//    sharedArea mem;
+	xCommPort xPort;
 
-//    double getPeriod();
     bool updateModule();
-//    bool interruptModule();
+    bool interruptModule();
+//    double getPeriod();
 //    int period;
 
 public:
