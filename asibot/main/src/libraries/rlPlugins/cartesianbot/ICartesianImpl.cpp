@@ -1,49 +1,7 @@
-// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include <yarp/os/all.h>
-#include <yarp/dev/ControlBoardInterfaces.h>
-#include <yarp/dev/Drivers.h>
-#include <yarp/dev/PolyDriver.h>
-#include <yarp/dev/CartesianControl.h>
-#include <yarp/sig/all.h>
+// -----------------------------------------------------------------------------
 
-#include <iostream> // only windows
-
-#include <stdlib.h> // for exit()
-
-#define DEFAULT_NUM_MOTORS 6
-#define MAX_NUM_MOTORS 50
-#define THREAD_RATE 5  // In miliseconds.
-#define MOTOR_PRECISION 0.5  // In degrees.
-#define SPEED_ADJ 0.05  // Speed adjustment for simulation
-#define NEG_LIM -180.0  // NOT IMPLEMENTED
-#define POS_LIM 180.0  // NOT IMPLEMETED
-
-using namespace std;
-
-using namespace yarp::os;
-using namespace yarp::dev;
-
-/**
- *
- * @ingroup CartesianBot
- *
- * CartesianBot creates a virtual (text-mode) N-DOF robot and exposes a YARP_dev controlboard
- * interface (implements the IPositionControl, IVelocityControl and IEncoders interfaces).
- *
- * <b>Installation</b>
- *
- * The plugin is compiled when ENABLE_rlPlugins_cartesianbot is activated (not default). For further
- * installation steps refer to <a href="pages.html">your own system installation guidelines</a>.
- *
- */
-class CartesianBot : public DeviceDriver, public RateThread, public ICartesianControl {
- public:
-
-  // Set the Thread Rate in the class constructor
-  CartesianBot() : RateThread(THREAD_RATE) {}  // In ms
-
-// ------- ICartesianControl declarations. Implementation in ICartesianImpl.cpp -------
+#include "RaveBot.h"
 
     /**
     * Set the controller in tracking or non-tracking mode. [wait for
