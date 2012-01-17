@@ -58,11 +58,10 @@ int main(int argc, char** argv) {
 
     const int rMgThres = 50.0;
 
-
     Network yarp;
 
     if (!Network::checkNetwork()) {
-        printf("Please start a yarp name server first\n");
+        printf("No yarp network, bye!\n");
         return(-1);
     }
 
@@ -82,7 +81,7 @@ int main(int argc, char** argv) {
 //    CvCapture* inputSource = cvCreateFileCapture("http://root:root@163.117.201.38/mjpg/video.mjpg");
     CvCapture* inputSource = cvCreateFileCapture("http://163.117.201.38/mjpg/video.mjpg");
     if (!inputSource) {
-        printf("[error] NULL inputSource.\n");
+        printf("[error] NULL inputSource. Make sure OpenCV has been compiled with Video I/O: -- FFMPEG: YES\n");
         return -1;
     }
     if (conX) {
