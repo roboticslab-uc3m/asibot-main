@@ -107,7 +107,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * @note Intended for streaming mode. 
     */
     virtual bool goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
-                          const double t.0);
+                          const double t=0);
 
     /**
     * Move the end-effector to a specified position in cartesian 
