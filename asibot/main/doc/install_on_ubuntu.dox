@@ -113,7 +113,8 @@ We'll do this from source to assure the CMake file is created.
 \verbatim
   svn co https://code.ros.org/svn/opencv/trunk/opencv
   cd opencv; mkdir build; cd build
-  cmake ..; make -j3; sudo make install
+  cmake ..  # Make sure you see Video I/O: -- FFMPEG: YES
+  make -j3; sudo make install
   cd ../..
 \endverbatim
 
