@@ -11,13 +11,7 @@
 
 #include <stdlib.h> // for exit()
 
-#define DEFAULT_NUM_MOTORS 6
-#define MAX_NUM_MOTORS 50
-#define THREAD_RATE 5  // In miliseconds.
-#define MOTOR_PRECISION 0.5  // In degrees.
-#define SPEED_ADJ 0.05  // Speed adjustment for simulation
-#define NEG_LIM -180.0  // NOT IMPLEMENTED
-#define POS_LIM 180.0  // NOT IMPLEMETED
+#define THREAD_RATE 20
 
 using namespace std;
 
@@ -28,8 +22,8 @@ using namespace yarp::dev;
  *
  * @ingroup CartesianBot
  *
- * CartesianBot creates a virtual (text-mode) N-DOF robot and exposes a YARP_dev controlboard
- * interface (implements the IPositionControl, IVelocityControl and IEncoders interfaces).
+ * CartesianBot connects to a robot (the IPositionControl, IVelocityControl and IEncoders interfaces)
+ * and exposes a YARP_dev cartesian interface (implements ICartesianControl).
  *
  * <b>Installation</b>
  *
@@ -484,81 +478,52 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     */
     virtual bool restoreContext(const int id);
 
- // ------------------- DeviceDriver Related ------------------------------------
-  virtual bool open(Searchable& config) {
-    printf("HI I WORK!!!!!\n");
+// -------- DeviceDriver declarations. Implementation in IDeviceImpl.cpp --------
 
-    if(config.check("help")) {
-       printf("\n");
-       printf("Usage: cartesianbot --help  -------> This help\n");
-       printf("Usage: cartesianbot --DOF [DOF]  --> [DOF] degrees of freedom (defaults to %d, max %d)\n\n",DEFAULT_NUM_MOTORS,MAX_NUM_MOTORS);
-       exit(1);
-    }
+    /**
+    * Open the DeviceDriver. 
+    * @param config is a list of parameters for the device.
+    * Which parameters are effective for your device can vary.
+    * See \ref dev_examples "device invocation examples".
+    * If there is no example for your device,
+    * you can run the "yarpdev" program with the verbose flag
+    * set to probe what parameters the device is checking.
+    * If that fails too,
+    * you'll need to read the source code (please nag one of the 
+    * yarp developers to add documentation for your device).
+    * @return true/false upon success/failure
+    */
+    virtual bool open(Searchable& config);
 
-    Value v = config.check("DOF",Value(DEFAULT_NUM_MOTORS));
-    num_motors=v.asInt();
-    if(num_motors>MAX_NUM_MOTORS) {
-      printf("Exceeded max DOF. ");
-      num_motors=MAX_NUM_MOTORS;
-    }
-    printf("Using %d DOF.\n",v.asInt());  
+    /**
+    * Close the DeviceDriver.
+    * @return true/false on success/failure.
+    */
+    virtual bool close();
 
-    // Initialize private parameters
-    for (unsigned int i=0; i<num_motors; i++) {
-      joint_status[i]=0;
-      real_degrees[i]=0.0;
-      joint_vel[i]=0.0;
-      target_degrees[i]=0.0;
-      gvels[i]=100.0;
-    }
+// -------- RateThread declarations. Implementation in RateThreadImpl.cpp --------
 
-    // Start the RateThread
-    this->start();
-    
-    return true;
-  }
+  /**
+   * Initialization method. The thread executes this function
+   * when it starts and before "run". This is a good place to 
+   * perform initialization tasks that need to be done by the 
+   * thread itself (device drivers initialization, memory 
+   * allocation etc). If the function returns false the thread 
+   * quits and never calls "run". The return value of threadInit()
+   * is notified to the class and passed as a parameter 
+   * to afterStart(). Note that afterStart() is called by the 
+   * same thread that is executing the "start" method.
+   */
+  bool threadInit();
 
-
-  virtual bool close() {
-    return true;
-  }
-
-
- // ------------------- RateThread Related ------------------------------------
-  /** On the thread initialization **/
-  bool threadInit() {
-    printf("threadInit(): ok\n");
-    return true;
-  }
-
-
-  /** The periodical function **/
-  void run() {
-    for(int motor=0;motor<num_motors;motor++){
-      if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
-        if (fabs(target_degrees[motor]-real_degrees[motor])<MOTOR_PRECISION){
-          printf("Joint q%d reached target.\n",motor+1);
-          joint_status[motor]=0;
-          joint_vel[motor]=0;
-        // Here we should check for joint limits
-        } else {
-          real_degrees[motor]+=joint_vel[motor];
-        }
-      }
-    }
-    for (unsigned int i=0; i<num_motors; i++) 
-      printf("%f ",real_degrees[i]);
-    printf("\n");
-  }
+  /**
+   * Loop function. This is the thread itself.
+   */
+  void run();
 
  private:
   // General Joint Motion Controller parameters //
-  int num_motors;
-  int joint_status[MAX_NUM_MOTORS];
-  double real_degrees[MAX_NUM_MOTORS];
-  double target_degrees[MAX_NUM_MOTORS];
-  double joint_vel[MAX_NUM_MOTORS];
-  double gvels[MAX_NUM_MOTORS];
+
   // YARP
 };
 

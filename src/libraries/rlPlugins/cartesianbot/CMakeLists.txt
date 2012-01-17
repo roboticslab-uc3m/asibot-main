@@ -12,7 +12,7 @@ FIND_PACKAGE(YARP REQUIRED)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
-ADD_LIBRARY(cartesianbot CartesianBot.h ICartesianImpl.cpp)
+ADD_LIBRARY(cartesianbot CartesianBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp)
 TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES}) # Works
 
 # Test-related
