@@ -200,6 +200,7 @@ bool CartesianBot::waitMotionDone(const double period, const double timeout) {
 
 bool CartesianBot::stopControl() {
     cmc_status=-1;
+    printf("[end] CartesianBot::stopControl()\n");
     return true;
 }
 

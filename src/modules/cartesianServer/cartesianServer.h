@@ -11,13 +11,14 @@
 
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/dev/CartesianControl.h>
+#include <yarp/dev/ControlBoardInterfaces.h>
 
 #define DEFAULT_CONTROLLER "cartesianbot"
 
 using namespace yarp::os;
 using namespace yarp::dev;
 
-class xCommPort : public BufferedPort<Bottle> {
+/*class xCommPort : public BufferedPort<Bottle> {
 protected:
     yarp::dev::ICartesianControl *icart;
     virtual void onRead(Bottle& b) {
@@ -26,13 +27,54 @@ protected:
         int choice = b.get(0).asInt();
         if (b.get(0).getCode() != BOTTLE_TAG_INT) choice = -2;
         if (choice==-1) {  ///////////////////////////////// x -1 /////////////////////////////////
-            printf("T1\n");
-            icart->stopControl();
-//            bottle_x_o = theControlLoop.emergencyStop();
-//            port_x.reply(bottle_x_o);
+            Bottle replyB;
+            if(!icart->stopControl())
+                replyB.addVocab(VOCAB_OK);
+            else
+                replyB.addVocab(VOCAB_FAILED);
+            this.reply(replyB);
         } else if (choice==0) { ///////////////////////////////// x 0 /////////////////////////////////
 //            bottle_x_o = theControlLoop.controlStat();
 //            port_x.reply(bottle_x_o);
+        }
+    }
+public:
+    void setCartesianInterface(yarp::dev::ICartesianControl* _icart) {
+        icart = _icart;
+    }
+
+};*/
+
+// PortProcessor class will help us create a callback&rpc port
+class PortProcessor : public PortReader {
+protected:
+
+    yarp::dev::ICartesianControl *icart;
+
+    virtual bool read(ConnectionReader& connection) {
+        Bottle in, out;
+        in.read(connection);
+        printf("Got %s\n", in.toString().c_str());  
+        out.clear();
+        ConnectionWriter *returnToSender = connection.getWriter();
+        int choice = in.get(0).asInt();
+        if (in.get(0).getCode() != BOTTLE_TAG_INT) choice = -2;
+        if (choice==-1) {  ///////////////////////////////// x -1 /////////////////////////////////
+            if(icart->stopControl())
+                out.addVocab(VOCAB_OK);
+            else
+                out.addVocab(VOCAB_FAILED);
+            if (returnToSender!=NULL) {
+                out.write(*returnToSender);
+            }
+            return true;
+//        } else if (choice==0) { ///////////////////////////////// x 0 /////////////////////////////////
+//            bottle_x_o = theControlLoop.controlStat();
+//            port_x.reply(bottle_x_o);
+        }
+        out.addVocab(VOCAB_FAILED);
+        if (returnToSender!=NULL) {
+            out.write(*returnToSender);
         }
     }
 public:
@@ -48,8 +90,9 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
 
-	xCommPort xPort;
-
+	PortProcessor xProcessor;
+    Port xPort;
+    
     bool updateModule();
     bool interruptModule();
 //    double getPeriod();
