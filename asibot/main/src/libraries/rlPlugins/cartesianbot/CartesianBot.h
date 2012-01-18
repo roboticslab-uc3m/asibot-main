@@ -61,8 +61,6 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 // --tmp stuff--
     double toRad(const double inDeg);
     double toDeg(const double inRad);
-    /* Returns true if all have reached */
-    bool targetReached();
 
 // ------- ICartesianControl declarations. Implementation in ICartesianImpl.cpp -------
 
@@ -556,7 +554,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     IVelocityControl *vel;
 
     int cmc_status;
-    bool targets[6];
+    bool withOri;
 
     Chain theChain;
     ChainFkSolverPos_recursive* pFksolver;
