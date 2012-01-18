@@ -91,7 +91,7 @@ protected:
     yarp::dev::ICartesianControl *icart;
 
 	PortProcessor xProcessor;
-    Port xPort;
+    RpcServer xPort;
     
     bool updateModule();
     bool interruptModule();
