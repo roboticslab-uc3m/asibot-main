@@ -40,8 +40,8 @@ bool cartesianServer::configure(ResourceFinder &rf) {
 
     //---------------------CONFIGURE PORT(s)------------------------//
     xCallback.setCartesianInterface(icart);
-    xRpcServer.setReader(xCallback);
     xRpcServer.open("/cartesianServer/rpc:i");
+    xRpcServer.setReader(xCallback);
     // xPort.useCallback();
     return true;
 }
