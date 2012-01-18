@@ -12,6 +12,7 @@
 
 using namespace yarp::os;
 using namespace yarp::dev;
+using namespace yarp::sig;
 
 // xRpcCallback class will help us create a callback&rpc port
 class xRpcCallback : public PortReader {
