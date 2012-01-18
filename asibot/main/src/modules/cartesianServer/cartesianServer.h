@@ -28,16 +28,8 @@ protected:
         printf("Recieved %s.\n", b.toString().c_str());
         int choice = b.get(0).asInt();
         if (b.get(0).getCode() != BOTTLE_TAG_INT) choice = -2;
-        if (choice==-1) {  ///////////////////////////////// x -1 /////////////////////////////////
-            Bottle replyB;
-            if(!icart->stopControl())
-                replyB.addVocab(VOCAB_OK);
-            else
-                replyB.addVocab(VOCAB_FAILED);
-            this.reply(replyB);
-        } else if (choice==0) { ///////////////////////////////// x 0 /////////////////////////////////
-//            bottle_x_o = theControlLoop.controlStat();
-//            port_x.reply(bottle_x_o);
+        if (choice==0) { ///////////////////////////////// x 0 /////////////////////////////////
+            bottle_x_o = theControlLoop.controlStat();
         }
     }
 public:
