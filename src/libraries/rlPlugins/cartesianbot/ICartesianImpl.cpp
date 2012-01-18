@@ -18,13 +18,19 @@ bool CartesianBot::getTrackingMode(bool *f) {
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
-    x.push_back(3.0);
-    x.push_back(2.0);
-    x.push_back(1.0);
-    o.push_back(0.0);
-    o.push_back(1.0);
-    o.push_back(2.0);
-    o.push_back(3.0);
+    double grabValues[NUM_MOTORS];
+    if(!enc->getEncoders(grabValues))
+        printf("GIGANTIC encoder WARNING\n");
+    pFksolver->JntToCart(real_rad,real_cartpos);
+    KDL::Vector axis = real_cartpos.M.GetRot();  // Gives only rotation axis
+    double angle = real_cartpos.M.GetRotAngle(axis);  // Gives both angle and rotation axis
+    x.push_back(real_cartpos.p.data[0]);
+    x.push_back(real_cartpos.p.data[1]);
+    x.push_back(real_cartpos.p.data[2]);
+    o.push_back(axis[0]);
+    o.push_back(axis[1]);
+    o.push_back(axis[2]);
+    o.push_back(angle);
     return true;
 }
 

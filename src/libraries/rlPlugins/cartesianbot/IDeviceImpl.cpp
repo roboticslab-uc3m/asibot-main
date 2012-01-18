@@ -20,11 +20,11 @@ bool CartesianBot::open(Searchable& config) {
     theChain.addSegment(Segment(Joint(Joint::RotY),Frame(Vector(0.0,0.0,0.4))));
     theChain.addSegment(Segment(Joint(Joint::RotY),Frame(Vector(0.0,0.0,0.12))));
     theChain.addSegment(Segment(Joint(Joint::RotZ),Frame(Vector(0.0,0.0,0.16))));
-    ChainFkSolverPos_recursive fksolver = ChainFkSolverPos_recursive(theChain);
-    ChainFkSolverPos_recursive fksolver1(theChain);  // Forward position solver.
+    pFksolver = new ChainFkSolverPos_recursive(theChain);
+
     real_rad = JntArray(5);
-    fksolver.JntToCart(real_rad,real_cartpos);
-    fksolver.JntToCart(real_rad,target_cartpos);
+    pFksolver->JntToCart(real_rad,real_cartpos);
+    pFksolver->JntToCart(real_rad,target_cartpos);
 
     vgeneral = 100;
     cmc_status = 0;
@@ -71,6 +71,9 @@ bool CartesianBot::open(Searchable& config) {
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::close() {
+    delete pFksolver;
+    pFksolver = 0;
+    printf("Cleaned heap.\n");
     return true;
 }
 
