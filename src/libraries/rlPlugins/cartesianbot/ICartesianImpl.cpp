@@ -79,6 +79,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     currentTime = 0;
 
     // Set the status
+
     cmc_status=1;
 
     printf("[cmc_kdl] End absolute base movement.\n");
