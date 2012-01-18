@@ -18,7 +18,14 @@ bool CartesianBot::getTrackingMode(bool *f) {
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
-    return false;
+    x.push_back(3.0);
+    x.push_back(2.0);
+    x.push_back(1.0);
+    o.push_back(0.0);
+    o.push_back(1.0);
+    o.push_back(2.0);
+    o.push_back(3.0);
+    return true;
 }
 
 // ----------------------------------------------------------------------------- 
