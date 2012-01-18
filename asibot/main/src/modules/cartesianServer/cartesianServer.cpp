@@ -38,10 +38,9 @@ bool cartesianServer::configure(ResourceFinder &rf) {
         return false;
     }
 
-    //---------------------OPEN PORT(s)------------------------//
+    //---------------------CONFIGURE PORT(s)------------------------//
+    xPort.setCartesianInterface(icart);
     xPort.open("/cartesianServer/x:i");
-
-    //-----------------ACTIVATE THE CALLBACKS ALWAYS-----------//
     xPort.useCallback();
 
     return true;

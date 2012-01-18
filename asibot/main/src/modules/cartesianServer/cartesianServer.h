@@ -19,9 +19,27 @@ using namespace yarp::dev;
 
 class xCommPort : public BufferedPort<Bottle> {
 protected:
-    virtual void onRead(Bottle& v) {
+    yarp::dev::ICartesianControl *icart;
+    virtual void onRead(Bottle& b) {
         printf("[Debug] Data arrived on xCommPort\n");
+        printf("Recieved %s.\n", b.toString().c_str());
+        int choice = b.get(0).asInt();
+        if (b.get(0).getCode() != BOTTLE_TAG_INT) choice = -2;
+        if (choice==-1) {  ///////////////////////////////// x -1 /////////////////////////////////
+            printf("T1\n");
+            icart->stopControl();
+//            bottle_x_o = theControlLoop.emergencyStop();
+//            port_x.reply(bottle_x_o);
+        } else if (choice==0) { ///////////////////////////////// x 0 /////////////////////////////////
+//            bottle_x_o = theControlLoop.controlStat();
+//            port_x.reply(bottle_x_o);
+        }
     }
+public:
+    void setCartesianInterface(yarp::dev::ICartesianControl* _icart) {
+        icart = _icart;
+    }
+
 };
 
 class cartesianServer : public RFModule {
