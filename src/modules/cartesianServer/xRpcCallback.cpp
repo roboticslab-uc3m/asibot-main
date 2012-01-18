@@ -12,14 +12,14 @@ bool xRpcCallback::read(ConnectionReader& connection) {
     if (returnToSender==NULL) return false;  // Warning: unknown behaviour to j.
     int choice = in.get(0).asInt();
     if (in.get(0).getCode() != BOTTLE_TAG_INT) choice = -2;
-    if (choice==-1) {  ///////////////////////////////// x -1 /////////////////////////////////
+    if (choice==-1) {  ///////////////////////////////// -1 /////////////////////////////////
         if(icart->stopControl())
             out.addVocab(VOCAB_OK);
         else
             out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
         return true;
-    } else if (choice==0) { ///////////////////////////////// x 0 /////////////////////////////////
+    } else if (choice==0) { ///////////////////////////////// 0 /////////////////////////////////
         Vector x,o;
         if(icart->getPose(x,o)) {
             Bottle& l1 = out.addList();
@@ -33,11 +33,32 @@ bool xRpcCallback::read(ConnectionReader& connection) {
             out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
         return true;
+    } else if (choice==1) { ///////////////////////////////// 1 /////////////////////////////////
+        Vector x,o;
+        Bottle *lst = in.get(1).asList();
+        printf("list of %d elements (7 needed)\n", lst->size());
+        if(lst->size() < 7) {
+            out.addVocab(VOCAB_FAILED);
+            out.write(*returnToSender);
+            return false;
+        }
+        x.push_back(lst->get(0).asDouble());
+        x.push_back(lst->get(1).asDouble());
+        x.push_back(lst->get(2).asDouble());
+        o.push_back(lst->get(3).asDouble());
+        o.push_back(lst->get(4).asDouble());
+        o.push_back(lst->get(5).asDouble());
+        o.push_back(lst->get(6).asDouble());
+        if(icart->goToPose(x,o)){
+            out.addVocab(VOCAB_OK);
+        } else
+            out.addVocab(VOCAB_FAILED);
+        out.write(*returnToSender);
+        return true;
     }
     out.addVocab(VOCAB_FAILED);
-    if (returnToSender!=NULL) {
-        out.write(*returnToSender);
-    }
+    out.write(*returnToSender);
+    return false;
 }
 
 /************************************************************************/
