@@ -45,8 +45,8 @@ public:
 
 };*/
 
-// PortProcessor class will help us create a callback&rpc port
-class PortProcessor : public PortReader {
+// xRpcCallback class will help us create a callback&rpc port
+class xRpcCallback : public PortReader {
 protected:
 
     yarp::dev::ICartesianControl *icart;
@@ -90,8 +90,8 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
 
-	PortProcessor xProcessor;
-    RpcServer xPort;
+	xRpcCallback xCallback;
+    RpcServer xRpcServer;
     
     bool updateModule();
     bool interruptModule();
