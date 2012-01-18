@@ -199,7 +199,8 @@ bool CartesianBot::waitMotionDone(const double period, const double timeout) {
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::stopControl() {
-    return false;
+    cmc_status=-1;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
