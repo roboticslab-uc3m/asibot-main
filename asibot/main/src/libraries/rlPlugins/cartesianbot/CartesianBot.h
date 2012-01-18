@@ -554,9 +554,12 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     IEncoders *enc;
     IPositionControl *pos;
     IVelocityControl *vel;
+
     int cmc_status;
     bool targets[6];
+
     Chain theChain;
+    ChainFkSolverPos_recursive* pFksolver;
     Frame real_cartpos;
     Frame target_cartpos;
     JntArray real_rad;  // in radians
