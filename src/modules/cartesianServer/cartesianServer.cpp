@@ -39,26 +39,25 @@ bool cartesianServer::configure(ResourceFinder &rf) {
     }
 
     //---------------------CONFIGURE PORT(s)------------------------//
-    xProcessor.setCartesianInterface(icart);
-    xPort.setReader(xProcessor);
-    xPort.open("/cartesianServer/rpc:i");
-//    xPort.useCallback();
-
+    xCallback.setCartesianInterface(icart);
+    xRpcServer.setReader(xCallback);
+    xRpcServer.open("/cartesianServer/rpc:i");
+    // xPort.useCallback();
     return true;
 }
 
 /************************************************************************/
 bool cartesianServer::updateModule() {
-//    printf("Alive\n");
+    // printf("Alive\n");
     return true;
 }
 
 /************************************************************************/
 bool cartesianServer::interruptModule() {
-//    xPort.disableCallback();
-    xPort.interrupt();
+    // xPort.disableCallback();
+    xRpcServer.interrupt();
     cartesianDevice.close();
-    xPort.close();
+    xRpcServer.close();
     return true;
 }
 
