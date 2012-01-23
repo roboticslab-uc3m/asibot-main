@@ -554,9 +554,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     int cmc_status;
     bool withOri;
 
-    double A1, A2, A3;  // link lengths
-//    Chain theChain;
-//    ChainFkSolverPos_recursive* pFksolver;
+    double A0, A1, A2, A3;  // link lengths
     Frame real_cartpos;
     Frame target_cartpos;
     JntArray realRad;  // current radians
