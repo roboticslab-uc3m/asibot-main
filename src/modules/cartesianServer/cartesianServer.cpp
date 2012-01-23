@@ -19,9 +19,8 @@ bool cartesianServer::configure(ResourceFinder &rf) {
         controller_name = rf.find("controller").asString();
     else controller_name = DEFAULT_CONTROLLER;
 
-    Property options;
+    Property options(rf.toString());  // Little hack to get rf stuff to the module
     options.put("device","cartesianbot");
-
     cartesianDevice.open(options);
     
     if (!cartesianDevice.isValid()) {

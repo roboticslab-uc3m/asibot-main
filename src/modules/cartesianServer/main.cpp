@@ -51,6 +51,12 @@ int main(int argc, char *argv[]) {
     rf.setDefaultConfigFile("cartesianServer.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
+    if (rf.check("help")) {
+        fprintf(stdout,"Options:\n");
+        fprintf(stdout,"\t--rate    rate: ms (default: \"20\")\n");
+        return 0;
+    }
+
     Network yarp;
     if (!yarp.checkNetwork()) {
         printf("No yarp network, bye!\n");

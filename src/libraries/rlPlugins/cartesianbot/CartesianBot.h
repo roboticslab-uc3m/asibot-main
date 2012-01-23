@@ -21,25 +21,23 @@
 #include <kdl/trajectory_segment.hpp>
 
 #include <iostream> // only windows
-
 #include <stdlib.h> // for exit()
 
-//using namespace std;
-
-using namespace yarp::os;
-using namespace yarp::dev;
-
-using namespace KDL;
+#define THREAD_RATE_INIT 20  // In ms, unmeaningful as ALWAYS gets overwritten by RF
 
 #define NUM_MOTORS 5
-#define THREAD_RATE 30  // In miliseconds
-#define CARTPOS_PRECISION 0.005  // Meter 0.0005
-#define CARTORI_PRECISION 0.5  // Degrees
-#define DEFAULT_DURATION 3  // For Trajectory, 3s?
-#define TIMEINCREMENT 0.03  // For Trajectory, 50ms?
-#define GAIN 75 // 75 good for unstabilized sim and common real. 25 ok with stable sim.
+#define CARTPOS_PRECISION 0.005  /// Meter 0.0005
+#define CARTORI_PRECISION 0.5  /// Degrees
+#define DEFAULT_DURATION 3  /// For Trajectory, 3s?
+#define TIMEINCREMENT 0.03  /// For Trajectory, 50ms?
+#define GAIN 75  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
-/**
+//using namespace std;
+using namespace yarp::os;
+using namespace yarp::dev;
+using namespace KDL;
+
+/*
  *
  * @ingroup CartesianBot
  *
@@ -56,9 +54,9 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
  public:
 
   // Set the Thread Rate in the class constructor
-  CartesianBot() : RateThread(THREAD_RATE) {}  // In ms
+  CartesianBot() : RateThread(THREAD_RATE_INIT) {}  // In ms
 
-// --tmp stuff--
+// --tmp stuff in HelperFuncs.cpp--
     double toRad(const double inDeg);
     double toDeg(const double inRad);
 
@@ -556,11 +554,12 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     int cmc_status;
     bool withOri;
 
-    Chain theChain;
-    ChainFkSolverPos_recursive* pFksolver;
+    double A1, A2, A3;  // link lengths
+//    Chain theChain;
+//    ChainFkSolverPos_recursive* pFksolver;
     Frame real_cartpos;
     Frame target_cartpos;
-    JntArray real_rad;  // in radians
+    JntArray realRad;  // current radians
     double vgeneral;
     RotationalInterpolation_SingleAxis* _orient;
     double _eqradius;
