@@ -13,10 +13,11 @@ bool CartesianBot::open(Searchable& config) {
         exit(1);
     }
 
-    if((!config.check("A1"))||(!config.check("A2"))||(!config.check("A3"))){
-        printf("[error] A1,A2,A3 must be defined in [link_lenghts] from .ini\n");
+    if((!config.check("A0"))||(!config.check("A1"))||(!config.check("A2"))||(!config.check("A3"))){
+        printf("[error] A0,A1,A2,A3 must be defined to open() CartesianBot\n");
         return false;
     }
+    A0 = config.find("A0").asInt();
     A1 = config.find("A1").asInt();
     A2 = config.find("A2").asInt();
     A3 = config.find("A3").asInt();
