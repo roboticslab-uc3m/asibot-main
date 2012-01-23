@@ -8,23 +8,20 @@
 bool CartesianBot::open(Searchable& config) {
 
     if(config.check("help")) {
-       printf("\n");
-       printf("Usage: cartesianbot --help  -------> This help\n");
-       exit(1);
+        printf("\n");
+        printf("Usage: cartesianbot --help  -------> This help\n");
+        exit(1);
     }
 
-    // 5 DOF chain for FK solver
-    // Note that does not include length of first link.
-    theChain.addSegment(Segment(Joint(Joint::RotZ),Frame(Vector(0.0,0.0,0.12))));
-    theChain.addSegment(Segment(Joint(Joint::RotY),Frame(Vector(0.0,0.0,0.4))));
-    theChain.addSegment(Segment(Joint(Joint::RotY),Frame(Vector(0.0,0.0,0.4))));
-    theChain.addSegment(Segment(Joint(Joint::RotY),Frame(Vector(0.0,0.0,0.12))));
-    theChain.addSegment(Segment(Joint(Joint::RotZ),Frame(Vector(0.0,0.0,0.16))));
-    pFksolver = new ChainFkSolverPos_recursive(theChain);
+    if((!config.check("A1"))||(!config.check("A2"))||(!config.check("A3"))){
+        printf("[error] A1,A2,A3 must be defined in [link_lenghts] from .ini\n");
+        return false;
+    }
+    A1 = config.find("A1").asInt();
+    A2 = config.find("A2").asInt();
+    A3 = config.find("A3").asInt();
 
-    real_rad = JntArray(5);
-    pFksolver->JntToCart(real_rad,real_cartpos);
-    pFksolver->JntToCart(real_rad,target_cartpos);
+    realRad = JntArray(5);
 
     vgeneral = 100;
     cmc_status = 0;
@@ -57,22 +54,26 @@ bool CartesianBot::open(Searchable& config) {
     ok = ok && robotDevice.view(vel);
     ok = ok && robotDevice.view(enc);
     if (!ok) {
-        printf("Problems acquiring interfaces\n");
+        printf("[error] Problems acquiring interfaces\n");
         return false;
     }
-    printf("OK acquiring interfaces\n");
+    printf("[success] OK acquiring interfaces\n");
 
     // Start the RateThread
+    int period = config.check("rate",30,"ms ratethread").asInt();
+    this->setRate(period);
     this->start();
-   
+    printf("[success] Started %d ms ratethread\n",period);
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::close() {
-    delete pFksolver;
-    pFksolver = 0;
+    delete _orient;
+    _orient = 0;
+//    delete pFksolver;
+//    pFksolver = 0;
     printf("Cleaned heap.\n");
     return true;
 }
