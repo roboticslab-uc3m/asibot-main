@@ -17,10 +17,10 @@ bool CartesianBot::open(Searchable& config) {
         printf("[error] A0,A1,A2,A3 must be defined to open() CartesianBot\n");
         return false;
     }
-    A0 = config.find("A0").asInt();
-    A1 = config.find("A1").asInt();
-    A2 = config.find("A2").asInt();
-    A3 = config.find("A3").asInt();
+    A0 = config.find("A0").asDouble();
+    A1 = config.find("A1").asDouble();
+    A2 = config.find("A2").asDouble();
+    A3 = config.find("A3").asDouble();
 
     realRad = JntArray(5);
 

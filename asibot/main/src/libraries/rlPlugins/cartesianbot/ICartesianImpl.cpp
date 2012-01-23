@@ -17,7 +17,7 @@ bool CartesianBot::getTrackingMode(bool *f) {
 
 // -----------------------------------------------------------------------------
 
-bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
+bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {  // interface is in [deg]
     double grabValues[NUM_MOTORS];
     if(!enc->getEncoders(grabValues)) {
         printf("[warning] CartesianBot::getPose() failed to getEncoders()\n");
@@ -25,19 +25,17 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
     }
     for (int i=0; i<NUM_MOTORS; i++)
         realRad(i)=toRad(grabValues[i]);
-    double pxP = A1*cos(realRad(1))+A2*cos(realRad(1)+realRad(2))+A3*cos(realRad(1)+realRad(2)+realRad(3));
-    double pzP = A1*sin(realRad(1))+A2*sin(realRad(1)+realRad(2))+A3*sin(realRad(1)+realRad(2)+realRad(3));
-    double oyP = grabValues[1] + grabValues[2] + grabValues[3];
-//    pFksolver->JntToCart(real_rad,real_cartpos);
-//    KDL::Vector axis = real_cartpos.M.GetRot();  // Gives only rotation axis
-//    double angle = real_cartpos.M.GetRotAngle(axis);  // Gives both angle and rotation axis
-/*    x.push_back(real_cartpos.p.data[0]);
-    x.push_back(real_cartpos.p.data[1]);
-    x.push_back(real_cartpos.p.data[2]);
-    o.push_back(axis[0]);
-    o.push_back(axis[1]);
-    o.push_back(axis[2]);
-    o.push_back(angle);*/
+    printf("A0:%f, A1:%f, A2:%f, A3:%f\n",A0,A1,A2,A3);
+    double pxP = A1*sin(realRad(1))+A2*sin(realRad(1)+realRad(2))+A3*sin(realRad(1)+realRad(2)+realRad(3)); // P = prime
+    double pzP = A0+A1*cos(realRad(1))+A2*cos(realRad(1)+realRad(2))+A3*cos(realRad(1)+realRad(2)+realRad(3));
+    double oyP = grabValues[1] + grabValues[2] + grabValues[3];  // [deg]
+    x.resize(3);
+    x[0] = pxP*cos(realRad(0));
+    x[1] = pxP*sin(realRad(0));
+    x[2] = pzP;  // pz = pzP
+    o.resize(2);
+    o[0] = oyP; // = pitchP
+    o[1] = grabValues[4];  // = rollP
     return true;
 }
 
