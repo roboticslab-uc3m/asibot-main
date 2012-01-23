@@ -3,16 +3,6 @@
 
 #include "CartesianBot.h"
 
-// -----------------------------------------------------------------------------
-
-double CartesianBot::toDeg(const double inRad) {
-    return (inRad * 180.0 / 3.14159265);
-}
-
-double CartesianBot::toRad(const double inDeg) {
-    return (inDeg * 3.14159265 / 180.0);
-}
-
 // ------------------- RateThread Related ------------------------------------
 
 bool CartesianBot::threadInit() {
@@ -23,13 +13,13 @@ bool CartesianBot::threadInit() {
 // -----------------------------------------------------------------------------
 
 void CartesianBot::run() {
-    if (cmc_status>0) {  // If it is movement
+/*    if (cmc_status>0) {  // If it is movement
         double grabValues[NUM_MOTORS];
         if(!enc->getEncoders(grabValues))
             printf("[warning] CartesianBot::run() failed to getEncoders()\n");
         for (int i=0; i<NUM_MOTORS; i++)
             real_rad(i)=toRad(grabValues[i]);
-        pFksolver->JntToCart(real_rad,real_cartpos);
+//        pFksolver->JntToCart(real_rad,real_cartpos);
         bool done = false;
         checkMotionDone(&done);
         if (done) {
@@ -49,8 +39,8 @@ void CartesianBot::run() {
                 //T_current(i) += T_other(i);
             }
             JntArray joint_vel(5);  // in radians
-            ChainIkSolverVel_pinv iksolverv_pinv(theChain);
-            iksolverv_pinv.CartToJnt(real_rad,T_current,joint_vel);
+//            ChainIkSolverVel_pinv iksolverv_pinv(theChain);
+//            iksolverv_pinv.CartToJnt(real_rad,T_current,joint_vel);
             double cmc_qdot[5];
             for (unsigned int i=0; i<5; i++)
                 cmc_qdot[i]=toDeg(joint_vel(i));
@@ -68,7 +58,7 @@ void CartesianBot::run() {
         }
     } else {  // If it is stopped or breaked, reamain unchanged
 //j//        printf("Inside control loop stopped.\n");
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------

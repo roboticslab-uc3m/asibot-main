@@ -24,17 +24,20 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
         return false;
     }
     for (int i=0; i<NUM_MOTORS; i++)
-        real_rad(i)=toRad(grabValues[i]);
-    pFksolver->JntToCart(real_rad,real_cartpos);
-    KDL::Vector axis = real_cartpos.M.GetRot();  // Gives only rotation axis
-    double angle = real_cartpos.M.GetRotAngle(axis);  // Gives both angle and rotation axis
-    x.push_back(real_cartpos.p.data[0]);
+        realRad(i)=toRad(grabValues[i]);
+    double pxP = A1*cos(realRad(1))+A2*cos(realRad(1)+realRad(2))+A3*cos(realRad(1)+realRad(2)+realRad(3));
+    double pzP = A1*sin(realRad(1))+A2*sin(realRad(1)+realRad(2))+A3*sin(realRad(1)+realRad(2)+realRad(3));
+    double oyP = grabValues[1] + grabValues[2] + grabValues[3];
+//    pFksolver->JntToCart(real_rad,real_cartpos);
+//    KDL::Vector axis = real_cartpos.M.GetRot();  // Gives only rotation axis
+//    double angle = real_cartpos.M.GetRotAngle(axis);  // Gives both angle and rotation axis
+/*    x.push_back(real_cartpos.p.data[0]);
     x.push_back(real_cartpos.p.data[1]);
     x.push_back(real_cartpos.p.data[2]);
     o.push_back(axis[0]);
     o.push_back(axis[1]);
     o.push_back(axis[2]);
-    o.push_back(angle);
+    o.push_back(angle);*/
     return true;
 }
 
@@ -54,11 +57,11 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
         return false;
     }
     for (int i=0; i<NUM_MOTORS; i++)
-        real_rad(i)=toRad(grabValues[i]);
+        realRad(i)=toRad(grabValues[i]);
     vel->setVelocityMode();
-    pFksolver->JntToCart(real_rad,real_cartpos);
+//    pFksolver->JntToCart(real_rad,real_cartpos);
 
-    target_cartpos.p.x(xd[0]);
+/*    target_cartpos.p.x(xd[0]);
     target_cartpos.p.y(xd[1]);
     target_cartpos.p.z(xd[2]);
     KDL::Vector rotvec(od[0],od[1],od[2]);
@@ -77,7 +80,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     currentTrajectory = testTrajectory.Clone();
     // Set the status
     currentTime = 0;
-
+*/
     // Set the status
 
     cmc_status=1;
