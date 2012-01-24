@@ -9,7 +9,6 @@ find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include(${YARP_MODULE_PATH}/YarpPlugin.cmake)
 begin_plugin_library(rlPlugins)
-add_subdirectory(printbot)
 add_subdirectory(ravebot)
 add_subdirectory(cartesianbot)
 end_plugin_library(rlPlugins)
@@ -18,6 +17,4 @@ IF (enable_ASIBOT_TESTS)
   add_plugin_library_executable(testRlPlugins rlPlugins)
   INSTALL(TARGETS testRlPlugins DESTINATION bin)
 ENDIF (enable_ASIBOT_TESTS)
-
-# For now, test modules are compiled inside each subdir.
 
