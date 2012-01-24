@@ -21,6 +21,7 @@ bool CartesianBot::open(Searchable& config) {
     A1 = config.find("A1").asDouble();
     A2 = config.find("A2").asDouble();
     A3 = config.find("A3").asDouble();
+    printf("Using A0:%f, A1:%f, A2:%f, A3:%f.\n",A0,A1,A2,A3);
 
     realRad = JntArray(5);
 

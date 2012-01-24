@@ -25,7 +25,6 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {  // int
     }
     for (int i=0; i<NUM_MOTORS; i++)
         realRad(i)=toRad(grabValues[i]);
-    printf("A0:%f, A1:%f, A2:%f, A3:%f\n",A0,A1,A2,A3);
     double pxP = A1*sin(realRad(1))+A2*sin(realRad(1)+realRad(2))+A3*sin(realRad(1)+realRad(2)+realRad(3)); // P = prime
     double pzP = A0+A1*cos(realRad(1))+A2*cos(realRad(1)+realRad(2))+A3*cos(realRad(1)+realRad(2)+realRad(3));
     double oyP = grabValues[1] + grabValues[2] + grabValues[3];  // [deg]
@@ -118,7 +117,39 @@ bool CartesianBot::getDesired(yarp::sig::Vector &xdhat, yarp::sig::Vector &odhat
 bool CartesianBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                             yarp::sig::Vector &xdhat, yarp::sig::Vector &odhat,
                             yarp::sig::Vector &qdhat) {
-    return false;
+    printf("Problem statement:\n");
+    printf("xd: %s\nod: %s\n",xd.toString().c_str(),od.toString().c_str());
+    double odzRad = atan2(xd[1],xd[0]);
+    double xdP = sqrt(xd[0]*xd[0]+xd[1]*xd[1]);
+    double zdP = xd[2]-A0;
+    double oydP = od[0];
+    printf("Problem statement:\n");
+    printf("odz: %f\nxdP: %f\nzdP: %f\n",toDeg(odzRad),xdP,zdP);
+    // t1=qdhat[1],t1=qdhat[2],t1=qdhat[3]
+    double pWx = xdP - A3*sin(toRad(oydP));
+    double pWz = zdP - A3*cos(toRad(oydP));
+    double ct2 = (pow(pWx,2) + pow(pWz,2) - A1*A1 - A2*A2)/(2*A1*A2);
+    double st2 = sqrt(1-ct2);  // forces elbow-up in ASIBOT
+    //double st2 = -sqrt(1-ct2);  // forces elbow-down in ASIBOT
+    double t2Rad = atan2(st2,ct2);
+    double st1 = ((A1+A2*ct2)*pWx - A2*st2*pWz)/(pow(pWz,2)+pow(pWx,2));
+    double ct1 = ((A1+A2*ct2)*pWz - A2*st2*pWx)/(pow(pWz,2)+pow(pWx,2));
+    double t1Rad = atan2(st1,ct1);
+    qdhat.resize(5);
+    qdhat[0] = toDeg(odzRad);
+    qdhat[1] = toDeg(t1Rad);
+    qdhat[2] = toDeg(t2Rad);
+    qdhat[3] = oydP - qdhat[1] - qdhat[2];
+    qdhat[4] = od[1];
+// Do the fwd kin for this and then:
+    xdhat.resize(3);
+//    xdhat[0] = ;
+    odhat.resize(2);
+//    odhat[0] = ;
+    return true;
+
+
+    return true;
 }
 
 // -----------------------------------------------------------------------------
