@@ -34,23 +34,23 @@ ADD_LIBRARY(ravebot RaveBot.h IDeviceImpl.cpp IPositionImpl.cpp IVelocityImpl.cp
 TARGET_LINK_LIBRARIES(ravebot ${YARP_LIBRARIES} ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} ${Boost_THREAD_LIBRARY})
 
 # Test-related
-IF (enable_ASIBOT_TESTS)
-    SET(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH} ${CMAKE_MODULE_PATH})
-    FIND_PACKAGE(ACE)
-    INCLUDE_DIRECTORIES(${ACE_INCLUDE_DIRS})
+#IF (enable_ASIBOT_TESTS)
+#    SET(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH} ${CMAKE_MODULE_PATH})
+#    FIND_PACKAGE(ACE)
+#    INCLUDE_DIRECTORIES(${ACE_INCLUDE_DIRS})
 
 #    add_executable(test_ravebot test_ravebot.cpp) # as server
 #    target_link_libraries(test_ravebot ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} rlPlugins) # changed from OPENRAVE...
 #   INSTALL(TARGETS test_ravebot DESTINATION bin)
 
-    FIND_PACKAGE(Eigen2 REQUIRED)
-    include(${CMAKE_MODULE_PATH}/FindOrocos-KDL.cmake)
-    include_directories(${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
-    LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
-    add_executable(test_kdl test_kdl.cpp) # as server
-    target_link_libraries(test_kdl rlPlugins ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
-    INSTALL(TARGETS test_kdl DESTINATION bin)
-ENDIF (enable_ASIBOT_TESTS)
+#    FIND_PACKAGE(Eigen2 REQUIRED)
+#    include(${CMAKE_MODULE_PATH}/FindOrocos-KDL.cmake)
+#    include_directories(${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
+#    LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
+#    add_executable(test_kdl test_kdl.cpp) # as server
+#    target_link_libraries(test_kdl rlPlugins ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
+#    INSTALL(TARGETS test_kdl DESTINATION bin)
+#ENDIF (enable_ASIBOT_TESTS)
 
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
