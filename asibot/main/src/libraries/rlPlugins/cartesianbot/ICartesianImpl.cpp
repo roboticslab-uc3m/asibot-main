@@ -55,7 +55,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     }
     for (int i=0; i<NUM_MOTORS; i++)
         realRad(i)=toRad(grabValues[i]);
-    vel->setVelocityMode();
+//    vel->setVelocityMode();
 //    pFksolver->JntToCart(real_rad,real_cartpos);
 
 /*    target_cartpos.p.x(xd[0]);
