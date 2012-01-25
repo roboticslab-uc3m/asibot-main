@@ -54,15 +54,10 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     target_cartpos.p.x(xd[0]);
     target_cartpos.p.y(xd[1]);
     target_cartpos.p.z(xd[2]);
-    KDL::Vector rotvec(od[0],od[1],od[2]);
-    target_cartpos.M = Rotation::Rot(rotvec,od[4]);
+    target_cartpos.M = Rotation::EulerZYZ(atan2(xd[1],xd[0]),toRad(od[0]),toRad(od[1]));
 
     KDL::Path_Line testPathLine(real_cartpos, target_cartpos, _orient, _eqradius, _aggregate);
-    //KDL::VelocityProfile_Rectangular::VelocityProfile_Rectangular(double _maxvel = 0)
-    double _maxVel = 0.2; //0.1; //?
-    double maxAcc = 0.2; //0.1; //?
-    //KDL::VelocityProfile_Rectangular testVelocityProfile(_maxVel);
-    KDL::VelocityProfile_Trap testVelocityProfile(_maxVel, maxAcc);
+    KDL::VelocityProfile_Trap testVelocityProfile(maxVel, maxAcc);
     //Trajectory_Segment (Path *_geom, VelocityProfile *_motprof, double duration, bool _aggregate=true)
     KDL::Trajectory_Segment testTrajectory(testPathLine.Clone(), testVelocityProfile.Clone(), duration, _aggregate);
     //currentTrajectory = KDL::Trajectory_Segment(testPathLine.Clone(), testVelocityProfile.Clone(), DURATION, _aggregate);
@@ -220,13 +215,15 @@ bool CartesianBot::setLimits(const int axis, const double min, const double max)
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::getTrajTime(double *t) {
-    return false;
+    *t = duration;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::setTrajTime(const double t) {
-    return false;
+    duration = t;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
