@@ -17,8 +17,8 @@
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-  sudo apt-get install cmake
-  sudo apt-get install cmake-curses-gui  # Needed for ccmake.
+sudo apt-get install cmake
+sudo apt-get install cmake-curses-gui  # Needed for ccmake.
 \endverbatim
 
 
@@ -27,9 +27,9 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-  sudo apt-get install build-essential libace-dev subversion
-  svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
-  cd yarp2; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
+sudo apt-get install build-essential libace-dev subversion
+svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
+cd yarp2; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
 \endverbatim
 
 For additional options use ccmake instead of cmake.
@@ -46,26 +46,26 @@ Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-  sudo add-apt-repository ppa:openrave/release
-  sudo apt-get update
-  sudo apt-get install openrave
+sudo add-apt-repository ppa:openrave/release
+sudo apt-get update
+sudo apt-get install openrave
 \endverbatim
 
 If nothing happens, it might not be available on your specific Ubuntu version. You can always compile from source:
 
 \verbatim
-  sudo apt-get install libboost-dev  libboost-date-time-dev libboost-thread-dev
-  sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev
-  sudo apt-get install libsoqt4-dev libcoin60-dev
-  sudo apt-get install collada-dom  # Optional collada support.
-  svn co https://openrave.svn.sourceforge.net/svnroot/openrave/tags/latest_stable openrave
-  cd openrave; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
+sudo apt-get install libboost-dev  libboost-date-time-dev libboost-thread-dev
+sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev
+sudo apt-get install libsoqt4-dev libcoin60-dev
+sudo apt-get install collada-dom  # Optional collada support.
+svn co https://openrave.svn.sourceforge.net/svnroot/openrave/tags/latest_stable openrave
+cd openrave; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
 \endverbatim
  
  For OpenRAVE to be found by CMake, it is useful to (change ''x.x'' for 2.6, 2.8, or your CMake version):
 
 \verbatim
-  sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
+sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
 \endverbatim
 
 
@@ -74,33 +74,33 @@ If nothing happens, it might not be available on your specific Ubuntu version. Y
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-  wget http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 
-  tar xvf 2.0.15.tar.bz2
-  cd eigen-eigen-2.0.15; mkdir build; cd build; cmake ..
-  sudo make install  # Does the job.
-  cd ../..
+wget http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 
+tar xvf 2.0.15.tar.bz2
+cd eigen-eigen-2.0.15; mkdir build; cd build; cmake ..
+sudo make install  # Does the job.
+cd ../..
 \endverbatim
 
 
  * @section install_kdl Install KDL (optional, needed for kinematics)
 
 \verbatim
-  wget http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz
-  tar xvf orocos-kdl-svn-src.tar.bz
+wget http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz
+tar xvf orocos-kdl-svn-src.tar.bz
 \endverbatim
 
 In "kdl/config" you'll find a file called "FindEigen2.cmake". Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path (something like /usr/share/cmake-2.x/Modules). This line would be something like (change the x to your cmake version): 
 
 \verbatim
-  sudo cp FindEigen2.cmake /usr/share/cmake-2.x/Modules
+sudo cp FindEigen2.cmake /usr/share/cmake-2.x/Modules
 \endverbatim
 
 Then you can:
 
 \verbatim
-  cd kdl; mkdir build; cd build
-  cmake ..; make -j3; sudo make install
-  cd ../..
+cd kdl; mkdir build; cd build
+cmake ..; make -j3; sudo make install
+cd ../..
 \endverbatim
 
 An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
@@ -111,11 +111,11 @@ An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line
 We'll do this from source to assure the CMake file is created.
 
 \verbatim
-  svn co https://code.ros.org/svn/opencv/trunk/opencv
-  cd opencv; mkdir build; cd build
-  cmake ..  # Make sure you see Video I/O: -- FFMPEG: YES
-  make -j3; sudo make install
-  cd ../..
+svn co https://code.ros.org/svn/opencv/trunk/opencv
+cd opencv; mkdir build; cd build
+cmake ..  # Make sure you see Video I/O: -- FFMPEG: YES
+make -j3; sudo make install
+cd ../..
 \endverbatim
 
  * @section install_asibot Download, Configure, Compile and Install the ASIBOT software
@@ -123,7 +123,7 @@ We'll do this from source to assure the CMake file is created.
  * @subsection download_asibot Download the ASIBOT software from the repository
 
 \verbatim
-  svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
+svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
 \endverbatim
 
  * @subsection configure_asibot Configure the ASIBOT software
@@ -137,7 +137,7 @@ Set the ASIBOT_ROOT environment variable to ''asibot''. There are two ways of do
 Now let's configure which modules we want to enable:
 
 \verbatim
-  cd asibot/main; mkdir build; cd build; ccmake ..
+cd asibot/main; mkdir build; cd build; ccmake ..
 \endverbatim
 
 Press 'c' to refresh the cache. A set of options should be available. The following is a set of the most important ones.
@@ -153,8 +153,8 @@ Once you have selected your options, press 'c' 'c' and 'g' to generate the compi
 Finally compile with:
 
 \verbatim
-  make
-  make install_applications  # no permissions required.
+make
+make install_applications  # In-project install: No super-user permissions are required.
 \endverbatim
 
 
@@ -166,21 +166,25 @@ It is highly recommended to set the ASIBOT_DIR environment variable to ''$ASIBOT
 
 <hr>
 
+<B>Project Organization</B>
+
 The project is organized in such a way that you will find:
 
- The '''executables''' in $ASIBOT_DIR/bin --> will be empty upon basic installation
+ The ''executables'' in $ASIBOT_DIR/bin --> Will be empty upon basic installation
 
- The '''shared files''' in $ASIBOT_DIR/share --> models, config files
+ The ''libraries'' in $ASIBOT_DIR/lib
 
- The '''libraries''' in $ASIBOT_DIR/lib
+ The ''shared files'' in $ASIBOT_ROOT/app --> Models, config files
 
 <hr>
 
-For using SWIG and therefore Python, Java (-> Matlab), etc... bindings
+<B>Multi-language Support Wrappers</B>
 
-To achieve this, (for now) you must export ASIBOT to YARP. This can be done by basically:
+For using SWIG and therefore Python, Java (-> Matlab), etc... bindings, (for now) you must export ASIBOT to YARP. This can be done by basically:
 
- cp ~/asibot/examples/exportable/ExternalModules.cmake.template ~/yarp2/conf/ExternalModules.cmake
+\verbatim
+cp ~/asibot/examples/exportable/ExternalModules.cmake.template ${YARP_ROOT}/conf/ExternalModules.cmake
+\endverbatim
 
 And recompiling YARP with the ASIBOT devices you need.
 

@@ -47,7 +47,7 @@ using namespace KDL;
  * <b>Installation</b>
  *
  * The plugin is compiled when ENABLE_rlPlugins_cartesianbot is activated (not default). For further
- * installation steps refer to <a href="pages.html">your own system installation guidelines</a>.
+ * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  */
 class CartesianBot : public DeviceDriver, public RateThread, public ICartesianControl {
