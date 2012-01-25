@@ -1,8 +1,8 @@
 /**
-  * \mainpage <a href="http://roboticslab.sourceforge.net"><B>Robotics Lab @ SourceForge.net</B></a> - The ASIBOT Software Repository documentation 
+  * \mainpage <a class="el" href="http://roboticslab.sourceforge.net">Robotics Lab @ SourceForge.net</a> - The ASIBOT Software Repository documentation 
 
 \image html asibotmix.jpg
-<center> <a href="http://roboticslab.uc3m.es/roboticslab/robot.php?id_robot=3" target="_blank"> Read more about ASIBOT</a> </center>
+<center> <a href="http://roboticslab.uc3m.es/roboticslab/robot.php?id_robot=3" target="_blank">Read more about ASIBOT</a> </center>
 
 Welcome to the ASIBOT Software Repository documentation.
 
