@@ -47,18 +47,11 @@ bool CartesianBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vect
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
-    printf("[cmc_kdl] Begin absolute base movement.\n");
-    double grabValues[NUM_MOTORS];
-    if(!enc->getEncoders(grabValues)) {
-        printf("[warning] CartesianBot::goToPose() failed to getEncoders()\n");
-        return false;
-    }
-    for (int i=0; i<NUM_MOTORS; i++)
-        realRad(i)=toRad(grabValues[i]);
-//    vel->setVelocityMode();
-//    pFksolver->JntToCart(real_rad,real_cartpos);
-
-/*    target_cartpos.p.x(xd[0]);
+    printf("[CartesianBot] Begin absolute base movement.\n");
+    yarp::sig::Vector x,o;
+    getPose(x,o);
+    
+    target_cartpos.p.x(xd[0]);
     target_cartpos.p.y(xd[1]);
     target_cartpos.p.z(xd[2]);
     KDL::Vector rotvec(od[0],od[1],od[2]);
@@ -67,7 +60,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     KDL::Path_Line testPathLine(real_cartpos, target_cartpos, _orient, _eqradius, _aggregate);
     //KDL::VelocityProfile_Rectangular::VelocityProfile_Rectangular(double _maxvel = 0)
     double _maxVel = 0.2; //0.1; //?
-    double  maxAcc = 0.2; //0.1; //?
+    double maxAcc = 0.2; //0.1; //?
     //KDL::VelocityProfile_Rectangular testVelocityProfile(_maxVel);
     KDL::VelocityProfile_Trap testVelocityProfile(_maxVel, maxAcc);
     //Trajectory_Segment (Path *_geom, VelocityProfile *_motprof, double duration, bool _aggregate=true)
@@ -77,12 +70,10 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     currentTrajectory = testTrajectory.Clone();
     // Set the status
     currentTime = 0;
-*/
-    // Set the status
-
+    vel->setVelocityMode();
     cmc_status=1;
 
-    printf("[cmc_kdl] End absolute base movement.\n");
+    printf("[CartesianBot] End absolute base movement.\n");
     return true;
 }
 
