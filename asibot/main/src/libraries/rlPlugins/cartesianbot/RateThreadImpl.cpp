@@ -13,12 +13,12 @@ bool CartesianBot::threadInit() {
 // -----------------------------------------------------------------------------
 
 void CartesianBot::run() {
-/*    if (cmc_status>0) {  // If it is movement
+    if (cmc_status>0) {  // If it is movement
         double grabValues[NUM_MOTORS];
         if(!enc->getEncoders(grabValues))
             printf("[warning] CartesianBot::run() failed to getEncoders()\n");
         for (int i=0; i<NUM_MOTORS; i++)
-            real_rad(i)=toRad(grabValues[i]);
+            realRad(i)=toRad(grabValues[i]);
 //        pFksolver->JntToCart(real_rad,real_cartpos);
         bool done = false;
         checkMotionDone(&done);
@@ -29,14 +29,12 @@ void CartesianBot::run() {
             cmc_status=0;
         } else {
             //printf("Inside control loop moving.\n");
-            //   Twist axis_vel;
             Twist T_desired = currentTrajectory->Vel(currentTime);
             Frame F_desired = currentTrajectory->Pos(currentTime);
             Twist T_current = diff(real_cartpos, F_desired);
             for (unsigned int i=0; i<6; i++) {
                 T_current(i) *= GAIN;
                 T_current(i) += T_desired(i);
-                //T_current(i) += T_other(i);
             }
             JntArray joint_vel(5);  // in radians
 //            ChainIkSolverVel_pinv iksolverv_pinv(theChain);
@@ -58,7 +56,7 @@ void CartesianBot::run() {
         }
     } else {  // If it is stopped or breaked, reamain unchanged
 //j//        printf("Inside control loop stopped.\n");
-    }*/
+    }
 }
 
 // -----------------------------------------------------------------------------

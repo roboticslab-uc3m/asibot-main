@@ -32,6 +32,8 @@
 #define CARTPOS_PRECISION 0.005  /// Meter 0.0005
 #define CARTORI_PRECISION 0.5  /// Degrees
 #define DEFAULT_DURATION 3  /// For Trajectory, 3s?
+#define DEFAULT_MAXVEL 0.2  /// 0.1?
+#define DEFAULT_MAXACC 0.2  /// 0.1?
 #define TIMEINCREMENT 0.03  /// For Trajectory, 50ms?
 #define GAIN 75  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
@@ -568,7 +570,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 //  Trajectory_Segment currentTrajectory;
     Trajectory* currentTrajectory;
     double currentTime;
-    double duration;
+    double duration, maxVel, maxAcc;
 
 };
 

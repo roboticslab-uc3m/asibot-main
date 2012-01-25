@@ -31,6 +31,8 @@ bool CartesianBot::open(Searchable& config) {
     _eqradius = 1; //0.000001;
     _aggregate = false;
     duration = DEFAULT_DURATION;
+    maxVel = DEFAULT_MAXVEL;
+    maxAcc = DEFAULT_MAXACC;
     currentTime = 0;
 
     Property options;
