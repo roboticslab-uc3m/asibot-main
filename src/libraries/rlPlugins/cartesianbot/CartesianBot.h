@@ -1,5 +1,8 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#ifndef __CARTESIANBOT_H__
+#define __CARTESIANBOT_H__
+
 #include <yarp/os/all.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 #include <yarp/dev/Drivers.h>
@@ -37,7 +40,7 @@ using namespace yarp::os;
 using namespace yarp::dev;
 using namespace KDL;
 
-/*
+/**
  *
  * @ingroup CartesianBot
  *
@@ -569,4 +572,5 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 
 };
 
+#endif
 
