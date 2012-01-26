@@ -6,7 +6,7 @@
 // ------------------- RateThread Related ------------------------------------
 
 bool CartesianBot::threadInit() {
-    printf("threadInit(): ok\n");
+    printf("[success] threadInit(): Started %f ms ratethread\n",getRate());
     return true;
 }
 
@@ -14,20 +14,16 @@ bool CartesianBot::threadInit() {
 
 void CartesianBot::run() {
     if (cmc_status>0) {  // If it is movement
-        double grabValues[NUM_MOTORS];
-        if(!enc->getEncoders(grabValues))
-            printf("[warning] CartesianBot::run() failed to getEncoders()\n");
-        for (int i=0; i<NUM_MOTORS; i++)
-            realRad(i)=toRad(grabValues[i]);
-//        pFksolver->JntToCart(real_rad,real_cartpos);
+        yarp::sig::Vector x,o;
+        getPose(x,o);
         bool done = false;
         checkMotionDone(&done);
         if (done) {
             printf("Target reached\n");
-            currentTime = 0;
+            startTime = 0;
             pos->setPositionMode();
             cmc_status=0;
-        } else {
+        }/* else {
             //printf("Inside control loop moving.\n");
             Twist T_desired = currentTrajectory->Vel(currentTime);
             Frame F_desired = currentTrajectory->Pos(currentTime);
@@ -53,7 +49,7 @@ void CartesianBot::run() {
             if(!vel->velocityMove(cmc_qdot))
                 printf("[warning] CartesianBot::run() failed to velocityMove()\n");
             currentTime = currentTime + TIMEINCREMENT;
-        }
+        }*/
     } else {  // If it is stopped or breaked, reamain unchanged
 //j//        printf("Inside control loop stopped.\n");
     }
