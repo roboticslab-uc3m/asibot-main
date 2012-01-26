@@ -25,15 +25,11 @@ bool CartesianBot::open(Searchable& config) {
 
     realRad = JntArray(5);
 
-    vgeneral = 100;
     cmc_status = 0;
-    _orient = new RotationalInterpolation_SingleAxis();
-    _eqradius = 1; //0.000001;
-    _aggregate = false;
+    startTime = 0;
     duration = DEFAULT_DURATION;
     maxVel = DEFAULT_MAXVEL;
     maxAcc = DEFAULT_MAXACC;
-    currentTime = 0;
 
     Property options;
 /////// UNCOMMENT NEXT 3 LINES FOR USING RAVEBOT AS A LIBRARY AND OPENING FOR REMOTE ////////
@@ -67,18 +63,13 @@ bool CartesianBot::open(Searchable& config) {
     int period = config.check("rate",30,"ms ratethread").asInt();
     this->setRate(period);
     this->start();
-    printf("[success] Started %d ms ratethread\n",period);
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::close() {
-    delete _orient;
-    _orient = 0;
-//    delete pFksolver;
-//    pFksolver = 0;
-    printf("Cleaned heap.\n");
+    // printf("Cleaned heap.\n");
     return true;
 }
 

@@ -23,6 +23,8 @@
 #include <kdl/velocityprofile_trap.hpp>
 #include <kdl/trajectory_segment.hpp>
 
+#include "TrajGen.h"
+
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
 
@@ -34,7 +36,6 @@
 #define DEFAULT_DURATION 3  /// For Trajectory, 3s?
 #define DEFAULT_MAXVEL 0.2  /// 0.1?
 #define DEFAULT_MAXACC 0.2  /// 0.1?
-#define TIMEINCREMENT 0.03  /// For Trajectory, 50ms?
 #define GAIN 75  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 //using namespace std;
@@ -559,17 +560,14 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     int cmc_status;
     bool withOri;
 
-    double A0, A1, A2, A3;  // link lengths
+    OrderThreeTraj trajX, trajY, trajZ;
+    OrderThreeTraj trajPitchP, trajRollP;
     Frame real_cartpos;
     Frame target_cartpos;
     JntArray realRad;  // current radians
-    double vgeneral;
-    RotationalInterpolation_SingleAxis* _orient;
-    double _eqradius;
-    bool _aggregate;
-//  Trajectory_Segment currentTrajectory;
-    Trajectory* currentTrajectory;
-    double currentTime;
+
+    double A0, A1, A2, A3;  // link lengths
+    double startTime;
     double duration, maxVel, maxAcc;
 
 };
