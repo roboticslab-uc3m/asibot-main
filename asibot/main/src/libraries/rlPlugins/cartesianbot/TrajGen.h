@@ -23,12 +23,15 @@ class OrderThreeTraj {
         a2 = (xf-xi-xdi*T)/(T*T) - a3*T;
     }
     double get(const double ti) {
+        if (ti>T) return a3*T*T*T + a2*T*T + a1*T + a0;  // Security hack
         return a3*ti*ti*ti + a2*ti*ti + a1*ti + a0;
     }
     double getd(const double ti) {
+        if (ti>T) return 3*a3*T*T + 2*a2*T + a1;  // Security hack
         return 3*a3*ti*ti + 2*a2*ti + a1;
     }
     double getdd(const double ti) { 
+        if (ti>T) return 6*a3*T + 2*a2;  // Security hack
         return 6*a3*ti + 2*a2;
     }
     bool maxVelBelow(const double thresVel) { 
@@ -36,6 +39,9 @@ class OrderThreeTraj {
     }
     bool maxAccBelow(const double thresAcc) { 
         return (getdd(T/2)<thresAcc);
+    }
+    double getT() {
+        return T;
     }
   private:
     double a3,a2,a1,a0,T;
