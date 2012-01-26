@@ -10,6 +10,7 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/sig/all.h>
 #include <yarp/math/Math.h>
+#include <yarp/math/SVD.h>
 
 #include <kdl/chain.hpp>
 #include <kdl/chainfksolver.hpp>
@@ -563,8 +564,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     int cmc_status;
     bool withOri;
 
-    OrderThreeTraj trajX, trajY, trajZ;
-    OrderThreeTraj trajPitchP, trajRollP;
+    OrderThreeTraj trajoz, trajXP, trajZP, trajPitchP, trajRollP;
     KDL::Frame real_cartpos;
     KDL::Frame target_cartpos;
     KDL::JntArray realRad;  // current radians
