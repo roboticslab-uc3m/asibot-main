@@ -47,28 +47,20 @@ bool CartesianBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vect
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
-    printf("[CartesianBot] Begin absolute base movement.\n");
+    printf("[CartesianBot] Begin setting absolute base movement.\n");
     yarp::sig::Vector x,o;
     getPose(x,o);
-    
-    target_cartpos.p.x(xd[0]);
-    target_cartpos.p.y(xd[1]);
-    target_cartpos.p.z(xd[2]);
-    target_cartpos.M = Rotation::EulerZYZ(atan2(xd[1],xd[0]),toRad(od[0]),toRad(od[1]));
-
-    KDL::Path_Line testPathLine(real_cartpos, target_cartpos, _orient, _eqradius, _aggregate);
-    KDL::VelocityProfile_Trap testVelocityProfile(maxVel, maxAcc);
-    //Trajectory_Segment (Path *_geom, VelocityProfile *_motprof, double duration, bool _aggregate=true)
-    KDL::Trajectory_Segment testTrajectory(testPathLine.Clone(), testVelocityProfile.Clone(), duration, _aggregate);
-    //currentTrajectory = KDL::Trajectory_Segment(testPathLine.Clone(), testVelocityProfile.Clone(), DURATION, _aggregate);
-    //delete currentTrajectory;
-    currentTrajectory = testTrajectory.Clone();
-    // Set the status
-    currentTime = 0;
+    double trajT=duration;
+    if (t>0) trajT = t;
+    trajX.configure(x[0],xd[0],trajT);
+    trajY.configure(x[1],xd[1],trajT);
+    trajZ.configure(x[2],xd[2],trajT);
+    trajPitchP.configure(o[0],od[0],trajT);
+    trajRollP.configure(o[1],od[1],trajT);
+    startTime = Time::now();
     vel->setVelocityMode();
     cmc_status=1;
-
-    printf("[CartesianBot] End absolute base movement.\n");
+    printf("[CartesianBot] End setting absolute base movement.\n");
     return true;
 }
 
@@ -132,9 +124,6 @@ bool CartesianBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vect
 //    xdhat[0] = ;
     odhat.resize(2);
 //    odhat[0] = ;
-    return true;
-
-
     return true;
 }
 
