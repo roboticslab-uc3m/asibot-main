@@ -9,6 +9,7 @@
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/sig/all.h>
+#include <yarp/math/Math.h>
 
 #include <kdl/chain.hpp>
 #include <kdl/chainfksolver.hpp>
@@ -41,7 +42,9 @@
 //using namespace std;
 using namespace yarp::os;
 using namespace yarp::dev;
-using namespace KDL;
+using namespace yarp::math;
+////using namespace yarp::sig;
+//using namespace KDL;
 
 /**
  *
@@ -562,9 +565,9 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 
     OrderThreeTraj trajX, trajY, trajZ;
     OrderThreeTraj trajPitchP, trajRollP;
-    Frame real_cartpos;
-    Frame target_cartpos;
-    JntArray realRad;  // current radians
+    KDL::Frame real_cartpos;
+    KDL::Frame target_cartpos;
+    KDL::JntArray realRad;  // current radians
 
     double A0, A1, A2, A3;  // link lengths
     double startTime;
