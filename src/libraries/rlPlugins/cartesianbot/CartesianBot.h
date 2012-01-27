@@ -565,6 +565,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     bool withOri;
 
     OrderThreeTraj trajoz, trajXP, trajZP, trajPitchP, trajRollP;
+    yarp::sig::Vector targetX,targetO;
     KDL::Frame real_cartpos;
     KDL::Frame target_cartpos;
     KDL::JntArray realRad;  // current radians

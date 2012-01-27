@@ -48,6 +48,11 @@ bool CartesianBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vect
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
     printf("[CartesianBot] Begin setting absolute base movement.\n");
+    targetX[0]=xd[0];
+    targetX[1]=xd[1];
+    targetX[2]=xd[2];
+    targetO[0]=od[0];
+    targetO[1]=od[1];
     yarp::sig::Vector x,o;
     getPose(x,o);
     double trajT=duration;
