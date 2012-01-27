@@ -14,6 +14,10 @@ bool RaveBot::setVelocityMode() {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::velocityMove(int j, double sp) {
+    if(modePosVel!=1) {
+        printf("RaveBot: Not in velocity mode.\n");
+        return false;
+    }
     if(sp>0) target_degrees[j]=180.0; // Must correct for JL
     else target_degrees[j]=-180.0;
     if (sp>100) sp=100;
@@ -28,6 +32,10 @@ bool RaveBot::velocityMove(int j, double sp) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::velocityMove(const double *sp) {
+    if(modePosVel!=1) {
+        printf("RaveBot: Not in velocity mode.\n");
+        return false;
+    }
     double sp_limited[NUM_MOTORS];
     for (unsigned int i=0; i<NUM_MOTORS; i++) {
       if(sp[i]>0) target_degrees[i]=180.0; // Must correct for JL

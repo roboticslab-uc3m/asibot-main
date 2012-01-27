@@ -24,6 +24,8 @@ bool CartesianBot::open(Searchable& config) {
     printf("Using A0:%f, A1:%f, A2:%f, A3:%f.\n",A0,A1,A2,A3);
 
     realRad = KDL::JntArray(5);
+    targetX.resize(3);
+    targetO.resize(2);
 
     cmc_status = 0;
     startTime = 0;
