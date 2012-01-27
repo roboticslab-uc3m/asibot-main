@@ -35,10 +35,10 @@
 #define NUM_MOTORS 5
 #define CARTPOS_PRECISION 0.005  /// Meter 0.0005
 #define CARTORI_PRECISION 0.5  /// Degrees
-#define DEFAULT_DURATION 3  /// For Trajectory, 3s?
+#define DEFAULT_DURATION 20  /// For Trajectory, 3s?
 #define DEFAULT_MAXVEL 0.2  /// 0.1?
 #define DEFAULT_MAXACC 0.2  /// 0.1?
-#define GAIN 75  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
+#define GAIN 5  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 //using namespace std;
 using namespace yarp::os;
