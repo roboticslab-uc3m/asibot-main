@@ -64,12 +64,14 @@ void CartesianBot::run() {
             t = Ja_pinv * lawxP;
             double q_dot[NUM_MOTORS];
             double eoz = trajoz.get(startTime-currentTime) - grabValues[0];
-            q_dot[0] = trajoz.getd(startTime-currentTime) + GAIN*eoz;  // lawRollP
+            q_dot[0] = trajoz.getd(startTime-currentTime) + GAIN*eoz;  // lawoz
             q_dot[1] = t[0];
             q_dot[2] = t[1];
             q_dot[3] = t[2];
             double eRollP = trajRollP.get(startTime-currentTime) - grabValues[4];
             q_dot[4] = trajRollP.getd(startTime-currentTime) + GAIN*eRollP;  // lawRollP
+            if(!vel->velocityMove(q_dot))
+                printf("GIGANTIC velocity WARNING\n");
         }
     } else {  // If it is stopped or breaked, reamain unchanged
         // printf("Inside control loop stopped.\n");
