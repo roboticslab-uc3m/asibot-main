@@ -16,8 +16,10 @@ void CartesianBot::run() {
     if (cmc_status>0) {  // If it is movement
         yarp::sig::Vector x,o;
         getPose(x,o);
-        bool done = false;
-        checkMotionDone(&done);
+        bool done = true;
+        if(fabs(x[0]-targetX[0])<CARTPOS_PRECISION) done = false;
+        if(fabs(x[1]-targetX[1])<CARTPOS_PRECISION) done = false;
+        if(fabs(x[2]-targetX[2])<CARTPOS_PRECISION) done = false;
         if (done) {
             printf("Target reached\n");
             startTime = 0;
@@ -33,7 +35,12 @@ void CartesianBot::run() {
             //printf("Problem statement:\n");
             //printf("oz: %f\nxP: %f\nzP: %f\n",toDeg(ozRad),xP[0],xP[1]);
             double currentTime = Time::now();
-            if((currentTime-startTime)>trajXP.getT()) printf ("[warning] out of time\n");
+            if((currentTime-startTime)>trajXP.getT()){
+                printf ("[warning] out of time\n");
+                startTime = 0;
+                pos->setPositionMode();
+                cmc_status=0;
+            }
             xdP.push_back(trajXP.get(startTime-currentTime));
             xdP.push_back(trajZP.get(startTime-currentTime));
             xdP.push_back(trajPitchP.get(startTime-currentTime));
