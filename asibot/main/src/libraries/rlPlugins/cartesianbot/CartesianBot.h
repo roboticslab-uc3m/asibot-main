@@ -566,9 +566,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 
     OrderThreeTraj trajoz, trajXP, trajZP, trajPitchP, trajRollP;
     yarp::sig::Vector targetX,targetO;
-    KDL::Frame real_cartpos;
-    KDL::Frame target_cartpos;
-    KDL::JntArray realRad;  // current radians
+    yarp::sig::Vector realRad;  // current radians
 
     double A0, A1, A2, A3;  // link lengths
     double startTime;
