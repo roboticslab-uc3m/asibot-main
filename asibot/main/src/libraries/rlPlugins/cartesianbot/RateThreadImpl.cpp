@@ -20,8 +20,8 @@ void CartesianBot::run() {
         if(fabs(x[0]-targetX[0])>CARTPOS_PRECISION) done = false;
         if(fabs(x[1]-targetX[1])>CARTPOS_PRECISION) done = false;
         if(fabs(x[2]-targetX[2])>CARTPOS_PRECISION) done = false;
-        //if(fabs(o[0]-targetO[0])>CARTORI_PRECISION) done = false;
-        //if(fabs(o[1]-targetO[1])>CARTORI_PRECISION) done = false;
+        if(fabs(o[0]-targetO[0])>CARTORI_PRECISION) done = false;
+        if(fabs(o[1]-targetO[1])>CARTORI_PRECISION) done = false;
         if (done) {
             printf("Target reached\n");
             startTime = 0;
@@ -57,7 +57,7 @@ void CartesianBot::run() {
             double grabValues[NUM_MOTORS];
             if(!enc->getEncoders(grabValues)) printf("[warning] CartesianBot::getPose() failed to getEncoders()\n");
             for (int i=0; i<NUM_MOTORS; i++)
-                realRad(i)=toRad(grabValues[i]);
+                realRad[i]=toRad(grabValues[i]);
             Ja(0,0) = A2*cos(realRad(1)+realRad(2)) + A1*cos(realRad(1)) + A3*cos(realRad(1)+realRad(2)+realRad(3));
             Ja(0,1) = A2*cos(realRad(1)+realRad(2)) + A3*cos(realRad(1) + realRad(2) + realRad(3));
             Ja(0,2) = A3*cos(realRad(1)+realRad(2) + realRad(3));
@@ -74,9 +74,9 @@ void CartesianBot::run() {
             double q_dot[NUM_MOTORS];
             double eoz = trajoz.get(startTime-currentTime) - grabValues[0];
             q_dot[0] = trajoz.getd(startTime-currentTime) + GAIN*eoz;  // lawoz
-            q_dot[1] = t[0];
-            q_dot[2] = t[1];
-            q_dot[3] = t[2];
+            q_dot[1] = toDeg(t[0]);
+            q_dot[2] = toDeg(t[1]);
+            q_dot[3] = toDeg(t[2]);
             double eRollP = trajRollP.get(startTime-currentTime) - grabValues[4];
             q_dot[4] = trajRollP.getd(startTime-currentTime) + GAIN*eRollP;  // lawRollP
             if(!vel->velocityMove(q_dot))
