@@ -108,7 +108,7 @@ bool CartesianBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vect
     double oydP = od[0];
     printf("Problem statement:\n");
     printf("odz: %f\nxdP: %f\nzdP: %f\n",toDeg(odzRad),xdP,zdP);
-    // t1=qdhat[1],t1=qdhat[2],t1=qdhat[3]
+    // t1=qdhat[1],t2=qdhat[2],t3=qdhat[3]
     double pWx = xdP - A3*sin(toRad(oydP));
     double pWz = zdP - A3*cos(toRad(oydP));
     double ct2 = (pow(pWx,2) + pow(pWz,2) - A1*A1 - A2*A2)/(2*A1*A2);
@@ -254,7 +254,7 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
 
 bool CartesianBot::checkMotionDone(bool *f) {
     bool tmpf = false;
-    if(cmc_status==0) tmpf = true;
+    if(cmc_status<=0) tmpf = true;
 /*    if (fabs((real_cartpos.p.data[0])-(target_cartpos.p.data[0]))>CARTPOS_PRECISION) tmpf = false;
     if (fabs((real_cartpos.p.data[1])-(target_cartpos.p.data[1]))>CARTPOS_PRECISION) tmpf = false;
     if (fabs((real_cartpos.p.data[2])-(target_cartpos.p.data[2]))>CARTPOS_PRECISION) tmpf = false;
