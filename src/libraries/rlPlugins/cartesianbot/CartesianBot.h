@@ -33,7 +33,7 @@
 #define THREAD_RATE_INIT 20  // In ms, unmeaningful as ALWAYS gets overwritten by RF
 
 #define NUM_MOTORS 5
-#define CARTPOS_PRECISION 0.005  /// Meter 0.0005
+#define CARTPOS_PRECISION 0.01  /// Meter 0.0005
 #define CARTORI_PRECISION 0.5  /// Degrees
 #define DEFAULT_DURATION 20  /// For Trajectory, 3s?
 #define DEFAULT_MAXVEL 0.2  /// 0.1?
