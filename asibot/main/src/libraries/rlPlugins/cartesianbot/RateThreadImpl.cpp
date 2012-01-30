@@ -17,9 +17,11 @@ void CartesianBot::run() {
         yarp::sig::Vector x,o;
         getPose(x,o);
         bool done = true;
-        if(fabs(x[0]-targetX[0])<CARTPOS_PRECISION) done = false;
-        if(fabs(x[1]-targetX[1])<CARTPOS_PRECISION) done = false;
-        if(fabs(x[2]-targetX[2])<CARTPOS_PRECISION) done = false;
+        if(fabs(x[0]-targetX[0])>CARTPOS_PRECISION) done = false;
+        if(fabs(x[1]-targetX[1])>CARTPOS_PRECISION) done = false;
+        if(fabs(x[2]-targetX[2])>CARTPOS_PRECISION) done = false;
+        //if(fabs(o[0]-targetO[0])>CARTORI_PRECISION) done = false;
+        //if(fabs(o[1]-targetO[1])>CARTORI_PRECISION) done = false;
         if (done) {
             printf("Target reached\n");
             startTime = 0;
