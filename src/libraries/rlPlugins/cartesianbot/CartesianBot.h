@@ -38,7 +38,7 @@
 #define DEFAULT_DURATION 20  /// For Trajectory, 3s?
 #define DEFAULT_MAXVEL 0.2  /// 0.1?
 #define DEFAULT_MAXACC 0.2  /// 0.1?
-#define GAIN 1  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
+#define GAIN 75  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 //using namespace std;
 using namespace yarp::os;
@@ -65,8 +65,20 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
   // Set the Thread Rate in the class constructor
   CartesianBot() : RateThread(THREAD_RATE_INIT) {}  // In ms
 
-// --tmp stuff in HelperFuncs.cpp--
+// -- Helper Funcion declarations. Implementation in HelperFuncs.cpp--
+
+    /**
+    * Simple function to pass from degrees to radians. 
+    * @param value in degrees.
+    * @return value in radians.
+    */
     double toRad(const double inDeg);
+
+    /**
+    * Simple function to pass from radians to degrees.
+    * @param value in radians.
+    * @return value in degrees.
+    */
     double toDeg(const double inRad);
 
 // ------- ICartesianControl declarations. Implementation in ICartesianImpl.cpp -------
