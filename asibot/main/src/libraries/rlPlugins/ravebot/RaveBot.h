@@ -16,10 +16,10 @@
 #include <sstream>
 
 #define NUM_MOTORS 5
-#define THREAD_RATE 0.5  // In miliseconds. Was 0.5
+#define THREAD_RATE 20  // In miliseconds. Was 0.5
 #define MOTOR_PRECISION 0.25  // In degrees. Was .75
 #define SPEED_ADJ 0.2  // Speed adjustment for simulation, pos.
-#define SPEED_ADJ_V 1  // Speed adjustment for simulation, vel.
+//#define SPEED_ADJ_V 1  // Speed adjustment for simulation, vel.
 #define NEG_LIM -135.0
 #define POS_LIM 135.0
 #define NEG_LIM_EXT -180.0
@@ -352,7 +352,8 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   double real_degrees[NUM_MOTORS];
   double target_degrees[NUM_MOTORS];
   double joint_vel[NUM_MOTORS];
-  double gvels[NUM_MOTORS];
+  double refSpeed[NUM_MOTORS];
+  double refAcc[NUM_MOTORS];
   // Tool-related
   double real_tool;
   toolPort theToolPort;  
