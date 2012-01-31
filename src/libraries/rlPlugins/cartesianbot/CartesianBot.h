@@ -69,15 +69,15 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 
     /**
     * Simple function to pass from degrees to radians. 
-    * @param value in degrees.
-    * @return value in radians.
+    * @param inDeg angle value in degrees.
+    * @return angle value in radians.
     */
     double toRad(const double inDeg);
 
     /**
     * Simple function to pass from radians to degrees.
-    * @param value in radians.
-    * @return value in degrees.
+    * @param inRad angle value in radians.
+    * @return angle value in degrees.
     */
     double toDeg(const double inRad);
 

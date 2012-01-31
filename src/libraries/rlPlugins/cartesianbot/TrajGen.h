@@ -38,7 +38,7 @@ class OrderThreeTraj {
     }
 
     /**
-    * Return the value of the function at instant ti.
+    * @return the value of the function at instant ti.
     */
     double get(const double ti) {
         if (ti>T) return a3*T*T*T + a2*T*T + a1*T + a0;  // Security hack
@@ -46,7 +46,7 @@ class OrderThreeTraj {
     }
 
     /**
-    * Return the value of the first derivative of the function at instant ti.
+    * @return the value of the first derivative of the function at instant ti.
     */
     double getd(const double ti) {
         if (ti>T) return 3*a3*T*T + 2*a2*T + a1;  // Security hack
@@ -54,7 +54,7 @@ class OrderThreeTraj {
     }
 
     /**
-    * Return the value of the second derivative of the function at instant ti.
+    * @return the value of the second derivative of the function at instant ti.
     */
     double getdd(const double ti) { 
         if (ti>T) return 6*a3*T + 2*a2;  // Security hack
