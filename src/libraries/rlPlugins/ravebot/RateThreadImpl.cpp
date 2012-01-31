@@ -22,7 +22,7 @@ void RaveBot::run() {
           joint_vel[motor]=0;
         // Here we should check for joint limits
         } else {
-          real_degrees[motor]+=joint_vel[motor];
+          real_degrees[motor]+=(joint_vel[motor])*(THREAD_RATE/1000.0);
         }
       }
       next_positions[motor]=float(real_degrees[motor]*MI_PI/180.0);
@@ -49,7 +49,7 @@ void RaveBot::run() {
 //    probot->SetJointValues(next_positions);  // More compatible with physics??
       probot->SetJointValues(next_positions);  // More compatible with physics??
     
-    penv->StepSimulation(THREAD_RATE/1000.0);  // Must be given in seconds
+    penv->StepSimulation(THREAD_RATE/1000.0);  // StepSimulation must be given in seconds
     if(cameraFound) {
         psensorbase->GetSensorData(pcamerasensordata);
         //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;

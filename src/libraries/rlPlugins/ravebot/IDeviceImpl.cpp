@@ -79,7 +79,8 @@ bool RaveBot::open(Searchable& config) {
       real_degrees[i]=0.0;
       joint_vel[i]=0.0;
       target_degrees[i]=0.0;
-      gvels[i]=100.0;
+      refSpeed[i]=20.0;
+      refAcc[i]=1.0;
     }
     modePosVel = 0;  // 0 = Pos; 1 = Vel.
 

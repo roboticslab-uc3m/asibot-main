@@ -18,23 +18,23 @@ bool CartesianBot::getTrackingMode(bool *f) {
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {  // interface is in [deg]
-    double grabValues[NUM_MOTORS];
-    if(!enc->getEncoders(grabValues)) {
+    double realDeg[NUM_MOTORS];
+    if(!enc->getEncoders(realDeg)) {
         printf("[warning] CartesianBot::getPose() failed to getEncoders()\n");
         return false;
     }
     for (int i=0; i<NUM_MOTORS; i++)
-        realRad(i)=toRad(grabValues[i]);
+        realRad[i]=toRad(realDeg[i]);
     double pxP = A1*sin(realRad(1))+A2*sin(realRad(1)+realRad(2))+A3*sin(realRad(1)+realRad(2)+realRad(3)); // P = prime
     double pzP = A0+A1*cos(realRad(1))+A2*cos(realRad(1)+realRad(2))+A3*cos(realRad(1)+realRad(2)+realRad(3));
-    double oyP = grabValues[1] + grabValues[2] + grabValues[3];  // [deg]
+    double oyP = realDeg[1] + realDeg[2] + realDeg[3];  // [deg]
     x.resize(3);
-    x[0] = pxP*cos(realRad(0));
-    x[1] = pxP*sin(realRad(0));
+    x[0] = pxP*cos(realRad[0]);
+    x[1] = pxP*sin(realRad[0]);
     x[2] = pzP;  // pz = pzP
     o.resize(2);
     o[0] = oyP; // = pitchP
-    o[1] = grabValues[4];  // = rollP
+    o[1] = realDeg[4];  // = rollP
     return true;
 }
 
@@ -57,12 +57,13 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     getPose(x,o);
     double trajT=duration;
     if (t>0) trajT = t;
-    trajoz.configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
-    trajXP.configure(sqrt(pow(x[0],2)+pow(x[1],2)),sqrt(pow(xd[0],2)+pow(xd[1],2)),trajT);
+    trajXP.configure(sqrt((x[0])*(x[0])+(x[1])*(x[1])),sqrt((xd[0])*(xd[0]))+((xd[1])*(xd[1])),trajT);
     trajZP.configure(x[2]-A0,xd[2]-A0,trajT);
     trajPitchP.configure(o[0],od[0],trajT);  // We set it in degrees
+    trajoz.configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
     trajRollP.configure(o[1],od[1],trajT);  // We set it in degrees
     startTime = Time::now();
+    withOri=true;
     vel->setVelocityMode();
     cmc_status=1;
     printf("[CartesianBot] End setting absolute base movement.\n");
@@ -255,15 +256,6 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
 bool CartesianBot::checkMotionDone(bool *f) {
     bool tmpf = false;
     if(cmc_status<=0) tmpf = true;
-/*    if (fabs((real_cartpos.p.data[0])-(target_cartpos.p.data[0]))>CARTPOS_PRECISION) tmpf = false;
-    if (fabs((real_cartpos.p.data[1])-(target_cartpos.p.data[1]))>CARTPOS_PRECISION) tmpf = false;
-    if (fabs((real_cartpos.p.data[2])-(target_cartpos.p.data[2]))>CARTPOS_PRECISION) tmpf = false;
-    double target_rpy[3] = {0,0,0};
-    double real_rpy[3] = {0,0,0};
-    real_cartpos.M.GetRPY(real_rpy[0],real_rpy[1],real_rpy[2]);
-    target_cartpos.M.GetRPY(target_rpy[0],target_rpy[1],target_rpy[2]);
-    if ((withOri)&&(fabs(toDeg(target_rpy[0])-toDeg(real_rpy[0]))>CARTORI_PRECISION)) tmpf = false;
-    if ((withOri)&&(fabs(toDeg(target_rpy[1])-toDeg(real_rpy[1]))>CARTORI_PRECISION)) tmpf = false;*/
     *f = tmpf;
     return true;
 }
