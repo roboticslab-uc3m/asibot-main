@@ -569,8 +569,8 @@ class webAsibot:
 
 ##################################### PRE-MAIN ################################
 import os.path
-shared_dir = os.path.join(os.environ['ASIBOT_DIR'],'app','webInterface')
-programs_dir = os.path.join(os.environ['ASIBOT_DIR'],'app','userPrograms')
+shared_dir = os.path.join(os.environ['ASIBOT_ROOT'],'app','webInterface')
+programs_dir = os.path.join(os.environ['ASIBOT_ROOT'],'app','userPrograms')
 interface_conf = os.path.join(shared_dir,'interface.conf')
 page_format = 'asibot'
 
