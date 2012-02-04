@@ -118,8 +118,8 @@ bool CartesianBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vect
     printf("prWd: %f, phWd:%f\n",prWd,phWd);
     double t2Rad = atan2(st2,ct2);
     double st1 = ((A1+A2*ct2)*prWd - A2*st2*phWd)/(phWd*phWd+prWd*prWd);
-//    double ct1 = ((A1+A2*ct2)*phWd - A2*st2*prWd)/(phWd*phWd+prWd*prWd);
-    double ct1 = (phWd+A2*st1*st2)/(A1+A2*ct2);
+    double ct1 = ((A1+A2*ct2)*phWd + A2*st2*prWd)/(phWd*phWd+prWd*prWd);
+    // double ct1 = (phWd+A2*st1*st2)/(A1+A2*ct2);  // Alternative method for same result
     double t1Rad = atan2(st1,ct1);
     qdhat.resize(5);
     qdhat[0] = toDeg(ozdRad);
