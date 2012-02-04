@@ -48,7 +48,7 @@ class OrderThreeTraj {
     /**
     * @return the value of the first derivative of the function at instant ti.
     */
-    double getd(const double ti) {
+    double getdot(const double ti) {
         if (ti>T) return 3*a3*T*T + 2*a2*T + a1;  // Security hack
         return 3*a3*ti*ti + 2*a2*ti + a1;
     }
@@ -56,7 +56,7 @@ class OrderThreeTraj {
     /**
     * @return the value of the second derivative of the function at instant ti.
     */
-    double getdd(const double ti) { 
+    double getdotdot(const double ti) { 
         if (ti>T) return 6*a3*T + 2*a2;  // Security hack
         return 6*a3*ti + 2*a2;
     }
@@ -65,14 +65,14 @@ class OrderThreeTraj {
     * Check if the maximum of the first derivative is below a certain threshold.
     */
     bool maxVelBelow(const double thresVel) { 
-        return (getd(T/2)<thresVel);
+        return (getdot(T/2)<thresVel);
     }
 
     /**
     * Check if the maximum of the second derivative is below a certain threshold.
     */
     bool maxAccBelow(const double thresAcc) { 
-        return (getdd(T/2)<thresAcc);
+        return (getdotdot(T/2)<thresAcc);
     }
 
     /**

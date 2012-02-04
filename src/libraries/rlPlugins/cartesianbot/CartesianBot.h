@@ -12,19 +12,6 @@
 #include <yarp/math/Math.h>
 #include <yarp/math/SVD.h>
 
-#include <kdl/chain.hpp>
-#include <kdl/chainfksolver.hpp>
-#include <kdl/chainiksolverpos_nr_jl.hpp>
-#include <kdl/chainfksolverpos_recursive.hpp>
-#include <kdl/chainiksolvervel_pinv.hpp>
-#include <kdl/frames_io.hpp>
-#include <kdl/frames.hpp>
-#include <kdl/path_line.hpp>
-#include <kdl/rotational_interpolation_sa.hpp>
-#include <kdl/velocityprofile_rect.hpp>
-#include <kdl/velocityprofile_trap.hpp>
-#include <kdl/trajectory_segment.hpp>
-
 #include "TrajGen.h"
 
 #include <iostream> // only windows
@@ -80,6 +67,12 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * @return angle value in degrees.
     */
     double toDeg(const double inRad);
+
+    /**
+    * Perform forward kinematics.
+    */
+    bool fwdKin(const double inDeg[NUM_MOTORS], yarp::sig::Vector &x, yarp::sig::Vector &o);
+
 
 // ------- ICartesianControl declarations. Implementation in ICartesianImpl.cpp -------
 
@@ -575,7 +568,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     int cmc_status;
     bool withOri;
 
-    OrderThreeTraj trajoz, trajXP, trajZP, trajPitchP, trajRollP;
+    OrderThreeTraj trajOz, trajPrP, trajPhP, trajOyP, trajOzPP;
     yarp::sig::Vector targetX,targetO;
     yarp::sig::Vector realRad;  // current radians
 
