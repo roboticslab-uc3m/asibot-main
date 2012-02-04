@@ -25,13 +25,13 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {  // int
     }
     for (int i=0; i<NUM_MOTORS; i++)
         realRad[i]=toRad(realDeg[i]);
-    double pxP = A1*sin(realRad(1))+A2*sin(realRad(1)+realRad(2))+A3*sin(realRad(1)+realRad(2)+realRad(3)); // P = prime
-    double pzP = A0+A1*cos(realRad(1))+A2*cos(realRad(1)+realRad(2))+A3*cos(realRad(1)+realRad(2)+realRad(3));
+    double prP = A1*sin(realRad[1])+A2*sin(realRad[1]+realRad[2])+A3*sin(realRad[1]+realRad[2]+realRad[3]); // P = prime
+    double phP = A1*cos(realRad[1])+A2*cos(realRad[1]+realRad[2])+A3*cos(realRad[1]+realRad[2]+realRad[3]);
     double oyP = realDeg[1] + realDeg[2] + realDeg[3];  // [deg]
     x.resize(3);
-    x[0] = pxP*cos(realRad[0]);
-    x[1] = pxP*sin(realRad[0]);
-    x[2] = pzP;  // pz = pzP
+    x[0] = prP*cos(realRad[0]);
+    x[1] = prP*sin(realRad[0]);
+    x[2] = phP+A0;  // pz = pzP
     o.resize(2);
     o[0] = oyP; // = pitchP
     o[1] = realDeg[4];  // = rollP
@@ -103,27 +103,29 @@ bool CartesianBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vect
                             yarp::sig::Vector &qdhat) {
     printf("Problem statement:\n");
     printf("xd: %s\nod: %s\n",xd.toString().c_str(),od.toString().c_str());
-    double odzRad = atan2(xd[1],xd[0]);
-    double xdP = sqrt(xd[0]*xd[0]+xd[1]*xd[1]);
-    double zdP = xd[2]-A0;
-    double oydP = od[0];
+    double ozdRad = atan2(xd[1],xd[0]);
+    double prPd = sqrt(xd[0]*xd[0]+xd[1]*xd[1]);
+    double phPd = xd[2]-A0;
+    double oyPd = od[0];
     printf("Problem statement:\n");
-    printf("odz: %f\nxdP: %f\nzdP: %f\n",toDeg(odzRad),xdP,zdP);
+    printf("ozd: %f\nprPd: %f\nphPd: %f\n",toDeg(ozdRad),prPd,phPd);
     // t1=qdhat[1],t2=qdhat[2],t3=qdhat[3]
-    double pWx = xdP - A3*sin(toRad(oydP));
-    double pWz = zdP - A3*cos(toRad(oydP));
-    double ct2 = (pow(pWx,2) + pow(pWz,2) - A1*A1 - A2*A2)/(2*A1*A2);
-    double st2 = sqrt(1-ct2);  // forces elbow-up in ASIBOT
-    //double st2 = -sqrt(1-ct2);  // forces elbow-down in ASIBOT
+    double prWd = prPd - A3*sin(toRad(oyPd));
+    double phWd = phPd - A3*cos(toRad(oyPd));
+    double ct2 = (prWd*prWd + phWd*phWd - A1*A1 - A2*A2)/(2*A1*A2);
+    double st2 = sqrt(1-ct2*ct2);  // forces elbow-up in ASIBOT
+    //double st2 = -sqrt(1-ct2*ct2);  // forces elbow-down in ASIBOT
+    printf("prWd: %f, phWd:%f\n",prWd,phWd);
     double t2Rad = atan2(st2,ct2);
-    double st1 = ((A1+A2*ct2)*pWx - A2*st2*pWz)/(pow(pWz,2)+pow(pWx,2));
-    double ct1 = ((A1+A2*ct2)*pWz - A2*st2*pWx)/(pow(pWz,2)+pow(pWx,2));
+    double st1 = ((A1+A2*ct2)*prWd - A2*st2*phWd)/(phWd*phWd+prWd*prWd);
+//    double ct1 = ((A1+A2*ct2)*phWd - A2*st2*prWd)/(phWd*phWd+prWd*prWd);
+    double ct1 = (phWd+A2*st1*st2)/(A1+A2*ct2);
     double t1Rad = atan2(st1,ct1);
     qdhat.resize(5);
-    qdhat[0] = toDeg(odzRad);
+    qdhat[0] = toDeg(ozdRad);
     qdhat[1] = toDeg(t1Rad);
     qdhat[2] = toDeg(t2Rad);
-    qdhat[3] = oydP - qdhat[1] - qdhat[2];
+    qdhat[3] = oyPd - qdhat[1] - qdhat[2];
     qdhat[4] = od[1];
 // Do the fwd kin for this and then:
     xdhat.resize(3);
