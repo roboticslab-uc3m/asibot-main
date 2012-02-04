@@ -23,19 +23,7 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {  // int
         printf("[warning] CartesianBot::getPose() failed to getEncoders()\n");
         return false;
     }
-    for (int i=0; i<NUM_MOTORS; i++)
-        realRad[i]=toRad(realDeg[i]);
-    double prP = A1*sin(realRad[1])+A2*sin(realRad[1]+realRad[2])+A3*sin(realRad[1]+realRad[2]+realRad[3]); // P = prime
-    double phP = A1*cos(realRad[1])+A2*cos(realRad[1]+realRad[2])+A3*cos(realRad[1]+realRad[2]+realRad[3]);
-    double oyP = realDeg[1] + realDeg[2] + realDeg[3];  // [deg]
-    x.resize(3);
-    x[0] = prP*cos(realRad[0]);
-    x[1] = prP*sin(realRad[0]);
-    x[2] = phP+A0;  // pz = pzP
-    o.resize(2);
-    o[0] = oyP; // = pitchP
-    o[1] = realDeg[4];  // = rollP
-    return true;
+    return fwdKin(realDeg,x,o);
 }
 
 // ----------------------------------------------------------------------------- 
@@ -57,11 +45,11 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     getPose(x,o);
     double trajT=duration;
     if (t>0) trajT = t;
-    trajXP.configure(sqrt((x[0])*(x[0])+(x[1])*(x[1])),sqrt((xd[0])*(xd[0]))+((xd[1])*(xd[1])),trajT);
-    trajZP.configure(x[2]-A0,xd[2]-A0,trajT);
-    trajPitchP.configure(o[0],od[0],trajT);  // We set it in degrees
-    trajoz.configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
-    trajRollP.configure(o[1],od[1],trajT);  // We set it in degrees
+    trajPrP.configure(sqrt((x[0])*(x[0])+(x[1])*(x[1])),sqrt((xd[0])*(xd[0]))+((xd[1])*(xd[1])),trajT);
+    trajPhP.configure(x[2]-A0,xd[2]-A0,trajT);
+    trajOyP.configure(o[0],od[0],trajT);  // We set it in degrees
+    trajOz.configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
+    trajOzPP.configure(o[1],od[1],trajT);  // We set it in degrees
     startTime = Time::now();
     withOri=true;
     vel->setVelocityMode();
@@ -126,7 +114,7 @@ bool CartesianBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vect
     qdhat[1] = toDeg(t1Rad);
     qdhat[2] = toDeg(t2Rad);
     qdhat[3] = oyPd - qdhat[1] - qdhat[2];
-    qdhat[4] = od[1];
+    qdhat[4] = od[1];  // ozPP
 // Do the fwd kin for this and then:
     xdhat.resize(3);
 //    xdhat[0] = ;
