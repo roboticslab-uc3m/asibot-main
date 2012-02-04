@@ -4,7 +4,7 @@
 #
 # @defgroup webInterface
 #
-# Serves a web interface using CherryPy to instanciate webAsibot.
+# Serves a Web Interface using CherryPy3 to instanciate webAsibot.
 # 
 # \image html webInterface.png 
 # <center> <a href="http://youtu.be/9B0tVJsg-0I" target="_blank"> Watch video on Youtube</a> </center>
@@ -29,9 +29,17 @@
 #
 # <b>Running</b> (assuming correct installation)
 #
-# yarp server &
+# First we must run a YARP name server if it is not running in our current namespace:
 #
-# $ASIBOT_DIR/bin/webInterface.py
+#\verbatim
+#[on terminal 1] yarp server
+#\endverbatim
+#
+# And then launch the actual module:
+#
+#\verbatim
+#[on terminal 2] $ASIBOT_DIR/bin/webInterface.py
+#\endverbatim
 #
 # <b>Modify</b>
 # 
@@ -54,7 +62,7 @@ import re
 
 ##
 #
-# The webAsibot class implements the web queries to the <a href="group__webInterface.html">webInterface</a>
+# The webAsibot class implements the web queries to the <a class="el" href="group__webInterface.html">webInterface</a>
 # as function calls.
 class webAsibot:
 ################################# INTERNAL PARAMETERS #########################
