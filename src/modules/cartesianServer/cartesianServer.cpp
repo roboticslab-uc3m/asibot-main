@@ -33,7 +33,7 @@ bool cartesianServer::configure(ResourceFinder &rf) {
 
     bool ok = cartesianDevice.view(icart);
     if (!ok) {
-        printf("Problems acquiring cartesian interface\n");
+        printf("[warning] Problems acquiring cartesian interface\n");
         return false;
     } else printf("[success] cartesianServer acquired cartesian interface\n");
 
@@ -47,6 +47,12 @@ bool cartesianServer::configure(ResourceFinder &rf) {
         printf("[error] Class instantiation not worked.\n\n");
         printf("[error] robotDevice not valid.\n\n");
         // robotDevice.close();  // un-needed?
+        return false;
+    }
+
+    bool ok2 = robotDevice.view(ipos);
+    if (!ok2) {
+        printf("[warning] Problems acquiring robot interfaces\n");
         return false;
     } else printf("[success] cartesianServer acquired robot interfaces\n");
 
