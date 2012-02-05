@@ -6,7 +6,7 @@
 // ------------------- RateThread Related ------------------------------------
 
 bool RaveBot::threadInit() {
-    printf("threadInit(): yay!\n");
+    printf("[success] ravebot threadInit()\n");
     return true;
 }
 

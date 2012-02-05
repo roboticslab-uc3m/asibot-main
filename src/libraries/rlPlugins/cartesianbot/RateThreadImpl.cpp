@@ -6,7 +6,7 @@
 // ------------------- RateThread Related ------------------------------------
 
 bool CartesianBot::threadInit() {
-    printf("[success] threadInit(): Started %f ms ratethread\n",getRate());
+    printf("[success] cartesianbot threadInit() started %f ms ratethread\n",getRate());
     return true;
 }
 
