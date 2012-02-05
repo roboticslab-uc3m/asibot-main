@@ -23,11 +23,13 @@ using namespace yarp::dev;
 class cartesianServer : public RFModule {
 protected:
     yarp::dev::PolyDriver cartesianDevice;
+    yarp::dev::PolyDriver robotDevice;
 
     yarp::dev::ICartesianControl *icart;
+    yarp::dev::IPositionControl *ipos;
 
-	xRpcCallback xCallback;
     RpcServer xRpcServer;
+	xRpcCallback xCallback;
     
     bool updateModule();
     bool interruptModule();

@@ -91,3 +91,9 @@ void xRpcCallback::setCartesianInterface(yarp::dev::ICartesianControl* _icart) {
 
 /************************************************************************/
 
+void xRpcCallback::setPositionInterface(yarp::dev::IPositionControl* _ipos) {
+    ipos = _ipos;
+}
+
+/************************************************************************/
+
