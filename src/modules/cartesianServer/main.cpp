@@ -56,16 +56,24 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
 \endverbatim
  * And should get some kind of feedback, such as:
 \verbatim
-Response: (45.0 -80.455885 110.552447 59.903438 0.0) [ok]
+Response: (45.0 -41.169914 116.855705 14.314209 0.0) [ok]
 \endverbatim
  * Which correspond to the joint values that would be needed to reach that position.
  
  * To actually move the robot, two rpc methods have been implemented: <b>movj</b> and <b>movl</b>
+ * Example with <b>movj</b>
 \verbatim
-[on terminal 3] [movj] (0 .3 .6 90 0)
+[on terminal 3] [movj] (.1 0 .7 90 0)
 \endverbatim
 \verbatim
-[on terminal 3] [movl] (0 .5 .6 90 0)
+Response: [ok]
+\endverbatim
+ * Example with <b>movl</b>
+\verbatim
+[on terminal 3] [movl] (.3 0 .7 90 0)
+\endverbatim
+\verbatim
+Response: [ok]
 \endverbatim
  *
  *
