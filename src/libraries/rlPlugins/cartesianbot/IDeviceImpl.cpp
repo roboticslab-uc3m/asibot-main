@@ -58,8 +58,7 @@ bool CartesianBot::open(Searchable& config) {
     if (!ok) {
         printf("[error] Problems acquiring interfaces\n");
         return false;
-    }
-    printf("[success] OK acquiring interfaces\n");
+    } else printf("[success] cartesianbot acquired robot interfaces\n");
 
     // Start the RateThread
     int period = config.check("rate",30,"ms ratethread").asInt();

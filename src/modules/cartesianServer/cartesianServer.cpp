@@ -33,11 +33,25 @@ bool cartesianServer::configure(ResourceFinder &rf) {
 
     bool ok = cartesianDevice.view(icart);
     if (!ok) {
-        printf("Problems acquiring interface\n");
+        printf("Problems acquiring cartesian interface\n");
         return false;
-    }
+    } else printf("[success] cartesianServer acquired cartesian interface\n");
+
+    Property robotOptions(rf.toString());  // Little hack to get rf stuff to the module
+    robotOptions.put("device","remote_controlboard");
+    robotOptions.put("local","/cartesianServer");
+    robotOptions.put("remote","/ravebot");
+    robotDevice.open(robotOptions);
+    
+    if (!robotDevice.isValid()) {
+        printf("[error] Class instantiation not worked.\n\n");
+        printf("[error] robotDevice not valid.\n\n");
+        // robotDevice.close();  // un-needed?
+        return false;
+    } else printf("[success] cartesianServer acquired robot interfaces\n");
 
     //---------------------CONFIGURE PORT(s)------------------------//
+    xCallback.setPositionInterface(ipos);
     xCallback.setCartesianInterface(icart);
     xRpcServer.open("/cartesianServer/rpc:i");
     xRpcServer.setReader(xCallback);

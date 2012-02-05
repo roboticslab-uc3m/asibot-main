@@ -14,16 +14,31 @@ using namespace yarp::os;
 using namespace yarp::dev;
 using namespace yarp::sig;
 
-// xRpcCallback class will help us create a callback&rpc port
+/**
+ * @ingroup xRpcCallback
+ *
+ * xRpcCallback class implements an xRpcPort responder (callback on RPC).
+ */
 class xRpcCallback : public PortReader {
 protected:
-
+    /**
+    * Implement the actual responder (callback on RPC).
+    */
     virtual bool read(ConnectionReader& connection);
 
     yarp::dev::ICartesianControl *icart;
+    yarp::dev::IPositionControl *ipos;
 public:
 
+    /**
+    * Register a cartesian interface for the PortReader.
+    */
     void setCartesianInterface(yarp::dev::ICartesianControl* _icart);
+
+    /**
+    * Register a position interface for the PortReader.
+    */
+    void setPositionInterface(yarp::dev::IPositionControl* _ipos);
 };
 
 #endif
