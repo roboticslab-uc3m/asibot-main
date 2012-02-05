@@ -40,27 +40,34 @@
 \verbatim
 [on terminal 3] yarp rpc /cartesianServer/rpc:i
 \endverbatim
- * We can get the current cartesian position (perform direct kinematics) by sending a 0: 
+ * We can get the current cartesian position (perform direct kinematics) by sending a <b>stat</b> rpc: 
 \verbatim
-[on terminal 3] 0
+[on terminal 3] [stat]
 \endverbatim
  * And should get some kind of feedback, such as:
 \verbatim
 Response: (0.0 0.0 1.4 0.0 0.0) [ok]
 \endverbatim
- * This corresponds to <b>x</b>, <b>y</b>, and <b>z</b> in <u>absolute base coordinates</u>, and <b>pitch</b> (angle on y) and <b>roll</b> (angle on z) defined <u>on the end-effector frame</u>.
+ * This corresponds to <b>x</b>[m], <b>y</b>[m], <b>z</b>[m], <b>rot(y')</b>[deg], <b>rot(z'')</b>[deg] of the end-effector in <i>absolute base coordinates</i>. The first rotation, <b>rot(z)</b>, is given by <b>x</b> and <b>y</b>.
  *
  * Another implemented behavior is kinematic inversion without movement.
 \verbatim
-[on terminal 3] 15 (0.3 0.3 0.7 90 0)
+[on terminal 3] [inv] (0.3 0.3 0.7 90 0)
 \endverbatim
  * And should get some kind of feedback, such as:
 \verbatim
 Response: (45.0 -80.455885 110.552447 59.903438 0.0) [ok]
 \endverbatim
- * Which correspond to the joint values that would be needed to reach that position. If you want to actually move
- * the motors to those joint values, remember that CartesianServer instanciates RaveBot as a YARP controlboard,
- * so you can interface with it as with <a class="el" href="group__testRaveBot.html">TestRaveBot</a> as well!
+ * Which correspond to the joint values that would be needed to reach that position.
+ 
+ * To actually move the robot, two rpc methods have been implemented: <b>movj</b> and <b>movl</b>
+\verbatim
+[on terminal 3] [movj] (0 .3 .6 90 0)
+\endverbatim
+\verbatim
+[on terminal 3] [movl] (0 .5 .6 90 0)
+\endverbatim
+ *
  *
  * <b>Modify</b>
 
