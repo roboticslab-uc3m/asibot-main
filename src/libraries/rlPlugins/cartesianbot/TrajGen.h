@@ -81,6 +81,16 @@ class OrderThreeTraj {
     double getT() {
         return T;
     }
+
+    /**
+    * Printf of ti, f(ti), fdot(ti), fdotdot(ti) for whole duration interval.
+    * @param samples number of lines to print.
+    */
+    void dump(double samples) {
+        for(double i=0;i<T;i+=(T/samples))
+            printf("%f %f %f %f\n",i,get(i),getdot(i), getdotdot(i));
+    }
+
   private:
     double a3,a2,a1,a0,T;
 };
