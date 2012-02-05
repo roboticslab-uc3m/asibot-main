@@ -61,6 +61,7 @@ Response: (45.0 -41.169914 116.855705 14.314209 0.0) [ok]
  * Which correspond to the joint values that would be needed to reach that position.
  
  * To actually move the robot, two rpc methods have been implemented: <b>movj</b> and <b>movl</b>
+ *
  * Example with <b>movj</b>
 \verbatim
 [on terminal 3] [movj] (.1 0 .7 90 0)
