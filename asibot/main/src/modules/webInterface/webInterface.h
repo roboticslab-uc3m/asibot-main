@@ -36,6 +36,8 @@ protected:
     double getPeriod();
     double period;
 
+    int counter;
+
 public:
     WebInterface();
     bool configure(ResourceFinder &rf);
