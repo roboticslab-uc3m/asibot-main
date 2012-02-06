@@ -12,14 +12,14 @@ using std::string;
 class WebResponder : public PortReader {
 protected:
     ResourceFinder rf;
-    ConstString contextPath;
+    ConstString htmlPath;
     ConstString resourcePath;
     string readFile(const ConstString& fileName);
     string& replaceAll(string& context, const string& from, const string& to);
 public:
     ConstString getCss();
     bool read(ConnectionReader& in);
-    bool setContextPath(const ConstString& _contextPath);
+    bool setHtmlPath(const ConstString& _htmlPath);
     bool setResourcePath(const ConstString& _resourcePath);
 };
 
