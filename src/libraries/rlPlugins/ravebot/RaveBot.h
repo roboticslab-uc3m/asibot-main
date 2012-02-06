@@ -27,7 +27,7 @@
 #define MI_PI 3.14159265
 #define UNSTABLE false
 
-#define DEFAULT_ENV_NAME "/app/models/asibot_cocina_entero.env.xml"  // on $ASIBOT_ROOT
+#define DEFAULT_ENV_NAME "/app/ravebot/asibot_cocina_entero.env.xml"  // on $ASIBOT_ROOT
 
 using namespace std;
 
