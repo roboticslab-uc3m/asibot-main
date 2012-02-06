@@ -34,7 +34,7 @@ protected:
     bool updateModule();
     bool interruptModule();
     double getPeriod();
-    int period;
+    double period;
 
 public:
     WebInterface();
