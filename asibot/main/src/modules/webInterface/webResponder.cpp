@@ -72,6 +72,20 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="joint") {
         response.addString(readFile("joint.html").c_str());
         return response.write(*out);
+    } else if (code=="test4") {
+        response.addString(readFile("test4.html").c_str());
+        return response.write(*out);
+    } else if (code=="xmlhttp.js") {
+        response.addString(readFile("xmlhttp.js").c_str());
+        return response.write(*out);
+    } else if (code=="add.1") {
+        ConstString param1 = request.find("a").asString();
+//        double param2 = request.find("b").asDouble();
+//        double sum = param1 + param2;
+        printf("%s\n",param1.c_str());
+//        ConstString sSum(ConstString::toString(sum));
+        response.addString(param1);
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
