@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
     c_yarpmodsdir = getenv("ASIBOT_DIR");
     if (c_yarpmodsdir) {
         myEnvironment.append(c_yarpmodsdir);
-        myEnvironment.append("/share/pictures/image.jpg");
+        myEnvironment.append("/app/findRedCan/image.jpg");
         printf("Full path+name: %s\n",myEnvironment.c_str());
     }*/
 
