@@ -4,9 +4,9 @@
 
   \li \ref install_cmake \endref
   \li \ref install_yarp \endref
-  \li \ref install_openrave \endref
+  \li \ref install_openrave \endref<!-- We do not use Eigen/KDL for now
   \li \ref install_eigen2 \endref
-  \li \ref install_kdl \endref
+  \li \ref install_kdl \endref-->
   \li \ref install_opencv \endref
 
   \li \ref install_asibot \endref
@@ -68,7 +68,7 @@ cd openrave; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd .
 sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
 \endverbatim
 
-
+<!--
  * @section install_eigen2 Install Eigen2 (optional, needed for KDL)
 
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
@@ -105,7 +105,7 @@ cd ../..
 
 An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
 
-
+-->
  * @section install_opencv Install OpenCV (optional, needed for vision modules such as findRedCan)
 
 We'll do this from source to assure the CMake file is created.

@@ -10,15 +10,17 @@ IF (NOT SKIP_cartesianbot)
 
 SET(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH} ${CMAKE_MODULE_PATH})
 FIND_PACKAGE(YARP REQUIRED)
-FIND_PACKAGE(Eigen2 REQUIRED)
+#FIND_PACKAGE(Eigen2 REQUIRED)
 
-include(${CMAKE_MODULE_PATH}/FindOrocos-KDL.cmake)
+#include(${CMAKE_MODULE_PATH}/FindOrocos-KDL.cmake)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
-LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
+#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})  # kdl name depends on version
+#LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
 
 ADD_LIBRARY(cartesianbot CartesianBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
-TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
+#TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
+TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES})
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins cartesianbot CACHE INTERNAL "appended libraries") 
