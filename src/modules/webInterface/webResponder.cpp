@@ -9,13 +9,24 @@ bool WebResponder::setContextPath(const ConstString& _contextPath) {
 }
 
 /************************************************************************/
-ConstString WebResponder::getCss() {
+ConstString WebResponder::readFile(const ConstString& fileName) {
+    ConstString filePath = contextPath + "../html/";
+    filePath += fileName;
+    std::ifstream myfile(filePath);
+    std::string tmp;
+    if (myfile.is_open()) {
+        while (myfile.good() ) {
+           getline (myfile,tmp);
+           tmp.append("\n");
+        }
+        myfile.close();
+    }
+    return ConstString(tmp.c_str());
+}
 
-    return "\n\
-body { background: black; color: white; } \n\
-h1 { font-size: 300%; color: yellow; } \n\
-div { padding-bottom: 10px; } \n\
-";
+/************************************************************************/
+ConstString WebResponder::getCss() {
+    return readFile("style.css");
 }
 
 /************************************************************************/
