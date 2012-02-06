@@ -7,12 +7,15 @@ WebInterface::WebInterface() { }
 
 /************************************************************************/
 bool WebInterface::configure(ResourceFinder &rf) {
+
+    period = 5;
+
     server.setReader(responder);
 
     ConstString name = rf.check("name",Value("/web")).asString();
     int port_number = rf.check("p",Value(0)).asInt();
 
-    Contact contact = Contact::byName(name);
+    contact = Contact::byName(name);
     if (port_number!=0) {
         contact = contact.addSocket("","",port_number);
     }
@@ -24,18 +27,21 @@ bool WebInterface::configure(ResourceFinder &rf) {
 
 /************************************************************************/
 bool WebInterface::updateModule() {
-    // printf("Alive\n");
+    printf("Server running, visit: http://%s:%d/test\n",
+                   contact.getHost().c_str(),
+                   contact.getPort());
     return true;
+}
+
+/************************************************************************/
+double WebInterface::getPeriod() {
+    return period;  // seconds
 }
 
 /************************************************************************/
 bool WebInterface::interruptModule() {
     server.interrupt();
     server.close();
-    // xPort.disableCallback();
-    /*xRpcServer.interrupt();
-    cartesianDevice.close();
-    xRpcServer.close();*/
     return true;
 }
 

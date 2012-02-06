@@ -23,6 +23,7 @@ protected:
 
     Port server;
     WebResponder responder;
+    Contact contact;
 
     yarp::dev::PolyDriver cartesianDevice;
     yarp::dev::PolyDriver robotDevice;
@@ -32,8 +33,8 @@ protected:
 
     bool updateModule();
     bool interruptModule();
-//    double getPeriod();
-//    int period;
+    double getPeriod();
+    int period;
 
 public:
     WebInterface();
