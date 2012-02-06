@@ -3,8 +3,8 @@
 #include "webResponder.h"
 
 /************************************************************************/
-bool WebResponder::setContextPath(const ConstString& _contextPath) {
-    contextPath = _contextPath;
+bool WebResponder::setHtmlPath(const ConstString& _htmlPath) {
+    htmlPath = _htmlPath;
     return true;
 }
 
@@ -16,8 +16,7 @@ bool WebResponder::setResourcePath(const ConstString& _resourcePath) {
 
 /************************************************************************/
 string WebResponder::readFile(const ConstString& fileName) {
-    ConstString filePath = contextPath + "/../html/";
-    filePath += fileName;
+    ConstString filePath = htmlPath + fileName;
     printf("filePath: %s\n",filePath.c_str());
     // thank you Tyler McHenry @ nerdland.net and KeithB @ ndssl.vbi.vt.edu for this algorithm
     // link: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring [2012-02-06]
@@ -29,8 +28,7 @@ string WebResponder::readFile(const ConstString& fileName) {
     str.assign((std::istreambuf_iterator<char>(t)),
                 std::istreambuf_iterator<char>());
     t.close();
-    ConstString resourceURL = "http://";
-    resourceURL += resourcePath + "/fig/";
+    ConstString resourceURL = resourcePath + "fig/";
     replaceAll(str, "fig/", resourceURL.c_str());
     return str;
 }
