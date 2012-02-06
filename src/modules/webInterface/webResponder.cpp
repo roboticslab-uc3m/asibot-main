@@ -15,6 +15,19 @@ bool WebResponder::setResourcePath(const ConstString& _resourcePath) {
 }
 
 /************************************************************************/
+string& WebResponder::replaceAll(string& context, const string& from, const string& to) {
+    // thank you Bruce Eckel for this one!! (TICPP-2nd-ed-Vol-two)
+    size_t lookHere = 0;
+    size_t foundHere;
+    while((foundHere = context.find(from, lookHere))
+        != string::npos) {
+        context.replace(foundHere, from.size(), to);
+        lookHere = foundHere + to.size();
+    }
+    return context;
+}
+
+/************************************************************************/
 string WebResponder::readFile(const ConstString& fileName) {
     ConstString filePath = htmlPath + fileName;
     printf("filePath: %s\n",filePath.c_str());
@@ -34,19 +47,6 @@ string WebResponder::readFile(const ConstString& fileName) {
 }
 
 /************************************************************************/
-string& WebResponder::replaceAll(string& context, const string& from, const string& to) {
-    // thank you Bruce Eckel for this one!! (TICPP-2nd-ed-Vol-two)
-    size_t lookHere = 0;
-    size_t foundHere;
-    while((foundHere = context.find(from, lookHere))
-        != string::npos) {
-        context.replace(foundHere, from.size(), to);
-        lookHere = foundHere + to.size();
-    }
-    return context;
-}
-
-/************************************************************************/
 ConstString WebResponder::getCss() {
     return ConstString(readFile("style.css").c_str());
 }
@@ -61,19 +61,22 @@ bool WebResponder::read(ConnectionReader& in) {
     response.addString("web");
 
     ConstString code = request.get(0).asString();
-    if (code=="css") {
+    if (code=="style.css") {
         response.addString(getCss());
         response.addString("mime");
         response.addString("text/css");
         return response.write(*out);
+    } else if (code=="index") {
+        response.addString(readFile("index.html").c_str());
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
-    prefix += "<link href=\"/css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
+    prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
     prefix += "</head>\n<body>\n";
 
     if (code=="push") {
-        prefix += "<h1>Potato count</h1>\n";
+        prefix += "<h1>Counter count</h1>\n";
         prefix += "<div>(<a href='/test'>back</a>)</div>\n";
 
         response.addString(prefix);
@@ -92,7 +95,7 @@ bool WebResponder::read(ConnectionReader& in) {
     } else {
         txt += ConstString("<div>So today is ") + request.find("day").asString() + ", is it? Hmm. I don't think I'm going to bother remembering that.</div>\n";
     }
-    txt += "<div><a href='/push'>How many potatoes?</a> (streaming example)</div>\n";
+    txt += "<div><a href='/push'>How many counter counts?</a> (streaming example)</div>\n";
     txt += postfix;
 
     response.addString(txt);
