@@ -8,7 +8,7 @@ WebInterface::WebInterface() { }
 /************************************************************************/
 bool WebInterface::configure(ResourceFinder &rf) {
 
-    period = 5;
+    period = rf.check("period",5,"period in s").asInt();
 
     server.setReader(responder);
 
@@ -21,6 +21,7 @@ bool WebInterface::configure(ResourceFinder &rf) {
     }
     if (!server.open(contact)) return false;
     contact = server.where();
+
     printf("[success] WebInterface configured.\n");
     return true;
 }
