@@ -10,18 +10,20 @@ bool WebResponder::setContextPath(const ConstString& _contextPath) {
 
 /************************************************************************/
 ConstString WebResponder::readFile(const ConstString& fileName) {
-    ConstString filePath = contextPath + "../html/";
+    ConstString filePath = contextPath + "/../html/";
     filePath += fileName;
-    std::ifstream myfile(filePath);
-    std::string tmp;
-    if (myfile.is_open()) {
-        while (myfile.good() ) {
-           getline (myfile,tmp);
-           tmp.append("\n");
-        }
-        myfile.close();
-    }
-    return ConstString(tmp.c_str());
+    printf("filePath: %s",filePath.c_str());
+    // thank you Tyler McHenry @ nerdland.net and KeithB @ ndssl.vbi.vt.edu for this algorithm
+    // link: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+    std::ifstream t(filePath.c_str());
+    std::string str;
+    t.seekg(0, std::ios::end);   
+    str.reserve(t.tellg());
+    t.seekg(0, std::ios::beg);
+    str.assign((std::istreambuf_iterator<char>(t)),
+                std::istreambuf_iterator<char>());
+    t.close();
+    return ConstString(str.c_str());
 }
 
 /************************************************************************/
