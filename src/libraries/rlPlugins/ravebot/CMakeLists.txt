@@ -34,7 +34,7 @@ ADD_LIBRARY(ravebot RaveBot.h IDeviceImpl.cpp IPositionImpl.cpp IVelocityImpl.cp
 TARGET_LINK_LIBRARIES(ravebot ${YARP_LIBRARIES} ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} ${Boost_THREAD_LIBRARY})
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
-set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins ravebot ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} CACHE INTERNAL "appended libraries") 
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins ravebot ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} ${Boost_THREAD_LIBRARY} CACHE INTERNAL "appended libraries") 
 set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${OpenRAVE_LIBRARY_DIRS} ${OPENRAVE_LINK_DIRS} CACHE INTERNAL "appended link dirs")
 
 ENDIF (NOT SKIP_ravebot)
