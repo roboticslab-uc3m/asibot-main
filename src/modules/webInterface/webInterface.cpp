@@ -8,6 +8,7 @@ WebInterface::WebInterface() { }
 /************************************************************************/
 bool WebInterface::configure(ResourceFinder &rf) {
 
+    counter = 0;
     period = rf.check("period",5,"period in s").asDouble();
 
     ConstString htmlPath = rf.getContextPath() + "/../html/";
@@ -38,6 +39,12 @@ bool WebInterface::updateModule() {
     printf("Server running, visit: http://%s:%d/test\n",
                    contact.getHost().c_str(),
                    contact.getPort());
+    Bottle push;
+    push.addString("web");
+    ConstString div = ConstString("<div>")+ConstString::toString(counter)+" counter count</div>";
+    push.addString(div);
+    server.write(push);
+    counter++;
     return true;
 }
 
