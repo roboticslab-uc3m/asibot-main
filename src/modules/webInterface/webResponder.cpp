@@ -9,12 +9,18 @@ bool WebResponder::setContextPath(const ConstString& _contextPath) {
 }
 
 /************************************************************************/
-ConstString WebResponder::readFile(const ConstString& fileName) {
+bool WebResponder::setResourcePath(const ConstString& _resourcePath) {
+    resourcePath = _resourcePath;
+    return true;
+}
+
+/************************************************************************/
+string WebResponder::readFile(const ConstString& fileName) {
     ConstString filePath = contextPath + "/../html/";
     filePath += fileName;
-    printf("filePath: %s",filePath.c_str());
+    printf("filePath: %s\n",filePath.c_str());
     // thank you Tyler McHenry @ nerdland.net and KeithB @ ndssl.vbi.vt.edu for this algorithm
-    // link: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+    // link: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring [2012-02-06]
     std::ifstream t(filePath.c_str());
     std::string str;
     t.seekg(0, std::ios::end);   
@@ -23,12 +29,29 @@ ConstString WebResponder::readFile(const ConstString& fileName) {
     str.assign((std::istreambuf_iterator<char>(t)),
                 std::istreambuf_iterator<char>());
     t.close();
-    return ConstString(str.c_str());
+    ConstString resourceURL = "http://";
+    resourceURL += resourcePath + "/fig/";
+    replaceAll(str, "fig/", resourceURL.c_str());
+    return str;
+}
+
+/************************************************************************/
+string& WebResponder::replaceAll(string& context, const string& from, const string& to) {
+    // thank you Bruce Eckel for this one!! (TICPP-2nd-ed-Vol-two)
+    size_t lookHere = 0;
+    size_t foundHere;
+    while((foundHere = context.find(from, lookHere))
+        != string::npos) {
+        context.replace(foundHere, from.size(), to);
+        lookHere = foundHere + to.size();
+    }
+    return context;
 }
 
 /************************************************************************/
 ConstString WebResponder::getCss() {
-    return readFile("style.css");
+    ConstString tmp(readFile("style.css").c_str());
+    return tmp;
 }
 
 /************************************************************************/

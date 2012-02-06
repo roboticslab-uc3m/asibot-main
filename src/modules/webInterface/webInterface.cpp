@@ -8,15 +8,17 @@ WebInterface::WebInterface() { }
 /************************************************************************/
 bool WebInterface::configure(ResourceFinder &rf) {
 
-    period = rf.check("period",5,"period in s").asInt();
+    period = rf.check("period",5,"period in s").asDouble();
 
     ConstString contextPath=rf.getContextPath();
     printf("ContextPath: %s.\n",contextPath.c_str());
     responder.setContextPath(contextPath);
+    ConstString resourcePath = rf.check("resource","localhost","resource path").asString();
+    responder.setResourcePath(resourcePath);
     server.setReader(responder);
 
     ConstString name = rf.check("name",Value("/web")).asString();
-    int port_number = rf.check("p",Value(0)).asInt();
+    int port_number = rf.check("port",Value(0)).asInt();
 
     contact = Contact::byName(name);
     if (port_number!=0) {
