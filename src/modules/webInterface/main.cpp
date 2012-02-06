@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
 
     ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("WebInterface/conf");
-    rf.setDefaultConfigFile("WebInterface.ini");
+    rf.setDefaultContext("webInterface/conf");
+    rf.setDefaultConfigFile("webInterface.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
     if (rf.check("help")) {
