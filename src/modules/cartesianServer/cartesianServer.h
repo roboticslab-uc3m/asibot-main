@@ -20,7 +20,7 @@
 using namespace yarp::os;
 using namespace yarp::dev;
 
-class cartesianServer : public RFModule {
+class CartesianServer : public RFModule {
 protected:
     yarp::dev::PolyDriver cartesianDevice;
     yarp::dev::PolyDriver robotDevice;
@@ -37,7 +37,7 @@ protected:
 //    int period;
 
 public:
-    cartesianServer();
+    CartesianServer();
     bool configure(ResourceFinder &rf);
 };
 
