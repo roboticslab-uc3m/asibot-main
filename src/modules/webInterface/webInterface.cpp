@@ -18,7 +18,7 @@ bool WebInterface::configure(ResourceFinder &rf) {
     }
     if (!server.open(contact)) return false;
     contact = server.where();
-
+    printf("[success] WebInterface configured.\n");
     return true;
 }
 
@@ -30,6 +30,8 @@ bool WebInterface::updateModule() {
 
 /************************************************************************/
 bool WebInterface::interruptModule() {
+    server.interrupt();
+    server.close();
     // xPort.disableCallback();
     /*xRpcServer.interrupt();
     cartesianDevice.close();
