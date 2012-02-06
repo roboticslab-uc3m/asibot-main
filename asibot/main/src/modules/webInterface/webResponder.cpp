@@ -48,8 +48,7 @@ string& WebResponder::replaceAll(string& context, const string& from, const stri
 
 /************************************************************************/
 ConstString WebResponder::getCss() {
-    ConstString tmp(readFile("style.css").c_str());
-    return tmp;
+    return ConstString(readFile("style.css").c_str());
 }
 
 /************************************************************************/
