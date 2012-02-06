@@ -7,7 +7,7 @@
  * \image html grabRedCan.png
  *  <center> <a href="http://youtu.be/ePW25V5i8FE" target="_blank"> Watch video on Youtube</a> </center>
  * 
- * The <b>grabRedCan</b> module reads the <b>geom.ini</b> configuration file found in $ASIBOT_DIR/app/grabRedCan and the streaming output of <a href="group__findRedCan.html">findRedCan</a> through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> input called <b>/redCan:i</b>. It connects to a <a href="group__test__kdl.html">test_kdl</a> that exposes a YARP remote_controlboard interface and an RPC server for cartesian movements, and makes the robot grab a red can situated at the kitchen environment table using the previously described geometrical information.
+ * The <b>grabRedCan</b> module reads the <b>geom.ini</b> configuration file found in $ASIBOT_DIR/app/grabRedCan/conf and the streaming output of <a href="group__findRedCan.html">findRedCan</a> through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> input called <b>/redCan:i</b>. It connects to a <a href="group__test__kdl.html">test_kdl</a> that exposes a YARP remote_controlboard interface and an RPC server for cartesian movements, and makes the robot grab a red can situated at the kitchen environment table using the previously described geometrical information.
  * Figure 1 depicts the port connections made at runtime.
  *
  *  \image html demoSetup.png
@@ -156,7 +156,7 @@ int main(int argc, char *argv[]) {
     }
 
     ConstString geomConfigFile(getenv("ASIBOT_DIR"));
-    geomConfigFile += "/app/grabRedCan/geom.ini";
+    geomConfigFile += "/app/grabRedCan/conf/geom.ini";
     Property geometry;
     if(!geometry.fromConfigFile(geomConfigFile)) {
         printf("[error] Need geom.ini\n");
