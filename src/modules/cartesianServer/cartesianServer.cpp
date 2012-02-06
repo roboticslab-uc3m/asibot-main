@@ -3,10 +3,10 @@
 #include "cartesianServer.h"
 
 /************************************************************************/
-cartesianServer::cartesianServer() { }
+CartesianServer::CartesianServer() { }
 
 /************************************************************************/
-bool cartesianServer::configure(ResourceFinder &rf) {
+bool CartesianServer::configure(ResourceFinder &rf) {
 
     // check our device can be wrapped in the controlboard network wrapper
     // and accessed remotely
@@ -66,13 +66,13 @@ bool cartesianServer::configure(ResourceFinder &rf) {
 }
 
 /************************************************************************/
-bool cartesianServer::updateModule() {
+bool CartesianServer::updateModule() {
     // printf("Alive\n");
     return true;
 }
 
 /************************************************************************/
-bool cartesianServer::interruptModule() {
+bool CartesianServer::interruptModule() {
     // xPort.disableCallback();
     xRpcServer.interrupt();
     cartesianDevice.close();
