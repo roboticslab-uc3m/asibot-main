@@ -10,10 +10,12 @@ bool WebInterface::configure(ResourceFinder &rf) {
 
     period = rf.check("period",5,"period in s").asDouble();
 
-    ConstString contextPath=rf.getContextPath();
-    printf("ContextPath: %s.\n",contextPath.c_str());
-    responder.setContextPath(contextPath);
-    ConstString resourcePath = rf.check("resource","localhost","resource path").asString();
+    ConstString htmlPath = rf.getContextPath() + "/../html/";
+    printf("htmlPath: %s\n",htmlPath.c_str());
+    responder.setHtmlPath(htmlPath);
+    ConstString resourcePath = "http://";
+    resourcePath += rf.check("resource","localhost","resource path").asString() + "/";
+    printf("resourcePath: %s\n",resourcePath.c_str());
     responder.setResourcePath(resourcePath);
     server.setReader(responder);
 
