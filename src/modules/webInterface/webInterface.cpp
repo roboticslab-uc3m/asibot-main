@@ -9,6 +9,16 @@ WebInterface::WebInterface() { }
 bool WebInterface::configure(ResourceFinder &rf) {
     server.setReader(responder);
 
+    ConstString name = rf.check("name",Value("/web")).asString();
+    int port_number = rf.check("p",Value(0)).asInt();
+
+    Contact contact = Contact::byName(name);
+    if (port_number!=0) {
+        contact = contact.addSocket("","",port_number);
+    }
+    if (!server.open(contact)) return false;
+    contact = server.where();
+
     return true;
 }
 
