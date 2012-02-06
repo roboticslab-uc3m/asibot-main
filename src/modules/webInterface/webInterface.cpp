@@ -10,6 +10,9 @@ bool WebInterface::configure(ResourceFinder &rf) {
 
     period = rf.check("period",5,"period in s").asInt();
 
+    ConstString contextPath=rf.getContextPath();
+    printf("ContextPath: %s.\n",contextPath.c_str());
+    responder.setContextPath(contextPath);
     server.setReader(responder);
 
     ConstString name = rf.check("name",Value("/web")).asString();
