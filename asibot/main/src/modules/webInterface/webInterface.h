@@ -13,12 +13,17 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
+#include "webResponder.h"
 
 using namespace yarp::os;
 using namespace yarp::dev;
 
 class WebInterface : public RFModule {
 protected:
+
+    Port server;
+    WebResponder responder;
+
     yarp::dev::PolyDriver cartesianDevice;
     yarp::dev::PolyDriver robotDevice;
 

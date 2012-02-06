@@ -7,6 +7,8 @@ WebInterface::WebInterface() { }
 
 /************************************************************************/
 bool WebInterface::configure(ResourceFinder &rf) {
+    server.setReader(responder);
+
     return true;
 }
 
