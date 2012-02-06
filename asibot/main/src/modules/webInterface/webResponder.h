@@ -7,16 +7,20 @@
 #include <yarp/os/all.h>
 
 using namespace yarp::os;
+using std::string;
 
 class WebResponder : public PortReader {
 protected:
     ResourceFinder rf;
     ConstString contextPath;
-    ConstString readFile(const ConstString& fileName);
+    ConstString resourcePath;
+    string readFile(const ConstString& fileName);
+    string& replaceAll(string& context, const string& from, const string& to);
 public:
     ConstString getCss();
     bool read(ConnectionReader& in);
     bool setContextPath(const ConstString& _contextPath);
+    bool setResourcePath(const ConstString& _resourcePath);
 };
 
 #endif
