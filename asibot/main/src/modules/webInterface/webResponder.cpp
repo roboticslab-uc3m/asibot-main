@@ -69,6 +69,9 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="index") {
         response.addString(readFile("index.html").c_str());
         return response.write(*out);
+    } else if (code=="joint") {
+        response.addString(readFile("joint.html").c_str());
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
