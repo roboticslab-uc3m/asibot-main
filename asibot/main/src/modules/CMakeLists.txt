@@ -6,4 +6,5 @@ add_subdirectory(findRedCan)
 add_subdirectory(grabRedCan)
 add_subdirectory(testRaveBot)
 add_subdirectory(webInterfacePy)
+add_subdirectory(webInterface)
 
