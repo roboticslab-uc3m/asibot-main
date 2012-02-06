@@ -2,9 +2,9 @@
 
 ##
 #
-# @defgroup webInterface
+# @defgroup webInterfacePy
 #
-# Serves a Web Interface using CherryPy3 to instanciate webAsibot.
+# Serves a Web Interface using CherryPy3 to instanciate WebAsibot.
 # 
 # \image html webInterface.png 
 # <center> <a href="http://youtu.be/9B0tVJsg-0I" target="_blank"> Watch video on Youtube</a> </center>
@@ -44,7 +44,7 @@
 # <b>Modify</b>
 # 
 # This file can be edited at 
-# $ASIBOT_ROOT/main/src/modules/webInterface/webInterface.py
+# $ASIBOT_ROOT/main/src/modules/webInterfacePy/webInterface.py
 #
 
 # Import CherryPy global namespace (server)
@@ -62,9 +62,9 @@ import re
 
 ##
 #
-# The webAsibot class implements the web queries to the <a class="el" href="group__webInterface.html">webInterface</a>
+# The webAsibot class implements the web queries to the <a class="el" href="group__webInterfacePy.html">webInterfacePy</a>
 # as function calls.
-class webAsibot:
+class WebAsibot:
 ################################# INTERNAL PARAMETERS #########################
     asibot_state = 0
     sim_state = 0
@@ -577,7 +577,7 @@ class webAsibot:
 
 ##################################### PRE-MAIN ################################
 import os.path
-shared_dir = os.path.join(os.environ['ASIBOT_ROOT'],'app','webInterface')
+shared_dir = os.path.join(os.environ['ASIBOT_ROOT'],'app','webInterfacePy')
 programs_dir = os.path.join(os.environ['ASIBOT_ROOT'],'app','userPrograms')
 interface_conf = os.path.join(shared_dir,'interface.conf')
 page_format = 'asibot'
@@ -589,7 +589,7 @@ page_format = 'asibot'
 if __name__ == '__main__':
     # CherryPy always starts with app.root when trying to map request URIs
     # to objects, so we need to mount a request handler root. A request
-    # to '/' will be mapped to webAsibot().index().
+    # to '/' will be mapped to WebAsibot().index().
     #print current_dir
     yarp.Network.init()
     if yarp.Network.checkNetwork() != True:
@@ -644,7 +644,7 @@ if __name__ == '__main__':
 
     #cherrypy.config.update({'tools.staticdir.root': current_dir})
     cherrypy.config.update({'tools.staticdir.root': shared_dir})
-    cherrypy.quickstart(webAsibot(), config=interface_conf)
+    cherrypy.quickstart(WebAsibot(), config=interface_conf)
 
     # On ctrl-c close all ports
     print "begin close ports"
@@ -654,5 +654,5 @@ if __name__ == '__main__':
 
 else:
     # This branch is for the test suite; you can ignore it.
-    cherrypy.tree.mount(webAsibot(), config=interfaceconf)
+    cherrypy.tree.mount(WebAsibot(), config=interfaceconf)
 
