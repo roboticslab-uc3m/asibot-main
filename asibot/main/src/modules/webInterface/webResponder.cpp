@@ -3,7 +3,14 @@
 #include "webResponder.h"
 
 /************************************************************************/
+bool WebResponder::setContextPath(const ConstString& _contextPath) {
+    contextPath = _contextPath;
+    return true;
+}
+
+/************************************************************************/
 ConstString WebResponder::getCss() {
+
     return "\n\
 body { background: black; color: white; } \n\
 h1 { font-size: 300%; color: yellow; } \n\

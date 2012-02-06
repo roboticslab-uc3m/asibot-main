@@ -8,9 +8,13 @@
 using namespace yarp::os;
 
 class WebResponder : public PortReader {
+protected:
+    ResourceFinder rf;
+    ConstString contextPath;
 public:
     ConstString getCss();
     bool read(ConnectionReader& in);
+    bool setContextPath(const ConstString& _contextPath);
 };
 
 #endif
