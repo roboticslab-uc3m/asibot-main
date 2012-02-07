@@ -66,25 +66,22 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString("mime");
         response.addString("text/css");
         return response.write(*out);
+    } else if (code=="xmlhttp.js") {
+        response.addString(readFile("xmlhttp.js").c_str());
+        return response.write(*out);
+    } else if (code=="testEqual") {
+        response.addString(readFile("testEqual.html").c_str());
+        return response.write(*out);
+    } else if (code=="equal.1") {
+        ConstString inParam = request.find("a").asString();
+        printf("Got an %s, going to equal it.\n",inParam.c_str());
+        response.addString(inParam);
+        return response.write(*out);
     } else if (code=="index") {
         response.addString(readFile("index.html").c_str());
         return response.write(*out);
     } else if (code=="joint") {
         response.addString(readFile("joint.html").c_str());
-        return response.write(*out);
-    } else if (code=="test4") {
-        response.addString(readFile("test4.html").c_str());
-        return response.write(*out);
-    } else if (code=="xmlhttp.js") {
-        response.addString(readFile("xmlhttp.js").c_str());
-        return response.write(*out);
-    } else if (code=="add.1") {
-        ConstString param1 = request.find("a").asString();
-//        double param2 = request.find("b").asDouble();
-//        double sum = param1 + param2;
-        printf("%s\n",param1.c_str());
-//        ConstString sSum(ConstString::toString(sum));
-        response.addString(param1);
         return response.write(*out);
     }
 
