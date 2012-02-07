@@ -25,10 +25,12 @@ function connectReal() {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             if((xmlhttp.responseText.search('REALOFF'))>-1){
-                doc.body.style.background = 'red';
+                doc.body.style.background = 'green';
+                doc.realState.src = "fig/realCon.jpg";
 //                doc.forms[0].elements['status'].value='yay';
             } else {
                 doc.body.style.background = 'white';
+                doc.realState.src = "fig/realDis.jpg";
 //                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
             }
         }
@@ -65,7 +67,7 @@ iframe.addEventListener("load", function() {
     var doc = iframe.contentDocument;
     doc.body.style.background = 'white';
 //    doc.body.innerHTML = '<form action="equal.1" method="get" onsubmit="return parent.calc()"><input type=text name=a> = <input type=text name=total><input type=submit value="Calculate"></form>'
-    doc.body.innerHTML = '<form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggle"><img width="125" src="fig/realDis.jpg"></button></form>';
+    doc.body.innerHTML = '<form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggle"><img id="realState" width="125" src="fig/realDis.jpg"></button></form>';
 //    <input type=submit name=robot value="on"><br><input type=text name=status>
 
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.
