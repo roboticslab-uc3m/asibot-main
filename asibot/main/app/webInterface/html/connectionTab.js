@@ -1,3 +1,4 @@
+
 // This iframe stuff is from http://wiki.greasespot.net/CSS_Independent_Content [thanks!]
 
 // position:fixed means stay fixed even when the page scrolls. z-index keeps your iframe on top.
@@ -12,6 +13,7 @@ var css = 'position:fixed; z-index:9999; bottom:0px; left:0px; border:2px solid 
           'overflow:hidden;'
 
 var iframe = document.createElement('iframe');
+iframe.setAttribute('id', 'theIframe');
 iframe.setAttribute('style', css);
 
 // The about:blank page becomes a blank(!) canvas to modify
@@ -23,7 +25,9 @@ document.body.appendChild(iframe);
 iframe.addEventListener("load", function() {
     var doc = iframe.contentDocument;
     doc.body.style.background = 'white';
-    doc.body.innerHTML = 'Robot &nbsp; Simulator<br><br>';
+//    doc.body.innerHTML = '<script src="xmlhttp.js" type="text/javascript"></script><script src="tabHelpers.js" type="text/javascript"></script><form id="cTab" action="connectRobot.1" method="get" onsubmit="alert2()"><input type=submit name=target value="on"><br><input type=text name=status></form>';
+    doc.body.innerHTML = '<form action="equal.1" method="get" onsubmit="return parent.calc()"><input type=text name=a> = <input type=text name=total><input type=submit value="Calculate"></form>'
+
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.
     // So try clientWidth and clientHeight instead of offsetWidth and offsetHeight
 //    iframe.style.width = doc.body.offsetWidth + "px";

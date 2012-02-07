@@ -30,3 +30,4 @@ if (!xmlhttp && window.createRequest) {
 		xmlhttp=false;
 	}
 }
+

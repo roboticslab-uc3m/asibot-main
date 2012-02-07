@@ -69,12 +69,24 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="xmlhttp.js") {
         response.addString(readFile("xmlhttp.js").c_str());
         return response.write(*out);
+    } else if (code=="connectionTab.js") {
+        response.addString(readFile("connectionTab.js").c_str());
+        return response.write(*out);
+    } else if (code=="tabHelpers.js") {
+        response.addString(readFile("tabHelpers.js").c_str());
+        return response.write(*out);
     } else if (code=="testEqual") {
         response.addString(readFile("testEqual.html").c_str());
         return response.write(*out);
     } else if (code=="equal.1") {
         ConstString inParam = request.find("a").asString();
         printf("Got an %s, going to equal it.\n",inParam.c_str());
+        response.addString(inParam);
+        return response.write(*out);
+    } else if (code=="connectRobot.1") {
+        ConstString inParam = request.find("target").asString();
+        printf("Got %s, sending OK.\n",inParam.c_str());
+        ConstString outParam = "OK";
         response.addString(inParam);
         return response.write(*out);
     } else if (code=="index") {
