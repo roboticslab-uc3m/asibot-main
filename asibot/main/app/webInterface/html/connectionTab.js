@@ -1,4 +1,40 @@
 
+function calc() {
+  var doc = iframe.contentDocument;
+  doc.body.style.background = 'red';
+//  frm=document.forms[0]
+  frm=doc.forms[0]
+  url="equal.1?a="+frm.elements['a'].value
+  xmlhttp.open("GET",url,true);
+  xmlhttp.onreadystatechange=function() {
+   if (xmlhttp.readyState==4) {
+//    document.forms[0].elements['total'].value=xmlhttp.responseText
+    doc.forms[0].elements['total'].value=xmlhttp.responseText
+   }
+  }
+ xmlhttp.setRequestHeader('Accept','message/x-jl-formresult')
+ xmlhttp.send()
+ return false
+}
+
+function connectRobot() {
+  var doc = iframe.contentDocument;
+  doc.body.style.background = 'red';
+//  frm=document.forms[0]
+  frm=doc.forms[0]
+  url="connectRobot.1?target="+frm.elements['target'].value
+  xmlhttp.open("GET",url,true);
+  xmlhttp.onreadystatechange=function() {
+   if (xmlhttp.readyState==4) {
+//    document.forms[0].elements['status'].value=xmlhttp.responseText
+    doc.forms[0].elements['status'].value=xmlhttp.responseText
+   }
+  }
+ xmlhttp.setRequestHeader('Accept','message/x-jl-formresult')
+ xmlhttp.send()
+ return false
+}
+
 // This iframe stuff is from http://wiki.greasespot.net/CSS_Independent_Content [thanks!]
 
 // position:fixed means stay fixed even when the page scrolls. z-index keeps your iframe on top.
