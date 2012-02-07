@@ -3,10 +3,17 @@
 #ifndef __WEB_RESPONDER__
 #define __WEB_RESPONDER__
 
-#include <fstream>
 #include <yarp/os/all.h>
 
+#include <yarp/dev/PolyDriver.h>
+#include <yarp/dev/CartesianControl.h>
+#include <yarp/dev/ControlBoardInterfaces.h>
+
+#include <fstream>
+
 using namespace yarp::os;
+using namespace yarp::dev;
+
 using std::string;
 
 /**
@@ -25,6 +32,14 @@ protected:
     ConstString resourcePath;
     string readFile(const ConstString& fileName);
     string& replaceAll(string& context, const string& from, const string& to);
+
+    yarp::dev::PolyDriver cartesianDevice;
+    yarp::dev::PolyDriver realDevice;
+    yarp::dev::PolyDriver simDevice;
+
+    yarp::dev::ICartesianControl *icart;
+    yarp::dev::IPositionControl *ipos;
+
 public:
     ConstString getCss();
     bool init();

@@ -93,12 +93,26 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString outParam;
         if (realConnected){
             printf("Disconnecting from real robot.\n");
+            realDevice.close();
+            // Maybe perform some checks here
             realConnected = false;
             outParam = "REALOFF";
         } else {
             printf("Connecting to real robot.\n");
-            realConnected = true;
-            outParam = "REALON";
+            Property options;
+            options.put("device","remote_controlboard");
+            options.put("remote","/canbot");
+            options.put("local","/webLocal");
+            realDevice.open(options);
+            if(!realDevice.isValid()) {
+                printf("canbot device not available.\n");
+                realDevice.close();
+                realConnected = false;
+                outParam = "REALOFF";
+            } else {
+                realConnected = true;
+                outParam = "REALON";
+            }
         }
         response.addString(outParam);
         return response.write(*out);
@@ -108,12 +122,26 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString outParam;
         if (simConnected){
             printf("Disconnecting from robot simulator.\n");
+            simDevice.close();
+            // Maybe perform some checks here
             simConnected = false;
             outParam = "SIMOFF";
         } else {
             printf("Connecting to robot simulator.\n");
-            simConnected = true;
-            outParam = "SIMON";
+            Property options;
+            options.put("device","remote_controlboard");
+            options.put("remote","/ravebot");
+            options.put("local","/webLocal");
+            simDevice.open(options);
+            if(!simDevice.isValid()) {
+                printf("ravebot device not available.\n");
+                simDevice.close();
+                simConnected = false;
+                outParam = "SIMOFF";
+            } else {
+                simConnected = true;
+                outParam = "SIMON";
+            }
         }
         response.addString(outParam);
         return response.write(*out);
