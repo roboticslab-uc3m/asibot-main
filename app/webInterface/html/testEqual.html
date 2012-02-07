@@ -34,7 +34,8 @@
 <script>
  function calc() {
   frm=document.forms[0]
-  url="add.1?a="+frm.elements['a'].value+"&b="+frm.elements['b'].value
+//  url="add.1?a="+frm.elements['a'].value+"&b="+frm.elements['b'].value
+  url="equal.1?a="+frm.elements['a'].value
   xmlhttp.open("GET",url,true);
   xmlhttp.onreadystatechange=function() {
    if (xmlhttp.readyState==4) {
@@ -46,9 +47,8 @@
  return false
 }
 </script>
-<form action="add.1" method="get" onsubmit="return calc()">
-<input type=text name=a> + <input type=text name=b>
- = <input type=text name=total>
+<form action="equal.1" method="get" onsubmit="return calc()">
+<input type=text name=a> = <input type=text name=total>
 <input type=submit value="Calculate">
 </form>
 
