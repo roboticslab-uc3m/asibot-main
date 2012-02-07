@@ -25,7 +25,7 @@ function connectRobot() {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            if(xmlhttp.responseText==='OK'){
+            if((xmlhttp.responseText.search('OK'))>-1){
                 doc.forms[0].elements['status'].value='yay';
             } else {
                 doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
