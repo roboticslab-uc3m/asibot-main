@@ -89,12 +89,14 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="connectReal.1") {
         ConstString inParam = request.find("real").asString();
-        printf("Got %s.\n",inParam.c_str());
+        printf("Got %s. ",inParam.c_str());
         ConstString outParam;
         if (realConnected){
+            printf("Disconnecting from real robot.\n");
             realConnected = false;
             outParam = "REALOFF";
         } else {
+            printf("Connecting to real robot.\n");
             realConnected = true;
             outParam = "REALON";
         }
@@ -102,12 +104,14 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="connectSim.1") {
         ConstString inParam = request.find("sim").asString();
-        printf("Got %s.\n",inParam.c_str());
+        printf("Got %s. ",inParam.c_str());
         ConstString outParam;
         if (simConnected){
+            printf("Disconnecting from robot simulator.\n");
             simConnected = false;
             outParam = "SIMOFF";
         } else {
+            printf("Connecting to robot simulator.\n");
             simConnected = true;
             outParam = "SIMON";
         }

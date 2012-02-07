@@ -25,12 +25,12 @@ function connectReal() {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             if((xmlhttp.responseText.search('REALOFF'))>-1){
-                doc.body.style.background = 'green';
-                doc.realState.src = "fig/realCon.jpg";
+//                doc.body.style.background = 'green';
+                doc.realState.src = "fig/realDis.jpg";
 //                doc.forms[0].elements['status'].value='yay';
             } else {
-                doc.body.style.background = 'white';
-                doc.realState.src = "fig/realDis.jpg";
+//                doc.body.style.background = 'white';
+                doc.realState.src = "fig/realCon.jpg";
 //                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
             }
         }
@@ -42,18 +42,18 @@ function connectReal() {
 
 function connectSim() {
     var doc = iframe.contentDocument;
-    frm=doc.forms[0];
+    frm=doc.forms[1];
     url="connectSim.1?sim="+frm.elements['sim'].value;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             if((xmlhttp.responseText.search('SIMOFF'))>-1){
-                doc.body.style.background = 'green';
-                doc.realState.src = "fig/simCon.jpg";
+//                doc.body.style.background = 'green';
+                doc.simState.src = "fig/simDis.jpg";
 //                doc.forms[0].elements['status'].value='yay';
             } else {
-                doc.body.style.background = 'white';
-                doc.realState.src = "fig/simDis.jpg";
+//                doc.body.style.background = 'white';
+                doc.simState.src = "fig/simCon.jpg";
 //                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
             }
         }
@@ -90,7 +90,7 @@ iframe.addEventListener("load", function() {
     var doc = iframe.contentDocument;
     doc.body.style.background = 'white';
 //    doc.body.innerHTML = '<form action="equal.1" method="get" onsubmit="return parent.calc()"><input type=text name=a> = <input type=text name=total><input type=submit value="Calculate"></form>'
-    doc.body.innerHTML = '<table><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggle"><img id="realState" width="110" src="fig/realDis.jpg"></button></form></td><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggle"><img id="realState" width="110" src="fig/realDis.jpg"></button></form></td></tr></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Connection Manager</u></b></center></tr><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggleReal"><img id="realState" height="75" src="fig/realDis.jpg"></button></form></td><td><form action="connectSim.1" method="get" onsubmit="return parent.connectSim()"><button name="sim" type="submit" value="toggleSim"><img id="simState" height="75" src="fig/simDis.jpg"></button></form></td></tr></table>';
 //    <input type=submit name=robot value="on"><br><input type=text name=status>
 
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.
