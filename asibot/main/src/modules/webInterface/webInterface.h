@@ -9,14 +9,9 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 
-#include <yarp/dev/PolyDriver.h>
-#include <yarp/dev/CartesianControl.h>
-#include <yarp/dev/ControlBoardInterfaces.h>
-
 #include "webResponder.h"
 
 using namespace yarp::os;
-using namespace yarp::dev;
 
 class WebInterface : public RFModule {
 protected:
@@ -24,12 +19,6 @@ protected:
     Port server;
     WebResponder responder;
     Contact contact;
-
-    yarp::dev::PolyDriver cartesianDevice;
-    yarp::dev::PolyDriver robotDevice;
-
-    yarp::dev::ICartesianControl *icart;
-    yarp::dev::IPositionControl *ipos;
 
     bool updateModule();
     bool interruptModule();
