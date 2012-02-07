@@ -19,6 +19,7 @@ using std::string;
  */
 class WebResponder : public PortReader {
 protected:
+    bool simConnected, realConnected;
     ResourceFinder rf;
     ConstString htmlPath;
     ConstString resourcePath;
@@ -26,6 +27,7 @@ protected:
     string& replaceAll(string& context, const string& from, const string& to);
 public:
     ConstString getCss();
+    bool init();
     bool read(ConnectionReader& in);
     bool setHtmlPath(const ConstString& _htmlPath);
     bool setResourcePath(const ConstString& _resourcePath);
