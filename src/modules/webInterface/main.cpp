@@ -29,8 +29,16 @@
 \verbatim
 [on terminal 2] $ASIBOT_DIR/bin/webInterface
 \endverbatim
+ * And should get some kind of feedback. The last line should be something like:
+\verbatim
+Server running, visit: http://127.0.0.1:8080/index
+\endverbatim
  *
- * Now open a browser and go to the location indicated by WebInterface.
+ * Now open a browser and go to the location indicated by that feedback, as in:
+ *
+\verbatim
+[on terminal 3] firefox http://127.0.0.1:8080/index &
+\endverbatim
  *
  * <b>Modify</b>
 
