@@ -90,7 +90,7 @@ iframe.addEventListener("load", function() {
     var doc = iframe.contentDocument;
     doc.body.style.background = 'white';
 //    doc.body.innerHTML = '<form action="equal.1" method="get" onsubmit="return parent.calc()"><input type=text name=a> = <input type=text name=total><input type=submit value="Calculate"></form>'
-    doc.body.innerHTML = '<table><tr><center><b><u>Connection Manager</u></b></center></tr><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggleReal"><img id="realState" height="75" src="fig/realDis.jpg"></button></form></td><td><form action="connectSim.1" method="get" onsubmit="return parent.connectSim()"><button name="sim" type="submit" value="toggleSim"><img id="simState" height="75" src="fig/simDis.jpg"></button></form></td></tr></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Connection Manager</u></b></center></tr><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggleReal"><img id="realState" height="75" src="fig/realInit.jpg"></button></form></td><td><form action="connectSim.1" method="get" onsubmit="return parent.connectSim()"><button name="sim" type="submit" value="toggleSim"><img id="simState" height="75" src="fig/simInit.jpg"></button></form></td></tr></table>';
 //    <input type=submit name=robot value="on"><br><input type=text name=status>
 
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.

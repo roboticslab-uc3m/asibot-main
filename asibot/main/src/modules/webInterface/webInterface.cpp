@@ -57,6 +57,7 @@ double WebInterface::getPeriod() {
 /************************************************************************/
 bool WebInterface::interruptModule() {
     server.interrupt();
+    responder.closeDevices();
     server.close();
     return true;
 }

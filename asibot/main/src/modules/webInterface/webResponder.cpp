@@ -10,6 +10,13 @@ bool WebResponder::init() {
 }
 
 /************************************************************************/
+bool WebResponder::closeDevices() {
+    realDevice.close();
+    simDevice.close();
+    return true;
+}
+
+/************************************************************************/
 bool WebResponder::setHtmlPath(const ConstString& _htmlPath) {
     htmlPath = _htmlPath;
     return true;
@@ -50,6 +57,10 @@ string WebResponder::readFile(const ConstString& fileName) {
     t.close();
     ConstString resourceURL = resourcePath + "fig/";
     replaceAll(str, "fig/", resourceURL.c_str());
+    if(simConnected) replaceAll(str, "simInit.jpg", "simCon.jpg");
+    else replaceAll(str, "simInit.jpg", "simDis.jpg");
+    if(realConnected) replaceAll(str, "realInit.jpg", "realCon.jpg");
+    else replaceAll(str, "realInit.jpg", "realDis.jpg");
     return str;
 }
 
