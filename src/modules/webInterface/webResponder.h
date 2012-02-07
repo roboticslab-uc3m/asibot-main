@@ -43,6 +43,7 @@ protected:
 public:
     ConstString getCss();
     bool init();
+    bool closeDevices();
     bool read(ConnectionReader& in);
     bool setHtmlPath(const ConstString& _htmlPath);
     bool setResourcePath(const ConstString& _resourcePath);
