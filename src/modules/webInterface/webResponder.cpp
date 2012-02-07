@@ -72,9 +72,6 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="connectionTab.js") {
         response.addString(readFile("connectionTab.js").c_str());
         return response.write(*out);
-    } else if (code=="tabHelpers.js") {
-        response.addString(readFile("tabHelpers.js").c_str());
-        return response.write(*out);
     } else if (code=="testEqual") {
         response.addString(readFile("testEqual.html").c_str());
         return response.write(*out);
