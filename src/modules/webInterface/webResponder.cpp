@@ -3,6 +3,13 @@
 #include "webResponder.h"
 
 /************************************************************************/
+bool WebResponder::init() {
+    simConnected = false;
+    realConnected = false;
+    return true;
+}
+
+/************************************************************************/
 bool WebResponder::setHtmlPath(const ConstString& _htmlPath) {
     htmlPath = _htmlPath;
     return true;
@@ -80,10 +87,17 @@ bool WebResponder::read(ConnectionReader& in) {
         printf("Got an %s, going to equal it.\n",inParam.c_str());
         response.addString(inParam);
         return response.write(*out);
-    } else if (code=="connectRobot.1") {
-        ConstString inParam = request.find("target").asString();
-        printf("Got %s, sending OK.\n",inParam.c_str());
-        ConstString outParam = "OK";
+    } else if (code=="connectReal.1") {
+        ConstString inParam = request.find("real").asString();
+        printf("Got %s.\n",inParam.c_str());
+        ConstString outParam;
+        if (realConnected){
+            realConnected = false;
+            outParam = "REALOFF";
+        } else {
+            realConnected = true;
+            outParam = "REALON";
+        }
         response.addString(outParam);
         return response.write(*out);
     } else if (code=="index") {
