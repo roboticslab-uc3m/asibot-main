@@ -36,7 +36,7 @@ bool WebInterface::configure(ResourceFinder &rf) {
 
 /************************************************************************/
 bool WebInterface::updateModule() {
-    printf("Server running, visit: http://%s:%d/test\n",
+    printf("Server running, visit: http://%s:%d/index\n",
                    contact.getHost().c_str(),
                    contact.getPort());
     Bottle push;
