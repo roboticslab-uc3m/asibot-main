@@ -11,6 +11,7 @@ bool WebInterface::configure(ResourceFinder &rf) {
     counter = 0;
     period = rf.check("period",5,"period in s").asDouble();
 
+    responder.init();
     ConstString htmlPath = rf.getContextPath() + "/../html/";
     printf("htmlPath: %s\n",htmlPath.c_str());
     responder.setHtmlPath(htmlPath);
