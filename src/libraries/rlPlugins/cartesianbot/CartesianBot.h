@@ -37,8 +37,9 @@ using namespace yarp::math;
  *
  * @ingroup CartesianBot
  *
- * CartesianBot connects to a robot (the IPositionControl, IVelocityControl and IEncoders interfaces)
- * and exposes a YARP_dev cartesian interface (implements ICartesianControl).
+ * CartesianBot connects to a robot (the IPositionControl, IVelocityControl and
+ * IEncoders interfaces) and exposes a YARP_dev cartesian interface (implements
+ * ICartesianControl). It is used by the CartesianServer module.
  *
  * <b>Installation</b>
  *
