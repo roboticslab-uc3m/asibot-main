@@ -100,6 +100,19 @@ bool WebResponder::read(ConnectionReader& in) {
         }
         response.addString(outParam);
         return response.write(*out);
+    } else if (code=="connectSim.1") {
+        ConstString inParam = request.find("sim").asString();
+        printf("Got %s.\n",inParam.c_str());
+        ConstString outParam;
+        if (simConnected){
+            simConnected = false;
+            outParam = "SIMOFF";
+        } else {
+            simConnected = true;
+            outParam = "SIMON";
+        }
+        response.addString(outParam);
+        return response.write(*out);
     } else if (code=="index") {
         response.addString(readFile("index.html").c_str());
         return response.write(*out);
