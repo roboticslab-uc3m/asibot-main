@@ -40,6 +40,29 @@ function connectReal() {
     return false
 }
 
+function connectSim() {
+    var doc = iframe.contentDocument;
+    frm=doc.forms[0];
+    url="connectSim.1?sim="+frm.elements['sim'].value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            if((xmlhttp.responseText.search('SIMOFF'))>-1){
+                doc.body.style.background = 'green';
+                doc.realState.src = "fig/simCon.jpg";
+//                doc.forms[0].elements['status'].value='yay';
+            } else {
+                doc.body.style.background = 'white';
+                doc.realState.src = "fig/simDis.jpg";
+//                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
+            }
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false
+}
+
 // This iframe stuff is from http://wiki.greasespot.net/CSS_Independent_Content [thanks!]
 
 // position:fixed means stay fixed even when the page scrolls. z-index keeps your iframe on top.
@@ -67,7 +90,7 @@ iframe.addEventListener("load", function() {
     var doc = iframe.contentDocument;
     doc.body.style.background = 'white';
 //    doc.body.innerHTML = '<form action="equal.1" method="get" onsubmit="return parent.calc()"><input type=text name=a> = <input type=text name=total><input type=submit value="Calculate"></form>'
-    doc.body.innerHTML = '<form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggle"><img id="realState" width="125" src="fig/realDis.jpg"></button></form>';
+    doc.body.innerHTML = '<table><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggle"><img id="realState" width="110" src="fig/realDis.jpg"></button></form></td><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggle"><img id="realState" width="110" src="fig/realDis.jpg"></button></form></td></tr></table>';
 //    <input type=submit name=robot value="on"><br><input type=text name=status>
 
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.
