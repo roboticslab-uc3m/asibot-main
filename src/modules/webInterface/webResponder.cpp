@@ -84,7 +84,7 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString inParam = request.find("target").asString();
         printf("Got %s, sending OK.\n",inParam.c_str());
         ConstString outParam = "OK";
-        response.addString(inParam);
+        response.addString(outParam);
         return response.write(*out);
     } else if (code=="index") {
         response.addString(readFile("index.html").c_str());
