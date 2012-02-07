@@ -4,7 +4,7 @@
  *
  * \defgroup webInterface
  *
- * Creates an instance of WebInterface.
+ * Creates an instance of WebInterface. Calls are handled by the WebResponder class.
  *
  * <b> Legal </b>
  *
@@ -29,6 +29,8 @@
 \verbatim
 [on terminal 2] $ASIBOT_DIR/bin/webInterface
 \endverbatim
+ *
+ * Now open a browser and go to the location indicated by WebInterface.
  *
  * <b>Modify</b>
 

@@ -9,6 +9,14 @@
 using namespace yarp::os;
 using std::string;
 
+/**
+ *
+ * @ingroup webResponder
+ *
+ * The WebResponder class manages YARP web RPCs as callbacks and additionally
+ * manages resouces and parses HTML code before acting as a mini-server.
+ *
+ */
 class WebResponder : public PortReader {
 protected:
     ResourceFinder rf;
