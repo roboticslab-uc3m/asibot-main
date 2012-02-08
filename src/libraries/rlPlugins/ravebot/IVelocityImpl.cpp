@@ -38,7 +38,7 @@ bool RaveBot::velocityMove(const double *sp) {
         return false;
     }
 //    double sp_limited[NUM_MOTORS];
-    printf("Vel: ");
+    printf("Vel:");
     for (unsigned int i=0; i<NUM_MOTORS; i++) {
         if(sp[i]>0) target_degrees[i]=180.0; // Must correct for JL
         else target_degrees[i]=-180.0;
@@ -48,7 +48,7 @@ bool RaveBot::velocityMove(const double *sp) {
 //      joint_vel[i] = (THREAD_RATE*SPEED_ADJ_V*sp_limited[i])/(100.0);
         // Force it as is:
         joint_vel[i] = sp[i];
-        printf(" %f",joint_vel[i]);
+        printf(" %+.6f",joint_vel[i]);
         joint_status[i]=3;
     }
     printf("\n");

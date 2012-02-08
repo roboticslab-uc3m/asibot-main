@@ -88,7 +88,7 @@ class OrderThreeTraj {
     */
     void dump(double samples) {
         for(double i=0;i<T;i+=(T/samples))
-            printf("%f %f %f %f\n",i,get(i),getdot(i), getdotdot(i));
+            printf("%05.2f %+02.6f %+02.6f %+02.6f\n",i,get(i),getdot(i), getdotdot(i));
     }
 
   private:
