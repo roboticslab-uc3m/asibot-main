@@ -58,7 +58,7 @@ void CartesianBot::run() {
             xPdotd.push_back(trajPhP.getdot(sTime));
             xPdotd.push_back(trajOyP.getdot(sTime));
             lawxP.resize(3);
-            lawxP = (eP * GAIN) + xPdotd;  // GAIN=0 => lawxP = xPdotd;
+            lawxP = (eP * GAIN * (msPeriod/1000.0)) + xPdotd;  // GAIN=0 => lawxP = xPdotd;
             yarp::sig::Matrix Ja(3,3);
             for (int i=0; i<NUM_MOTORS; i++)
                 realRad[i]=toRad(realDeg[i]);
@@ -78,12 +78,12 @@ void CartesianBot::run() {
             t = Ja_pinv * lawxP;
             double qdot[NUM_MOTORS];
             double eoz = trajOz.get(sTime) - realDeg[0];
-            qdot[0] = trajOz.getdot(sTime) + GAIN*eoz;  // lawoz
+            qdot[0] = trajOz.getdot(sTime) + GAIN*(msPeriod/1000.0)*eoz;  // lawoz
             qdot[1] = toDeg(t[0]);
             qdot[2] = toDeg(t[1]);
             qdot[3] = toDeg(t[2]);
             double eOzPP = trajOzPP.get(sTime) - realDeg[4];
-            qdot[4] = trajOzPP.getdot(sTime) + GAIN*eOzPP;  // lawOzP
+            qdot[4] = trajOzPP.getdot(sTime) + GAIN*(msPeriod/1000.0)*eOzPP;  // lawOzP
             if(!vel->velocityMove(qdot))
                 printf("GIGANTIC velocity WARNING\n");
         }

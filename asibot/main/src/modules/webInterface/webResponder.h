@@ -21,13 +21,13 @@ using std::string;
  * @ingroup webResponder
  *
  * The WebResponder class manages YARP web RPCs as callbacks and additionally
- * manages resouces and parses HTML code before acting as a mini-server.
+ * manages resouces and parses HTML code before acting as a mini-server. Used by
+ * WebInterface.
  *
  */
 class WebResponder : public PortReader {
 protected:
     bool simConnected, realConnected;
-    ResourceFinder rf;
     ConstString htmlPath;
     ConstString resourcePath;
     string readFile(const ConstString& fileName);
