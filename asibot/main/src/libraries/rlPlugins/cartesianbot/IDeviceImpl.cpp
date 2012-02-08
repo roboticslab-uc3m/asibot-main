@@ -33,11 +33,22 @@ bool CartesianBot::open(Searchable& config) {
     maxVel = DEFAULT_MAXVEL;
     maxAcc = DEFAULT_MAXACC;
 
+    if(!config.check("robotDevice")){
+        printf("[error] robotDevice must be defined to open() CartesianBot\n");
+        printf("[error] you may also define subdevice,name,local,remote to open() CartesianBot\n");
+        return false;
+    }
     Property options;
+    options.put("device",config.find("robotDevice").asString());
+    options.put("subdevice",config.find("robotSubdevice").asString());
+    options.put("name",config.find("robotName").asString());
+    options.put("local",config.find("robotLocal").asString());
+    options.put("remote",config.find("robotRemote").asString());
+
 /////// UNCOMMENT NEXT 3 LINES FOR USING RAVEBOT AS A LIBRARY AND OPENING FOR REMOTE ////////
-    options.put("device","controlboard");
-    options.put("subdevice","ravebot");
-    options.put("name","/ravebot");
+//    options.put("device","controlboard");
+//    options.put("subdevice","ravebot");
+//    options.put("name","/ravebot");
 //////// UNCOMMENT NEXT 1 LINE FOR USING RAVEBOT AS A LIBRARY ///////////////////////
 //        options.put("device","ravebot");
 //////// UNCOMMENT NEXT 3 LINES FOR CONNECTING TO REMOTE RAVEBOT /////////////
