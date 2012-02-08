@@ -10,7 +10,7 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
-// #define VOCAB_STOP VOCAB4('s','t','o','p')  // already exists
+#define VOCAB_MY_STOP VOCAB4('s','t','o','p')
 #define VOCAB_STAT VOCAB4('s','t','a','t')
 #define VOCAB_MOVL VOCAB4('m','o','v','l')
 #define VOCAB_MOVJ VOCAB4('m','o','v','j')

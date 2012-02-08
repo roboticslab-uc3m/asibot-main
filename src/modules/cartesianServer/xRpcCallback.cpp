@@ -12,11 +12,12 @@ bool xRpcCallback::read(ConnectionReader& connection) {
     if (returnToSender==NULL) return false;  // Warning: unknown behaviour to j.
     int choice = in.get(0).asVocab();
     if (in.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
-    if (choice==VOCAB_STOP) {  ///////////////////////////////// stop /////////////////////////////////
-        if(icart->stopControl())
-            out.addVocab(VOCAB_OK);
-        else
-            out.addVocab(VOCAB_FAILED);
+    if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
+        if(icart->stopControl()) {
+            if(ipos->stop()) {
+                out.addVocab(VOCAB_OK);
+            } else out.addVocab(VOCAB_FAILED);
+        } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
         return true;
     } else if (choice==VOCAB_STAT) { ///////////////////////////////// stat /////////////////////////////////
