@@ -61,8 +61,8 @@ bool CartesianBot::open(Searchable& config) {
     } else printf("[success] cartesianbot acquired robot interfaces\n");
 
     // Start the RateThread
-    int period = config.check("rate",30,"ms ratethread").asInt();
-    this->setRate(period);
+    msPeriod = config.check("rate",30,"ms ratethread").asDouble();
+    this->setRate(msPeriod);
     this->start();
     return true;
 }

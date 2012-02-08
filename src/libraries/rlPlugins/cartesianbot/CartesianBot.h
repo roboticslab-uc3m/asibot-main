@@ -25,7 +25,7 @@
 #define DEFAULT_DURATION 20  /// For Trajectory, 3s?
 #define DEFAULT_MAXVEL 0.2  /// 0.1?
 #define DEFAULT_MAXACC 0.2  /// 0.1?
-#define GAIN 0.2  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
+#define GAIN 0.5  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 //using namespace std;
 using namespace yarp::os;
@@ -576,7 +576,8 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     double A0, A1, A2, A3;  // link lengths
     double startTime;
     double duration, maxVel, maxAcc;
-
+    
+    double msPeriod;
 };
 
 #endif

@@ -19,7 +19,6 @@ Released for free under a Creative Commons Attribution 2.5 License
 	<h1><a href="index">Asibot Web Interface</a></h1>
 	<h2>By <a href="http://roboticslab.uc3m.es">Robotics Lab</a> & <a href="http://asrob.uc3m.es">Asrob</a></h2>
 </div>
-
 <div id="menu">
 	<ul>
 		<li class="first"><a href="index" accesskey="1" title="">Home</a></li>
@@ -39,21 +38,41 @@ Released for free under a Creative Commons Attribution 2.5 License
 <div id="banner"><img src="fig/img04.jpg" alt="" width="960" height="150" />
 </div>
 
+
+
 <!-- start page -->
 <div id="page">
 	<!-- start content -->
 		<div id="left_wrapper" align=center><br><br>
-            <FORM ACTION="joint">
+        <script>
+function jointMove() {
+//  frm=document.forms[0]
+//  frm=document.getElementById(id);
+  frm=document.forms["thejoypad"];
+  alert(frm.elements['movement'].value);
+  url="joint.1?joint="+frm.elements['joint'].value+"&movement="+frm.elements['movement'].value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.onreadystatechange=function() {
+   if (xmlhttp.readyState==4) {
+    document.forms[0].elements['total'].value=xmlhttp.responseText;
+   }
+  }
+ xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+ xmlhttp.send();
+ return false;
+}
+</script>
+            <form name="thejoypad" id="thejoypad" action="joint.1" method="get" onsubmit="return parent.jointMove()">
                 <font size="4"><strong><u>Joypad</u></strong></font>&nbsp;<P>
-                <INPUT TYPE=RADIO NAME="joint" VALUE="1">&nbsp;<font size="3">One</font> &nbsp;&nbsp;
-                <INPUT TYPE=RADIO NAME="joint" VALUE="2">&nbsp;<font size="3">Two</font> &nbsp;&nbsp;
-                <INPUT TYPE=RADIO NAME="joint" VALUE="3">&nbsp;<font size="3">Three</font> &nbsp;&nbsp;
-                <INPUT TYPE=RADIO NAME="joint" VALUE="4">&nbsp;<font size="3">Four</font> &nbsp;&nbsp;
-                <INPUT TYPE=RADIO NAME="joint" VALUE="5">&nbsp;<font size="3">Five</font><br><br>
-                <button name="movement" type="submit" value="left"><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
-<button name="movement" type="submit" value="right"><img src="fig/right.png" width="50" height="50"></button>
+                <input type=radio name="joint" value="1">&nbsp;<font size="3">One</font> &nbsp;&nbsp;
+                <input type=radio name="joint" value="2">&nbsp;<font size="3">Two</font> &nbsp;&nbsp;
+                <input type=radio name="joint" value="3">&nbsp;<font size="3">Three</font> &nbsp;&nbsp;
+                <input type=radio name="joint" value="4">&nbsp;<font size="3">Four</font> &nbsp;&nbsp;
+                <input type=radio name="joint" value="5">&nbsp;<font size="3">Five</font><br><br>
+                <button type=submit name="movement" value="left"><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button type=submit name="movement" value="right"><img src="fig/right.png" width="50" height="50"></button>
 <br><br><br>
-            </FORM>
+            </form>
         </div>
 
         <div id="middle_wrapper" align=center>
