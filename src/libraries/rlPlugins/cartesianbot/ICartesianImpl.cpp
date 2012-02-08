@@ -45,7 +45,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     getPose(x,o);
     double trajT=duration;
     if (t>0) trajT = t;
-    trajPrP.configure(sqrt((x[0])*(x[0])+(x[1])*(x[1])),sqrt((xd[0])*(xd[0]))+((xd[1])*(xd[1])),trajT);
+    trajPrP.configure(sqrt(x[0]*x[0]+x[1]*x[1]),sqrt(xd[0]*xd[0]+xd[1]*xd[1]),trajT);
     trajPhP.configure(x[2]-A0,xd[2]-A0,trajT);
     trajOyP.configure(o[0],od[0],trajT);  // We set it in degrees
     trajOz.configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
