@@ -162,6 +162,11 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="joint") {
         response.addString(readFile("joint.html").c_str());
         return response.write(*out);
+    } else if (code=="joint.1") {
+        ConstString inParam = request.find("movement").asString();
+        printf("Got an [%s] movement, going to equal it.\n",inParam.c_str());
+        response.addString(inParam);
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
