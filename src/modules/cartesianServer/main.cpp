@@ -64,19 +64,26 @@ Response: (45.0 -41.169914 116.855705 14.314209 0.0) [ok]
  *
  * Example with <b>movj</b>
 \verbatim
-[on terminal 3] [movj] (.1 0 .7 90 0)
+[on terminal 3] [movj] (.1 .1 .7 90 0)
 \endverbatim
 \verbatim
 Response: [ok]
 \endverbatim
  * Example with <b>movl</b>
 \verbatim
-[on terminal 3] [movl] (.3 0 .7 90 0)
+[on terminal 3] [movl] (.1 .3 .8 90 0)
 \endverbatim
 \verbatim
 Response: [ok]
 \endverbatim
  *
+ * Of course, a <b>stop</b> rpc method has been implemented:
+\verbatim
+[on terminal X] [stop]
+\endverbatim
+\verbatim
+Response: [ok]
+\endverbatim
  *
  * <b>Modify</b>
 
