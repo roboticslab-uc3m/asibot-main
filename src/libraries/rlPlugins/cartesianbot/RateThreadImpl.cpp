@@ -36,9 +36,9 @@ void CartesianBot::run() {
             //printf("Inside control loop moving.\n");
             yarp::sig::Vector xP,xPd,xPdotd,eP,lawxP;
             double ozRad = atan2(x[1],x[0]);
-            xP.push_back(sqrt((x[0])*(x[0])+(x[1])*(x[1])));  // prP
+            xP.push_back(sqrt(x[0]*x[0]+x[1]*x[1]));  // prP
             xP.push_back(x[2]-A0);  // phP
-            xP.push_back(o[0]);  // oyP
+            xP.push_back(toRad(o[0]));  // oyP
             //printf("Problem statement:\n");
             //printf("oz: %f\nxP: %f\nzP: %f\n",toDeg(ozRad),xP[0],xP[1]);
             double sTime = Time::now()-startTime;
@@ -51,12 +51,12 @@ void CartesianBot::run() {
             }
             xPd.push_back(trajPrP.get(sTime));
             xPd.push_back(trajPhP.get(sTime));
-            xPd.push_back(trajOyP.get(sTime));
+            xPd.push_back(toRad(trajOyP.get(sTime)));
             eP.resize(3);
             eP = xPd - xP;
             xPdotd.push_back(trajPrP.getdot(sTime));
             xPdotd.push_back(trajPhP.getdot(sTime));
-            xPdotd.push_back(trajOyP.getdot(sTime));
+            xPdotd.push_back(toRad(trajOyP.getdot(sTime)));
             lawxP.resize(3);
             lawxP = (eP * GAIN * (msPeriod/1000.0)) + xPdotd;  // GAIN=0 => lawxP = xPdotd;
             yarp::sig::Matrix Ja(3,3);
@@ -71,8 +71,8 @@ void CartesianBot::run() {
             Ja(2,0) = 1;
             Ja(2,1) = 1;
             Ja(2,2) = 1;
-            yarp::sig::Matrix Ja_pinv(pinv(Ja,1.0e-2));
-//            yarp::sig::Matrix Ja_pinv(pinv(Ja));
+//            yarp::sig::Matrix Ja_pinv(pinv(Ja,1.0e-2));
+            yarp::sig::Matrix Ja_pinv(pinv(Ja));
             yarp::sig::Vector t;
             t.resize(3);
             t = Ja_pinv * lawxP;
