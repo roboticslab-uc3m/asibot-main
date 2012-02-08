@@ -32,9 +32,9 @@ void RaveBot::run() {
         if(theToolPort.status==1) {
             if (fabs(theToolPort.target-real_tool)>MOTOR_PRECISION) {
                 if(theToolPort.target-real_tool>0)
-                    real_tool+=THREAD_RATE*SPEED_ADJ*0.25;
+                    real_tool+=THREAD_RATE*TOOL_SPEED_ADJ;
                 else
-                    real_tool-=THREAD_RATE*SPEED_ADJ*0.25;
+                    real_tool-=THREAD_RATE*TOOL_SPEED_ADJ;
                 printf("Tool at %f\n",real_tool);
             } else {
                 theToolPort.status = 0;
