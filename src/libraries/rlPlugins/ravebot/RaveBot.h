@@ -18,8 +18,8 @@
 #define NUM_MOTORS 5
 #define THREAD_RATE 20  // In miliseconds. Was 0.5
 #define MOTOR_PRECISION 0.25  // In degrees. Was .75
-#define SPEED_ADJ 0.2  // Speed adjustment for simulation, pos.
-//#define SPEED_ADJ_V 1  // Speed adjustment for simulation, vel.
+#define DEFAULT_REFSPEED 20.0
+#define TOOL_SPEED_ADJ 0.08  // Speed adjustment for simulation, pos.
 #define NEG_LIM -135.0
 #define POS_LIM 135.0
 #define NEG_LIM_EXT -180.0
