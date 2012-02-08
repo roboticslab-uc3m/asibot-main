@@ -24,7 +24,8 @@
 #define POS_LIM 135.0
 #define NEG_LIM_EXT -180.0
 #define POS_LIM_EXT 180.0
-#define MI_PI 3.14159265
+//#define MI_PI 3.14159265
+#define MI_PI M_PI
 #define UNSTABLE false
 
 #define DEFAULT_ENV_NAME "/app/ravebot/models/asibot_cocina_entero.env.xml"  // on $ASIBOT_ROOT
@@ -354,6 +355,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   double joint_vel[NUM_MOTORS];
   double refSpeed[NUM_MOTORS];
   double refAcc[NUM_MOTORS];
+  double lastTime;
   // Tool-related
   double real_tool;
   toolPort theToolPort;  

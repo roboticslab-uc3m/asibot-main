@@ -59,6 +59,12 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     printf("[goToPose] begin: trajOyP dump(100 samples).\n");
     trajOyP.dump(100);
     printf("[goToPose] end: trajOyP dump(100 samples).\n");
+    printf("[goToPose] begin: trajOz dump(100 samples).\n");
+    trajOz.dump(100);
+    printf("[goToPose] end: trajOz dump(100 samples).\n");
+    printf("[goToPose] begin: trajOzPP dump(100 samples).\n");
+    trajOzPP.dump(100);
+    printf("[goToPose] end: trajOzPP dump(100 samples).\n");
     startTime = Time::now();
     withOri=true;
     vel->setVelocityMode();

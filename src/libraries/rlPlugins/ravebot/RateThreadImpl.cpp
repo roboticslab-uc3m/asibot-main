@@ -7,6 +7,7 @@
 
 bool RaveBot::threadInit() {
     printf("[success] ravebot threadInit()\n");
+    lastTime = Time::now();
     return true;
 }
 
@@ -22,11 +23,13 @@ void RaveBot::run() {
           joint_vel[motor]=0;
         // Here we should check for joint limits
         } else {
-          real_degrees[motor]+=(joint_vel[motor])*(THREAD_RATE/1000.0);
+//            real_degrees[motor]+=(joint_vel[motor])*(THREAD_RATE/1000.0);
+            real_degrees[motor]+=(joint_vel[motor])*(Time::now()-lastTime);
         }
       }
       next_positions[motor]=float(real_degrees[motor]*MI_PI/180.0);
     }
+    lastTime = Time::now();
 
     if (toolFound) {
         if(theToolPort.status==1) {
