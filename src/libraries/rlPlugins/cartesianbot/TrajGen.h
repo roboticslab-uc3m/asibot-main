@@ -29,12 +29,12 @@ class OrderThreeTraj {
     /**
     * Configure the trajectory.
     */
-    void configure(const double xi, const double xf, const double xdi, const double xdf, const double _T) {
+    void configure(const double xi, const double xf, const double xdoti, const double xdotf, const double _T) {
         T = _T;
         a0 = xi;
-        a1 = xdi;
-        a3 = (xdf-2*xdi)/(T*T) + 2*(xi-xf)/(T*T*T);
-        a2 = (xf-xi-xdi*T)/(T*T) - a3*T;
+        a1 = xdoti;
+        a3 = (xdotf-2*xdoti)/(T*T) + 2*(xi-xf)/(T*T*T);
+        a2 = (xf-xi-xdoti*T)/(T*T) - a3*T;
     }
 
     /**
