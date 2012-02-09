@@ -21,11 +21,11 @@ using namespace yarp::dev;
 using namespace yarp::sig;
 
 /**
- * @ingroup xRpcCallback
+ * @ingroup xRpcResponder
  *
- * xRpcCallback class implements an xRpcPort responder (callback on RPC).
+ * xRpcResponder class implements an xRpcPort responder (callback on RPC).
  */
-class xRpcCallback : public PortReader {
+class xRpcResponder : public PortReader {
 protected:
     /**
     * Implement the actual responder (callback on RPC).
