@@ -72,6 +72,12 @@
 \endverbatim
  *
  * <b>Interfacing with the wiimoteServer</b>
+ *
+ * File -> Connect
+ *
+ * Put Wiimote in discoverable mode (press 1+2) and press OK
+ *
+ * Settings -> Acc Data
  * 
  * <b>Modify</b>
  *
@@ -248,6 +254,11 @@ int main (int argc, char *argv[]) {
 	char *str_addr;
 
 	Network yarp;
+    if (!yarp.checkNetwork()) {
+        printf("No yarp network, bye!\n");
+        return -1;
+    }
+
 	miPuerto.open("/wiimote_info");
 
 	gtk_set_locale ();
