@@ -7,4 +7,5 @@ add_subdirectory(grabRedCan)
 add_subdirectory(testRaveBot)
 add_subdirectory(webInterfacePy)
 add_subdirectory(webInterface)
+add_subdirectory(wiimoteServer)
 
