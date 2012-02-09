@@ -13,7 +13,8 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
-#include "xRpcCallback.h"
+#include "xRpcResponder.h"
+#include "xServer.h"
 
 #define DEFAULT_CONTROLLER "cartesianbot"
 
@@ -29,8 +30,11 @@ protected:
     yarp::dev::IPositionControl *ipos;
 
     RpcServer xRpcServer;
-	xRpcCallback xCallback;
-    
+	xRpcResponder xResponder;
+
+    Port xServer;
+//	xPortCallback xCallback;
+
     bool updateModule();
     bool interruptModule();
 //    double getPeriod();
