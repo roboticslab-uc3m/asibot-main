@@ -2,7 +2,9 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD hmiWiimote)
+IF (enable_ASIBOT_MODULES)
+
+set(KEYWORD wiimoteServer)
 
 # Start a project.
 project(${KEYWORD})
@@ -27,6 +29,8 @@ endforeach(header_file ${folder_header})
 # Set additional include directories.
 include_directories(${GTK2_INCLUDE_DIRS})
 
+set(CMAKE_CXX_FLAGS "-fpermissive") # gcc compiler complains but at least compiles thanks to this
+
 # Set up our main executable.
 IF (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
@@ -34,4 +38,6 @@ IF (folder_source)
 ELSE (folder_source)
   MESSAGE(FATAL_ERROR "No source code files found. Please add something")
 ENDIF (folder_source)
+
+ENDIF (enable_ASIBOT_MODULES)
 

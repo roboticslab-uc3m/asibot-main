@@ -8,6 +8,7 @@
   \li \ref install_eigen2 \endref
   \li \ref install_kdl \endref-->
   \li \ref install_opencv \endref
+  \li \ref install_wiimote \endref
 
   \li \ref install_asibot \endref
 
@@ -106,6 +107,13 @@ cd ../..
 An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
 
 -->
+ * @section install_wiimote Install Glib and Cwiid (optional, needed for wiimoteServer)
+Installing these wiimoteServer dependencies is quite straightforward.
+
+\verbatim
+sudo apt-get install libglib2.0-dev libcwiid-dev
+\endverbatim
+
  * @section install_opencv Install OpenCV (optional, needed for vision modules such as findRedCan)
 
 We'll do this from source to assure the CMake file is created.
