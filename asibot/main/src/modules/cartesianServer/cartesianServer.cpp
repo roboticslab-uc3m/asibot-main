@@ -61,7 +61,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     xResponder.setCartesianInterface(icart);
     xRpcServer.open("/cartesianServer/rpc:i");
     xRpcServer.setReader(xResponder);
-    xPort.useCallback();
+//    xPort.useCallback();
     return true;
 }
 
@@ -73,7 +73,7 @@ bool CartesianServer::updateModule() {
 
 /************************************************************************/
 bool CartesianServer::interruptModule() {
-    xPort.disableCallback();
+//    xPort.disableCallback();
     xRpcServer.interrupt();
     cartesianDevice.close();
     xRpcServer.close();
