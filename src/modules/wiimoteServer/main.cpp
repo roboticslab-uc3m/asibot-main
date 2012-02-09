@@ -114,6 +114,8 @@
 #include "yarp/os/all.h"
 
 using namespace yarp::os;
+#define VOCAB_FWD VOCAB3('f','w','d')
+#define VOCAB_BKWD VOCAB4('b','k','w','d')
 
 #define PI	3.14159265358979323
 
@@ -244,11 +246,16 @@ void err(int id, const char *s, ...)
 */
 
 BufferedPort<Bottle> miPuerto;
-static bool deadMan;
-static bool lastDeadMan;
+static bool buttonAstate;
+static bool lastButtonAstate;
+static bool buttonBstate;
+static bool lastButtonBstate;
 
 int main (int argc, char *argv[]) {
-    deadMan = false;
+    buttonAstate = false;
+    lastButtonAstate = false;
+    buttonBstate = false;
+    lastButtonBstate = false;
 
 	int c;
 	char *str_addr;
@@ -1164,7 +1171,8 @@ void cwiid_btn(struct cwiid_btn_mesg *mesg)
 	gtk_widget_modify_bg(ev2, GTK_STATE_NORMAL,
 	    (mesg->buttons & CWIID_BTN_2) ? &btn_on : &btn_off);
 
-    deadMan=mesg->buttons & CWIID_BTN_B;
+    buttonAstate=mesg->buttons & CWIID_BTN_A;
+    buttonBstate=mesg->buttons & CWIID_BTN_B;
 
 }
 
@@ -1222,24 +1230,48 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 //		miOutput.addDouble(roll);
 //		miOutput.addString("pitch");
 //		miOutput.addDouble(pitch);
+
         
-        if(deadMan) {
+        if(buttonAstate) {
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
+		    miOutput.addVocab(VOCAB_BKWD);
 		    miOutput.addDouble(roll);
             miOutput.addDouble(pitch);
             miPuerto.write(true);
-		    printf ("wrote (roll,pitch): %+6.4f %+6.4f\n",roll,pitch);
-            lastDeadMan = true;
-        } else if (lastDeadMan) {
+		    printf ("wrote (dir,roll,pitch): [bkwd] %+6.4f %+6.4f\n",roll,pitch);
+            lastButtonAstate = true;
+        } else if (lastButtonAstate) {
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
+		    miOutput.addVocab(VOCAB_BKWD);
 		    miOutput.addDouble(0);
             miOutput.addDouble(0);
             miPuerto.write(true);
-		    printf ("wrote (roll,pitch): 0.0 0.0\n");
-            lastDeadMan = false;
+		    printf ("wrote (dir,roll,pitch): [bkwd] 0.0 0.0\n");
+            lastButtonAstate = false;
         }
+
+        if(buttonBstate) {
+	    	Bottle& miOutput = miPuerto.prepare();
+    		miOutput.clear();
+		    miOutput.addVocab(VOCAB_FWD);
+		    miOutput.addDouble(roll);
+            miOutput.addDouble(pitch);
+            miPuerto.write(true);
+		    printf ("wrote (dir,roll,pitch): [fwd] %+6.4f %+6.4f\n",roll,pitch);
+            lastButtonBstate = true;
+        } else if (lastButtonBstate) {
+	    	Bottle& miOutput = miPuerto.prepare();
+    		miOutput.clear();
+		    miOutput.addVocab(VOCAB_FWD);
+		    miOutput.addDouble(0);
+            miOutput.addDouble(0);
+            miPuerto.write(true);
+		    printf ("wrote (dir,roll,pitch): [fwd] 0.0 0.0\n");
+            lastButtonBstate = false;
+        }
+        
 	}
 }
 
