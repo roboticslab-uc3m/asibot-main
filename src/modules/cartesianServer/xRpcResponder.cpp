@@ -1,9 +1,9 @@
 
-#include "xRpcCallback.h"
+#include "xRpcResponder.h"
 
 /************************************************************************/
 
-bool xRpcCallback::read(ConnectionReader& connection) {
+bool xRpcResponder::read(ConnectionReader& connection) {
     Bottle in, out;
     in.read(connection);
     printf("Got %s\n", in.toString().c_str());
@@ -109,13 +109,13 @@ bool xRpcCallback::read(ConnectionReader& connection) {
 
 /************************************************************************/
 
-void xRpcCallback::setCartesianInterface(yarp::dev::ICartesianControl* _icart) {
+void xRpcResponder::setCartesianInterface(yarp::dev::ICartesianControl* _icart) {
     icart = _icart;
 }
 
 /************************************************************************/
 
-void xRpcCallback::setPositionInterface(yarp::dev::IPositionControl* _ipos) {
+void xRpcResponder::setPositionInterface(yarp::dev::IPositionControl* _ipos) {
     ipos = _ipos;
 }
 
