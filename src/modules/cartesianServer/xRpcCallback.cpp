@@ -48,7 +48,7 @@ bool xRpcCallback::read(ConnectionReader& connection) {
         x.push_back(lst->get(2).asDouble());
         o.push_back(lst->get(3).asDouble());
         o.push_back(lst->get(4).asDouble());
-        if(icart->goToPose(x,o)){
+        if(icart->goToPoseSync(x,o)){
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
