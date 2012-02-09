@@ -1238,6 +1238,9 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 //		miOutput.addString("pitch");
 //		miOutput.addDouble(pitch);
 
+        // Check for NaN's...
+        if((pitch!=pitch)||(roll!=roll)) return;
+
         double pitchDeg = (pitch * 180.0 / M_PI) + 90.0;
         if (pitchDeg < PITCHDEG_LIM_INF) pitchDeg = PITCHDEG_LIM_INF;
         if (pitchDeg > PITCHDEG_LIM_SUP) pitchDeg = PITCHDEG_LIM_SUP;
