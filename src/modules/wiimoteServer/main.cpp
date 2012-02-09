@@ -1,20 +1,21 @@
-/* Copyright (C) 2007 L. Donnie Smith <cwiid@abstrakraft.org>
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
+
+/**
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * \defgroup wiimoteServer
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * A working prototype of Wiimote server.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * <b> Legal </b>
  *
- *  ChangeLog:
+ * Copyright: 2012 (C) Universidad Carlos III de Madrid; 
+ *            2007 (C) L. Donnie Smith <cwiid@abstrakraft.org>
+ * 
+ * Author: See Changelog.
+ *
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see license/LGPL.TXT
+ *
+ * ChangeLog:
  *
  *  2012-02-08 <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>
  *  * changed folder structure
@@ -53,6 +54,12 @@
  *  2007-03-01 L. Donnie Smith <cwiid@abstrakraft.org>
  *  * Initial Changelog
  *  * type audit (stdint, const, char booleans)
+ *
+ * <b>Modify</b>
+ *
+ * This file can be edited at 
+ * src/modules/wiimoteServer/main.cpp
+ *
  */
 
 #include "config.h"
