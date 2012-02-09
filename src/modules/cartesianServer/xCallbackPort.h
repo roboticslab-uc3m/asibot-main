@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __X_RPC_RESPONDER__
-#define __X_RPC_RESPONDER__
+#ifndef __X_CALLBACK_PORT__
+#define __X_CALLBACK_PORT__
 
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
@@ -21,30 +21,32 @@ using namespace yarp::dev;
 using namespace yarp::sig;
 
 /**
- * @ingroup xRpcResponder
+ * @ingroup xCallbackPort
  *
- * xRpcResponder class implements an xRpcPort responder (callback on RPC).
+ * xCallbackPort class implements a port with x callbacks.
  */
-class xRpcResponder : public PortReader {
+class xCallbackPort : public BufferedPort<Bottle> {
 protected:
     /**
-    * Implement the actual responder (callback on RPC).
+    * Implement the actual callback.
     */
-    virtual bool read(ConnectionReader& connection);
+    void onRead(Bottle& b);
 
-    yarp::dev::ICartesianControl *icart;
-    yarp::dev::IPositionControl *ipos;
+//    yarp::dev::ICartesianControl *icart;
+//    yarp::dev::IPositionControl *ipos;
 public:
+
+    xCallbackPort() {}
 
     /**
     * Register a cartesian interface for the PortReader.
     */
-    void setCartesianInterface(yarp::dev::ICartesianControl* _icart);
+//    void setCartesianInterface(yarp::dev::ICartesianControl* _icart);
 
     /**
     * Register a position interface for the PortReader.
     */
-    void setPositionInterface(yarp::dev::IPositionControl* _ipos);
+//    void setPositionInterface(yarp::dev::IPositionControl* _ipos);
 };
 
 #endif
