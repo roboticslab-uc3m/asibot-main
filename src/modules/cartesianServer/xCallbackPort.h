@@ -3,6 +3,8 @@
 #ifndef __X_CALLBACK_PORT__
 #define __X_CALLBACK_PORT__
 
+#include <math.h>
+
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 
