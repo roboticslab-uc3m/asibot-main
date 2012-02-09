@@ -14,7 +14,7 @@
 #include <yarp/dev/ControlBoardInterfaces.h>
 
 #include "xRpcResponder.h"
-//#include "xServer.h"
+#include "xCallbackPort.h"
 
 #define DEFAULT_CONTROLLER "cartesianbot"
 
@@ -32,8 +32,7 @@ protected:
     RpcServer xRpcServer;
 	xRpcResponder xResponder;
 
-//    Port xPort;
-//	xPortCallback xCallback;
+    xCallbackPort xPort;
 
     bool updateModule();
     bool interruptModule();

@@ -6,7 +6,7 @@
 bool xRpcResponder::read(ConnectionReader& connection) {
     Bottle in, out;
     in.read(connection);
-    printf("Got %s\n", in.toString().c_str());
+    printf("[xRpcResponder] Got %s\n", in.toString().c_str());
     out.clear();
     ConnectionWriter *returnToSender = connection.getWriter();
     if (returnToSender==NULL) return false;  // Warning: unknown behaviour to j.
