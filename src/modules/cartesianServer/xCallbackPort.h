@@ -11,10 +11,14 @@
 #include <yarp/dev/ControlBoardInterfaces.h>
 
 #define VOCAB_MY_STOP VOCAB4('s','t','o','p')
+
 #define VOCAB_STAT VOCAB4('s','t','a','t')
 #define VOCAB_MOVL VOCAB4('m','o','v','l')
 #define VOCAB_MOVJ VOCAB4('m','o','v','j')
 #define VOCAB_INV VOCAB3('i','n','v')
+
+#define VOCAB_FWD VOCAB3('f','w','d')
+#define VOCAB_BKWD VOCAB4('b','k','w','d')
 
 using namespace yarp::os;
 using namespace yarp::dev;
@@ -32,8 +36,8 @@ protected:
     */
     void onRead(Bottle& b);
 
-//    yarp::dev::ICartesianControl *icart;
-//    yarp::dev::IPositionControl *ipos;
+    yarp::dev::ICartesianControl *icart;
+    yarp::dev::IPositionControl *ipos;
 public:
 
     xCallbackPort() {}
@@ -41,12 +45,12 @@ public:
     /**
     * Register a cartesian interface for the PortReader.
     */
-//    void setCartesianInterface(yarp::dev::ICartesianControl* _icart);
+    void setCartesianInterface(yarp::dev::ICartesianControl* _icart);
 
     /**
     * Register a position interface for the PortReader.
     */
-//    void setPositionInterface(yarp::dev::IPositionControl* _ipos);
+    void setPositionInterface(yarp::dev::IPositionControl* _ipos);
 };
 
 #endif
