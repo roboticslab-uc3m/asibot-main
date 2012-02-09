@@ -55,6 +55,24 @@
  *  * Initial Changelog
  *  * type audit (stdint, const, char booleans)
  *
+ * <b>Installation</b>
+ *
+ * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
+ * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
+ *
+ * <b>Running</b> (assuming correct installation)
+ *
+ * First we must run a YARP name server if it is not running in our current namespace:
+\verbatim
+[on terminal 1] yarp server
+\endverbatim
+ * And then launch the actual module:
+\verbatim
+[on terminal 2] $ASIBOT_DIR/bin/wiimoteServer
+\endverbatim
+ *
+ * <b>Interfacing with the wiimoteServer</b>
+ * 
  * <b>Modify</b>
  *
  * This file can be edited at 
@@ -221,6 +239,7 @@ void err(int id, const char *s, ...)
 
 BufferedPort<Bottle> miPuerto;
 static bool deadMan;
+static bool lastDeadMan;
 
 int main (int argc, char *argv[]) {
     deadMan = false;
@@ -1133,16 +1152,9 @@ void cwiid_btn(struct cwiid_btn_mesg *mesg)
 	    (mesg->buttons & CWIID_BTN_1) ? &btn_on : &btn_off);
 	gtk_widget_modify_bg(ev2, GTK_STATE_NORMAL,
 	    (mesg->buttons & CWIID_BTN_2) ? &btn_on : &btn_off);
-    deadMan=mesg->buttons & CWIID_BTN_B;
-//    if(CWIID_BTN_B) printf("-------------boton B-----------");
-//    if (mesg->buttons & CWIID_BTN_B) printf("pressed button B\n");
-//    if (evB) printf("evB\n");
-//    if (ev2) printf("ev2\n");
-//        if (deadMan = false) deadMan = true;
-//        else deadMan = false;
-//    }
 
-	//printf ("\n aqui tengo los botones %f,%f,%f,%f,%f \n",a_x,a_y,a_z,roll,pitch);
+    deadMan=mesg->buttons & CWIID_BTN_B;
+
 }
 
 #define LBLVAL_LEN 6
@@ -1189,8 +1201,6 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 		g_snprintf(str, LBLVAL_LEN, "%.2f", pitch);
 		gtk_label_set_text(GTK_LABEL(lblPitchVal), str);
 		
-		Bottle& miOutput = miPuerto.prepare();
-		miOutput.clear();
 //		miOutput.addString("accX");
 //		miOutput.addDouble(a_x);
 //		miOutput.addString("accY");
@@ -1198,15 +1208,27 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 //		miOutput.addString("accZ");
 //		miOutput.addDouble(a_z);
 //		miOutput.addString("roll");
-		miOutput.addDouble(roll);
+//		miOutput.addDouble(roll);
 //		miOutput.addString("pitch");
-		miOutput.addDouble(pitch);
+//		miOutput.addDouble(pitch);
         
         if(deadMan) {
-		    miPuerto.write(true);
-		    printf ("ENVIADAS las variables %+6.4f,%+6.4f\n",roll,pitch);
+	    	Bottle& miOutput = miPuerto.prepare();
+    		miOutput.clear();
+		    miOutput.addDouble(roll);
+            miOutput.addDouble(pitch);
+            miPuerto.write(true);
+		    printf ("wrote (roll,pitch): %+6.4f %+6.4f\n",roll,pitch);
+            lastDeadMan = true;
+        } else if (lastDeadMan) {
+	    	Bottle& miOutput = miPuerto.prepare();
+    		miOutput.clear();
+		    miOutput.addDouble(0);
+            miOutput.addDouble(0);
+            miPuerto.write(true);
+		    printf ("wrote (roll,pitch): 0.0 0.0\n");
+            lastDeadMan = false;
         }
-//		printf ("ENVIADAS las variables del acc %.2f,%.2f,%.2f,%.2f,%.2f \n",a_x,a_y,a_z,roll,pitch);
 	}
 }
 
