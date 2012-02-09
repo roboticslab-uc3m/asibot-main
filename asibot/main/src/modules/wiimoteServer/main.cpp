@@ -114,6 +114,7 @@
 #include "yarp/os/all.h"
 
 using namespace yarp::os;
+
 #define VOCAB_FWD VOCAB3('f','w','d')
 #define VOCAB_BKWD VOCAB4('b','k','w','d')
 #define VOCAB_MY_STOP VOCAB4('s','t','o','p')
@@ -1252,10 +1253,12 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
 		    miOutput.addVocab(VOCAB_BKWD);
-		    miOutput.addDouble(rollDeg);
-            miOutput.addDouble(pitchDeg);
+            Bottle dBottle;
+		    dBottle.addDouble(rollDeg);
+            dBottle.addDouble(pitchDeg);
+            miOutput.addList() = dBottle;
             miPuerto.write(true);
-		    printf ("wrote (dir,rollDeg,pitchDeg): [bkwd] %+6.4f %+6.4f\n",rollDeg,pitchDeg);
+		    printf ("wrote (dir,oz,oy'): [bkwd] (%+6.4f %+6.4f)\n",rollDeg,pitchDeg);
             lastButtonAstate = true;
         } else if (lastButtonAstate) {
 	    	Bottle& miOutput = miPuerto.prepare();
@@ -1270,10 +1273,12 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
 		    miOutput.addVocab(VOCAB_FWD);
-		    miOutput.addDouble(rollDeg);
-            miOutput.addDouble(pitchDeg);
+            Bottle dBottle;
+		    dBottle.addDouble(rollDeg);
+            dBottle.addDouble(pitchDeg);
+            miOutput.addList() = dBottle;
             miPuerto.write(true);
-		    printf ("wrote (dir,rollDeg,pitchDeg): [fwd] %+6.4f %+6.4f\n",rollDeg,pitchDeg);
+		    printf ("wrote (dir,oz,oy'): [fwd] (%+6.4f %+6.4f)\n",rollDeg,pitchDeg);
             lastButtonBstate = true;
         } else if (lastButtonBstate) {
 	    	Bottle& miOutput = miPuerto.prepare();

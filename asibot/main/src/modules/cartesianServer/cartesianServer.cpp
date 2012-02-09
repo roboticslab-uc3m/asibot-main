@@ -61,6 +61,8 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     xResponder.setCartesianInterface(icart);
     xRpcServer.open("/cartesianServer/rpc:i");
     xRpcServer.setReader(xResponder);
+    xPort.setPositionInterface(ipos);
+    xPort.setCartesianInterface(icart);
     xPort.open("/cartesianServer/command:i");
     xPort.useCallback();
     return true;
