@@ -83,7 +83,42 @@ bool CartesianBot::goToPosition(const yarp::sig::Vector &xd, const double t) {
 
 bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                               const double t) {
-    return false;
+    printf("[CartesianBot] Begin setting absolute base movement.\n");
+    targetX[0]=xd[0];
+    targetX[1]=xd[1];
+    targetX[2]=xd[2];
+    targetO[0]=od[0];
+    targetO[1]=od[1];
+    yarp::sig::Vector x,o;
+    getPose(x,o);
+    double trajT=duration;
+    if (t>0) trajT = t;
+    trajPrP.configure(sqrt(x[0]*x[0]+x[1]*x[1]),sqrt(xd[0]*xd[0]+xd[1]*xd[1]),trajT);
+    trajPhP.configure(x[2]-A0,xd[2]-A0,trajT);
+    trajOyP.configure(o[0],od[0],trajT);  // We set it in degrees
+    trajOz.configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
+    trajOzPP.configure(o[1],od[1],trajT);  // We set it in degrees
+    printf("[goToPose] begin: trajPrP dump(100 samples).\n");
+    trajPrP.dump(100);
+    printf("[goToPose] end: trajPrP dump(100 samples).\n");
+    printf("[goToPose] begin: trajPhP dump(100 samples).\n");
+    trajPhP.dump(100);
+    printf("[goToPose] end: trajPhP dump(100 samples).\n");
+    printf("[goToPose] begin: trajOyP dump(100 samples).\n");
+    trajOyP.dump(100);
+    printf("[goToPose] end: trajOyP dump(100 samples).\n");
+    printf("[goToPose] begin: trajOz dump(100 samples).\n");
+    trajOz.dump(100);
+    printf("[goToPose] end: trajOz dump(100 samples).\n");
+    printf("[goToPose] begin: trajOzPP dump(100 samples).\n");
+    trajOzPP.dump(100);
+    printf("[goToPose] end: trajOzPP dump(100 samples).\n");
+    startTime = Time::now();
+    withOri=true;
+    vel->setVelocityMode();
+    cmc_status=1;
+    printf("[CartesianBot] End setting absolute base movement.\n");
+    return true;
 }
 
 // -----------------------------------------------------------------------------
