@@ -57,11 +57,11 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     } else printf("[success] cartesianServer acquired robot interfaces\n");
 
     //---------------------CONFIGURE PORT(s)------------------------//
-    xCallback.setPositionInterface(ipos);
-    xCallback.setCartesianInterface(icart);
+    xResponder.setPositionInterface(ipos);
+    xResponder.setCartesianInterface(icart);
     xRpcServer.open("/cartesianServer/rpc:i");
-    xRpcServer.setReader(xCallback);
-    // xPort.useCallback();
+    xRpcServer.setReader(xResponder);
+    xPort.useCallback();
     return true;
 }
 
@@ -73,7 +73,7 @@ bool CartesianServer::updateModule() {
 
 /************************************************************************/
 bool CartesianServer::interruptModule() {
-    // xPort.disableCallback();
+    xPort.disableCallback();
     xRpcServer.interrupt();
     cartesianDevice.close();
     xRpcServer.close();
