@@ -116,6 +116,13 @@
 using namespace yarp::os;
 #define VOCAB_FWD VOCAB3('f','w','d')
 #define VOCAB_BKWD VOCAB4('b','k','w','d')
+#define VOCAB_MY_STOP VOCAB4('s','t','o','p')
+
+#define ROLLDEG_LIM_INF -100.0
+#define ROLLDEG_LIM_SUP 100.0
+
+#define PITCHDEG_LIM_INF 10.0
+#define PITCHDEG_LIM_SUP 170.0
 
 #define PI	3.14159265358979323
 
@@ -1231,24 +1238,28 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 //		miOutput.addString("pitch");
 //		miOutput.addDouble(pitch);
 
-        
+        double pitchDeg = (pitch * 180.0 / M_PI) + 90.0;
+        if (pitchDeg < PITCHDEG_LIM_INF) pitchDeg = PITCHDEG_LIM_INF;
+        if (pitchDeg > PITCHDEG_LIM_SUP) pitchDeg = PITCHDEG_LIM_SUP;
+        double rollDeg = -(roll * 180.0 / M_PI);
+        if (rollDeg < ROLLDEG_LIM_INF) rollDeg = ROLLDEG_LIM_INF;
+        if (rollDeg > ROLLDEG_LIM_SUP) rollDeg = ROLLDEG_LIM_SUP;
+
         if(buttonAstate) {
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
 		    miOutput.addVocab(VOCAB_BKWD);
-		    miOutput.addDouble(roll);
-            miOutput.addDouble(pitch);
+		    miOutput.addDouble(rollDeg);
+            miOutput.addDouble(pitchDeg);
             miPuerto.write(true);
-		    printf ("wrote (dir,roll,pitch): [bkwd] %+6.4f %+6.4f\n",roll,pitch);
+		    printf ("wrote (dir,rollDeg,pitchDeg): [bkwd] %+6.4f %+6.4f\n",rollDeg,pitchDeg);
             lastButtonAstate = true;
         } else if (lastButtonAstate) {
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
-		    miOutput.addVocab(VOCAB_BKWD);
-		    miOutput.addDouble(0);
-            miOutput.addDouble(0);
+		    miOutput.addVocab(VOCAB_MY_STOP);
             miPuerto.write(true);
-		    printf ("wrote (dir,roll,pitch): [bkwd] 0.0 0.0\n");
+		    printf ("wrote (dir): [stop]\n");
             lastButtonAstate = false;
         }
 
@@ -1256,19 +1267,17 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
 		    miOutput.addVocab(VOCAB_FWD);
-		    miOutput.addDouble(roll);
-            miOutput.addDouble(pitch);
+		    miOutput.addDouble(rollDeg);
+            miOutput.addDouble(pitchDeg);
             miPuerto.write(true);
-		    printf ("wrote (dir,roll,pitch): [fwd] %+6.4f %+6.4f\n",roll,pitch);
+		    printf ("wrote (dir,rollDeg,pitchDeg): [fwd] %+6.4f %+6.4f\n",rollDeg,pitchDeg);
             lastButtonBstate = true;
         } else if (lastButtonBstate) {
 	    	Bottle& miOutput = miPuerto.prepare();
     		miOutput.clear();
-		    miOutput.addVocab(VOCAB_FWD);
-		    miOutput.addDouble(0);
-            miOutput.addDouble(0);
+		    miOutput.addVocab(VOCAB_MY_STOP);
             miPuerto.write(true);
-		    printf ("wrote (dir,roll,pitch): [fwd] 0.0 0.0\n");
+		    printf ("wrote (dir): [stop]\n");
             lastButtonBstate = false;
         }
         
