@@ -15,7 +15,9 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
         if(icart->stopControl()) {
             if(ipos->stop()) {
-                out.addVocab(VOCAB_OK);
+                if(ipos->setPositionMode()) {
+                    out.addVocab(VOCAB_OK);
+                } else out.addVocab(VOCAB_FAILED);
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
