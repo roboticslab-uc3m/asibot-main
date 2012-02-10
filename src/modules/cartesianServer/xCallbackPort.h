@@ -12,7 +12,7 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
-#define VPOINT_DIST 0.5  // [m]
+#define VPOINT_DIST 0.3  // [m]
 
 #define VOCAB_MY_STOP VOCAB4('s','t','o','p')
 

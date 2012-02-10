@@ -29,6 +29,16 @@ void CartesianBot::run() {
         if((withOri)&&(fabs(o[1]-targetO[1])>CARTORI_PRECISION)) done = false;
         if (done) {
             printf("Target reached in %f.\n",Time::now()-startTime);
+            delete trajPrP;
+            trajPrP = 0;
+            delete trajPhP;
+            trajPhP = 0;
+            delete trajOz;
+            trajOz = 0;
+            delete trajOyP;
+            trajOyP = 0;
+            delete trajOzPP;
+            trajOzPP = 0;
             startTime = 0;
             pos->setPositionMode();
             cmc_status=0;
@@ -42,21 +52,21 @@ void CartesianBot::run() {
             //printf("Problem statement:\n");
             //printf("oz: %f\nxP: %f\nzP: %f\n",toDeg(ozRad),xP[0],xP[1]);
             double sTime = Time::now()-startTime;
-            if(sTime>trajPrP.getT()){
+            if(sTime>trajPrP->getT()){
                 printf ("[warning] out of time at %f.\n",sTime);
                 startTime = 0;
                 pos->setPositionMode();
                 cmc_status=0;
                 return;  // bad practice??
             }
-            xPd.push_back(trajPrP.get(sTime));
-            xPd.push_back(trajPhP.get(sTime));
-            xPd.push_back(toRad(trajOyP.get(sTime)));
+            xPd.push_back(trajPrP->get(sTime));
+            xPd.push_back(trajPhP->get(sTime));
+            xPd.push_back(toRad(trajOyP->get(sTime)));
             eP.resize(3);
             eP = xPd - xP;
-            xPdotd.push_back(trajPrP.getdot(sTime));
-            xPdotd.push_back(trajPhP.getdot(sTime));
-            xPdotd.push_back(toRad(trajOyP.getdot(sTime)));
+            xPdotd.push_back(trajPrP->getdot(sTime));
+            xPdotd.push_back(trajPhP->getdot(sTime));
+            xPdotd.push_back(toRad(trajOyP->getdot(sTime)));
             lawxP.resize(3);
             lawxP = (eP * GAIN * (msPeriod/1000.0)) + xPdotd;  // GAIN=0 => lawxP = xPdotd;
             yarp::sig::Matrix Ja(3,3);
@@ -77,13 +87,13 @@ void CartesianBot::run() {
             t.resize(3);
             t = Ja_pinv * lawxP;
             double qdot[NUM_MOTORS];
-            double eoz = trajOz.get(sTime) - realDeg[0];
-            qdot[0] = trajOz.getdot(sTime) + GAIN*(msPeriod/1000.0)*eoz;  // lawoz
+            double eoz = trajOz->get(sTime) - realDeg[0];
+            qdot[0] = trajOz->getdot(sTime) + GAIN*(msPeriod/1000.0)*eoz;  // lawoz
             qdot[1] = toDeg(t[0]);
             qdot[2] = toDeg(t[1]);
             qdot[3] = toDeg(t[2]);
-            double eOzPP = trajOzPP.get(sTime) - realDeg[4];
-            qdot[4] = trajOzPP.getdot(sTime) + GAIN*(msPeriod/1000.0)*eOzPP;  // lawOzP
+            double eOzPP = trajOzPP->get(sTime) - realDeg[4];
+            qdot[4] = trajOzPP->getdot(sTime) + GAIN*(msPeriod/1000.0)*eOzPP;  // lawOzP
             if(!vel->velocityMove(qdot))
                 printf("GIGANTIC velocity WARNING\n");
         }
