@@ -50,7 +50,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     trajOyP.configure(o[0],od[0],maxVel,maxVel,trajT);  // We set it in degrees
     trajOz.configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),maxVel,maxVel,trajT);
     trajOzPP.configure(o[1],od[1],maxVel,maxVel,trajT);  // We set it in degrees
-/*    printf("[goToPose] begin: trajPrP dump(100 samples).\n");
+    printf("[goToPose] begin: trajPrP dump(100 samples).\n");
     trajPrP.dump(100);
     printf("[goToPose] end: trajPrP dump(100 samples).\n");
     printf("[goToPose] begin: trajPhP dump(100 samples).\n");
@@ -64,7 +64,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     printf("[goToPose] end: trajOz dump(100 samples).\n");
     printf("[goToPose] begin: trajOzPP dump(100 samples).\n");
     trajOzPP.dump(100);
-    printf("[goToPose] end: trajOzPP dump(100 samples).\n");*/
+    printf("[goToPose] end: trajOzPP dump(100 samples).\n");
     startTime = Time::now();
     withOri=true;
     vel->setVelocityMode();
