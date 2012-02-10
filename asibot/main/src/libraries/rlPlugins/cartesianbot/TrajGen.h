@@ -33,7 +33,7 @@ class OrderThreeTraj {
         T = _T;
         a0 = xi;
         a1 = xdoti;
-        a3 = (xdotf-2*xdoti)/(T*T) + 2*(xi-xf)/(T*T*T);
+        a3 = 2.0*(xi-xf)/(T*T*T) + (xdotf+xdoti)/(T*T);
         a2 = (xf-xi-xdoti*T)/(T*T) - a3*T;
     }
 
