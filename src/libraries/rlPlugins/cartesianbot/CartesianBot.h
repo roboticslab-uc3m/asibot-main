@@ -569,7 +569,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     int cmc_status;
     bool withOri;
 
-    OrderThreeTraj trajOz, trajPrP, trajPhP, trajOyP, trajOzPP;
+    Traj *trajOz, *trajPrP, *trajPhP, *trajOyP, *trajOzPP;
     yarp::sig::Vector targetX,targetO;
     yarp::sig::Vector realRad;  // current radians
 
