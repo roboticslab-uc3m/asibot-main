@@ -5,6 +5,60 @@
 
 #include <stdio.h>
 
+class Traj {
+  public:
+    virtual bool configure(const double xi, const double xf, const double _T) = 0;
+    virtual bool configure(const double xi, const double xf, const double xdoti, const double xdotf, const double _T) = 0;
+    virtual double get(const double ti) = 0;
+    virtual double getdot(const double ti) = 0;
+    virtual double getdotdot(const double ti) = 0;
+    virtual bool maxVelBelow(const double thresVel) = 0;
+    virtual bool maxAccBelow(const double thresAcc) = 0;
+    virtual double getT() = 0;
+    virtual void dump(double samples) = 0;
+
+};
+
+class OrderOneTraj : public Traj {
+  public:
+    OrderOneTraj() {}
+    bool configure(const double xi, const double xf, const double _T) {
+        T = _T;
+        b = xi;
+        m = (xf-xi)/T;
+        return true;
+    }
+    bool configure(const double xi, const double xf, const double xdoti, const double xdotf, const double _T) {
+        return false;
+    }
+    double get(const double ti) {
+        return b+m*ti;
+    }
+    double getdot(const double ti) {
+        return m;
+    }
+    double getdotdot(const double ti) {
+        return 0;
+    }
+    bool maxVelBelow(const double thresVel) {
+        return (m<thresVel);
+    }
+    bool maxAccBelow(const double thresAcc) {
+        return (0<thresAcc);
+    }
+    double getT() {
+        return T;
+    }
+    void dump(double samples)  {
+        for(double i=0;i<T;i+=(T/samples))
+            printf("%05.2f %+02.6f %+02.6f %+02.6f\n",i,get(i),getdot(i), getdotdot(i));
+    }
+
+  private:
+    double T,m,b;
+
+};
+
 /**
  *
  * @ingroup OrderThreeTraj
@@ -12,29 +66,31 @@
  * OrderThreeTraj generates a 1DOF order-three trajectory.
  *
  */
-class OrderThreeTraj {
+class OrderThreeTraj : public Traj {
   public:
     OrderThreeTraj() {}
     /**
     * Configure the trajectory. Forces null initial and final velocities.
     */
-    void configure(const double xi, const double xf, const double _T) {
+    bool configure(const double xi, const double xf, const double _T) {
         T = _T;
         a0 = xi;
         a1 = 0;
         a3 = 2*(xi-xf)/(T*T*T);
         a2 = (xf-xi)/(T*T) - a3*T;
+        return true;
     }
 
     /**
     * Configure the trajectory.
     */
-    void configure(const double xi, const double xf, const double xdoti, const double xdotf, const double _T) {
+    bool configure(const double xi, const double xf, const double xdoti, const double xdotf, const double _T) {
         T = _T;
         a0 = xi;
         a1 = xdoti;
         a3 = 2.0*(xi-xf)/(T*T*T) + (xdotf+xdoti)/(T*T);
         a2 = (xf-xi-xdoti*T)/(T*T) - a3*T;
+        return true;
     }
 
     /**
