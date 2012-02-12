@@ -274,7 +274,7 @@ int main (int argc, char *argv[]) {
         return -1;
     }
 
-	miPuerto.open("/wiimote_info");
+	miPuerto.open("/wiimoteServer/command:o");
 
 	gtk_set_locale ();
 	gtk_init (&argc, &argv);
