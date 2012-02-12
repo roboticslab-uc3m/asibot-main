@@ -21,13 +21,13 @@ void xCallbackPort::onRead(Bottle& b) {
         if(!icart->getPose(x,o)) return;
 //        printf("xCallbackPort::onRead() Problem statement:\n");
 //        printf("x: %s; o: %s\n",x.toString().c_str(),o.toString().c_str());
-//        double ozRad = atan2(x[1],x[0]);
+        double ozDeg = (atan2(x[1],x[0]))*180.0/M_PI;
         double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
         double PrPd = PrP + VPOINT_DIST*sin((cmd[1])*M_PI/180.0);
         printf("PrP: %f;PrPd: %f\n",PrP,PrPd);
         double PhPd = x[2] + VPOINT_DIST*cos((cmd[1])*M_PI/180.0);
-        xd.push_back(PrPd*cos((cmd[0])*M_PI/180.0));  // xd
-        xd.push_back(PrPd*sin((cmd[0])*M_PI/180.0));  // yd
+        xd.push_back(PrPd*cos((ozDeg-cmd[0])*M_PI/180.0));  // xd
+        xd.push_back(PrPd*sin((ozDeg-cmd[0])*M_PI/180.0));  // yd
         xd.push_back(PhPd);  // zd
         od.push_back(cmd[1]); // rot(y')d
         od.push_back(0.0); // rot(z'')d
@@ -43,7 +43,7 @@ void xCallbackPort::onRead(Bottle& b) {
         if(!icart->getPose(x,o)) return;
 //        printf("xCallbackPort::onRead() Problem statement:\n");
 //        printf("x: %s; o: %s\n",x.toString().c_str(),o.toString().c_str());
-//        double ozRad = atan2(x[1],x[0]);
+        double ozDeg = (atan2(x[1],x[0]))*180.0/M_PI;
         double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
         double PrPd = PrP - VPOINT_DIST*sin((cmd[1])*M_PI/180.0); 
         if (PrPd<=0) {
@@ -52,8 +52,8 @@ void xCallbackPort::onRead(Bottle& b) {
         }
         printf("PrP: %f;PrPd: %f\n",PrP,PrPd);
         double PhPd = x[2] - VPOINT_DIST*cos((cmd[1])*M_PI/180.0);
-        xd.push_back(PrPd*cos((cmd[0])*M_PI/180.0));  // xd
-        xd.push_back(PrPd*sin((cmd[0])*M_PI/180.0));  // yd
+        xd.push_back(PrPd*cos((ozDeg-cmd[0])*M_PI/180.0));  // xd
+        xd.push_back(PrPd*sin((ozDeg-cmd[0])*M_PI/180.0));  // yd
         xd.push_back(PhPd);  // zd
         od.push_back(cmd[1]); // rot(y')d
         od.push_back(0.0); // rot(z'')d
