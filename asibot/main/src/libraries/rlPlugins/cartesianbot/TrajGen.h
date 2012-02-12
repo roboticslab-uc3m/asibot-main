@@ -5,6 +5,13 @@
 
 #include <stdio.h>
 
+/**
+ *
+ * @ingroup Traj
+ *
+ * Traj is a base class for trajectories.
+ *
+ */
 class Traj {
   public:
     virtual bool configure(const double xi, const double xf, const double _T) = 0;
@@ -19,6 +26,13 @@ class Traj {
 
 };
 
+/**
+ *
+ * @ingroup OrderOneTraj
+ *
+ * OrderThreeTraj generates a 1DOF order-one trajectory.
+ *
+ */
 class OrderOneTraj : public Traj {
   public:
     OrderOneTraj() {}
@@ -82,7 +96,7 @@ class OrderThreeTraj : public Traj {
     }
 
     /**
-    * Configure the trajectory.
+    * Configure the trajectory setting an initial and final velocity too (warning: possible overshoot).
     */
     bool configure(const double xi, const double xf, const double xdoti, const double xdotf, const double _T) {
         T = _T;
