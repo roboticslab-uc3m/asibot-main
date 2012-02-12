@@ -1,0 +1,16 @@
+<application>
+<name>wiimoteServer App</name>
+        <module>
+                <name>cartesianServer</name>
+        </module>
+        <module>
+                <name>wiimoteServer</name>
+        </module>
+
+        <connection>
+                <from>/wiimote_info</from>
+                <to>/cartesianServer/command:i</to>
+                <protocol>udp</protocol>
+        </connection>
+
+</application>
