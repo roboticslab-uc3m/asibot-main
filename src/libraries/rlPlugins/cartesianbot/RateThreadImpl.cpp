@@ -81,8 +81,8 @@ void CartesianBot::run() {
             Ja(2,0) = 1;
             Ja(2,1) = 1;
             Ja(2,2) = 1;
-//            yarp::sig::Matrix Ja_pinv(pinv(Ja,1.0e-2));
-            yarp::sig::Matrix Ja_pinv(pinv(Ja));
+            yarp::sig::Matrix Ja_pinv(pinv(Ja,1.0e-2));
+//            yarp::sig::Matrix Ja_pinv(pinv(Ja));
             yarp::sig::Vector t;
             t.resize(3);
             t = Ja_pinv * lawxP;
