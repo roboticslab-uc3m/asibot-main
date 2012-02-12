@@ -2,13 +2,15 @@
 <name>wiimoteServer App</name>
         <module>
                 <name>cartesianServer</name>
+                <node>console</node>
         </module>
         <module>
                 <name>wiimoteServer</name>
+                <node>console</node>
         </module>
 
         <connection>
-                <from>/wiimote_info</from>
+                <from>/wiimoteServer/command:o</from>
                 <to>/cartesianServer/command:i</to>
                 <protocol>udp</protocol>
         </connection>
