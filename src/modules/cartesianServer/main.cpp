@@ -4,7 +4,7 @@
  *
  * \defgroup cartesianServer
  *
- * Creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
+ * The cartesianServer module creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
  *
  * <b> Legal </b>
  *
