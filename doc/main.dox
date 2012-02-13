@@ -14,4 +14,23 @@ Topics:
 
 This page can be edited at $ASIBOT_ROOT/main/doc/main.dox (\ref modify_asibot_main).
 
+\htmlonly
+<script type="text/javascript"><!--
+var css = 'position:fixed; z-index:9999; bottom:0px; left:0px; border:2px solid black; margin:0; height:35px; padding:0;overflow:hidden;';
+var iframe = document.createElement('iframe');
+iframe.setAttribute('id', 'theIframe');
+iframe.setAttribute('style', css);
+iframe.src = 'about:blank';
+document.body.appendChild(iframe);
+    var doc = iframe.contentDocument;
+    doc.body.style.background = 'white';
+    doc.body.innerHTML = 'Import Journal BibTeX -> <a href="https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot/main/doc/bibtex/asibot.bib" target="_blank">asibot.bib</a>';
+iframe.addEventListener("load", function() {
+    var doc = iframe.contentDocument;
+    doc.body.style.background = 'white';
+    doc.body.innerHTML = 'Import Journal BibTeX -> <a href="https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot/main/doc/bibtex/asibot.bib" target="_blank">asibot.bib</a>';
+}, false);
+//--></script>
+\endhtmlonly
+
 */
