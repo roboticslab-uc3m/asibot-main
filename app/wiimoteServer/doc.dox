@@ -1,0 +1,17 @@
+/**
+@ingroup  asibot_applications
+\defgroup asibot_wimoteServer wiimoteServer App
+
+An application that launches a cartesianServer module and a wiimoteServer module,
+and establishes a connection between them.
+
+\section Legal
+
+Copyright: 2012 (C) Universidad Carlos III de Madrid
+
+Author: <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>
+
+CopyPolicy: Released under the terms of the LGPLv2.1 or later, see license/LGPL.TXT
+
+*/
+
