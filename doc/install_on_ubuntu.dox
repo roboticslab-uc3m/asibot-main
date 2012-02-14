@@ -29,11 +29,12 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
 
 \verbatim
 sudo apt-get install build-essential libace-dev subversion
+sudo apt-get libgsl0-dev
 svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
 cd yarp2; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
 \endverbatim
 
-For additional options use ccmake instead of cmake.
+For additional options (turning math lib ON) use ccmake instead of cmake.
 
 Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
 
@@ -119,6 +120,7 @@ sudo apt-get install libglib2.0-dev libcwiid-dev
 We'll do this from source to assure the CMake file is created.
 
 \verbatim
+sudo apt-get install libavformat-dev libavcodec-dev libswscale-dev
 svn co https://code.ros.org/svn/opencv/trunk/opencv
 cd opencv; mkdir build; cd build
 cmake ..  # Make sure you see Video I/O: -- FFMPEG: YES
@@ -151,7 +153,7 @@ cd asibot/main; mkdir build; cd build; ccmake ..
 Press 'c' to refresh the cache. A set of options should be available. The following is a set of the most important ones.
 
   \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of RaveBot.
-  \li <B>enable_ASIBOT_TESTS</B> (defaults to <B>OFF</B>): Enables the compilation of test modules; i.e. <a href="group__test__ravebot.html"><B>test_ravebot</B></a> if RaveBot is present, etc.
+  \li <B>enable_ASIBOT_TESTS</B> (defaults to <B>OFF</B>): Enables the compilation of test modules; i.e. testRavebot, cartesianServer, etc.
 
 
 Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project.
