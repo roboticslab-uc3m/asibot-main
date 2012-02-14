@@ -40,7 +40,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     Property robotOptions(rf.toString());  // Little hack to get rf stuff to the module
     robotOptions.put("device","remote_controlboard");
     robotOptions.put("local","/cartesianServer");
-    robotOptions.put("remote","/ravebot");
+    robotOptions.put("remote",rf.find("robotRemote").asString());
     robotDevice.open(robotOptions);
     
     if (!robotDevice.isValid()) {
