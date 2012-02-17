@@ -37,6 +37,11 @@ bool CartesianServer::configure(ResourceFinder &rf) {
         return false;
     } else printf("[success] cartesianServer acquired cartesian interface\n");
 
+    if(!rf.check("robotRemote")){
+        printf("[error] robotDevice must be defined to configure() CartesianServer\n");
+        cartesianDevice.close();
+        return false;
+    }
     Property robotOptions(rf.toString());  // Little hack to get rf stuff to the module
     robotOptions.put("device","remote_controlboard");
     robotOptions.put("local","/cartesianServer");
