@@ -92,7 +92,7 @@ Response: [ok]
  *
  */
 
-#include "cartesianServer.h"
+#include "CartesianServer.h"
 
 using namespace yarp::os;
 using namespace yarp::dev;
