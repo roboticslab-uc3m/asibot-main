@@ -233,6 +233,10 @@ bool WebResponder::read(ConnectionReader& in) {
         if((realPos!=0)&&(inMovement == ConstString("absolute"))) realPos->positionMove(targets);
         if((realPos!=0)&&(inMovement == ConstString("relative"))) realPos->relativeMove(targets);
         return response.write(*out);
+    } else if (code=="stop.0") {
+        if(simPos!=0) simPos->stop();
+        if(realPos!=0) realPos->stop();
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
