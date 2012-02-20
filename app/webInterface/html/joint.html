@@ -44,35 +44,54 @@ Released for free under a Creative Commons Attribution 2.5 License
 <div id="page">
 	<!-- start content -->
 		<div id="left_wrapper" align=center><br><br>
-        <script>
-function jointMove() {
-//  frm=document.forms[0]
-//  frm=document.getElementById(id);
-  frm=document.forms["thejoypad"];
-  alert(frm.elements['movement'].value);
-  url="joint.1?joint="+frm.elements['joint'].value+"&movement="+frm.elements['movement'].value;
-  xmlhttp.open("GET",url,true);
-  xmlhttp.onreadystatechange=function() {
-   if (xmlhttp.readyState==4) {
-    document.forms[0].elements['total'].value=xmlhttp.responseText;
-   }
-  }
- xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
- xmlhttp.send();
- return false;
-}
-</script>
-            <form name="thejoypad" id="thejoypad" action="joint.1" method="get" onsubmit="return parent.jointMove()">
+            <form name="thejoypad" id="thejoypad" action="joint.1" method="get">
                 <font size="4"><strong><u>Joypad</u></strong></font>&nbsp;<P>
                 <input type=radio name="joint" value="1">&nbsp;<font size="3">One</font> &nbsp;&nbsp;
                 <input type=radio name="joint" value="2">&nbsp;<font size="3">Two</font> &nbsp;&nbsp;
                 <input type=radio name="joint" value="3">&nbsp;<font size="3">Three</font> &nbsp;&nbsp;
                 <input type=radio name="joint" value="4">&nbsp;<font size="3">Four</font> &nbsp;&nbsp;
                 <input type=radio name="joint" value="5">&nbsp;<font size="3">Five</font><br><br>
-                <button type=submit name="movement" value="left"><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
-<button type=submit name="movement" value="right"><img src="fig/right.png" width="50" height="50"></button>
+                <button type=submit onClick="return jointMove('left')"><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button type=submit onClick="return jointMove('right')"><img src="fig/right.png" width="50" height="50"></button>
 <br><br><br>
             </form>
+
+<script>
+// [thanks http://www.somacon.com/p143.php for getCheckedValue]
+// return the value of the radio button that is checked
+// return an empty string if none are checked or if there are no radio buttons
+function getCheckedValue(radioObj) {
+	if(!radioObj)
+		return "";
+	var radioLength = radioObj.length;
+	if(radioLength == undefined)
+		if(radioObj.checked)
+			return radioObj.value;
+		else
+			return "";
+	for(var i = 0; i < radioLength; i++) {
+		if(radioObj[i].checked) {
+			return radioObj[i].value;
+		}
+	}
+	return "";
+}
+
+function jointMove(str) {
+    var frm = document.getElementById('thejoypad');
+    url="joint.1?joint="+getCheckedValue(frm.elements['joint'])+"&movement="+str;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.forms[0].elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
+
         </div>
 
         <div id="middle_wrapper" align=center>
