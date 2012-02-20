@@ -11,9 +11,10 @@ Released for free under a Creative Commons Attribution 2.5 License
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
-
+<script src="xmlhttp.js" type="text/javascript"></script>
 </head>
 <body>
+<script src="connectionTab.js" type="text/javascript"></script>
 <div id="logo">
 	<h1><a href="index">Asibot Web Interface</a></h1>
 	<h2>By <a href="http://roboticslab.uc3m.es">Robotics Lab</a> & <a href="http://asrob.uc3m.es">Asrob</a></h2>
@@ -37,40 +38,63 @@ Released for free under a Creative Commons Attribution 2.5 License
 <div id="page">
 	<!-- start content -->
 	<div id="contentcenter">
+		<table id="table_left"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td><div align=center>
+            <form name= "cjoypad" id="cjoypad" action="cartesian.0">
+				<br><br> <font size="4"><strong><u>Joypad</u></strong></font>&nbsp;
+				<P>
+				<input TYPE=radio NAME="axis" VALUE="x">&nbsp;<font size="3">x</font> &nbsp;&nbsp;
+				<input TYPE=radio NAME="axis" VALUE="y">&nbsp;<font size="3">y</font> &nbsp;&nbsp;
+				<input TYPE=radio NAME="axis" VALUE="z">&nbsp;<font size="3">z</font><br><br>
 
-		<table id="table_left"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"> 
-			<tr> 
-   				<td> 
-					<div align=center>	
- 						<FORM ACTION="joypad">
-							<br><br> <font size="4"><strong><u>Joypad</u></strong></font>&nbsp;
-							<P>
-							<INPUT TYPE=RADIO NAME="axis" VALUE="x">&nbsp;<font size="3">X</font> &nbsp;&nbsp;
-							<INPUT TYPE=RADIO NAME="axis" VALUE="y">&nbsp;<font size="3">Y</font> &nbsp;&nbsp;
-							<INPUT TYPE=RADIO NAME="axis" VALUE="z">&nbsp;<font size="3">Z</font><br><br>
+				<input TYPE=radio NAME="axis" VALUE="oyP">&nbsp;<font size="3">rot(y')</font> &nbsp;&nbsp;
+				<input TYPE=radio NAME="axis" VALUE="ozPP">&nbsp;<font size="3">rot(z'')</font><br><br>
 
-							<INPUT TYPE=RADIO NAME="axis" VALUE="roll">&nbsp;<font size="3">Roll</font> &nbsp;&nbsp;
-							<INPUT TYPE=RADIO NAME="axis" VALUE="pitch">&nbsp;<font size="3">Pitch</font> &nbsp;&nbsp;
-							<INPUT TYPE=RADIO NAME="axis" VALUE="yaw">&nbsp;<font size="3">Yaw</font><br><br>
+				<!--INPUT TYPE=RADIO NAME="origin" VALUE="base">&nbsp;<font size="3">Base</font> &nbsp;&nbsp;
+				<INPUT TYPE=RADIO NAME="origin" VALUE="tool">&nbsp;<font size="3">Tool</font> <br><br-->
+				<br><br><br>
+				<button type="submit" onClick="return cartesianMove('left')"><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="submit" onClick="return cartesianMove('right')"><img src="fig/right.png" width="50" height="50"></button>
+				<br>
+				<P>
+            </form>
 
-							<INPUT TYPE=RADIO NAME="origin" VALUE="base">&nbsp;<font size="3">Base</font> &nbsp;&nbsp;
-							<INPUT TYPE=RADIO NAME="origin" VALUE="tool">&nbsp;<font size="3">Tool</font> <br><br>
-							
-							<br><br><br>
+<script>
+// [thanks http://www.somacon.com/p143.php for getCheckedValue]
+// return the value of the radio button that is checked
+// return an empty string if none are checked or if there are no radio buttons
+function getCheckedValue(radioObj) {
+	if(!radioObj)
+		return "";
+	var radioLength = radioObj.length;
+	if(radioLength == undefined)
+		if(radioObj.checked)
+			return radioObj.value;
+		else
+			return "";
+	for(var i = 0; i < radioLength; i++) {
+		if(radioObj[i].checked) {
+			return radioObj[i].value;
+		}
+	}
+	return "";
+}
 
-							<button name="movement" type="submit" value="left"><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+function cartesianMove(str) {
+    var frm = document.getElementById('cjoypad');
+    url="cartesian.1?axis="+getCheckedValue(frm.elements['axis'])+"&movement="+str;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.forms[0].elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
 
-							<button name="movement" type="submit" value="right"><img src="fig/right.png" width="50" height="50"></button>
-					<br>
-							<P>
-						</FORM> 
-
-					</div>
-   				</td> 
-			</tr> 
-		</table> 
-
-<!-- space between tables-->
+        </div></td></tr></table> 
 
 		<div id="table_left">
 			<div align="center">
@@ -78,7 +102,6 @@ Released for free under a Creative Commons Attribution 2.5 License
 			</div>		
 		</div>
 
-<!-- space between tables-->
 		<table id ="table_right"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"> 
 			<tr> 
    				<td> 
