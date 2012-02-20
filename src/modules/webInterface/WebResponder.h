@@ -34,6 +34,7 @@ protected:
     string readFile(const ConstString& fileName);
     string& replaceAll(string& context, const string& from, const string& to);
     int stringToInt(const ConstString& inString);
+    double stringToDouble(const ConstString& inString);
 
     yarp::dev::PolyDriver simDevice;
     yarp::dev::IPositionControl *simPos;
@@ -41,8 +42,8 @@ protected:
     yarp::dev::PolyDriver realDevice;
     yarp::dev::IPositionControl *realPos;
 
-    yarp::dev::PolyDriver cartesianDevice;
-    yarp::dev::ICartesianControl *icart;
+//    yarp::dev::PolyDriver cartesianDevice;
+//    yarp::dev::ICartesianControl *icart;
 
 public:
     ConstString getCss();
