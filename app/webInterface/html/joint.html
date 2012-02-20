@@ -94,9 +94,23 @@ function jointMove(str) {
 
         <div id="middle_wrapper" align=center>
             <font size="6"><b>Joint</b></font><br><br><br>
-            <form action="joint">
-                <button name="stop" type="submit" value="1"><img src="fig/stop.png" width=50></button>
+            <form action="stop.0">
+                <button name="stop" type="submit" onClick="return jstop()"><img src="fig/stop.png" width=50></button>
             </form>
+<script>
+function jstop() {
+    url="stop.0";
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.forms[0].elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
         </div>
 
         <div id="right_wrapper" align=center><br><br>
