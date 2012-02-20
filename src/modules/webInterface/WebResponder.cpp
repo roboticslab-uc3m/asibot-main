@@ -237,6 +237,19 @@ bool WebResponder::read(ConnectionReader& in) {
         if(simPos!=0) simPos->stop();
         if(realPos!=0) realPos->stop();
         return response.write(*out);
+    } else if (code=="cartesian") {
+        response.addString(readFile("cartesian.html").c_str());
+        return response.write(*out);
+    } else if (code=="cartesian.1") {
+        ConstString theAxis = request.find("axis").asString();
+//        int inJoint = stringToInt(theAxis);
+        ConstString inMovement = request.find("movement").asString();
+        printf("Going to move axis [%s] towards the [%s].\n", theAxis.c_str(), inMovement.c_str());
+//        if((simPos!=0)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,5);
+//        if((simPos!=0)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-5);
+//        if((realPos!=0)&&(inMovement == ConstString("right"))) realPos->relativeMove(inJoint-1,5);
+//        if((realPos!=0)&&(inMovement == ConstString("left"))) realPos->relativeMove(inJoint-1,-5);
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
