@@ -168,6 +168,7 @@ bool WebResponder::read(ConnectionReader& in) {
             simDevice.close();
             simConnected = false;
             simPos = 0;
+            cartesianClient.close();
             // Maybe perform some checks here
             outParam = "SIMOFF";
         } else {
@@ -186,6 +187,10 @@ bool WebResponder::read(ConnectionReader& in) {
                 printf("[error] ravebot interface not available.\n");
                 ok = false;
             } else printf ("[success] ravebot interface available.\n");
+
+            if(!cartesianClient.open()) {
+                printf("[error] cannot open cartesianClient.\n");
+            } else printf ("[success] opened cartesianClient.\n");
             if(!ok) {
                 simDevice.close();
                 simConnected = false;
@@ -245,6 +250,9 @@ bool WebResponder::read(ConnectionReader& in) {
 //        int inJoint = stringToInt(theAxis);
         ConstString inMovement = request.find("movement").asString();
         printf("Going to move axis [%s] towards the [%s].\n", theAxis.c_str(), inMovement.c_str());
+        double stat[5];
+        cartesianClient.stat(stat);
+        printf("At: %f %f %f %f %f\n",stat[0],stat[1],stat[2],stat[3],stat[4]);
 //        if((simPos!=0)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,5);
 //        if((simPos!=0)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-5);
 //        if((realPos!=0)&&(inMovement == ConstString("right"))) realPos->relativeMove(inJoint-1,5);
