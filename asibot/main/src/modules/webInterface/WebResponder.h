@@ -9,6 +9,8 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
+#include "CartesianClient.h"
+
 #include <fstream>
 #include <sstream>
 
@@ -42,6 +44,7 @@ protected:
     yarp::dev::PolyDriver realDevice;
     yarp::dev::IPositionControl *realPos;
 
+    CartesianClient cartesianClient;
 //    yarp::dev::PolyDriver cartesianDevice;
 //    yarp::dev::ICartesianControl *icart;
 
