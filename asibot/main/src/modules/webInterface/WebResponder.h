@@ -10,6 +10,7 @@
 #include <yarp/dev/ControlBoardInterfaces.h>
 
 #include <fstream>
+#include <sstream>
 
 using namespace yarp::os;
 using namespace yarp::dev;
@@ -32,14 +33,15 @@ protected:
     ConstString resourcePath;
     string readFile(const ConstString& fileName);
     string& replaceAll(string& context, const string& from, const string& to);
+    int stringToInt(const ConstString& inString);
 
     yarp::dev::PolyDriver simDevice;
+    yarp::dev::IPositionControl *simPos;
+
     yarp::dev::PolyDriver realDevice;
+    yarp::dev::IPositionControl *realPos;
 
     yarp::dev::PolyDriver cartesianDevice;
-
-    yarp::dev::IPositionControl *ipos;
-
     yarp::dev::ICartesianControl *icart;
 
 public:

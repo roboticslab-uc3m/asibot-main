@@ -6,6 +6,7 @@
 bool WebResponder::init() {
     simConnected = false;
     realConnected = false;
+    simPos = 0;
     return true;
 }
 
@@ -62,6 +63,14 @@ string WebResponder::readFile(const ConstString& fileName) {
     if(realConnected) replaceAll(str, "realInit.jpg", "realCon.jpg");
     else replaceAll(str, "realInit.jpg", "realDis.jpg");
     return str;
+}
+
+/************************************************************************/
+int WebResponder::stringToInt(const ConstString& inString) {
+    int outInt;
+    std::istringstream buffer(inString.c_str());
+    buffer >> outInt;
+    return outInt;
 }
 
 /************************************************************************/
@@ -134,8 +143,9 @@ bool WebResponder::read(ConnectionReader& in) {
         if (simConnected){
             printf("Disconnecting from robot simulator.\n");
             simDevice.close();
-            // Maybe perform some checks here
             simConnected = false;
+            simPos = 0;
+            // Maybe perform some checks here
             outParam = "SIMOFF";
         } else {
             printf("Connecting to robot simulator.\n");
@@ -144,10 +154,19 @@ bool WebResponder::read(ConnectionReader& in) {
             options.put("remote","/ravebot");
             options.put("local","/webLocal");
             simDevice.open(options);
+            bool ok = true;            
             if(!simDevice.isValid()) {
-                printf("ravebot device not available.\n");
+                printf("[error] ravebot device not available.\n");
+                ok = false;
+            } printf ("[success] ravebot device available.\n");
+            if(!simDevice.view(simPos)) {
+                printf("[error] ravebot interface not available.\n");
+                ok = false;
+            } printf ("[success] ravebot interface available.\n");
+            if(!ok) {
                 simDevice.close();
                 simConnected = false;
+                simPos = 0;
                 outParam = "SIMOFF";
             } else {
                 simConnected = true;
@@ -163,9 +182,12 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(readFile("joint.html").c_str());
         return response.write(*out);
     } else if (code=="joint.1") {
-        int inJoint = request.find("joint").asInt();
+        ConstString theJoint = request.find("joint").asString();
+        int inJoint = stringToInt(theJoint);
         ConstString inMovement = request.find("movement").asString();
         printf("Going to move joint [%d] towards the [%s].\n", inJoint, inMovement.c_str());
+        if((simPos!=0)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,5);
+        if((simPos!=0)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-5);
 //        response.addString(inParam);
         return response.write(*out);
     }
