@@ -47,7 +47,7 @@ Server running, visit: http://127.0.0.1:8080/index
  *
  */
 
-#include "webInterface.h"
+#include "WebInterface.h"
 
 using namespace yarp::os;
 using namespace yarp::dev;
