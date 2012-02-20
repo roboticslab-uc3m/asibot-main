@@ -9,7 +9,7 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 
-#include "webResponder.h"
+#include "WebResponder.h"
 
 using namespace yarp::os;
 
