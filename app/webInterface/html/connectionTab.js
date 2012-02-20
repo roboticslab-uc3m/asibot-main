@@ -100,15 +100,11 @@ function connectSim() {
                     doc.getElementById('simState').src = 'fig/simDis.jpg';
                 alert('Disconnected from Simulator');
             } else {
-//                alert(xmlhttp.responseText);
-//                if(!document.getElementById('simState'))
-//                    alert('not found simState'); <- evals to this
                 if(!doc.getElementById('simState'))
                     alert('Not found simState');
                 else
                     doc.getElementById('simState').src = 'fig/simCon.jpg';
                 alert('Connected to Simulator');
-//                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
             }
         }
     }
