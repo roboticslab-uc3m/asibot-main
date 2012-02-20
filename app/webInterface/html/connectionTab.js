@@ -17,52 +17,6 @@
  return false
 }*/
 
-function connectReal() {
-    var doc = iframe.contentDocument;
-    frm=doc.forms[0];
-    url="connectReal.1?real="+frm.elements['real'].value;
-    xmlhttp.open("GET",url,true);
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-            if((xmlhttp.responseText.search('REALOFF'))>-1){
-//                doc.body.style.background = 'green';
-                doc.realState.src = "fig/realDis.jpg";
-//                doc.forms[0].elements['status'].value='yay';
-            } else {
-//                doc.body.style.background = 'white';
-                doc.realState.src = "fig/realCon.jpg";
-//                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
-            }
-        }
-    }
-    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
-    return false
-}
-
-function connectSim() {
-    var doc = iframe.contentDocument;
-    frm=doc.forms[1];
-    url="connectSim.1?sim="+frm.elements['sim'].value;
-    xmlhttp.open("GET",url,true);
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-            if((xmlhttp.responseText.search('SIMOFF'))>-1){
-//                doc.body.style.background = 'green';
-                doc.simState.src = "fig/simDis.jpg";
-//                doc.forms[0].elements['status'].value='yay';
-            } else {
-//                doc.body.style.background = 'white';
-                doc.simState.src = "fig/simCon.jpg";
-//                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
-            }
-        }
-    }
-    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
-    return false
-}
-
 // This iframe stuff is from http://wiki.greasespot.net/CSS_Independent_Content [thanks!]
 
 // position:fixed means stay fixed even when the page scrolls. z-index keeps your iframe on top.
@@ -103,4 +57,63 @@ iframe.addEventListener("load", function() {
 //    iframe.style.width = doc.body.offsetWidth + "px";
 //    iframe.style.height = doc.body.offsetHeight + "px";
 }, false);
+
+function connectReal() {
+    var doc = iframe.contentDocument;
+    frm=doc.forms[0];
+    url="connectReal.1?real="+frm.elements['real'].value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            if((xmlhttp.responseText.search('REALOFF'))>-1){
+//                doc.body.style.background = 'green';
+                if(!doc.getElementById('realState'))
+                    alert('Not found realState');
+                else
+                    doc.getElementById('realState').src = 'fig/realDis.jpg';
+                alert('Disconnected from Real Robot');
+            } else {
+                if(!doc.getElementById('realState'))
+                    alert('Not found realState');
+                else
+                    doc.getElementById('realState').src = 'fig/realCon.jpg';
+                alert('Disconnected from Real Robot');
+            }
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false
+}
+
+function connectSim() {
+    var doc = iframe.contentDocument;
+    frm=doc.forms[1];
+    url="connectSim.1?sim="+frm.elements['sim'].value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            if((xmlhttp.responseText.search('SIMOFF'))>-1) {
+                if(!doc.getElementById('simState'))
+                    alert('Not found simState');
+                else
+                    doc.getElementById('simState').src = 'fig/simDis.jpg';
+                alert('Disconnected from Simulator');
+            } else {
+//                alert(xmlhttp.responseText);
+//                if(!document.getElementById('simState'))
+//                    alert('not found simState'); <- evals to this
+                if(!doc.getElementById('simState'))
+                    alert('Not found simState');
+                else
+                    doc.getElementById('simState').src = 'fig/simCon.jpg';
+                alert('Connected to Simulator');
+//                doc.forms[0].elements['status'].value='oh, no!'+xmlhttp.responseText;
+            }
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false
+}
 
