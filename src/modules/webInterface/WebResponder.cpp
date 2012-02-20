@@ -7,13 +7,16 @@ bool WebResponder::init() {
     simConnected = false;
     realConnected = false;
     simPos = 0;
+    realPos = 0;
     return true;
 }
 
 /************************************************************************/
 bool WebResponder::closeDevices() {
-    realDevice.close();
-    simDevice.close();
+    if(realDevice.isValid())
+        realDevice.close();
+    if(simDevice.isValid())
+        simDevice.close();
     return true;
 }
 
@@ -70,7 +73,17 @@ int WebResponder::stringToInt(const ConstString& inString) {
     int outInt;
     std::istringstream buffer(inString.c_str());
     buffer >> outInt;
+    if(inString=="") outInt = 0;
     return outInt;
+}
+
+/************************************************************************/
+double WebResponder::stringToDouble(const ConstString& inString) {
+    double outDouble;
+    std::istringstream buffer(inString.c_str());
+    buffer >> outDouble;
+    if(inString=="") outDouble = 0.0;
+    return outDouble;
 }
 
 /************************************************************************/
@@ -114,8 +127,9 @@ bool WebResponder::read(ConnectionReader& in) {
         if (realConnected){
             printf("Disconnecting from real robot.\n");
             realDevice.close();
-            // Maybe perform some checks here
             realConnected = false;
+            realPos = 0;
+            // Maybe perform some checks here
             outParam = "REALOFF";
         } else {
             printf("Connecting to real robot.\n");
@@ -124,10 +138,19 @@ bool WebResponder::read(ConnectionReader& in) {
             options.put("remote","/canbot");
             options.put("local","/webLocal");
             realDevice.open(options);
+            bool ok = true;        
             if(!realDevice.isValid()) {
-                printf("canbot device not available.\n");
+                printf("[error] canbot device not available.\n");
+                ok = false;
+            } else printf ("[success] canbot device available.\n");
+            if(!realDevice.view(realPos)) {
+                printf("[error] canbot interface not available.\n");
+                ok = false;
+            } else printf ("[success] canbot interface available.\n");
+            if (!ok) {
                 realDevice.close();
                 realConnected = false;
+                realPos = 0;
                 outParam = "REALOFF";
             } else {
                 realConnected = true;
@@ -154,15 +177,15 @@ bool WebResponder::read(ConnectionReader& in) {
             options.put("remote","/ravebot");
             options.put("local","/webLocal");
             simDevice.open(options);
-            bool ok = true;            
+            bool ok = true;        
             if(!simDevice.isValid()) {
                 printf("[error] ravebot device not available.\n");
                 ok = false;
-            } printf ("[success] ravebot device available.\n");
+            } else printf ("[success] ravebot device available.\n");
             if(!simDevice.view(simPos)) {
                 printf("[error] ravebot interface not available.\n");
                 ok = false;
-            } printf ("[success] ravebot interface available.\n");
+            } else printf ("[success] ravebot interface available.\n");
             if(!ok) {
                 simDevice.close();
                 simConnected = false;
@@ -188,7 +211,27 @@ bool WebResponder::read(ConnectionReader& in) {
         printf("Going to move joint [%d] towards the [%s].\n", inJoint, inMovement.c_str());
         if((simPos!=0)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,5);
         if((simPos!=0)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-5);
-//        response.addString(inParam);
+        if((realPos!=0)&&(inMovement == ConstString("right"))) realPos->relativeMove(inJoint-1,5);
+        if((realPos!=0)&&(inMovement == ConstString("left"))) realPos->relativeMove(inJoint-1,-5);
+        return response.write(*out);
+    } else if (code=="joint.2") {
+        ConstString inMovement = request.find("movement").asString();
+        ConstString q1 = request.find("one").asString();
+        ConstString q2 = request.find("two").asString();
+        ConstString q3 = request.find("three").asString();
+        ConstString q4 = request.find("four").asString();
+        ConstString q5 = request.find("five").asString();
+        double targets[5];
+        targets[0] = stringToDouble(q1);
+        targets[1] = stringToDouble(q2);
+        targets[2] = stringToDouble(q3);
+        targets[3] = stringToDouble(q4);
+        targets[4] = stringToDouble(q5);
+        printf("Going to move%s\n", inMovement.c_str());
+        if((simPos!=0)&&(inMovement == ConstString("absolute"))) simPos->positionMove(targets);
+        if((simPos!=0)&&(inMovement == ConstString("relative"))) simPos->relativeMove(targets);
+        if((realPos!=0)&&(inMovement == ConstString("absolute"))) realPos->positionMove(targets);
+        if((realPos!=0)&&(inMovement == ConstString("relative"))) realPos->relativeMove(targets);
         return response.write(*out);
     }
 
