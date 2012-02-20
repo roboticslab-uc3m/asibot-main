@@ -163,9 +163,10 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(readFile("joint.html").c_str());
         return response.write(*out);
     } else if (code=="joint.1") {
-        ConstString inParam = request.find("movement").asString();
-        printf("Got an [%s] movement, going to equal it.\n",inParam.c_str());
-        response.addString(inParam);
+        int inJoint = request.find("joint").asInt();
+        ConstString inMovement = request.find("movement").asString();
+        printf("Going to move joint [%d] towards the [%s].\n", inJoint, inMovement.c_str());
+//        response.addString(inParam);
         return response.write(*out);
     }
 
