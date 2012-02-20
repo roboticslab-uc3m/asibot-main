@@ -55,7 +55,6 @@ Released for free under a Creative Commons Attribution 2.5 License
 <button type=submit onClick="return jointMove('right')"><img src="fig/right.png" width="50" height="50"></button>
 <br><br><br>
             </form>
-
 <script>
 // [thanks http://www.somacon.com/p143.php for getCheckedValue]
 // return the value of the radio button that is checked
@@ -91,7 +90,6 @@ function jointMove(str) {
     return false;
 }
 </script>
-
         </div>
 
         <div id="middle_wrapper" align=center>
@@ -102,7 +100,7 @@ function jointMove(str) {
         </div>
 
         <div id="right_wrapper" align=center><br><br>
-			<FORM ACTION="joint">
+			<form name="thenumeric" id="thenumeric" action="joint.2">
 				<font size="4"><strong><u>Numeric</u></strong></font>&nbsp;<br><br>
 				<INPUT TYPE=RADIO NAME="movement" VALUE="absolute">&nbsp;<font size="3">Absolute</font> &nbsp;&nbsp;
 				<INPUT TYPE=RADIO NAME="movement" VALUE="relative">&nbsp;<font size="3">Relative</font> <br><br>
@@ -112,8 +110,23 @@ function jointMove(str) {
 				<font size="3">Four</font>&nbsp;&nbsp;&nbsp;<INPUT NAME="four" > <br>
 				<font size="3">Five</font>&nbsp;&nbsp;&nbsp;<INPUT NAME="five" > <br>
 				<P>
-				<button TYPE=SUBMIT style="height: 25px; width: 100px;">GO!</button><br><br>
-			</FORM>
+				<button type=submit style="height: 25px; width: 100px;" onClick="return numeric()">GO!</button><br><br>
+			</form>
+<script>
+function numeric() {
+    var frm = document.getElementById('thenumeric');
+    url="joint.2?movement="+getCheckedValue(frm.elements['movement'])+"&one="+frm.elements['one'].value+"&two="+frm.elements['two'].value+"&three="+frm.elements['three'].value+"&four="+frm.elements['four'].value+"&five="+frm.elements['five'].value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.forms[0].elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
 		</div>
 	<!-- end content -->
 </div>
