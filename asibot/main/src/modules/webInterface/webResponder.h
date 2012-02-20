@@ -33,12 +33,14 @@ protected:
     string readFile(const ConstString& fileName);
     string& replaceAll(string& context, const string& from, const string& to);
 
-    yarp::dev::PolyDriver cartesianDevice;
-    yarp::dev::PolyDriver realDevice;
     yarp::dev::PolyDriver simDevice;
+    yarp::dev::PolyDriver realDevice;
+
+    yarp::dev::PolyDriver cartesianDevice;
+
+    yarp::dev::IPositionControl *ipos;
 
     yarp::dev::ICartesianControl *icart;
-    yarp::dev::IPositionControl *ipos;
 
 public:
     ConstString getCss();
