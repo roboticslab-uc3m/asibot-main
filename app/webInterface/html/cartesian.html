@@ -104,7 +104,7 @@ function cartesianMove(str) {
 
 		<table id ="table_right"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"> 
 			<tr><td><div align=center>	
- 				<form name="cnumeric" id="cnumeric" action="cartesian.2">
+ 				<form name="thecnumeric" id="thecnumeric" action="cartesian.2">
 				    <br><br> <font size="4"><strong><u>Numeric</u></strong></font>&nbsp;
 					<P>
 					<INPUT TYPE=RADIO NAME="origin" VALUE="abs_base">&nbsp;<font size="3">Abs. Base</font> &nbsp;&nbsp;
@@ -134,11 +134,11 @@ function cartesianMove(str) {
 						<b>Yaw </b> &nbsp;<input name="yaw"/>
 					</div-->	 
 					<P>
-					<button TYPE=SUBMIT style="height: 25px; width: 100px;">GO!</button><br><br>
+					<button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric()">GO!</button><br><br>
 				</form>
 <script>
 function cnumeric() {
-    var frm = document.getElementById('cthenumeric');
+    var frm = document.getElementById('thecnumeric');
     url="cartesian.2?origin="+getCheckedValue(frm.elements['origin'])+"&px="+frm.elements['px'].value+"&py="+frm.elements['py'].value+"&pz="+frm.elements['pz'].value+"&oyP="+frm.elements['oyP'].value+"&ozPP="+frm.elements['ozPP'].value;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
