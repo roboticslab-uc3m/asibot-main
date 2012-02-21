@@ -298,6 +298,25 @@ bool WebResponder::read(ConnectionReader& in) {
         if(simCart) simCart->stop();
         if(realCart) realPos->stop();
         return response.write(*out);
+    } else if (code=="cartesian.2") {
+        ConstString origin = request.find("origin").asString();
+        ConstString px = request.find("px").asString();
+        ConstString py = request.find("py").asString();
+        ConstString pz = request.find("pz").asString();
+        ConstString oyP = request.find("oyP").asString();
+        ConstString ozPP = request.find("ozPP").asString();
+        double targets[5];
+        targets[0] = stringToDouble(px);
+        targets[1] = stringToDouble(py);
+        targets[2] = stringToDouble(pz);
+        targets[3] = stringToDouble(oyP);
+        targets[4] = stringToDouble(ozPP);
+        printf("Going to move%s\n", origin.c_str());
+        if(origin == ConstString("abs_base")) {
+            if(simCart) simCart->movj(targets);
+            if(realCart) realCart->movj(targets);
+        }
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
