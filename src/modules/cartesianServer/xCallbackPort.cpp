@@ -59,6 +59,28 @@ void xCallbackPort::onRead(Bottle& b) {
         od.push_back(0.0); // rot(z'')d
         printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
         icart->goToPose(xd,od,3.0);
+    } else if (choice==VOCAB_ROT) { ///////////////////////////////// rot /////////////////////////////////
+        Vector cmd;
+        Bottle *lst = b.get(1).asList();
+//        printf("BKWD list of %d elements (2 needed: oz oy')\n", lst->size());
+        cmd.push_back(lst->get(0).asDouble());
+        cmd.push_back(lst->get(1).asDouble());
+        Vector x,o,xd,od;
+        if(!icart->getPose(x,o)) return;
+//        printf("xCallbackPort::onRead() Problem statement:\n");
+//        printf("x: %s; o: %s\n",x.toString().c_str(),o.toString().c_str());
+        double ozDeg = (atan2(x[1],x[0]))*180.0/M_PI;
+        double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
+        double PrPd = PrP;
+        printf("PrP: %f;PrPd: %f\n",PrP,PrPd);
+        double PhPd = x[2];
+        xd.push_back(PrPd*cos((ozDeg-cmd[0])*M_PI/180.0));  // xd
+        xd.push_back(PrPd*sin((ozDeg-cmd[0])*M_PI/180.0));  // yd
+        xd.push_back(PhPd);  // zd
+        od.push_back(cmd[1]); // rot(y')d
+        od.push_back(0.0); // rot(z'')d
+        printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
+        icart->goToPose(xd,od,3.0);
     }
 }
 
