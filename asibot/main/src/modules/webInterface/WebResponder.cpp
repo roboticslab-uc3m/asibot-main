@@ -300,6 +300,7 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="cartesian.2") {
         ConstString origin = request.find("origin").asString();
+        ConstString movement = request.find("movement").asString();
         ConstString px = request.find("px").asString();
         ConstString py = request.find("py").asString();
         ConstString pz = request.find("pz").asString();
@@ -313,8 +314,13 @@ bool WebResponder::read(ConnectionReader& in) {
         targets[4] = stringToDouble(ozPP);
         printf("Going to move%s\n", origin.c_str());
         if(origin == ConstString("abs_base")) {
-            if(simCart) simCart->movj(targets);
-            if(realCart) realCart->movj(targets);
+            if(movement == ConstString("movj")) {
+                if(simCart) simCart->movj(targets);
+                if(realCart) realCart->movj(targets);
+            }else if(movement == ConstString("movl")) {
+                if(simCart) simCart->movl(targets);
+                if(realCart) realCart->movl(targets);
+            }
         }
         return response.write(*out);
     }
