@@ -81,3 +81,12 @@ bool CartesianClient::movl(const double *xd) {
     return true;
 }
 
+/************************************************************************/
+bool CartesianClient::stop() {
+    Bottle miOutput, miInput;
+    miOutput.clear();
+    miOutput.addVocab(VOCAB_MY_STOP);
+    rpcClient.write(miOutput, miInput);
+    return true;
+}
+

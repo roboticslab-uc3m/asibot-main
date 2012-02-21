@@ -13,8 +13,9 @@
 #include <fstream>
 #include <sstream>
 
-#define JOYPAD_RELMOVE 5  // [degrees]
-#define CJOYPAD_RELMOVE 0.10  // [m]
+#define JOYPAD_RELMOVE 5  // [deg]
+#define CJOYPAD_RELMOVE_POS 0.10  // [m]
+#define CJOYPAD_RELMOVE_ORI 15  // [deg]
 
 using namespace yarp::os;
 using namespace yarp::dev;
