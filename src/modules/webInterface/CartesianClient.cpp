@@ -8,7 +8,9 @@ CartesianClient::CartesianClient() { }
 /************************************************************************/
 bool CartesianClient::open() {
     rpcClient.open("/cartesianClient/rpc:o");
-    rpcClient.addOutput("/cartesianServer/rpc:i");
+    if (!rpcClient.addOutput("/cartesianServer/rpc:i")) {
+        printf("[error] no cartesian connection possible\n");
+    }
     //valid = true;
     //else valid = false;
     return true;

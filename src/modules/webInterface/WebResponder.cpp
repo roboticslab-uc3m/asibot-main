@@ -8,6 +8,8 @@ bool WebResponder::init() {
     realConnected = false;
     simPos = 0;
     realPos = 0;
+    simCart = 0;
+    realCart = 0;
     return true;
 }
 
@@ -17,6 +19,16 @@ bool WebResponder::closeDevices() {
         realDevice.close();
     if(simDevice.isValid())
         simDevice.close();
+    if(simCart) {
+        simCart->close();
+        delete simCart;
+        simCart = 0;
+    }
+    if(realCart) {
+        simCart->close();
+        delete simCart;
+        simCart = 0;
+    }
     return true;
 }
 
@@ -37,8 +49,7 @@ string& WebResponder::replaceAll(string& context, const string& from, const stri
     // thank you Bruce Eckel for this one!! (TICPP-2nd-ed-Vol-two)
     size_t lookHere = 0;
     size_t foundHere;
-    while((foundHere = context.find(from, lookHere))
-        != string::npos) {
+    while((foundHere = context.find(from, lookHere)) != string::npos) {
         context.replace(foundHere, from.size(), to);
         lookHere = foundHere + to.size();
     }
@@ -168,7 +179,9 @@ bool WebResponder::read(ConnectionReader& in) {
             simDevice.close();
             simConnected = false;
             simPos = 0;
-            cartesianClient.close();
+            simCart->close();
+            delete simCart;
+            simCart=0;
             // Maybe perform some checks here
             outParam = "SIMOFF";
         } else {
@@ -184,17 +197,23 @@ bool WebResponder::read(ConnectionReader& in) {
                 ok = false;
             } else printf ("[success] ravebot device available.\n");
             if(!simDevice.view(simPos)) {
-                printf("[error] ravebot interface not available.\n");
+                printf("[error] ravebot simPos not available.\n");
                 ok = false;
-            } else printf ("[success] ravebot interface available.\n");
-
-            if(!cartesianClient.open()) {
-                printf("[error] cannot open cartesianClient.\n");
-            } else printf ("[success] opened cartesianClient.\n");
+            } else printf ("[success] ravebot simPos available.\n");
+            simCart = new CartesianClient;
+            if(!simCart->open()) {
+                printf("[error] cannot open ravebot simCart.\n");
+                ok=false;
+            } else printf ("[success] opened ravebot simCart.\n");
             if(!ok) {
                 simDevice.close();
                 simConnected = false;
                 simPos = 0;
+                if(simCart) {
+                    simCart->close();
+                    delete simCart;
+                    simCart = 0;
+                }
                 outParam = "SIMOFF";
             } else {
                 simConnected = true;
@@ -214,10 +233,12 @@ bool WebResponder::read(ConnectionReader& in) {
         int inJoint = stringToInt(theJoint);
         ConstString inMovement = request.find("movement").asString();
         printf("Going to move joint [%d] towards the [%s].\n", inJoint, inMovement.c_str());
-        if((simPos!=0)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,5);
-        if((simPos!=0)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-5);
-        if((realPos!=0)&&(inMovement == ConstString("right"))) realPos->relativeMove(inJoint-1,5);
-        if((realPos!=0)&&(inMovement == ConstString("left"))) realPos->relativeMove(inJoint-1,-5);
+        if(simPos) simPos->setPositionMode();
+        if((simPos)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,JOYPAD_RELMOVE);
+        if((simPos)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-JOYPAD_RELMOVE);
+        if(realPos) realPos->setPositionMode();
+        if((realPos)&&(inMovement == ConstString("right"))) realPos->relativeMove(inJoint-1,JOYPAD_RELMOVE);
+        if((realPos)&&(inMovement == ConstString("left"))) realPos->relativeMove(inJoint-1,-JOYPAD_RELMOVE);
         return response.write(*out);
     } else if (code=="joint.2") {
         ConstString inMovement = request.find("movement").asString();
@@ -233,30 +254,45 @@ bool WebResponder::read(ConnectionReader& in) {
         targets[3] = stringToDouble(q4);
         targets[4] = stringToDouble(q5);
         printf("Going to move%s\n", inMovement.c_str());
-        if((simPos!=0)&&(inMovement == ConstString("absolute"))) simPos->positionMove(targets);
-        if((simPos!=0)&&(inMovement == ConstString("relative"))) simPos->relativeMove(targets);
-        if((realPos!=0)&&(inMovement == ConstString("absolute"))) realPos->positionMove(targets);
-        if((realPos!=0)&&(inMovement == ConstString("relative"))) realPos->relativeMove(targets);
+        if(simPos) simPos->setPositionMode();
+        if((simPos)&&(inMovement == ConstString("absolute"))) simPos->positionMove(targets);
+        if((simPos)&&(inMovement == ConstString("relative"))) simPos->relativeMove(targets);
+        if(realPos) realPos->setPositionMode();
+        if((realPos)&&(inMovement == ConstString("absolute"))) realPos->positionMove(targets);
+        if((realPos)&&(inMovement == ConstString("relative"))) realPos->relativeMove(targets);
         return response.write(*out);
     } else if (code=="stop.0") {
-        if(simPos!=0) simPos->stop();
-        if(realPos!=0) realPos->stop();
+        if(simPos) simPos->stop();
+        if(realPos) realPos->stop();
         return response.write(*out);
     } else if (code=="cartesian") {
         response.addString(readFile("cartesian.html").c_str());
         return response.write(*out);
     } else if (code=="cartesian.1") {
         ConstString theAxis = request.find("axis").asString();
-//        int inJoint = stringToInt(theAxis);
         ConstString inMovement = request.find("movement").asString();
         printf("Going to move axis [%s] towards the [%s].\n", theAxis.c_str(), inMovement.c_str());
-        double stat[5];
-        cartesianClient.stat(stat);
-        printf("At: %f %f %f %f %f\n",stat[0],stat[1],stat[2],stat[3],stat[4]);
-//        if((simPos!=0)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,5);
-//        if((simPos!=0)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-5);
-//        if((realPos!=0)&&(inMovement == ConstString("right"))) realPos->relativeMove(inJoint-1,5);
-//        if((realPos!=0)&&(inMovement == ConstString("left"))) realPos->relativeMove(inJoint-1,-5);
+        double cartCoords[5];
+        if(simCart) simCart->stat(cartCoords);
+        if(realCart) simCart->stat(cartCoords); // REAL OVERWRITES COORDS
+        printf("At: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
+        if(inMovement == ConstString("right")) {
+            printf("right movement...\n");
+            if(theAxis == ConstString("px")) cartCoords[0]+= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("py")) cartCoords[1]+= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("pz")) cartCoords[2]+= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("oyP")) cartCoords[3]+= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("ozPP")) cartCoords[4]+= CJOYPAD_RELMOVE;
+        } else if(inMovement == ConstString("left")) {
+            if(theAxis == ConstString("px")) cartCoords[0]-= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("py")) cartCoords[1]-= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("pz")) cartCoords[2]-= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("oyP")) cartCoords[3]-= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("ozPP")) cartCoords[4]-= CJOYPAD_RELMOVE;
+        }
+        printf("To: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
+        if(simCart) simCart->movl(cartCoords);
+        if(realCart) realCart->movl(cartCoords);
         return response.write(*out);
     }
 
