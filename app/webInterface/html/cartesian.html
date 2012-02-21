@@ -155,10 +155,23 @@ function cartesianMove(str) {
 <br><br>
 			<div align="center">
 				<form action="cartesian">
-				<!--button name="stop" type="submit" value="1" style="height: 25px; width: 100px;"-->
-                <button name="stop" type="submit" value="1"><img src="fig/stop.png" width=50></button>
+                <button name="stop" type="submit" onClick="return cstop()"><img src="fig/stop.png" width=50></button>
 <br><br>
 				</form>
+<script>
+function cstop() {
+    url="cstop.0";
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.forms[0].elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
 			</div>
 
 	</div>
