@@ -103,55 +103,56 @@ function cartesianMove(str) {
 		</div>
 
 		<table id ="table_right"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"> 
-			<tr> 
-   				<td> 
-					<div align=center>	
- 						<FORM ACTION="numeric">
-							<br><br> <font size="4"><strong><u>Numeric</u></strong></font>&nbsp;
-							<P>
-
-							<INPUT TYPE=RADIO NAME="origin" VALUE="abs_base">&nbsp;<font size="3">Abs. Base</font> &nbsp;&nbsp;
-							<INPUT TYPE=RADIO NAME="origin" VALUE="rel_base">&nbsp;<font size="3">Rel. Base</font> &nbsp;&nbsp;
-							<INPUT TYPE=RADIO NAME="origin" VALUE="tool">&nbsp;<font size="3">Tool</font><br><br>
-
-
-							<div>
-								<b>X</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="x" />
-							</div> 
-							<br>
-							<div>
-								<b>Y</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="y" />
-							</div>	 
-							<br>
-							<div>
-								<b>Z</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="z" />
-							</div> 
-							<br>
-							<div>
-								<b>Roll </b> &nbsp; <input name="roll"/>
-							</div>	 
-							<br>
-							<div>
-								<b>Pitch</b> <input name="pitch" />
-							</div> 
-							<br>
-
-							<div>
-								<b>Yaw </b> &nbsp;<input name="yaw"/>
-							</div>	 
-
-
-
-
-							<P>
-							<button TYPE=SUBMIT style="height: 25px; width: 100px;">GO!</button><br><br>
-						</FORM> 
-
-						</div>
-   					</td> 
-				</tr> 
-			</table> 
-
+			<tr><td><div align=center>	
+ 				<form name="cnumeric" id="cnumeric" action="cartesian.2">
+				    <br><br> <font size="4"><strong><u>Numeric</u></strong></font>&nbsp;
+					<P>
+					<INPUT TYPE=RADIO NAME="origin" VALUE="abs_base">&nbsp;<font size="3">Abs. Base</font> &nbsp;&nbsp;
+					<INPUT TYPE=RADIO NAME="origin" VALUE="rel_base">&nbsp;<font size="3">Rel. Base</font> &nbsp;&nbsp;
+					<INPUT TYPE=RADIO NAME="origin" VALUE="tool">&nbsp;<font size="3">Tool</font><br><br>
+					<div>
+						<b>x</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="px" />
+					</div> 
+					<br>
+					<div>
+						<b>y</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="py" />
+					</div>	 
+					<br>
+					<div>
+						<b>z</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="pz" />
+					</div> 
+					<br>
+					<div>
+    					<b>rot(y')</b> &nbsp; <input name="oyP"/>
+					</div>	 
+					<br>
+					<div>
+						<b>rot(z'')</b> <input name="ozPP" />
+	    			</div> 
+					<br>
+					<!--div>
+						<b>Yaw </b> &nbsp;<input name="yaw"/>
+					</div-->	 
+					<P>
+					<button TYPE=SUBMIT style="height: 25px; width: 100px;">GO!</button><br><br>
+				</form>
+<script>
+function cnumeric() {
+    var frm = document.getElementById('cthenumeric');
+    url="cartesian.2?origin="+getCheckedValue(frm.elements['origin'])+"&px="+frm.elements['px'].value+"&py="+frm.elements['py'].value+"&pz="+frm.elements['pz'].value+"&oyP="+frm.elements['oyP'].value+"&ozPP="+frm.elements['ozPP'].value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.forms[0].elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
+			</div></td></tr> 
+		</table>
 <br><br>
 			<div align="center">
 				<form action="cartesian">
