@@ -6,13 +6,15 @@
 #include <yarp/os/all.h>
 
 #include <yarp/dev/PolyDriver.h>
-#include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
 #include "CartesianClient.h"
 
 #include <fstream>
 #include <sstream>
+
+#define JOYPAD_RELMOVE 5  // [degrees]
+#define CJOYPAD_RELMOVE 0.10  // [m]
 
 using namespace yarp::os;
 using namespace yarp::dev;
@@ -40,13 +42,11 @@ protected:
 
     yarp::dev::PolyDriver simDevice;
     yarp::dev::IPositionControl *simPos;
+    CartesianClient *simCart;  // != ICartesianControl
 
     yarp::dev::PolyDriver realDevice;
     yarp::dev::IPositionControl *realPos;
-
-    CartesianClient cartesianClient;
-//    yarp::dev::PolyDriver cartesianDevice;
-//    yarp::dev::ICartesianControl *icart;
+    CartesianClient *realCart;  // != ICartesianControl
 
 public:
     ConstString getCss();
