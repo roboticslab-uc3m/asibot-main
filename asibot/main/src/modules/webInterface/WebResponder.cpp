@@ -278,21 +278,25 @@ bool WebResponder::read(ConnectionReader& in) {
         printf("At: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
         if(inMovement == ConstString("right")) {
             printf("right movement...\n");
-            if(theAxis == ConstString("px")) cartCoords[0]+= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("py")) cartCoords[1]+= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("pz")) cartCoords[2]+= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("oyP")) cartCoords[3]+= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("ozPP")) cartCoords[4]+= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("px")) cartCoords[0]+= CJOYPAD_RELMOVE_POS;
+            if(theAxis == ConstString("py")) cartCoords[1]+= CJOYPAD_RELMOVE_POS;
+            if(theAxis == ConstString("pz")) cartCoords[2]+= CJOYPAD_RELMOVE_POS;
+            if(theAxis == ConstString("oyP")) cartCoords[3]+= CJOYPAD_RELMOVE_ORI;
+            if(theAxis == ConstString("ozPP")) cartCoords[4]+= CJOYPAD_RELMOVE_ORI;
         } else if(inMovement == ConstString("left")) {
-            if(theAxis == ConstString("px")) cartCoords[0]-= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("py")) cartCoords[1]-= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("pz")) cartCoords[2]-= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("oyP")) cartCoords[3]-= CJOYPAD_RELMOVE;
-            if(theAxis == ConstString("ozPP")) cartCoords[4]-= CJOYPAD_RELMOVE;
+            if(theAxis == ConstString("px")) cartCoords[0]-= CJOYPAD_RELMOVE_POS;
+            if(theAxis == ConstString("py")) cartCoords[1]-= CJOYPAD_RELMOVE_POS;
+            if(theAxis == ConstString("pz")) cartCoords[2]-= CJOYPAD_RELMOVE_POS;
+            if(theAxis == ConstString("oyP")) cartCoords[3]-= CJOYPAD_RELMOVE_ORI;
+            if(theAxis == ConstString("ozPP")) cartCoords[4]-= CJOYPAD_RELMOVE_ORI;
         }
         printf("To: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
         if(simCart) simCart->movl(cartCoords);
         if(realCart) realCart->movl(cartCoords);
+        return response.write(*out);
+    } else if (code=="cstop.0") {
+        if(simCart) simCart->stop();
+        if(realCart) realPos->stop();
         return response.write(*out);
     }
 
