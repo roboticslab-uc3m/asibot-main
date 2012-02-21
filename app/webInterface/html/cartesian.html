@@ -134,12 +134,15 @@ function cartesianMove(str) {
 						<b>Yaw </b> &nbsp;<input name="yaw"/>
 					</div-->	 
 					<P>
-					<button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric()">GO!</button><br><br>
+					<button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric('movj')">MOVJ</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric('movl')">MOVL</button>
+                    <br><br>
 				</form>
 <script>
-function cnumeric() {
+function cnumeric(str) {
     var frm = document.getElementById('thecnumeric');
-    url="cartesian.2?origin="+getCheckedValue(frm.elements['origin'])+"&px="+frm.elements['px'].value+"&py="+frm.elements['py'].value+"&pz="+frm.elements['pz'].value+"&oyP="+frm.elements['oyP'].value+"&ozPP="+frm.elements['ozPP'].value;
+    url="cartesian.2?origin="+getCheckedValue(frm.elements['origin'])+"&movement="+str+"&px="+frm.elements['px'].value+"&py="+frm.elements['py'].value+"&pz="+frm.elements['pz'].value+"&oyP="+frm.elements['oyP'].value+"&ozPP="+frm.elements['ozPP'].value;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
