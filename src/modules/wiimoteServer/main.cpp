@@ -4,7 +4,7 @@
  *
  * \defgroup wiimoteServer
  *
- * A working prototype of Wiimote server.
+ * The wiimoteServer module acts as a flexible-threadrate server interface for a wiimote controller or similar.
  *
  * <b> Legal </b>
  *
@@ -16,6 +16,9 @@
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see license/LGPL.TXT
  *
  * ChangeLog:
+ *
+ *  2012-02-21 <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>
+ *  * added variable threadrate support for YARP output stream using a shared memory area
  *
  *  2012-02-08 <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>
  *  * changed folder structure
@@ -111,13 +114,9 @@
 
 #include <bluetooth/bluetooth.h>
 #include "cwiid.h"
-#include "yarp/os/all.h"
 
-using namespace yarp::os;
-
-#define VOCAB_FWD VOCAB3('f','w','d')
-#define VOCAB_BKWD VOCAB4('b','k','w','d')
-#define VOCAB_MY_STOP VOCAB4('s','t','o','p')
+#include "SharedArea.h"
+#include "WiimoteYarp.h"
 
 #define ROLLDEG_LIM_INF -100.0
 #define ROLLDEG_LIM_SUP 100.0
@@ -253,28 +252,27 @@ void err(int id, const char *s, ...)
 }
 */
 
-BufferedPort<Bottle> miPuerto;
 static bool buttonAstate;
 static bool lastButtonAstate;
 static bool buttonBstate;
 static bool lastButtonBstate;
+SharedArea* pSharedArea;
+WiimoteYarp* pWiimoteYarp;
 
 int main (int argc, char *argv[]) {
+
     buttonAstate = false;
     lastButtonAstate = false;
     buttonBstate = false;
     lastButtonBstate = false;
 
+    pSharedArea = new SharedArea;
+    pWiimoteYarp = new WiimoteYarp;
+    pWiimoteYarp->setSharedArea(pSharedArea);
+    pWiimoteYarp->open();
+
 	int c;
 	char *str_addr;
-
-	Network yarp;
-    if (!yarp.checkNetwork()) {
-        printf("No yarp network, bye!\n");
-        return -1;
-    }
-
-	miPuerto.open("/wiimoteServer/command:o");
 
 	gtk_set_locale ();
 	gtk_init (&argc, &argv);
@@ -761,6 +759,11 @@ void menuQuit_activate(void)
 	if (wiimote) {
 		menuDisconnect_activate();
 	}
+    printf("bye, cleaning wiimoteyarp... ");
+    pWiimoteYarp->close();
+    delete pWiimoteYarp;
+    delete pSharedArea;
+    printf("done.\n");
 	gtk_main_quit();
 }
 
@@ -1250,42 +1253,28 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
         if (rollDeg > ROLLDEG_LIM_SUP) rollDeg = ROLLDEG_LIM_SUP;
 
         if(buttonAstate) {
-	    	Bottle& miOutput = miPuerto.prepare();
-    		miOutput.clear();
-		    miOutput.addVocab(VOCAB_BKWD);
-            Bottle dBottle;
-		    dBottle.addDouble(rollDeg);
-            dBottle.addDouble(pitchDeg);
-            miOutput.addList() = dBottle;
-            miPuerto.write(true);
-		    printf ("wrote (dir,oz,oy'): [bkwd] (%+6.4f %+6.4f)\n",rollDeg,pitchDeg);
+            pSharedArea->setCmd(VOCAB_BKWD);
+            pSharedArea->setRoll(rollDeg);
+            pSharedArea->setPitch(pitchDeg);
+//            printf("j[bkwd]\n");
             lastButtonAstate = true;
         } else if (lastButtonAstate) {
-	    	Bottle& miOutput = miPuerto.prepare();
-    		miOutput.clear();
-		    miOutput.addVocab(VOCAB_MY_STOP);
-            miPuerto.write(true);
-		    printf ("wrote (dir): [stop]\n");
+            pSharedArea->setCmd(VOCAB_NULL);
+            pWiimoteYarp->forceStop();
+//            printf("j[bkwd]stop\n");
             lastButtonAstate = false;
         }
 
         if(buttonBstate) {
-	    	Bottle& miOutput = miPuerto.prepare();
-    		miOutput.clear();
-		    miOutput.addVocab(VOCAB_FWD);
-            Bottle dBottle;
-		    dBottle.addDouble(rollDeg);
-            dBottle.addDouble(pitchDeg);
-            miOutput.addList() = dBottle;
-            miPuerto.write(true);
-		    printf ("wrote (dir,oz,oy'): [fwd] (%+6.4f %+6.4f)\n",rollDeg,pitchDeg);
+            pSharedArea->setCmd(VOCAB_FWD);
+            pSharedArea->setRoll(rollDeg);
+            pSharedArea->setPitch(pitchDeg);
+//            printf("j[fwd]\n");
             lastButtonBstate = true;
         } else if (lastButtonBstate) {
-	    	Bottle& miOutput = miPuerto.prepare();
-    		miOutput.clear();
-		    miOutput.addVocab(VOCAB_MY_STOP);
-            miPuerto.write(true);
-		    printf ("wrote (dir): [stop]\n");
+            pSharedArea->setCmd(VOCAB_NULL);
+            pWiimoteYarp->forceStop();
+//            printf("j[fwd]stop\n");
             lastButtonBstate = false;
         }
         
