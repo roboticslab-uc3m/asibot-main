@@ -256,6 +256,7 @@ static bool buttonAstate;
 static bool lastButtonAstate;
 static bool buttonBstate;
 static bool lastButtonBstate;
+static bool lastButtonAandBstate;
 SharedArea* pSharedArea;
 WiimoteYarp* pWiimoteYarp;
 
@@ -265,6 +266,7 @@ int main (int argc, char *argv[]) {
     lastButtonAstate = false;
     buttonBstate = false;
     lastButtonBstate = false;
+    lastButtonAandBstate = false;
 
     pSharedArea = new SharedArea;
     pWiimoteYarp = new WiimoteYarp;
@@ -759,7 +761,7 @@ void menuQuit_activate(void)
 	if (wiimote) {
 		menuDisconnect_activate();
 	}
-    printf("bye, cleaning wiimoteyarp... ");
+    printf("bye, cleaning wiimoteyarp...\n");
     pWiimoteYarp->close();
     delete pWiimoteYarp;
     delete pSharedArea;
@@ -1252,30 +1254,28 @@ void cwiid_acc(struct cwiid_acc_mesg *mesg)
         if (rollDeg < ROLLDEG_LIM_INF) rollDeg = ROLLDEG_LIM_INF;
         if (rollDeg > ROLLDEG_LIM_SUP) rollDeg = ROLLDEG_LIM_SUP;
 
-        if(buttonAstate) {
+
+        if ((buttonAstate)&&(buttonBstate)) {
+            pSharedArea->setCmd(VOCAB_ROT);
+            pSharedArea->setRoll(rollDeg);
+            pSharedArea->setPitch(pitchDeg);
+            lastButtonAandBstate = true;
+        } else if (buttonAstate) {
             pSharedArea->setCmd(VOCAB_BKWD);
             pSharedArea->setRoll(rollDeg);
             pSharedArea->setPitch(pitchDeg);
-//            printf("j[bkwd]\n");
             lastButtonAstate = true;
-        } else if (lastButtonAstate) {
-            pSharedArea->setCmd(VOCAB_NULL);
-            pWiimoteYarp->forceStop();
-//            printf("j[bkwd]stop\n");
-            lastButtonAstate = false;
-        }
-
-        if(buttonBstate) {
+        } else if (buttonBstate) {
             pSharedArea->setCmd(VOCAB_FWD);
             pSharedArea->setRoll(rollDeg);
             pSharedArea->setPitch(pitchDeg);
-//            printf("j[fwd]\n");
             lastButtonBstate = true;
-        } else if (lastButtonBstate) {
+        } else if ((lastButtonAstate)||(lastButtonBstate)||(lastButtonAandBstate)) {
             pSharedArea->setCmd(VOCAB_NULL);
             pWiimoteYarp->forceStop();
-//            printf("j[fwd]stop\n");
+            lastButtonAstate = false;
             lastButtonBstate = false;
+            lastButtonAandBstate = false;
         }
         
 	}
