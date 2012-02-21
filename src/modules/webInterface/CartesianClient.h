@@ -17,7 +17,7 @@ using namespace yarp::os;
 class CartesianClient {
 protected:
     RpcClient rpcClient;
-//    bool valid;
+    bool validClient;
 public:
     CartesianClient();
     bool open();
