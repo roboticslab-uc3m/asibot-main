@@ -1,5 +1,5 @@
 <application>
-<name>wiimoteServer App</name>
+<name>webInterface App</name>
         <module>
                 <name>cartesianServer</name>
                 <node>console</node>
