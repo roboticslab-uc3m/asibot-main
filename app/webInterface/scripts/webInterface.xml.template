@@ -1,0 +1,13 @@
+<application>
+<name>wiimoteServer App</name>
+        <module>
+                <name>cartesianServer</name>
+                <node>console</node>
+        </module>
+        <module>
+                <name>webInterface</name>
+                <node>console</node>
+        </module>
+
+</application>
+
