@@ -34,9 +34,9 @@
 [on terminal 2] $ASIBOT_DIR/bin/testRaveBot
 \endverbatim
  *
- * <b>Interfacing with the TestRaveBot</b>
+ * <b>Interfacing with the testRaveBot</b>
  *
- * The TestRaveBot module acts as the server part of a network wrapper of the RaveBot class.
+ * The <b>testRaveBot</b> module acts as the server part of a network wrapper of the RaveBot class.
  * The implementation maps certain YARP rpc's to RaveBot function calls. Therefore, we can interface
  * with the class from the command-line by typing:
 \verbatim

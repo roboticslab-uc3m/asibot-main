@@ -16,11 +16,8 @@ endif(COMMAND cmake_policy)
 project(asibot)
 
 ##### options
-#option(enable_ASIBOT_TESTS "Choose if you want to compile test modules" TRUE)
-#option(enable_ASIBOT_MODULES "Choose if you want to compile independent modules" TRUE)
 option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FALSE)
 option(ENABLE_findRedCan "Choose if you want to compile findRedCan" FALSE)
-option(ENABLE_grabRedCan "Choose if you want to compile grabRedCan" FALSE)
 option(ENABLE_testRaveBot "Choose if you want to compile testRaveBot" FALSE)
 option(ENABLE_webInterface "Choose if you want to compile webInterface" FALSE)
 option(ENABLE_webInterfacePy "Choose if you want to compile webInterfacePy" FALSE)
