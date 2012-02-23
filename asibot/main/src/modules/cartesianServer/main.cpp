@@ -4,7 +4,7 @@
  *
  * \defgroup cartesianServer
  *
- * The cartesianServer module creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
+ * The <b>cartesianServer</b> module creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
  *
  * <b> Legal </b>
  *
@@ -32,9 +32,9 @@
 [on terminal 2] $ASIBOT_DIR/bin/cartesianServer
 \endverbatim
  *
- * <b>Interfacing with the CartesianServer</b>
+ * <b>Interfacing with the cartesianServer</b>
  *
- * The CartesianServer module acts as the server part of a network wrapper of the CartesianBot class.
+ * The <b>cartesianServer</b> module acts as the server part of a network wrapper of the CartesianBot class.
  * The implementation maps certain YARP rpc's to CartesianBot function calls. Therefore, we can interface
  * with the class from the command-line by typing:
 \verbatim
