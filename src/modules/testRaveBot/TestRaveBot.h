@@ -16,7 +16,7 @@
 using namespace yarp::os;
 using namespace yarp::dev;
 
-class testRaveBot : public RFModule {
+class TestRaveBot : public RFModule {
 protected:
     yarp::dev::PolyDriver robotDevice;
 
@@ -26,7 +26,7 @@ protected:
 //    int period;
 
 public:
-    testRaveBot();
+    TestRaveBot();
     bool configure(ResourceFinder &rf);
 };
 

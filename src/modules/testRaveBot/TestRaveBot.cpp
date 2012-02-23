@@ -3,10 +3,10 @@
 #include "TestRaveBot.h"
 
 /************************************************************************/
-testRaveBot::testRaveBot() { }
+TestRaveBot::TestRaveBot() { }
 
 /************************************************************************/
-bool testRaveBot::configure(ResourceFinder &rf) {
+bool TestRaveBot::configure(ResourceFinder &rf) {
 
     // check our device can be wrapped in the controlboard network wrapper
     // and accessed remotely
@@ -38,7 +38,7 @@ bool testRaveBot::configure(ResourceFinder &rf) {
 }
 
 /************************************************************************/
-bool testRaveBot::updateModule() {
+bool TestRaveBot::updateModule() {
 //    printf("Alive\n");
     return true;
 }
