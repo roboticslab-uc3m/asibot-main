@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (enable_ASIBOT_MODULES)
+IF (ENABLE_wiimoteServer)
 
 set(KEYWORD wiimoteServer)
 
@@ -39,5 +39,5 @@ ELSE (folder_source)
   MESSAGE(FATAL_ERROR "No source code files found. Please add something")
 ENDIF (folder_source)
 
-ENDIF (enable_ASIBOT_MODULES)
+ENDIF (ENABLE_wiimoteServer)
 
