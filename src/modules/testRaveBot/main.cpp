@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    testRaveBot mod;
+    TestRaveBot mod;
     return mod.runModule(rf);
 }
 
