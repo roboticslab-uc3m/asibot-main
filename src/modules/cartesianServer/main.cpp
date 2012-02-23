@@ -32,7 +32,7 @@
 [on terminal 2] $ASIBOT_DIR/bin/cartesianServer
 \endverbatim
  *
- * <b>Interfacing with the cartesianServer</b>
+ * <b>Interfacing with the \ref cartesianServer module</b>
  *
  * The \ref cartesianServer module acts as the server part of a network wrapper of the CartesianBot class
  * using the CartesianServer class.
