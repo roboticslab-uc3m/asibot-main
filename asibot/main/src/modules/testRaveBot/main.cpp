@@ -20,7 +20,7 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
+ * The module is compiled when ENABLE_testRaveBot is activated (default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)
@@ -36,7 +36,7 @@
  *
  * <b>Interfacing with the testRaveBot</b>
  *
- * The <b>testRaveBot</b> module acts as the server part of a network wrapper of the RaveBot class.
+ * The \ref testRaveBot module acts as the server part of a network wrapper of the RaveBot class.
  * The implementation maps certain YARP rpc's to RaveBot function calls. Therefore, we can interface
  * with the class from the command-line by typing:
 \verbatim
@@ -58,7 +58,7 @@ Response: [ok]
  *
  */
 
-#include "testRaveBot.h"
+#include "TestRaveBot.h"
 
 using namespace yarp::os;
 using namespace yarp::dev;
