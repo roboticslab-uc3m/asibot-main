@@ -4,7 +4,7 @@
 #
 # @defgroup webInterfacePy
 #
-# Serves a Web Interface using CherryPy3 to instanciate WebAsibot.
+# Serves a Web Interface using CherryPy3 to instanciate the WebAsibot python class.
 # 
 # \image html webInterface.png 
 # <center> <a href="http://youtu.be/9B0tVJsg-0I" target="_blank"> Watch video on Youtube</a> </center>
@@ -24,7 +24,7 @@
 # 
 # <b>Installation</b>
 #
-# The module is installed when enable_ASIBOT_MODULES is activated (default). For further
+# The module is installed when ENABLE_webInterfacePy is activated (default: OFF). For further
 # installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
 #
 # <b>Running</b> (assuming correct installation)
