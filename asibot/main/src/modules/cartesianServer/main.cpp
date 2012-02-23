@@ -4,7 +4,7 @@
  *
  * \defgroup cartesianServer
  *
- * The <b>cartesianServer</b> module creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
+ * The \ref cartesianServer module creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
  *
  * <b> Legal </b>
  *
@@ -18,7 +18,7 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
+ * The module is compiled when ENABLE_cartesianServer is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)
@@ -34,7 +34,8 @@
  *
  * <b>Interfacing with the cartesianServer</b>
  *
- * The <b>cartesianServer</b> module acts as the server part of a network wrapper of the CartesianBot class.
+ * The \ref cartesianServer module acts as the server part of a network wrapper of the CartesianBot class
+ * using the CartesianServer class.
  * The implementation maps certain YARP rpc's to CartesianBot function calls. Therefore, we can interface
  * with the class from the command-line by typing:
 \verbatim

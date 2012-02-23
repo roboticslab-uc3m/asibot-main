@@ -4,7 +4,7 @@
  *
  * \defgroup wiimoteServer
  *
- * The wiimoteServer module acts as a flexible-threadrate server interface for a wiimote controller or similar.
+ * The \ref wiimoteServer module acts as a flexible-threadrate server interface for a wiimote controller or similar.
  *
  * <b> Legal </b>
  *
@@ -60,7 +60,7 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
+ * The module is compiled when ENABLE_wiimoteServer is activated (default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)

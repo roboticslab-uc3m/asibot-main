@@ -4,7 +4,7 @@
  *
  * \defgroup webInterface
  *
- * Creates an instance of WebInterface. Calls are handled by the WebResponder class.
+ * Creates an instance of the WebInterface class. Calls are handled by the WebResponder class.
  *
  * <b> Legal </b>
  *
@@ -16,7 +16,7 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when enable_ASIBOT_MODULES is activated (default). For further
+ * The module is compiled when ENABLE_webInterface is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)
