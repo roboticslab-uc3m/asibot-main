@@ -6,7 +6,7 @@
  *
  * \image html findRedCan.png
  * 
- * The <b>findRedCan</b> module tracks a red can and streams its location in the format "lata roja [cm] [cm]" through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> output called <b>/redCan:o</b>. The current implementation uses blobs and OpenCV, so a cvNamedWindow with the tracking is simultaneously displayed.
+ * The \ref findRedCan module tracks a red can and streams its location in the format "lata roja [cm] [cm]" through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> output called <b>/redCan:o</b>. The current implementation uses blobs and OpenCV, so a cvNamedWindow with the tracking is simultaneously displayed.
  *
  * <b> Legal </b>
  *
