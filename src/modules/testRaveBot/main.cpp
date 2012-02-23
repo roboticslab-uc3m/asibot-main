@@ -20,7 +20,7 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when ENABLE_testRaveBot is activated (default). For further
+ * The module is compiled when ENABLE_testRaveBot is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)
