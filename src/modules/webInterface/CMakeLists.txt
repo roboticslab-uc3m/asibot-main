@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (enable_ASIBOT_MODULES)
+IF (ENABLE_webInterface)
 
 set(KEYWORD "webInterface")
 
@@ -32,5 +32,5 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
-ENDIF (enable_ASIBOT_MODULES)
+ENDIF (ENABLE_webInterface)
 

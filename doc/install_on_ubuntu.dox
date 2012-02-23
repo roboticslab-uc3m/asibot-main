@@ -29,9 +29,10 @@ Note that you will be prompted for your password upon using '''sudo''' a couple 
 
 \verbatim
 sudo apt-get install build-essential libace-dev subversion
-sudo apt-get libgsl0-dev
+sudo apt-get libgsl0-dev  # Needed for creating YARP lib_math
 svn co https://yarp0.svn.sourceforge.net/svnroot/yarp0/trunk/yarp2
-cd yarp2; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
+cd yarp2; mkdir build; cd build; cmake .. -DCREATE_LIB_MATH=ON
+make -j3;  sudo make install; cd ../..
 \endverbatim
 
 For additional options (turning math lib ON) use ccmake instead of cmake.
@@ -150,10 +151,11 @@ Now let's configure which modules we want to enable:
 cd asibot/main; mkdir build; cd build; ccmake ..
 \endverbatim
 
-Press 'c' to refresh the cache. A set of options should be available. The following is a set of the most important ones.
+Press 'c' to refresh the cache. A set of options should be available, set the ENABLE options you need to ON. The following is a set of the most important ones.
 
-  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of RaveBot.
-  \li <B>enable_ASIBOT_TESTS</B> (defaults to <B>OFF</B>): Enables the compilation of test modules; i.e. testRavebot, cartesianServer, etc.
+  \li <B>ENABLE_cartesianServer</B> (defaults to <B>OFF</B>): Enables the compilation of the cartesianServer module.
+  \li <B>ENABLE_rlPlugins_cartesianbot</B> (defaults to <B>OFF</B>): Enables the compilation of the CartesianBot library.
+  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of the RaveBot library.
 
 
 Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project.
