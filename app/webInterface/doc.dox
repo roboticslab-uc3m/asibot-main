@@ -25,7 +25,7 @@ cd $ASIBOT_ROOT/app/webInterface/scripts
 cp webInterface.xml.template webInterface.xml
 \endverbatim
 
-You will also need the cartesianServer module and webInterface module. For further installation
+You will also need the \ref cartesianServer module and \ref webInterface module. For further installation
 steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
 
 \section running_webInterface_App Running (assuming correct installation)

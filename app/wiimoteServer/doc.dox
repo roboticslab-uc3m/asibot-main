@@ -26,7 +26,7 @@ cd $ASIBOT_ROOT/app/wiimoteServer/scripts
 cp wiimoteServer.xml.template wiimoteServer.xml
 \endverbatim
 
-You will also need the cartesianServer module and wiimoteServer module. For further installation
+You will also need the \ref cartesianServer module and \ref wiimoteServer module. For further installation
 steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
 
 \section running_wiimoteServer_App Running (assuming correct installation)
