@@ -22,7 +22,7 @@
 #define NUM_MOTORS 5
 #define CARTPOS_PRECISION 0.01  /// Meter 0.0005
 #define CARTORI_PRECISION 1.5  /// Degrees
-#define DEFAULT_DURATION 20  /// For Trajectory, 3s?
+#define DEFAULT_DURATION 15  /// For Trajectory, 3s?
 #define DEFAULT_MAXVEL 7.5  /// deg/s
 #define DEFAULT_MAXACC 0.2  /// (?) deg/s*s
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.

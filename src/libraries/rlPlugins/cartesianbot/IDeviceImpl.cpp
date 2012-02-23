@@ -30,8 +30,11 @@ bool CartesianBot::open(Searchable& config) {
     cmc_status = 0;
     startTime = 0;
     duration = DEFAULT_DURATION;
+    if (config.check("duration")) duration = config.find("duration").asDouble();
     maxVel = DEFAULT_MAXVEL;
+    if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
     maxAcc = DEFAULT_MAXACC;
+    if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
 
     if(!config.check("robotDevice")){
         printf("[error] robotDevice must be defined to open() CartesianBot\n");
