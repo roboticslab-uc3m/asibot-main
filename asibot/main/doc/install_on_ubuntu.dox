@@ -306,11 +306,17 @@ cp yarp/yarp.py .  # If you selected CREATE_PYTHON
 sudo make install
 \endverbatim
 
-If you selected CREATE_PYTHON, you can run a small example:
+If you selected CREATE_PYTHON, you can run a small example by first running a YARP name server if it is not running in our current namespace:
 
 \verbatim
-chmod +x $ASIBOT_ROOT/example/python/testRaveBot.py
-$ASIBOT_ROOT/example/python/testRaveBot.py
+[on terminal 1] yarp server
+\endverbatim
+
+And then:
+
+\verbatim
+[on terminal 2] chmod +x $ASIBOT_ROOT/example/python/testRaveBot.py
+[on terminal 2] $ASIBOT_ROOT/example/python/testRaveBot.py
 \endverbatim
 
 <hr>
