@@ -244,15 +244,23 @@ The project is organized in such a way that you will find:
 
 <hr>
 
-<B>Multi-language Support Wrappers (Completely Optional, read warning)</B>
+<B>Multi-language Support Wrappers (Completely Optional, read the warnings)</B>
+
+<b>WARNING</b>: This is unnecessary, as we already have working examples that can connect to an open \ref cartesianServer module remotely:
+
+\verbatim
+chmod +x $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
+$ASIBOT_ROOT/example/python/testRemoteRaveBot.py
+\endverbatim
 
 For using the ASIBOT libraries with SWIG wrappers and therefore invoking them through Python,
 Java (-> Matlab), etc... bindings, (for now) you must export them to the YARP yarpmod plugin library.
 
 <b>WARNING</b>: If you do this, they may not belong to the rlPlugins plugin library simultaneously.
 This is, a YARP device can belong to either to the YARP project <b>OR</b> to the ASIBOT project
-(this is <b>mutually exclusive</b>). To export the ASIBOT libraries to the YARP yarpmod plugin library,
-you must:
+(this is <b>mutually exclusive</b>).
+
+If you still want to export the ASIBOT libraries to the YARP yarpmod plugin library, you must:
 
 \verbatim
 cp $ASIBOT_ROOT/example/exportable/ExternalModules.cmake.template $YARP_ROOT/conf/ExternalModules.cmake
