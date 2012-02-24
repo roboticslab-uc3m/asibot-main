@@ -171,13 +171,14 @@ cd asibot/main; mkdir build; cd build; ccmake ..
 Press 'c' to refresh the cache. A set of options should be available, set the ENABLE options you need to ON. The following is a set of options which <b>if set to ON</b> will provide you with the ASIBOT simulator with motor control and direct/inverse kinematics.
 
   \li <B>ENABLE_cartesianServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref cartesianServer module.
-  \li <B>ENABLE_rlPlugins_cartesianbot</B> (defaults to <B>OFF</B>): Enables the compilation of the CartesianBot library.
-  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of the RaveBot library.
+  \li <B>ENABLE_rlPlugins_cartesianbot</B> (defaults to <B>OFF</B>): Enables the compilation of the CartesianBot library (part of rlPlugins).
+  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of the RaveBot library (part of rlPlugins).
 
 The following is a list of other options.
 
   \li <B>ENABLE_findRedCan</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref findRedCan module.
   \li <B>ENABLE_testRaveBot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref testRaveBot module.
+  \li <B>ENABLE_testRlPlugins</B> (defaults to <B>OFF</B>): Enables the compilation of the testRlPlugins module (like <b>yarpdev</b> with rlPlugins).
   \li <B>ENABLE_webInterface</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterface module.
   \li <B>ENABLE_webInterfacePy</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterfacePy module.
   \li <B>ENABLE_wiimoteServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref wiimoteServer module.
@@ -246,10 +247,15 @@ The project is organized in such a way that you will find:
 For using SWIG and therefore Python, Java (-> Matlab), etc... bindings, (for now) you must export ASIBOT to YARP. Be warned that a YARP device can belong to either YARP <b>OR</b> rlPlugins (this is <b>mutually exclusive</b>). This can be done by basically:
 
 \verbatim
-cp ~/asibot/examples/exportable/ExternalModules.cmake.template ${YARP_ROOT}/conf/ExternalModules.cmake
+cp $ASIBOT_ROOT/example/exportable/ExternalModules.cmake.template $YARP_ROOT/conf/ExternalModules.cmake
 \endverbatim
 
-And recompiling YARP with the ASIBOT devices you need.
+Make and install YARP with the ASIBOT devices you want. They should be shown (once installed) on issuing a:
+
+\verbatim
+yarpdev --list
+\endverbatim
+
 
 <hr>
 
