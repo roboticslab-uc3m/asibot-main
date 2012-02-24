@@ -319,6 +319,19 @@ And then:
 [on terminal 2] $ASIBOT_ROOT/example/python/testRaveBot.py
 \endverbatim
 
+<b>Or</b> create a separate instace of ravebot:
+
+\verbatim
+[on terminal 2] yarpdev --device controlboard --subdevice ravebot --name /ravebot
+\endverbatim
+
+And test it remotely:
+
+\verbatim
+[on terminal 3] chmod +x $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
+[on terminal 3] $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
+\endverbatim
+
 <hr>
 
 This page can be edited at $ASIBOT_ROOT/main/doc/install.dox.
