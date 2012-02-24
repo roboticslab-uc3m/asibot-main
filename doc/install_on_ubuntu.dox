@@ -38,18 +38,20 @@ make -j3;  sudo make install; cd ../..
 
 For additional options (turning math lib ON) use ccmake instead of cmake.
 
-Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
+Do not forget to set the YARP_ROOT environment variable to ''yarp2'' and the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
 
  1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
  
 \verbatim
+echo "export YARP_ROOT=$PWD/yarp2" >> ~/.profile
 echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.profile
 \endverbatim
 
  2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
  
 \verbatim
-echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc</B>
+echo "export YARP_ROOT=$PWD/yarp2" >> ~/.bashrc
+echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc
 \endverbatim
 
 
