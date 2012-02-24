@@ -306,6 +306,13 @@ cp yarp/yarp.py .  # If you selected CREATE_PYTHON
 sudo make install
 \endverbatim
 
+If you selected CREATE_PYTHON, you can run a small example:
+
+\verbatim
+chmod +x $ASIBOT_ROOT/example/python/testRaveBot.py
+$ASIBOT_ROOT/example/python/testRaveBot.py
+\endverbatim
+
 <hr>
 
 This page can be edited at $ASIBOT_ROOT/main/doc/install.dox.
