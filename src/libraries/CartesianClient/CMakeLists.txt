@@ -2,14 +2,12 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_webInterface)
-
-set(KEYWORD "webInterface")
+set(KEYWORD "CartesianClient")
 
 # Start a project.
 project(${KEYWORD})
 
-# Find YARP.
+# Find YARP.  Point the YARP_DIR environment variable at your build.
 find_package(YARP REQUIRED)
 
 # Search for source code.
@@ -24,15 +22,18 @@ foreach(header_file ${folder_header})
   include_directories(${p})
 endforeach(header_file ${folder_header})
 
-include_directories(${ASIBOT_INCLUDE_DIRS})
+# Inclue any directories needed for YARP
+include_directories(${YARP_INCLUDE_DIRS})
 
-# Set up our main executable.
+# Set up our library.
 if (folder_source)
-  add_executable(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} rlPlugins ${ASIBOT_LIBRARIES})
+  add_library(${KEYWORD} ${folder_source} ${folder_header})
+  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
-ENDIF (ENABLE_webInterface)
+# Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
+set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") 
 
