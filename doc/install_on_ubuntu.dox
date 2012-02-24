@@ -244,61 +244,9 @@ The project is organized in such a way that you will find:
 
 <hr>
 
-<B>Multi-language Support Wrappers (Completely Optional, read the warnings)</B>
+<B>Multi-language Support (Optional)</B>
 
-<b>WARNING</b>: This is unnecessary, as we already have working examples that can connect to an open \ref cartesianServer module remotely:
-
-\verbatim
-chmod +x $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
-$ASIBOT_ROOT/example/python/testRemoteRaveBot.py
-\endverbatim
-
-For using the ASIBOT libraries with SWIG wrappers and therefore invoking them through Python,
-Java (-> Matlab), etc... bindings, (for now) you must export them to the YARP yarpmod plugin library.
-
-<b>WARNING</b>: If you do this, they may not belong to the rlPlugins plugin library simultaneously.
-This is, a YARP device can belong to either to the YARP project <b>OR</b> to the ASIBOT project
-(this is <b>mutually exclusive</b>).
-
-If you still want to export the ASIBOT libraries to the YARP yarpmod plugin library, you must:
-
-\verbatim
-cp $ASIBOT_ROOT/example/exportable/ExternalModules.cmake.template $YARP_ROOT/conf/ExternalModules.cmake
-\endverbatim
-
-Configure the ASIBOT libraries you want in the YARP yarpmod plugin library:
-
-\verbatim
-cd $YARP_DIR
-ccmake .. -DCREATE_DEVICE_LIBRARY_MODULES=ON
-\endverbatim
-
-Press 'c' to see the library options. Set the ENABLE options you want to ON (ENABLE_yarpmod_ravebot for RaveBot, ENABLE_yarpmod_cartesianbot for CartesianBot, etc). Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project. Compile and install with this new YARP configuration with:
-
-\verbatim
-make -j3
-sudo make install
-\endverbatim
-
-They should be shown (once installed) on issuing a:
-
-\verbatim
-yarpdev --list
-\endverbatim
-
-You can test RaveBot as a YARP yarpmod through:
-
-\verbatim
-yarpdev --device ravebot
-\endverbatim
-
-You can test CartesianBot as a YARP yarpmod through:
-
-\verbatim
-yarpdev --device cartesianbot --file $ASIBOT_ROOT/app/cartesianServer/conf/cartesianServer.ini
-\endverbatim
-
-Now compile the YARP bindings with SWIG:
+You can compile the YARP bindings with SWIG:
 
 \verbatim
 sudo apt-get install swig
@@ -309,7 +257,7 @@ ccmake .  # Have seen issues with out-of-source build
 Press 'c' to refresh the cache. A set of options should be available, set the CREATE options you need to ON. Press 'c' to configure. If you chose CREATE_JAVA between your options, set PREPARE_CLASS_FILES to ON now. Press 'c' and 'g' now. Compile the project:
 
 \verbatim
-make
+make -j3
 cp yarp/yarp.py .  # If you selected CREATE_PYTHON
 sudo make install
 \endverbatim
@@ -320,25 +268,19 @@ If you selected CREATE_PYTHON, you can run a small example by first running a YA
 [on terminal 1] yarp server
 \endverbatim
 
-And then:
+Instanciate a \ref cartesianServer module:
 
 \verbatim
-[on terminal 2] chmod +x $ASIBOT_ROOT/example/python/testRaveBot.py
-[on terminal 2] $ASIBOT_ROOT/example/python/testRaveBot.py
+[on terminal 2] cartesianServer
 \endverbatim
 
-<b>Or</b> create a separate instace of ravebot:
-
-\verbatim
-[on terminal 2] yarpdev --device controlboard --subdevice ravebot --name /ravebot
-\endverbatim
-
-And test it remotely:
+And use the example that can connect to an open \ref cartesianServer module remotely:
 
 \verbatim
 [on terminal 3] chmod +x $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
 [on terminal 3] $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
 \endverbatim
+
 
 <hr>
 
