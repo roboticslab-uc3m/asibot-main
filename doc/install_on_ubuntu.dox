@@ -246,13 +246,26 @@ The project is organized in such a way that you will find:
 
 <B>Multi-language Support Wrappers</B>
 
-For using SWIG and therefore Python, Java (-> Matlab), etc... bindings, (for now) you must export ASIBOT to YARP. Be warned that a YARP device can belong to either YARP <b>OR</b> rlPlugins (this is <b>mutually exclusive</b>). This can be done by basically:
+For using SWIG and therefore Python, Java (-> Matlab), etc... bindings for the ASIBOT libraries, (for now) you must export them to the YARP yarpmod plugin library. Be warned that if you do this, they may not belong to the rlPlugins plugin library simultaneously. This is, a YARP device can belong to either to the YARP project <b>OR</b> to the ASIBOT project (this is <b>mutually exclusive</b>). To export the ASIBOT libraries to the YARP yarpmod plugin library, you must:
 
 \verbatim
 cp $ASIBOT_ROOT/example/exportable/ExternalModules.cmake.template $YARP_ROOT/conf/ExternalModules.cmake
 \endverbatim
 
-Make and install YARP with the ASIBOT devices you want. They should be shown (once installed) on issuing a:
+Configure the ASIBOT libraries you want in the YARP yarpmod plugin library:
+
+\verbatim
+cd $YARP_DIR
+ccmake ..
+\endverbatim
+
+And then make and install YARP with:
+\verbatim
+make -j3
+sudo make install
+\endverbatim
+
+They should be shown (once installed) on issuing a:
 
 \verbatim
 yarpdev --list
