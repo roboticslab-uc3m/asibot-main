@@ -40,9 +40,17 @@ For additional options (turning math lib ON) use ccmake instead of cmake.
 
 Do not forget to set the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
 
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.profile</B>
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
+ 
+\verbatim
+echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.profile
+\endverbatim
 
- 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc</B>
+ 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
+ 
+\verbatim
+echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc</B>
+\endverbatim
 
 
  * @section install_openrave Install OpenRAVE (optional, needed for simulator)
@@ -142,9 +150,17 @@ svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
 
 Set the ASIBOT_ROOT environment variable to ''asibot''. There are two ways of doing this:
 
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.profile</B>
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
+ 
+\verbatim
+echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.profile
+\endverbatim
 
- 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.bashrc</B>
+ 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
+ 
+\verbatim
+echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.bashrc
+\endverbatim
 
 Now let's configure which modules we want to enable:
 
@@ -180,17 +196,34 @@ make install_applications  # In-project install: No super-user permissions are r
 
 Set the ASIBOT_DIR environment variable to ''$ASIBOT_ROOT/main/build''. There are two ways of doing this:
 
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.profile</B>
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
+ 
+\verbatim
+echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.profile
+\endverbatim
 
- 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.bashrc</B>
+ 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
+ 
+\verbatim
+echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.bashrc
+\endverbatim
 
  * @subsection install_asibot_apps Install the ASIBOT applications (collections of modules)
 
 For <b>gyarpmanager</b> to run the applications correctly, <b>yarprun</b> must find the modules in the system path. You can achieve this by adding '''$ASIBOT_DIR/bin''' to the PATH environment variable. There are two ways of doing this:
 
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.profile</B>
+ 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
+ 
+\verbatim
+echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.profile
+\endverbatim
 
- 2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.bashrc</B>
+ 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
+ 
+\verbatim
+echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.bashrc
+\endverbatim
+
 
 You may now proceed to install each individual application: \ref asibot_applications
 
