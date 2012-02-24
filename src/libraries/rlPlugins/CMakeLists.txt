@@ -13,8 +13,8 @@ add_subdirectory(ravebot)
 add_subdirectory(cartesianbot)
 end_plugin_library(rlPlugins)
 
-IF (enable_ASIBOT_TESTS)
+IF (ENABLE_testRlPlugins)
   add_plugin_library_executable(testRlPlugins rlPlugins)
   INSTALL(TARGETS testRlPlugins DESTINATION bin)
-ENDIF (enable_ASIBOT_TESTS)
+ENDIF (ENABLE_testRlPlugins)
 
