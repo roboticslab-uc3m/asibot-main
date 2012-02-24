@@ -11,7 +11,7 @@ IF (NOT SKIP_ravebot)
 FIND_PACKAGE(YARP REQUIRED)
 
 # Next the OpenRAVE stuff
-FIND_PACKAGE(OpenRAVE)
+FIND_PACKAGE(OpenRAVE REQUIRED)
 
 find_package(Boost ${OpenRAVE_Boost_VERSION} EXACT COMPONENTS iostreams python thread)
 
@@ -21,7 +21,9 @@ find_package(Boost ${OpenRAVE_Boost_VERSION} EXACT COMPONENTS iostreams python t
 if( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX )
   add_definitions("-fno-strict-aliasing -Wall")
 endif( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX )
+
 include_directories(${OpenRAVE_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR})
+
 if( Boost_INCLUDE_DIRS )
   include_directories(${Boost_INCLUDE_DIRS})
 endif()
@@ -34,7 +36,7 @@ ADD_LIBRARY(ravebot RaveBot.h IDeviceImpl.cpp IPositionImpl.cpp IVelocityImpl.cp
 TARGET_LINK_LIBRARIES(ravebot ${YARP_LIBRARIES} ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} ${Boost_THREAD_LIBRARY} ${BOOST_THREAD_LIBRARY})
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
-#set_property(GLOBAL APPEND PROPERTY YARP_LIBS ${yarpmod_LIBRARIES} ${Boost_THREAD_LIBRARY} ${BOOST_THREAD_LIBRARY})
+set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${OpenRAVE_INCLUDE_DIRS})
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins ravebot ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} ${Boost_THREAD_LIBRARY} ${BOOST_THREAD_LIBRARY} CACHE INTERNAL "appended libraries") 
 set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${OpenRAVE_LIBRARY_DIRS} ${OPENRAVE_LINK_DIRS} CACHE INTERNAL "appended link dirs")
 

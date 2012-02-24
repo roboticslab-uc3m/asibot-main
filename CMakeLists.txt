@@ -58,11 +58,13 @@ mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
 # Pick up our scripts - they are all in the conf subdirectory
 set(ASIBOT_MODULE_PATH ${CMAKE_SOURCE_DIR}/conf)
 
-#set_property(GLOBAL PROPERTY ASIBOT_LIBRARIES)
 #set_property(GLOBAL PROPERTY ASIBOT_INCLUDE_DIRS)
+#set_property(GLOBAL PROPERTY ASIBOT_LINK_DIRS)
+#set_property(GLOBAL PROPERTY ASIBOT_LIBRARIES)
 #set_property(GLOBAL PROPERTY ASIBOT_TARGETS)
-set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
+set(ASIBOT_INCLUDE_DIRS CACHE INTERNAL "appended header dirs" FORCE)
 set(ASIBOT_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
+set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 
 # add main contents
 add_subdirectory(src)
