@@ -244,9 +244,15 @@ The project is organized in such a way that you will find:
 
 <hr>
 
-<B>Multi-language Support Wrappers</B>
+<B>Multi-language Support Wrappers (Completely Optional, read warning)</B>
 
-For using SWIG and therefore Python, Java (-> Matlab), etc... bindings for the ASIBOT libraries, (for now) you must export them to the YARP yarpmod plugin library. Be warned that if you do this, they may not belong to the rlPlugins plugin library simultaneously. This is, a YARP device can belong to either to the YARP project <b>OR</b> to the ASIBOT project (this is <b>mutually exclusive</b>). To export the ASIBOT libraries to the YARP yarpmod plugin library, you must:
+For using the ASIBOT libraries with SWIG wrappers and therefore invoking them through Python,
+Java (-> Matlab), etc... bindings, (for now) you must export them to the YARP yarpmod plugin library.
+
+<b>WARNING</b>: If you do this, they may not belong to the rlPlugins plugin library simultaneously.
+This is, a YARP device can belong to either to the YARP project <b>OR</b> to the ASIBOT project
+(this is <b>mutually exclusive</b>). To export the ASIBOT libraries to the YARP yarpmod plugin library,
+you must:
 
 \verbatim
 cp $ASIBOT_ROOT/example/exportable/ExternalModules.cmake.template $YARP_ROOT/conf/ExternalModules.cmake
@@ -256,10 +262,11 @@ Configure the ASIBOT libraries you want in the YARP yarpmod plugin library:
 
 \verbatim
 cd $YARP_DIR
-ccmake ..
+ccmake .. -DCREATE_DEVICE_LIBRARY_MODULES=ON
 \endverbatim
 
-And then make and install YARP with:
+Press 'c' to see the library options. Set the ENABLE options you want to ON (ENABLE_yarpmod_ravebot for RaveBot, ENABLE_yarpmod_cartesianbot for CartesianBot, etc). Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project. Compile and install with this new YARP configuration with:
+
 \verbatim
 make -j3
 sudo make install
@@ -269,6 +276,18 @@ They should be shown (once installed) on issuing a:
 
 \verbatim
 yarpdev --list
+\endverbatim
+
+You can test RaveBot as a YARP yarpmod through:
+
+\verbatim
+yarpdev --device ravebot
+\endverbatim
+
+You can test CartesianBot as a YARP yarpmod through:
+
+\verbatim
+yarpdev --device cartesianbot --file $ASIBOT_ROOT/app/cartesianServer/conf/cartesianServer.ini
 \endverbatim
 
 
