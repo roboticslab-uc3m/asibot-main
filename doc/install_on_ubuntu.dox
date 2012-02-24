@@ -290,6 +290,21 @@ You can test CartesianBot as a YARP yarpmod through:
 yarpdev --device cartesianbot --file $ASIBOT_ROOT/app/cartesianServer/conf/cartesianServer.ini
 \endverbatim
 
+Now compile the YARP bindings with SWIG:
+
+\verbatim
+sudo apt-get install swig
+cd $YARP_ROOT/example/swig
+ccmake .  # Have seen issues with out-of-source build
+\endverbatim
+
+Press 'c' to refresh the cache. A set of options should be available, set the CREATE options you need to ON. Press 'c' to configure. If you chose CREATE_JAVA between your options, set PREPARE_CLASS_FILES to ON now. Press 'c' and 'g' now. Compile the project:
+
+\verbatim
+make
+cp yarp/yarp.py .  # If you selected CREATE_PYTHON
+sudo make install
+\endverbatim
 
 <hr>
 
