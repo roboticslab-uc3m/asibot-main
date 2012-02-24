@@ -152,16 +152,23 @@ Now let's configure which modules we want to enable:
 cd asibot/main; mkdir build; cd build; ccmake ..
 \endverbatim
 
-Press 'c' to refresh the cache. A set of options should be available, set the ENABLE options you need to ON. The following is a set of the most important ones.
+Press 'c' to refresh the cache. A set of options should be available, set the ENABLE options you need to ON. The following is a set of options which <b>if set to ON</b> will provide you with the ASIBOT simulator with motor control and direct/inverse kinematics.
 
   \li <B>ENABLE_cartesianServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref cartesianServer module.
   \li <B>ENABLE_rlPlugins_cartesianbot</B> (defaults to <B>OFF</B>): Enables the compilation of the CartesianBot library.
   \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of the RaveBot library.
 
+The following is a list of other options.
+
+  \li <B>ENABLE_findRedCan</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref findRedCan module.
+  \li <B>ENABLE_testRaveBot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref testRaveBot module.
+  \li <B>ENABLE_webInterface</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterface module.
+  \li <B>ENABLE_webInterfacePy</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterfacePy module.
+  \li <B>ENABLE_wiimoteServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref wiimoteServer module.
 
 Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project.
 
- * @subsection compile_asibot Compile and Install the ASIBOT software
+ * @subsection compile_asibot Compile and Install the ASIBOT modules and libraries
 
 Finally compile with:
 
@@ -171,17 +178,21 @@ make install_applications  # In-project install: No super-user permissions are r
 \endverbatim
 
 
-It is highly recommended to set the ASIBOT_DIR environment variable to ''$ASIBOT_ROOT/main/build''. There are two ways of doing this:
+Set the ASIBOT_DIR environment variable to ''$ASIBOT_ROOT/main/build''. There are two ways of doing this:
 
  1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.profile</B>
 
  2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.bashrc</B>
 
-It is also quite convenient to add '''$ASIBOT_DIR/bin''' to the PATH environment variable. There are two ways of doing this:
+ * @subsection install_asibot_apps Install the ASIBOT applications (collections of modules)
+
+For <b>gyarpmanager</b> to run the applications correctly, <b>yarprun</b> must find the modules in the system path. You can achieve this by adding '''$ASIBOT_DIR/bin''' to the PATH environment variable. There are two ways of doing this:
 
  1) Through ~/.profile (parsed at system init, persistent throughout entire session). Type <B>echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.profile</B>
 
  2) Through ~/.baschrc (parsed inside each terminal). Type <B>echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.bashrc</B>
+
+You may now proceed to install each individual application: \ref asibot_applications
 
 <hr>
 
@@ -199,7 +210,7 @@ The project is organized in such a way that you will find:
 
 <B>Multi-language Support Wrappers</B>
 
-For using SWIG and therefore Python, Java (-> Matlab), etc... bindings, (for now) you must export ASIBOT to YARP. This can be done by basically:
+For using SWIG and therefore Python, Java (-> Matlab), etc... bindings, (for now) you must export ASIBOT to YARP. Be warned that a YARP device can belong to either YARP <b>OR</b> rlPlugins (this is <b>mutually exclusive</b>). This can be done by basically:
 
 \verbatim
 cp ~/asibot/examples/exportable/ExternalModules.cmake.template ${YARP_ROOT}/conf/ExternalModules.cmake
