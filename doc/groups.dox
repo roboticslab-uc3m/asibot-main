@@ -1,5 +1,4 @@
 /**
-*
 * \defgroup asibot_applications List of ASIBOT Applications (Collections of Modules)
 *
 * The app directory stores directories which group
@@ -22,7 +21,6 @@
 */
 
 /**
-*
 * \defgroup asibot_libraries List of ASIBOT Libraries
 *
 * Documentation for each library goes in each 
@@ -37,6 +35,16 @@
 *
 * A collection of ASIBOT libraries that implement YARP devices
 * and therefore can be invoked as YARP plugins.
+*
+* This file can be edited at \in main/doc/groups.dox
+*/
+
+/**
+* \defgroup testRlPlugins
+*
+* The \ref testRlPlugins module works like
+* <a class="el" href="http://eris.liralab.it/yarpdoc/group__dev__runtime.html">yarpdev</a>, but also includes
+* the compiled \ref rlPlugins.
 *
 * This file can be edited at \in main/doc/groups.dox
 */
