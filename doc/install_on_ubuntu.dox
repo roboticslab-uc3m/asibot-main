@@ -180,7 +180,7 @@ The following is a list of other options.
 
   \li <B>ENABLE_findRedCan</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref findRedCan module.
   \li <B>ENABLE_testRaveBot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref testRaveBot module.
-  \li <B>ENABLE_testRlPlugins</B> (defaults to <B>OFF</B>): Enables the compilation of the testRlPlugins module (like <b>yarpdev</b> with rlPlugins).
+  \li <B>ENABLE_testRlPlugins</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref testRlPlugins module.
   \li <B>ENABLE_webInterface</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterface module.
   \li <B>ENABLE_webInterfacePy</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterfacePy module.
   \li <B>ENABLE_wiimoteServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref wiimoteServer module.
