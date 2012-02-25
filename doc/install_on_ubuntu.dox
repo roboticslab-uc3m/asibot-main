@@ -38,7 +38,7 @@ cmake .. -DCREATE_LIB_MATH=ON -DCREATE_GUIS=ON -DCREATE_OPTIONAL_CARRIERS=ON -DE
 make -j3;  sudo make install; cd ../..
 \endverbatim
 
-For additional options (turning math lib ON) use ccmake instead of cmake.
+For additional options use ccmake instead of cmake.
 
 Do not forget to set the YARP_ROOT environment variable to ''yarp2'' and the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
 
