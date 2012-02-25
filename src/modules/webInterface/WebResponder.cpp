@@ -344,12 +344,15 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="video") {
         ConstString camHost = Network::queryName("/ravebot/img:o").getHost();
         int camPort = Network::queryName("/ravebot/img:o").getPort();
-//        printf("simCam running at: http://%s:%d\n",camHost.c_str(),camPort);
         ConstString camSocket = "http://";
         camSocket += camHost + ":" + ConstString::toString(camPort) + "/?action";
         printf("\nCam running at: %s\n\n", camSocket.c_str());
         string str = readFile("video.html");
         replaceAll(str, "<SIMCAMIP>", camSocket.c_str());
+        response.addString(str.c_str());
+        return response.write(*out);
+    } else if (code=="teach") {
+        string str = readFile("teach.html");
         response.addString(str.c_str());
         return response.write(*out);
     }
