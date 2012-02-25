@@ -2,7 +2,7 @@
 
 /**
  *
- * \defgroup cartesianServer
+ * \defgroup cartesianServer cartesianServer
  *
  * The \ref cartesianServer module creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
  *

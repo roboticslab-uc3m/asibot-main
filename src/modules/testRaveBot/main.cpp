@@ -2,7 +2,7 @@
 
 /**
  * 
- * \defgroup testRaveBot
+ * \defgroup testRaveBot testRaveBot
  *
  * Creates an instance of RaveBot wrapped in a YARP controlboard. This means that it may be used
  * through a YARP remote_controlboard or directly through low-level YARP controlboard RPC commands.

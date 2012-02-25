@@ -2,7 +2,7 @@
 
 /**
  * 
- * \defgroup findRedCan
+ * \defgroup findRedCan findRedCan
  *
  * \image html findRedCan.png
  * 
