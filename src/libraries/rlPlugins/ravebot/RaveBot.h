@@ -53,21 +53,27 @@ class toolPort : public BufferedPort<Bottle> {
 };
 
 /**
- * 
- * @ingroup RaveBot
+ * @ingroup rlPlugins
+ * \defgroup RaveBot
  *
  * \image html ravebot.png
  *
- * RaveBot creates an instance of OpenRAVE-core (qtcoin viewer included) and implements the
- * YARP_dev IPositionControl, IVelocityControl and IEncoders interface class member functions.
- * It additionally publishes the stream of images from a camera set on robot[0] (default image
- * port name: /ravebot/img:o). It is used by <a class="el" href="group__testRaveBot.html">testRaveBot</a>
- * and <a class="el" href="group__cartesianServer.html">cartesianServer</a>.
+ * The \ref RaveBot library is composed by a single class, RaveBot.
  *
  * <b>Installation</b>
  *
  * The plugin is compiled when ENABLE_rlPlugins_ravebot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
+ */
+
+/**
+ *
+ * @ingroup RaveBot
+ * The RaveBot class creates an instance of OpenRAVE-core (qtcoin viewer included) and implements the
+ * YARP_dev IPositionControl, IVelocityControl and IEncoders interface class member functions.
+ * It additionally publishes the stream of images from a camera set on robot[0] (default image
+ * port name: /ravebot/img:o). It is used by <a class="el" href="group__testRaveBot.html">testRaveBot</a>
+ * and <a class="el" href="group__cartesianServer.html">cartesianServer</a>.
  *
  */
 class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncoders {

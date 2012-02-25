@@ -34,12 +34,10 @@ using namespace yarp::math;
 ////using namespace yarp::sig;
 
 /**
+ * @ingroup rlPlugins
+ * \defgroup CartesianBot
  *
- * @ingroup CartesianBot
- *
- * CartesianBot connects to a robot (the IPositionControl, IVelocityControl and
- * IEncoders interfaces) and exposes a YARP_dev cartesian interface (implements
- * ICartesianControl). It is used by the CartesianServer module.
+ * The \ref CartesianBot library is composed by a single class, CartesianBot.
  *
  * <b>Installation</b>
  *
@@ -47,6 +45,14 @@ using namespace yarp::math;
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  */
+
+/**
+ * @ingroup CartesianBot
+ * The CartesianBot class connects to a robot (the IPositionControl, IVelocityControl and
+ * IEncoders interfaces) and exposes a YARP_dev cartesian interface (implements
+ * ICartesianControl). It is used by the \ref cartesianServer module.
+ */
+
 class CartesianBot : public DeviceDriver, public RateThread, public ICartesianControl {
  public:
 
