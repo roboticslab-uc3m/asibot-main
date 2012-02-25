@@ -262,29 +262,7 @@ cp yarp/yarp.py .  # If you selected CREATE_PYTHON
 sudo make install
 \endverbatim
 
-If you selected CREATE_PYTHON, you can run a small example by first running a YARP name server if it is not running in our current namespace:
-
-\verbatim
-[on terminal 1] yarp server
-\endverbatim
-
-Instanciate a \ref cartesianServer module:
-
-\verbatim
-[on terminal 2] cartesianServer
-\endverbatim
-
-And use the examples that can connect to an open \ref cartesianServer module remotely:
-
-\verbatim
-[on terminal 3] chmod +x $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
-[on terminal 3] $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
-\endverbatim
-
-\verbatim
-[on terminal 3] chmod +x $ASIBOT_ROOT/example/python/testRemoteCartesianServer.py
-[on terminal 3] $ASIBOT_ROOT/example/python/testRemoteCartesianServer.py
-\endverbatim
+If you selected CREATE_PYTHON, you can run the PYTHON example of the \ref CartesianClient library.
 
 <hr>
 
