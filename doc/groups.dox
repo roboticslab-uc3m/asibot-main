@@ -21,3 +21,13 @@
 * This file can be edited at \in main/doc/groups.dox
 */
 
+/**
+*
+* \defgroup asibot_libraries List of ASIBOT Libraries
+*
+* Documentation for each library goes in each 
+* directory.
+*
+* This file can be edited at \in main/doc/groups.dox
+*/
+
