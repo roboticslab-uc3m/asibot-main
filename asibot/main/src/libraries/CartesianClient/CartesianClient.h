@@ -14,6 +14,22 @@
 
 using namespace yarp::os;
 
+/**
+ * @ingroup asibot_libraries
+ *
+ * \defgroup CartesianClient
+ *
+ * The \ref CartesianClient library is composed by a single class, CartesianClient.
+ *
+ */
+
+/**
+ * @ingroup CartesianClient
+ *
+ * The CartesianClient class implements a client part that connects to a remote
+ * \ref cartesianServer module.
+ * 
+ */
 class CartesianClient {
 protected:
     RpcClient rpcClient;
