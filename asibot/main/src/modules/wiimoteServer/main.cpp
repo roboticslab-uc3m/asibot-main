@@ -2,7 +2,7 @@
 
 /**
  *
- * \defgroup wiimoteServer
+ * \defgroup wiimoteServer wiimoteServer
  *
  * The \ref wiimoteServer module acts as a flexible-threadrate server interface for a wiimote controller or similar.
  *
