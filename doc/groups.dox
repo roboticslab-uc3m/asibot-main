@@ -31,7 +31,7 @@
 
 /**
 * @ingroup asibot_libraries
-* \defgroup rlPlugins
+* \defgroup rlPlugins rlPlugins
 *
 * A collection of ASIBOT libraries that implement YARP devices
 * and therefore can be invoked as YARP plugins.
@@ -40,7 +40,7 @@
 */
 
 /**
-* \defgroup testRlPlugins
+* \defgroup testRlPlugins testRlPlugins
 *
 * The \ref testRlPlugins module works like
 * <a class="el" href="http://eris.liralab.it/yarpdoc/group__dev__runtime.html">yarpdev</a>, but also includes

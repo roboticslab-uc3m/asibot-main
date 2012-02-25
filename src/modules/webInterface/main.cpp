@@ -2,7 +2,7 @@
 
 /**
  *
- * \defgroup webInterface
+ * \defgroup webInterface webInterface
  *
  * Creates an instance of the WebInterface class. Calls are handled by the WebResponder class.
  *

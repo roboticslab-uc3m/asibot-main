@@ -2,7 +2,7 @@
 
 ##
 #
-# @defgroup webInterfacePy
+# @defgroup webInterfacePy webInterfacePy
 #
 # Serves a Web Interface using CherryPy3 to instanciate the WebAsibot python class.
 # 
