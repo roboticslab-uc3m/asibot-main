@@ -17,7 +17,7 @@
 * Ideally these directories will contain only scripts 
 * and ini/txt files. Use src to store source code. 
 *
-* This file can be edited at \in main/doc/groups.dox
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
 */
 
 /**
@@ -26,17 +26,19 @@
 * Documentation for each library goes in each 
 * directory.
 *
-* This file can be edited at \in main/doc/groups.dox
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
 */
 
 /**
 * @ingroup asibot_libraries
 * \defgroup rlPlugins rlPlugins
 *
-* A collection of ASIBOT libraries that implement YARP devices
-* and therefore can be invoked as YARP plugins.
+* A collection of ASIBOT libraries that implement YARP device interfaces
+* and therefore can be invoked as YARP plugins. This collection of libraries
+* is the PC equivalent to rlPlugins2, which is intended for cross-compiling
+* for the robot and can be found inside $ASIBOT_ROOT/pxa270/src/libraries
 *
-* This file can be edited at \in main/doc/groups.dox
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
 */
 
 /**
@@ -46,6 +48,6 @@
 * <a class="el" href="http://eris.liralab.it/yarpdoc/group__dev__runtime.html">yarpdev</a>, but also includes
 * the compiled \ref rlPlugins.
 *
-* This file can be edited at \in main/doc/groups.dox
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
 */
 
