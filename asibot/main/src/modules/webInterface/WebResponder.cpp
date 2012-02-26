@@ -355,6 +355,8 @@ bool WebResponder::read(ConnectionReader& in) {
         string str = readFile("teach.html");
         response.addString(str.c_str());
         return response.write(*out);
+    } else if (code=="capture.0") {
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
