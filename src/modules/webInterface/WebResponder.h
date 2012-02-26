@@ -16,6 +16,7 @@
 #define JOYPAD_RELMOVE 5  // [deg]
 #define CJOYPAD_RELMOVE_POS 0.10  // [m]
 #define CJOYPAD_RELMOVE_ORI 15  // [deg]
+#define NUM_CART_COORDS 5  // 
 
 using namespace yarp::os;
 using namespace yarp::dev;
@@ -49,6 +50,8 @@ protected:
     yarp::dev::PolyDriver realDevice;
     yarp::dev::IPositionControl *realPos;
     CartesianClient *realCart;  // != ICartesianControl
+
+    double captureX[NUM_CART_COORDS];
 
 public:
     ConstString getCss();
