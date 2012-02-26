@@ -38,7 +38,8 @@ protected:
     ConstString htmlPath;
     ConstString userPath;
     ConstString resourcePath;
-    string readFile(const ConstString& fileName);
+    string readFile(const ConstString& fileName);  // grabs from htmlPath
+    bool appendToFile(const ConstString& absFile, const ConstString& inString); // writes to userPath
     string& replaceAll(string& context, const string& from, const string& to);
     int stringToInt(const ConstString& inString);
     double stringToDouble(const ConstString& inString);
