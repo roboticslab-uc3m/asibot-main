@@ -101,6 +101,9 @@ function jointMove(str) {
             <form action="capture.0">
                 <button name="thecapture" id="thecapture" type="submit" onClick="return capture()"><img src="fig/record.png" width=50></button>
             </form>
+            <form action="capture.1" name="thesave" id="thesave" onSubmit="return psave()">
+                <input name="pname" id="pname" type="hidden" value="null">
+            </form>
             </td></tr></table>
 <script>
 function jstop() {
@@ -116,17 +119,32 @@ function jstop() {
     return false;
 }
 function capture() {
+    var r2;
     url="capture.0";
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             var r = confirm(xmlhttp.responseText + 'Would you like to save this point?\n\n');
             if (r==true) {
-                var r2 = prompt("Please insert a name for the point","point01");
+                r2 = prompt("Please insert a name for the point","point01");
                 if(r2!=null && r2!="") {
-                    alert("Saved " + r2);
+//                    alert("Saving " + r2 + "...");
+                    document.getElementById('pname').value = r2;
+                    psave();
                 }
             }
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+function psave() {
+    url="capture.1?pname="+document.getElementById('pname').value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            alert("Saved " + xmlhttp.responseText);
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
