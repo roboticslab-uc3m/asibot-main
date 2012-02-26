@@ -94,9 +94,14 @@ function jointMove(str) {
 
         <div id="middle_wrapper" align=center>
             <font size="6"><b>Joint</b></font><br><br><br>
+            <table><tr><td>
             <form action="stop.0">
                 <button name="stop" type="submit" onClick="return jstop()"><img src="fig/stop.png" width=50></button>
+            </form></td><td>&nbsp; &nbsp; &nbsp;</td><td>
+            <form action="capture.0">
+                <button name="capture" type="submit" onClick="return jcapture()"><img src="fig/record.png" width=50></button>
             </form>
+            </td></tr></table>
 <script>
 function jstop() {
     url="stop.0";
