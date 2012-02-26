@@ -98,6 +98,13 @@ double WebResponder::stringToDouble(const ConstString& inString) {
 }
 
 /************************************************************************/
+ConstString WebResponder::doubleToString(const double& inDouble) {
+    std::ostringstream s;
+    s << inDouble;
+    return ConstString(s.str().c_str());
+}
+
+/************************************************************************/
 ConstString WebResponder::getCss() {
     return ConstString(readFile("style.css").c_str());
 }
@@ -360,6 +367,11 @@ bool WebResponder::read(ConnectionReader& in) {
         if(simCart) simCart->stat(cartCoords);
         if(realCart) simCart->stat(cartCoords); // REAL OVERWRITES COORDS
         printf("At: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
+        ConstString coords;
+        for(int i=0;i<5;i++)
+            coords += doubleToString(cartCoords[i]) + " ";
+        response.addString(coords.c_str());
+        printf("Writing: %s\n",coords.c_str());
         return response.write(*out);
     }
 

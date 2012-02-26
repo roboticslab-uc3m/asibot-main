@@ -40,6 +40,7 @@ protected:
     string& replaceAll(string& context, const string& from, const string& to);
     int stringToInt(const ConstString& inString);
     double stringToDouble(const ConstString& inString);
+    ConstString doubleToString(const double& inDouble);
 
     yarp::dev::PolyDriver simDevice;
     yarp::dev::IPositionControl *simPos;
