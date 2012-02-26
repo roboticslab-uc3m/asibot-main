@@ -99,6 +99,31 @@ function cartesianMove(str) {
 		<div id="table_left">
 			<div align="center">
 				<font size="6"><strong>Cartesian</strong></font> <br><img src="fig/axis.png" width="300" height="270" >
+<br><br>
+             <table><tr><td>
+	        <form action="cartesian">
+                <button name="stop" type="submit" onClick="return cstop()"><img src="fig/stop.png" width=50></button>
+            </form></td><td>&nbsp; &nbsp; &nbsp;</td><td>
+            <form action="capture.0">
+                <button name="capture" type="submit" onClick="return jcapture()"><img src="fig/record.png" width=50></button>
+            </form>
+            </td></tr></table>
+<br><br>
+<script>
+function cstop() {
+    url="cstop.0";
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.forms[0].elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
+
 			</div>		
 		</div>
 
@@ -160,26 +185,6 @@ function cnumeric(str) {
 			</div></td></tr> 
 		</table>
 <br><br>
-			<div align="center">
-				<form action="cartesian">
-                <button name="stop" type="submit" onClick="return cstop()"><img src="fig/stop.png" width=50></button>
-<br><br>
-				</form>
-<script>
-function cstop() {
-    url="cstop.0";
-    xmlhttp.open("GET",url,true);
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-            document.forms[0].elements['total'].value=xmlhttp.responseText;
-        }
-    }
-    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
-    return false;
-}
-</script>
-			</div>
 
 	</div>
 
