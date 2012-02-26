@@ -120,8 +120,13 @@ function capture() {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-//            document.getElementById('thecapture').elements['total'].value=xmlhttp.responseText;
-            alert(xmlhttp.responseText + 'Would you like to save this point?\n\n')
+            var r = confirm(xmlhttp.responseText + 'Would you like to save this point?\n\n');
+            if (r==true) {
+                var r2 = prompt("Please insert a name for the point","point01");
+                if(r2!=null && r2!="") {
+                    alert("Saved " + r2);
+                }
+            }
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
