@@ -86,6 +86,17 @@ string WebResponder::readFile(const ConstString& fileName) {
 }
 
 /************************************************************************/
+bool WebResponder::appendToFile(const ConstString& fileName, const ConstString& inString) {
+    ConstString filePath = userPath + fileName;
+    printf("saving: %s\n",inString.c_str());
+    printf("to file: %s\n",filePath.c_str());
+    std::ofstream t(filePath.c_str(), std::ios::app);
+    t << inString << std::endl;
+    t.close();
+    return true;
+}
+
+/************************************************************************/
 int WebResponder::stringToInt(const ConstString& inString) {
     int outInt;
     std::istringstream buffer(inString.c_str());
@@ -384,7 +395,15 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="capture.1") {
         ConstString pname = request.find("pname").asString();
-        printf("Saving capture.0 captures: %f %f %f %f %f\n",captureX[0],captureX[1],captureX[2],captureX[3],captureX[4]);
+        printf("capture.1 saving capture.0 captures: %f %f %f %f %f\n",captureX[0],captureX[1],captureX[2],captureX[3],captureX[4]);
+        ConstString captureStr(pname);
+        captureStr += " ";
+        captureStr += doubleToString(captureX[0]) + " ";
+        captureStr += doubleToString(captureX[1]) + " ";
+        captureStr += doubleToString(captureX[2]) + " ";
+        captureStr += doubleToString(captureX[3]) + " ";
+        captureStr += doubleToString(captureX[4]);
+        appendToFile("points.ini",captureStr);
         response.addString(pname);
         return response.write(*out);
     }
