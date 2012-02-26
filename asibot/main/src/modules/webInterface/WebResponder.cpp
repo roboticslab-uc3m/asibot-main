@@ -364,20 +364,22 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="capture.0") {
-        double cartCoords[5];
-        if(simCart) simCart->stat(cartCoords);
-        if(realCart) simCart->stat(cartCoords); // REAL OVERWRITES COORDS
-        printf("At: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
-//        for(int i=0;i<5;i++)
-//            coords += doubleToString(cartCoords[i]) + " ";
+        if(simCart) simCart->stat(captureX);
+        if(realCart) simCart->stat(captureX); // REAL OVERWRITES COORDS
+        printf("At: %f %f %f %f %f\n",captureX[0],captureX[1],captureX[2],captureX[3],captureX[4]);
         ConstString coords("x=");
-        coords += doubleToString(cartCoords[0]) + " y=";
-        coords += doubleToString(cartCoords[1]) + " z=";
-        coords += doubleToString(cartCoords[2]) + " rot(y')=";
-        coords += doubleToString(cartCoords[3]) + " rot(z'')=";
-        coords += doubleToString(cartCoords[4]);
+        coords += doubleToString(captureX[0]) + " y=";
+        coords += doubleToString(captureX[1]) + " z=";
+        coords += doubleToString(captureX[2]) + " rot(y')=";
+        coords += doubleToString(captureX[3]) + " rot(z'')=";
+        coords += doubleToString(captureX[4]);
         response.addString(coords.c_str());
         printf("Writing: %s\n",coords.c_str());
+        return response.write(*out);
+    } else if (code=="capture.1") {
+        ConstString pname = request.find("pname").asString();
+        printf("Saving capture.0 captures: %f %f %f %f %f\n",captureX[0],captureX[1],captureX[2],captureX[3],captureX[4]);
+        response.addString(pname);
         return response.write(*out);
     }
 
