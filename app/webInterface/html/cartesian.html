@@ -102,10 +102,10 @@ function cartesianMove(str) {
 <br><br>
              <table><tr><td>
 	        <form action="cartesian">
-                <button name="stop" type="submit" onClick="return cstop()"><img src="fig/stop.png" width=50></button>
+                <button name="thestop" id="thestop" type="submit" onClick="return cstop()"><img src="fig/stop.png" width=50></button>
             </form></td><td>&nbsp; &nbsp; &nbsp;</td><td>
-            <form action="capture.0">
-                <button name="capture" type="submit" onClick="return jcapture()"><img src="fig/record.png" width=50></button>
+            <form action="cartesian">
+                <button name="thecapture" id="thecapture" type="submit" onClick="return capture()"><img src="fig/record.png" width=50></button>
             </form>
             </td></tr></table>
 <br><br>
@@ -115,13 +115,26 @@ function cstop() {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            document.forms[0].elements['total'].value=xmlhttp.responseText;
+            document.getElementById('thestop').elements['total'].value=xmlhttp.responseText;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
     xmlhttp.send();
     return false;
 }
+function capture() {
+    url="capture.0";
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.getElementById('thecapture').elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+
 </script>
 
 			</div>		
@@ -174,7 +187,7 @@ function cnumeric(str) {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            document.forms[0].elements['total'].value=xmlhttp.responseText;
+            document.getElementById('thecnumeric').elements['total'].value=xmlhttp.responseText;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
