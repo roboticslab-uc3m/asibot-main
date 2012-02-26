@@ -356,6 +356,10 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="capture.0") {
+        double cartCoords[5];
+        if(simCart) simCart->stat(cartCoords);
+        if(realCart) simCart->stat(cartCoords); // REAL OVERWRITES COORDS
+        printf("At: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
         return response.write(*out);
     }
 
