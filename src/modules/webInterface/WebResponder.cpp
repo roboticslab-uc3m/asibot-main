@@ -99,6 +99,7 @@ double WebResponder::stringToDouble(const ConstString& inString) {
 
 /************************************************************************/
 ConstString WebResponder::doubleToString(const double& inDouble) {
+    // [thank you Adam Rosenfield] http://stackoverflow.com/questions/1123201/convert-double-to-string-c
     std::ostringstream s;
     s << inDouble;
     return ConstString(s.str().c_str());
@@ -367,9 +368,14 @@ bool WebResponder::read(ConnectionReader& in) {
         if(simCart) simCart->stat(cartCoords);
         if(realCart) simCart->stat(cartCoords); // REAL OVERWRITES COORDS
         printf("At: %f %f %f %f %f\n",cartCoords[0],cartCoords[1],cartCoords[2],cartCoords[3],cartCoords[4]);
-        ConstString coords;
-        for(int i=0;i<5;i++)
-            coords += doubleToString(cartCoords[i]) + " ";
+//        for(int i=0;i<5;i++)
+//            coords += doubleToString(cartCoords[i]) + " ";
+        ConstString coords("x=");
+        coords += doubleToString(cartCoords[0]) + " y=";
+        coords += doubleToString(cartCoords[1]) + " z=";
+        coords += doubleToString(cartCoords[2]) + " rot(y')=";
+        coords += doubleToString(cartCoords[3]) + " rot(z'')=";
+        coords += doubleToString(cartCoords[4]);
         response.addString(coords.c_str());
         printf("Writing: %s\n",coords.c_str());
         return response.write(*out);

@@ -120,7 +120,8 @@ function capture() {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            document.getElementById('thecapture').elements['total'].value=xmlhttp.responseText;
+//            document.getElementById('thecapture').elements['total'].value=xmlhttp.responseText;
+            alert(xmlhttp.responseText + 'Would you like to save this point?\n\n')
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
