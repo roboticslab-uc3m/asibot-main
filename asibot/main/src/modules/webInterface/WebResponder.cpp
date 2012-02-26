@@ -39,6 +39,12 @@ bool WebResponder::setHtmlPath(const ConstString& _htmlPath) {
 }
 
 /************************************************************************/
+bool WebResponder::setUserPath(const ConstString& _userPath) {
+    userPath = _userPath;
+    return true;
+}
+
+/************************************************************************/
 bool WebResponder::setResourcePath(const ConstString& _resourcePath) {
     resourcePath = _resourcePath;
     return true;

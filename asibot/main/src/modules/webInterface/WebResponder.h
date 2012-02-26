@@ -36,6 +36,7 @@ class WebResponder : public PortReader {
 protected:
     bool simConnected, realConnected;
     ConstString htmlPath;
+    ConstString userPath;
     ConstString resourcePath;
     string readFile(const ConstString& fileName);
     string& replaceAll(string& context, const string& from, const string& to);
@@ -59,6 +60,7 @@ public:
     bool closeDevices();
     bool read(ConnectionReader& in);
     bool setHtmlPath(const ConstString& _htmlPath);
+    bool setUserPath(const ConstString& _userPath);
     bool setResourcePath(const ConstString& _resourcePath);
 };
 
