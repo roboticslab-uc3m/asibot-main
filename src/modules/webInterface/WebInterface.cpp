@@ -15,6 +15,9 @@ bool WebInterface::configure(ResourceFinder &rf) {
     ConstString htmlPath = rf.getContextPath() + "/../html/";
     printf("htmlPath: %s\n",htmlPath.c_str());
     responder.setHtmlPath(htmlPath);
+    ConstString userPath = rf.getContextPath() + "/../user/";
+    printf("userPath: %s\n",userPath.c_str());
+    responder.setUserPath(userPath);
     ConstString resourcePath = "http://";
     resourcePath += rf.check("resources","localhost","resource path").asString() + "/";
     printf("resourcePath: %s\n",resourcePath.c_str());
