@@ -42,6 +42,7 @@ protected:
     string readFile(const ConstString& filePath);  // needs absoulte path
     string readHtml(const ConstString& fileName);  // grabs from htmlPath
     bool appendToFile(const ConstString& absFile, const ConstString& inString); // writes to userPath
+    bool rewriteFile(const ConstString& absFile, const ConstString& inString); // writes to userPath
     bool deleteFile(const ConstString& absFile); // needs absoulte path
     string& replaceAll(string& context, const string& from, const string& to);
     int stringToInt(const ConstString& inString);
