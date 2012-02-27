@@ -21,7 +21,6 @@ function submitEdit(form) {
 function submitCreate(form) {
     if (form.nfile.value) {
         if (confirm("Are you sure you want to create " + form.nfile.value + "?")) {
-            alert("Created " + form.nfile.value + ".");
             form.submit();
         }
     }
@@ -108,7 +107,7 @@ function submitSave() {
 			</div><br>
             <div align="center">          
                 <br><font size="5"><b>Create New</b></font><br><br>
-			    <FORM ACTION="create">
+			    <FORM ACTION="create.0">
                     <input name="nfile"><br><br>
                     <input type="button" onClick="submitCreate(this.form);" value="Create Program">
 	    	    </FORM><br>
@@ -139,12 +138,10 @@ function submitSave() {
 					<br><br><font size="5"><b>Captured Points</b></font><br>
                          <POINTS>
      	 		</div>
-                <!--button type="submit" name="update" value="update" onClick="submitUpdate();"><img src="fig/record.png" width="80" height="80" ></button-->
 <br>
 		   	</div>
    		</td></tr>
-<!-- space between tables end-->
-<tr><td> 
+        <tr><td> 
             <div align="center">
                 <br><font size="5"><b>Save Program</b></font><br><br>
                 <button onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
