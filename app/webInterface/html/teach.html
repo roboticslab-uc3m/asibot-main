@@ -94,7 +94,7 @@ function submitEdit(form) {
             alert('Loaded: \n' + form.efile.value);
             document.getElementById("programname").innerHTML = form.efile.value;
 //            var dselect = document.getElementById("dfile");
-            document.getElementById("programcontents").innerHTML = form.efile.value;
+            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -180,7 +180,7 @@ function submitDelete(form) {
 			<div align="center">
 				<font size="6"><strong>&nbsp;Program: <span id="programname"><FNAME></span></strong></font> <br>
 				<FORM name="myform" ACTION="save">
-        			<textarea id="programcontents" name="programcontents" style="width: 295px;height: 322px;">
+        			<textarea id="programcontents" name="programcontents" style="width:295px;max-width:295px;height:350px;">
                     <CENTRALPIECE>
                     </textarea>
     			</FORM>
