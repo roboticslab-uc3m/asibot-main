@@ -442,6 +442,11 @@ bool WebResponder::read(ConnectionReader& in) {
         replaceAll(str, "<POINTS>", pointsButtons.c_str());
         response.addString(str.c_str());
         return response.write(*out);
+    } else if (code=="create.0") {
+        ConstString nfile = request.find("nfile").asString();
+        printf("create %s file.\n",nfile.c_str());
+        response.addString(nfile);
+        return response.write(*out);
     }
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
     prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
