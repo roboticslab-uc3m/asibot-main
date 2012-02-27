@@ -146,16 +146,12 @@ function submitDelete(form) {
             var eselect = document.getElementById("efile");
             for(var i = 0; i < eselect.options.length; i++) {
                 if(eselect.options[i].value == form.dfile.value) {
-                    alert (eselect.options[i].value + ' is equal');
-//                    eselect.remove(eselect.options[i]);
+//                    alert (eselect.options[i].value + ' is equal');
                     eselect.remove(i);
                 }
             }
             var dselect = document.getElementById("dfile");
             dselect.remove(dselect.selectedIndex);
-//            var dselect = document.getElementById("dfile");
-//            dselect.options[dselect.options.length] = new Option(form.nfile.value,0);
-//            dselect.selectedIndex = dselect.options.length-1;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
