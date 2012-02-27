@@ -18,14 +18,6 @@ function submitEdit(form) {
         form.submit();
     }
 }
-function submitDelete(form) {
-    if (form.dfile.value) {
-        if (confirm("Are you sure you want to delete " + form.dfile.value + "?")) {
-            alert("Deleted " + form.dfile.value + ".");
-            form.submit();
-        }
-    }
-}
 function submitUpdate() {
     if (encState==-2) {
         alert("Not connected: Connect in Mode tab.")
@@ -137,6 +129,29 @@ function fcreate(form) {
                     <input type="button" onClick="submitDelete(this.form);" value="Delete Program">
                     <br><br>
 	    		</FORM><br>
+<script>
+function submitDelete(form) {
+    if (!form.dfile.value) return false;
+    if (!confirm("Are you sure you want to delete " + form.dfile.value + "?")) return false;
+    url="delete.0?dfile="+form.dfile.value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            alert('Deleted ' + xmlhttp.responseText)
+            // Now update efile and dfile
+//            var eselect = document.getElementById("efile");
+//            eselect.options[eselect.options.length] = new Option(form.nfile.value,0);
+//            eselect.selectedIndex = eselect.options.length-1;
+//            var dselect = document.getElementById("dfile");
+//            dselect.options[dselect.options.length] = new Option(form.nfile.value,0);
+//            dselect.selectedIndex = dselect.options.length-1;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
 		    </div>
         </td></tr></table> 
 <!-- space between tables begin-->
