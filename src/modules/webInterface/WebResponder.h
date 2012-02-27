@@ -12,6 +12,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <dirent.h>
 
 #define JOYPAD_RELMOVE 5  // [deg]
 #define CJOYPAD_RELMOVE_POS 0.10  // [m]
@@ -38,13 +39,15 @@ protected:
     ConstString htmlPath;
     ConstString userPath;
     ConstString resourcePath;
-    string readFile(const ConstString& fileName);  // grabs from htmlPath
+    string readFile(const ConstString& filePath);  // needs absoulte path
+    string readHtml(const ConstString& fileName);  // grabs from htmlPath
     bool appendToFile(const ConstString& absFile, const ConstString& inString); // writes to userPath
     string& replaceAll(string& context, const string& from, const string& to);
     int stringToInt(const ConstString& inString);
     double stringToDouble(const ConstString& inString);
     ConstString doubleToString(const double& inDouble);
     ConstString pointButtonCreator(const ConstString& pointsFile);
+    ConstString fileListCreator();
 
     yarp::dev::PolyDriver simDevice;
     yarp::dev::IPositionControl *simPos;

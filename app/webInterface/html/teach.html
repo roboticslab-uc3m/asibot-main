@@ -91,7 +91,7 @@ function submitSave() {
             <div align="center">          
         	    <br><font size="5"><b>Explorer</b></font><br><br>
                 <FORM ACTION="teach" METHOD="get">
-                    <select name="tfile">
+                    <select name="efile" id="efile">
                         <CARGARFICHEROS>
                     </select>
     				<!--input type="file" id="uploaded_file" name="file" size="30"-->
@@ -111,7 +111,14 @@ function fcreate(form) {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            alert('Saved ' + xmlhttp.responseText)
+            alert('Created ' + xmlhttp.responseText)
+            // Now update efile and dfile
+            var eselect = document.getElementById("efile");
+            eselect.options[eselect.options.length] = new Option(form.nfile.value,0);
+            eselect.selectedIndex = eselect.options.length-1;
+            var dselect = document.getElementById("dfile");
+            dselect.options[dselect.options.length] = new Option(form.nfile.value,0);
+            dselect.selectedIndex = dselect.options.length-1;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -123,7 +130,7 @@ function fcreate(form) {
             <div align="center">          
                 <br><font size="5"><b>Delete</b></font><br><br>
     			<FORM ACTION="delete">
-                    <select name="dfile">
+                    <select name="dfile" id="dfile">
                         <CARGARFICHEROSD>
                     </select>
                     <input type="button" onClick="submitDelete(this.form);" value="Delete Program">
