@@ -23,8 +23,6 @@ function submitCreate(form) {
         if (confirm("Are you sure you want to create " + form.nfile.value + "?")) {
             alert("Created " + form.nfile.value + ".");
             form.submit();
-        } else {
-            alert("Canceled creation of " + form.nfile.value + ".");
         }
     }
 }
@@ -33,8 +31,6 @@ function submitDelete(form) {
         if (confirm("Are you sure you want to delete " + form.dfile.value + "?")) {
             alert("Deleted " + form.dfile.value + ".");
             form.submit();
-        } else {
-            alert("Canceled deletion of " + form.dfile.value + ".");
         }
     }
 }
@@ -131,7 +127,7 @@ function submitSave() {
 <!-- space between tables begin-->
     	<div id="table_left">
 			<div align="center">
-				<font size="6"><strong>Teach: <FNAME></strong></font> <br>
+				<font size="6"><strong>Program: <FNAME></strong></font> <br>
 				<FORM name="myform" ACTION="save">
         			<CENTRALPIECE>
     			</FORM>
@@ -140,14 +136,15 @@ function submitSave() {
 		<table id ="table_right"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
 		    <div align="center">          
         	    <div align="center">
-					<br><br><font size="5"><b>Capture Point</b></font><br><br>
+					<br><br><font size="5"><b>Captured Points</b></font><br>
+                         <POINTS>
      	 		</div>
-                <button type="submit" name="update" value="update" onClick="submitUpdate();"><img src="fig/record.png" width="80" height="80" ></button>
-<br><br>
+                <!--button type="submit" name="update" value="update" onClick="submitUpdate();"><img src="fig/record.png" width="80" height="80" ></button-->
+<br>
 		   	</div>
-   		</td></tr></table> 
+   		</td></tr>
 <!-- space between tables end-->
-		<table id ="table_right" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
+<tr><td> 
             <div align="center">
                 <br><font size="5"><b>Save Changes</b></font><br><br>
                 <button onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
