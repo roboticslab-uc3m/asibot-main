@@ -168,8 +168,15 @@ ConstString WebResponder::fileListCreator() {
     struct dirent *ep;
     dp = opendir(filePath.c_str());
     if (dp != NULL) {
-        while (ep = readdir (dp))
-            printf("file: %s\n",ep->d_name);
+        while (ep = readdir (dp)) {
+            string fileName(ep->d_name);
+            if((int)fileName.find(".py", 0) != string::npos) {
+                printf("[%s] was py\n",fileName.c_str());
+                ret += "<option>";
+                ret += fileName.substr(0, fileName.size()-3).c_str();
+                ret += "</option>";
+            }
+        }
        (void) closedir (dp);
     } else printf ("[warning] Couldn't open the directory");
     printf("Done reading files from: %s\n",filePath.c_str());
@@ -458,12 +465,16 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="teach") {
         string str = readHtml("teach.html");
-        ConstString pointsFile = userPath + "points.ini";
+
         replaceAll(str, "<FNAME>", "[none]");
+
+        ConstString fileList = fileListCreator();
+        replaceAll(str, "<CARGARFICHEROS>", fileList.c_str());
+
+        ConstString pointsFile = userPath + "points.ini";
         ConstString pointsButtons = pointButtonCreator(pointsFile);
         replaceAll(str, "<POINTS>", pointsButtons.c_str());
-        ConstString fileList = fileListCreator();
-        replaceAll(str, "<POINTS>", pointsButtons.c_str());
+
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="create.0") {

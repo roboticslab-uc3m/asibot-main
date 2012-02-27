@@ -106,6 +106,7 @@ function submitSave() {
 	    	    </FORM><br>
 <script>
 function fcreate(form) {
+    if (!form.nfile.value) return false;
     if (!confirm("Are you sure you want to create " + form.nfile.value + "?")) return false;
     url="create.0?nfile="+form.nfile.value;
     xmlhttp.open("GET",url,true);
@@ -131,7 +132,7 @@ function fcreate(form) {
                 <br><font size="5"><b>Delete</b></font><br><br>
     			<FORM ACTION="delete">
                     <select name="dfile" id="dfile">
-                        <CARGARFICHEROSD>
+                        <CARGARFICHEROS>
                     </select>
                     <input type="button" onClick="submitDelete(this.form);" value="Delete Program">
                     <br><br>
