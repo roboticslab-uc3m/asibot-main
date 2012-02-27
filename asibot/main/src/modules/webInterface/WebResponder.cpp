@@ -102,6 +102,15 @@ bool WebResponder::appendToFile(const ConstString& fileName, const ConstString& 
 }
 
 /************************************************************************/
+bool deleteFile(const ConstString& absFile){ // needs absoulte path
+    if (remove(absFile.c_str()) != 0 ) {
+        prinft("[error] could not delete file");
+        return false;
+    } else prinft("Deleted %s",absFile.c_str());
+    return true;
+}
+
+/************************************************************************/
 int WebResponder::stringToInt(const ConstString& inString) {
     int outInt;
     std::istringstream buffer(inString.c_str());
@@ -483,6 +492,13 @@ bool WebResponder::read(ConnectionReader& in) {
         nfile += ".py";
         appendToFile(nfile,"");
         printf("create.0 %s file.\n",nfile.c_str());
+        return response.write(*out);
+    } else if (code=="delete.0") {
+        ConstString dfile = request.find("dfile").asString();
+        response.addString(dfile);
+        dfile += ".py";
+        deleteFile(nfile,"");
+        printf("delete.0 %s file.\n",dfile.c_str());
         return response.write(*out);
     }
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
