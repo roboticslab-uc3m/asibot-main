@@ -59,6 +59,7 @@ protected:
     CartesianClient *realCart;  // != ICartesianControl
 
     double captureX[NUM_CART_COORDS];
+    ConstString lastEdit;
 
 public:
     ConstString getCss();
