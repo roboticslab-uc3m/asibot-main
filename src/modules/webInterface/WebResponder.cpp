@@ -107,6 +107,17 @@ bool WebResponder::appendToFile(const ConstString& fileName, const ConstString& 
 }
 
 /************************************************************************/
+bool WebResponder::rewriteFile(const ConstString& fileName, const ConstString& inString) {
+    ConstString filePath = userPath + fileName;
+    printf("rewriting: %s\n",inString.c_str());
+    printf("to file: %s\n",filePath.c_str());
+    std::ofstream t(filePath.c_str());
+    t << inString << std::endl;
+    t.close();
+    return true;
+}
+
+/************************************************************************/
 bool WebResponder::deleteFile(const ConstString& absFile){ // needs absoulte path
     if (remove(absFile.c_str()) != 0 ) {
         printf("[error] could not delete file");
@@ -520,11 +531,13 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="save.0") {
-        ConstString sfile = userPath;
-        sfile += request.find("sfile").asString();
+        ConstString sfile = request.find("sfile").asString();
         response.addString(request.find("sfile").asString());
-        dfile += ".py";
+        sfile += ".py";
         printf("save.0 %s file.\n",sfile.c_str());
+        string lstr = request.find("lstr").asString().c_str();
+        replaceAll(lstr, "<br>", "\n");
+        rewriteFile(sfile,lstr.c_str());
         return response.write(*out);
     }
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";

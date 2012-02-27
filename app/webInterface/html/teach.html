@@ -64,7 +64,8 @@ function submitEdit(form) {
             alert('Loaded: \n' + form.efile.value);
             document.getElementById("programname").innerHTML = form.efile.value;
 //            var dselect = document.getElementById("dfile");
-            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
+//            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
+            document.getElementById("programcontents").value = xmlhttp.responseText;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -168,16 +169,18 @@ function submitDelete(form) {
         <tr><td> 
             <div align="center">
                 <br><font size="5"><b>Save Program</b></font><br><br>
-       			<form ACTION="save">
-                    <button onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
-                </form>
+                    <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
                 <br><br>
 <script>
 function submitSave() {
-
+    var theFileInUse = document.getElementById("programname").innerHTML;
     if (!theFileInUse) return false;
-    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) return false;
-    url="save.0?sfile="+form.nfile.value;
+    var lstr = document.getElementById("programcontents").value;
+//    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) return false;
+//    alert("program contents: " + lstr);
+    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
+    lstr = lstr.replace(/\n\r?/g, '<br>');
+    url="save.0?sfile="+theFileInUse+"&lstr="+lstr;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
