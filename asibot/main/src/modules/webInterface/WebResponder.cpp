@@ -10,6 +10,7 @@ bool WebResponder::init() {
     realPos = 0;
     simCart = 0;
     realCart = 0;
+    lastEdit="";
     return true;
 }
 
@@ -75,6 +76,10 @@ string WebResponder::readFile(const ConstString& filePath) {
     // link: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring [2012-02-06]
     std::ifstream t(filePath.c_str());
     std::string str;
+    if(!t.is_open()) {
+        str.append("Not able to open file.\n");
+        return str;
+    }
     t.seekg(0, std::ios::end);   
     str.reserve(t.tellg());
     t.seekg(0, std::ios::beg);
@@ -484,6 +489,9 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString pointsButtons = pointButtonCreator(pointsFile);
         replaceAll(str, "<POINTS>", pointsButtons.c_str());
 
+        string contents = readFile(lastEdit);
+        replaceAll(str, "<CENTRALPIECE>", contents.c_str());
+
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="create.0") {
@@ -500,6 +508,16 @@ bool WebResponder::read(ConnectionReader& in) {
         dfile += ".py";
         deleteFile(dfile);
         printf("delete.0 %s file.\n",dfile.c_str());
+        return response.write(*out);
+    } else if (code=="edit.0") {
+        ConstString efile = userPath;
+        efile += request.find("efile").asString();
+        efile += ".py";
+        printf("edit.0 %s file.\n",efile.c_str());
+        string str = readFile(efile);
+        lastEdit = efile;
+        response.addString(str.c_str());
+//        response.addString(request.find("efile").asString());
         return response.write(*out);
     }
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
