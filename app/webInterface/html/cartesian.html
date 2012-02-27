@@ -126,17 +126,16 @@ function cstop() {
     return false;
 }
 function capture() {
-    var r2;
     url="capture.0";
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            var r = confirm(xmlhttp.responseText + 'Would you like to save this point?\n\n');
-            if (r==true) {
-                r2 = prompt("Please insert a name for the point","point01");
-                if(r2!=null && r2!="") {
+            if (confirm(xmlhttp.responseText + 'Would you like to save this point?\n\n')) {
+                var pname;
+                pname = prompt("Please insert a name for the point","point01");
+                if(pname!=null && pname!="") {
 //                    alert("Saving " + r2 + "...");
-                    document.getElementById('pname').value = r2;
+                    document.getElementById('pname').value = pname;
                     psave();
                 }
             }
