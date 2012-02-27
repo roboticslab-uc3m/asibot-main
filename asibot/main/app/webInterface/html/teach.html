@@ -18,13 +18,6 @@ function submitEdit(form) {
         form.submit();
     }
 }
-function submitCreate(form) {
-    if (form.nfile.value) {
-        if (confirm("Are you sure you want to create " + form.nfile.value + "?")) {
-            form.submit();
-        }
-    }
-}
 function submitDelete(form) {
     if (form.dfile.value) {
         if (confirm("Are you sure you want to delete " + form.dfile.value + "?")) {
@@ -62,10 +55,10 @@ function submitSave() {
 }
 </script>
 <JOINTVALS>
-
+<script src="xmlhttp.js" type="text/javascript"></script>
 </head>
 <body>
-
+<script src="connectionTab.js" type="text/javascript"></script>
 <div id="logo">
 	<h1><a href="index">Asibot Web Interface</a></h1>
 	<h2>By <a href="http://roboticslab.uc3m.es">Robotics Lab</a> & <a href="http://asrob.uc3m.es">Asrob</a></h2>
@@ -107,10 +100,25 @@ function submitSave() {
 			</div><br>
             <div align="center">          
                 <br><font size="5"><b>Create New</b></font><br><br>
-			    <FORM ACTION="create.0">
+			    <FORM ACTION="create">
                     <input name="nfile"><br><br>
-                    <input type="button" onClick="submitCreate(this.form);" value="Create Program">
+                    <input name="cprogram" id="cprogram" type="submit" value="Create Program" onClick="return fcreate(this.form);">
 	    	    </FORM><br>
+<script>
+function fcreate(form) {
+    if (!confirm("Are you sure you want to create " + form.nfile.value + "?")) return false;
+    url="create.0?nfile="+form.nfile.value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            alert('Saved ' + xmlhttp.responseText)
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
 	    	</div><br>
             <div align="center">          
                 <br><font size="5"><b>Delete</b></font><br><br>
