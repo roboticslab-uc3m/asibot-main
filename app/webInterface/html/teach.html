@@ -106,11 +106,15 @@ function fcreate(form) {
         if (xmlhttp.readyState==4) {
             alert('Created ' + xmlhttp.responseText)
             // Now update efile and dfile
+            var eoption=document.createElement("option");
+            eoption.text=form.nfile.value;
             var eselect = document.getElementById("efile");
-            eselect.options[eselect.options.length] = new Option(form.nfile.value,0);
+            eselect.add(eoption,eselect.options[null]);
             eselect.selectedIndex = eselect.options.length-1;
+            var doption=document.createElement("option");
+            doption.text=form.nfile.value;
             var dselect = document.getElementById("dfile");
-            dselect.options[dselect.options.length] = new Option(form.nfile.value,0);
+            dselect.add(doption,dselect.options[null]);
             dselect.selectedIndex = dselect.options.length-1;
         }
     }
@@ -139,6 +143,8 @@ function submitDelete(form) {
         if (xmlhttp.readyState==4) {
             alert('Deleted ' + xmlhttp.responseText)
             // Now update efile and dfile
+            var dselect = document.getElementById("dfile");
+            dselect.remove(dselect.selectedIndex);
 //            var eselect = document.getElementById("efile");
 //            eselect.options[eselect.options.length] = new Option(form.nfile.value,0);
 //            eselect.selectedIndex = eselect.options.length-1;
