@@ -166,18 +166,19 @@ ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
     while (getline(ifs, line)) {
         line += ' ';  // add a comma for easier parsing
         printf("line: %s.\n",line.c_str());
-        ret += "<button>";
-        ret += line.c_str();
+        ret += "<button onClick=\"pointToText('";
         int npos=0;
         int lpos=0;
         while ((npos = (int)line.find(' ', lpos)) != string::npos) {
             ConstString subs(line.substr(lpos, npos - lpos).c_str());
 //j//            printf("Substr(%d): %s.\n",lpos,subs.c_str());
 //            ret += subs;
-//            if (lpos==0) ret += "(";
+            if (lpos==0) ret += subs;
 //            else ret += ",";
             lpos = npos+1;
         }
+        ret += "');\">";
+        ret += line.c_str();
         ret += "</button><br>";
     }
     printf("Done reading points from file: %s\n",pointsFile.c_str());
@@ -488,8 +489,8 @@ bool WebResponder::read(ConnectionReader& in) {
         appendToFile("points.ini",captureStr);
         response.addString(pname);
         return response.write(*out);
-    } else if (code=="teach") {
-        string str = readHtml("teach.html");
+    } else if (code=="program") {
+        string str = readHtml("program.html");
 
         replaceAll(str, "<FNAME>", lastEditName.c_str());
 
