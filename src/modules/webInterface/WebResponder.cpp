@@ -444,6 +444,7 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="create.0") {
         ConstString nfile = request.find("nfile").asString();
+        appendToFile(nfile,"");
         printf("create.0 %s file.\n",nfile.c_str());
         response.addString(nfile);
         return response.write(*out);
