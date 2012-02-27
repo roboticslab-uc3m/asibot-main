@@ -63,8 +63,13 @@ string& WebResponder::replaceAll(string& context, const string& from, const stri
 }
 
 /************************************************************************/
-string WebResponder::readFile(const ConstString& fileName) {
+string WebResponder::readHtml(const ConstString& fileName) {
     ConstString filePath = htmlPath + fileName;
+    return readFile(filePath);
+}
+
+/************************************************************************/
+string WebResponder::readFile(const ConstString& filePath) {
     printf("filePath: %s\n",filePath.c_str());
     // thank you Tyler McHenry @ nerdland.net and KeithB @ ndssl.vbi.vt.edu for this algorithm
     // link: http://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring [2012-02-06]
@@ -140,10 +145,9 @@ ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
         ret += line.c_str();
         int npos=0;
         int lpos=0;
-        double ij;
         while ((npos = (int)line.find(' ', lpos)) != string::npos) {
             ConstString subs(line.substr(lpos, npos - lpos).c_str());
-            printf("Substr(%d): %s.\n",lpos,subs.c_str());
+//j//            printf("Substr(%d): %s.\n",lpos,subs.c_str());
 //            ret += subs;
 //            if (lpos==0) ret += "(";
 //            else ret += ",";
@@ -156,8 +160,25 @@ ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
 }
 
 /************************************************************************/
+ConstString WebResponder::fileListCreator() {
+    ConstString ret;
+    ConstString filePath = userPath;
+    printf("Reading files from: %s\n",filePath.c_str());
+    DIR *dp;
+    struct dirent *ep;
+    dp = opendir(filePath.c_str());
+    if (dp != NULL) {
+        while (ep = readdir (dp))
+            printf("file: %s\n",ep->d_name);
+       (void) closedir (dp);
+    } else printf ("[warning] Couldn't open the directory");
+    printf("Done reading files from: %s\n",filePath.c_str());
+    return ret;
+}
+
+/************************************************************************/
 ConstString WebResponder::getCss() {
-    return ConstString(readFile("style.css").c_str());
+    return ConstString(readHtml("style.css").c_str());
 }
 
 /************************************************************************/
@@ -176,13 +197,13 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString("text/css");
         return response.write(*out);
     } else if (code=="xmlhttp.js") {
-        response.addString(readFile("xmlhttp.js").c_str());
+        response.addString(readHtml("xmlhttp.js").c_str());
         return response.write(*out);
     } else if (code=="connectionTab.js") {
-        response.addString(readFile("connectionTab.js").c_str());
+        response.addString(readHtml("connectionTab.js").c_str());
         return response.write(*out);
     } else if (code=="testEqual") {
-        response.addString(readFile("testEqual.html").c_str());
+        response.addString(readHtml("testEqual.html").c_str());
         return response.write(*out);
     } else if (code=="equal.1") {
         ConstString inParam = request.find("a").asString();
@@ -281,10 +302,10 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(outParam);
         return response.write(*out);
     } else if (code=="index") {
-        response.addString(readFile("index.html").c_str());
+        response.addString(readHtml("index.html").c_str());
         return response.write(*out);
     } else if (code=="joint") {
-        response.addString(readFile("joint.html").c_str());
+        response.addString(readHtml("joint.html").c_str());
         return response.write(*out);
     } else if (code=="joint.1") {
         ConstString theJoint = request.find("joint").asString();
@@ -324,7 +345,7 @@ bool WebResponder::read(ConnectionReader& in) {
         if(realPos) realPos->stop();
         return response.write(*out);
     } else if (code=="cartesian") {
-        response.addString(readFile("cartesian.html").c_str());
+        response.addString(readHtml("cartesian.html").c_str());
         return response.write(*out);
     } else if (code=="cartesian.1") {
         ConstString theAxis = request.find("axis").asString();
@@ -405,7 +426,7 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString camSocket = "http://";
         camSocket += camHost + ":" + ConstString::toString(camPort) + "/?action";
         printf("\nCam running at: %s\n\n", camSocket.c_str());
-        string str = readFile("video.html");
+        string str = readHtml("video.html");
         replaceAll(str, "<SIMCAMIP>", camSocket.c_str());
         response.addString(str.c_str());
         return response.write(*out);
@@ -436,17 +457,21 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(pname);
         return response.write(*out);
     } else if (code=="teach") {
-        string str = readFile("teach.html");
+        string str = readHtml("teach.html");
         ConstString pointsFile = userPath + "points.ini";
+        replaceAll(str, "<FNAME>", "[none]");
         ConstString pointsButtons = pointButtonCreator(pointsFile);
+        replaceAll(str, "<POINTS>", pointsButtons.c_str());
+        ConstString fileList = fileListCreator();
         replaceAll(str, "<POINTS>", pointsButtons.c_str());
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="create.0") {
         ConstString nfile = request.find("nfile").asString();
+        response.addString(nfile);
+        nfile += ".py";
         appendToFile(nfile,"");
         printf("create.0 %s file.\n",nfile.c_str());
-        response.addString(nfile);
         return response.write(*out);
     }
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
