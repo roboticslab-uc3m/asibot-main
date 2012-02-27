@@ -123,6 +123,39 @@ ConstString WebResponder::doubleToString(const double& inDouble) {
 }
 
 /************************************************************************/
+ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
+    ConstString ret;
+    printf("Reading points from file: %s\n",pointsFile.c_str());
+    std::ifstream ifs(pointsFile.c_str());
+    if (!ifs.is_open()) {
+        printf("[warning] point file not open, assuming no points yet.\n");
+        ret += "[No points captured yet]";
+        return ret;
+    }
+    string line;
+    while (getline(ifs, line)) {
+        line += ' ';  // add a comma for easier parsing
+        printf("line: %s.\n",line.c_str());
+        ret += "<button>";
+        ret += line.c_str();
+        int npos=0;
+        int lpos=0;
+        double ij;
+        while ((npos = (int)line.find(' ', lpos)) != string::npos) {
+            ConstString subs(line.substr(lpos, npos - lpos).c_str());
+            printf("Substr(%d): %s.\n",lpos,subs.c_str());
+//            ret += subs;
+//            if (lpos==0) ret += "(";
+//            else ret += ",";
+            lpos = npos+1;
+        }
+        ret += "</button><br>";
+    }
+    printf("Done reading points from file: %s\n",pointsFile.c_str());
+    return ret;
+}
+
+/************************************************************************/
 ConstString WebResponder::getCss() {
     return ConstString(readFile("style.css").c_str());
 }
@@ -376,10 +409,6 @@ bool WebResponder::read(ConnectionReader& in) {
         replaceAll(str, "<SIMCAMIP>", camSocket.c_str());
         response.addString(str.c_str());
         return response.write(*out);
-    } else if (code=="teach") {
-        string str = readFile("teach.html");
-        response.addString(str.c_str());
-        return response.write(*out);
     } else if (code=="capture.0") {
         if(simCart) simCart->stat(captureX);
         if(realCart) simCart->stat(captureX); // REAL OVERWRITES COORDS
@@ -406,8 +435,14 @@ bool WebResponder::read(ConnectionReader& in) {
         appendToFile("points.ini",captureStr);
         response.addString(pname);
         return response.write(*out);
+    } else if (code=="teach") {
+        string str = readFile("teach.html");
+        ConstString pointsFile = userPath + "points.ini";
+        ConstString pointsButtons = pointButtonCreator(pointsFile);
+        replaceAll(str, "<POINTS>", pointsButtons.c_str());
+        response.addString(str.c_str());
+        return response.write(*out);
     }
-
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
     prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
     prefix += "</head>\n<body>\n";
