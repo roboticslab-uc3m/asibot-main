@@ -10,7 +10,7 @@ bool WebResponder::init() {
     realPos = 0;
     simCart = 0;
     realCart = 0;
-    lastEdit="";
+    lastEditName="[none]";
     return true;
 }
 
@@ -480,7 +480,7 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="teach") {
         string str = readHtml("teach.html");
 
-        replaceAll(str, "<FNAME>", "[none]");
+        replaceAll(str, "<FNAME>", lastEditName.c_str());
 
         ConstString fileList = fileListCreator();
         replaceAll(str, "<CARGARFICHEROS>", fileList.c_str());
@@ -489,7 +489,8 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString pointsButtons = pointButtonCreator(pointsFile);
         replaceAll(str, "<POINTS>", pointsButtons.c_str());
 
-        string contents = readFile(lastEdit);
+        ConstString editFile = userPath + lastEditName + ".py";
+        string contents = readFile(editFile);
         replaceAll(str, "<CENTRALPIECE>", contents.c_str());
 
         response.addString(str.c_str());
@@ -515,9 +516,15 @@ bool WebResponder::read(ConnectionReader& in) {
         efile += ".py";
         printf("edit.0 %s file.\n",efile.c_str());
         string str = readFile(efile);
-        lastEdit = efile;
+        lastEditName = request.find("efile").asString();
         response.addString(str.c_str());
-//        response.addString(request.find("efile").asString());
+        return response.write(*out);
+    } else if (code=="save.0") {
+        ConstString sfile = userPath;
+        sfile += request.find("sfile").asString();
+        response.addString(request.find("sfile").asString());
+        dfile += ".py";
+        printf("save.0 %s file.\n",sfile.c_str());
         return response.write(*out);
     }
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";

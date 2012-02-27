@@ -11,36 +11,6 @@ Released for free under a Creative Commons Attribution 2.5 License
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
-
-<script language="JavaScript" type="text/javascript">
-function submitUpdate() {
-    if (encState==-2) {
-        alert("Not connected: Connect in Mode tab.")
-    } else {
-        if (theFileInUse) {
-            if (confirm("Must save changes to " + theFileInUse + ", ok?")) {
-                myform.action = "update";
-                myform.submit();
-            } else {
-                alert("Canceled update and save changes to " + theFileInUse + ".");
-            }
-        } else {
-            alert("Can't save: no file in use.");
-        }
-    }
-}
-function submitSave() {
-    if (theFileInUse) {
-        if (confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) {
-            myform.submit();
-        } else {
-            alert("Canceled save changes to " + theFileInUse + ".");
-        }
-    } else {
-        alert("Can't save: no file in use.");
-    }
-}
-</script>
 <script src="xmlhttp.js" type="text/javascript"></script>
 </head>
 <body>
@@ -198,8 +168,27 @@ function submitDelete(form) {
         <tr><td> 
             <div align="center">
                 <br><font size="5"><b>Save Program</b></font><br><br>
-                <button onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
+       			<form ACTION="save">
+                    <button onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
+                </form>
                 <br><br>
+<script>
+function submitSave() {
+
+    if (!theFileInUse) return false;
+    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) return false;
+    url="save.0?sfile="+form.nfile.value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            alert('Saved ' + xmlhttp.responseText)
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
 		    </div>
    		</td></tr></table> 
 	</div>
