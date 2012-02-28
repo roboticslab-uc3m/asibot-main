@@ -540,7 +540,12 @@ bool WebResponder::read(ConnectionReader& in) {
         replaceAll(lstr, "<br>", "\n");
         rewriteFile(sfile,lstr.c_str());
         return response.write(*out);
+    } else if (code=="speech") {
+        string str = readHtml("speech.html");
+        response.addString(str.c_str());
+        return response.write(*out);
     }
+
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
     prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
     prefix += "</head>\n<body>\n";
