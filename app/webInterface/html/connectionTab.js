@@ -28,7 +28,7 @@
 //var css = 'position:fixed; z-index:9999; border:2px solid black; ' +
 //          'top:50%; left:50%; width:50em; margin:15em 0 0 10em; height:40em;';
 var css = 'position:fixed; z-index:9999; bottom:0px; left:0px; border:2px solid black; margin:0; padding:0; ' +
-          'overflow:hidden;'
+          'overflow:hidden;width:23em;height:12em;'
 
 var iframe = document.createElement('iframe');
 iframe.setAttribute('id', 'theIframe');
@@ -42,14 +42,14 @@ document.body.appendChild(iframe);
     var doc = iframe.contentDocument;
     doc.body.style.background = 'white';
 //    doc.body.innerHTML = '<form action="equal.1" method="get" onsubmit="return parent.calc()"><input type=text name=a> = <input type=text name=total><input type=submit value="Calculate"></form>'
-    doc.body.innerHTML = '<table><tr><center><b><u>Connection Manager</u></b></center></tr><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggleReal"><img id="realState" height="75" src="fig/realInit.jpg"></button></form></td><td><form action="connectSim.1" method="get" onsubmit="return parent.connectSim()"><button name="sim" type="submit" value="toggleSim"><img id="simState" height="75" src="fig/simInit.jpg"></button></form></td></tr></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Connection Manager</u></b> (<a href="javascript:parent.closeMe();">x</a>)</center></tr><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggleReal"><img id="realState" height="75" src="fig/realInit.jpg"></button></form></td><td><form action="connectSim.1" method="get" onsubmit="return parent.connectSim()"><button name="sim" type="submit" value="toggleSim"><img id="simState" height="75" src="fig/simInit.jpg"></button></form></td></tr></table>';
 
 // Make sure Firefox initializes the DOM before we try to use it.
 iframe.addEventListener("load", function() {
     var doc = iframe.contentDocument;
     doc.body.style.background = 'white';
 //    doc.body.innerHTML = '<form action="equal.1" method="get" onsubmit="return parent.calc()"><input type=text name=a> = <input type=text name=total><input type=submit value="Calculate"></form>'
-    doc.body.innerHTML = '<table><tr><center><b><u>Connection Manager</u></b></center></tr><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggleReal"><img id="realState" height="75" src="fig/realInit.jpg"></button></form></td><td><form action="connectSim.1" method="get" onsubmit="return parent.connectSim()"><button name="sim" type="submit" value="toggleSim"><img id="simState" height="75" src="fig/simInit.jpg"></button></form></td></tr></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Connection Manager</u></b> (<a href="javascript:parent.closeMe();">x</a>)</center></tr><tr><td><form action="connectReal.1" method="get" onsubmit="return parent.connectReal()"><button name="real" type="submit" value="toggleReal"><img id="realState" height="75" src="fig/realInit.jpg"></button></form></td><td><form action="connectSim.1" method="get" onsubmit="return parent.connectSim()"><button name="sim" type="submit" value="toggleSim"><img id="simState" height="75" src="fig/simInit.jpg"></button></form></td></tr></table>';
 //    <input type=submit name=robot value="on"><br><input type=text name=status>
 
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.
@@ -57,6 +57,12 @@ iframe.addEventListener("load", function() {
 //    iframe.style.width = doc.body.offsetWidth + "px";
 //    iframe.style.height = doc.body.offsetHeight + "px";
 }, false);
+
+function closeMe() {
+    var ifr = parent.document.getElementById("theIframe");
+    ifr.parentNode.removeChild(ifr);
+    return false;
+}
 
 function connectReal() {
     var doc = iframe.contentDocument;
