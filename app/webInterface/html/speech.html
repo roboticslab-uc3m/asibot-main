@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <!--
 Design by Free CSS Templates
 http://www.freecsstemplates.org
@@ -12,21 +12,6 @@ Released for free under a Creative Commons Attribution 2.5 License
 <meta name="description" content="" />
 <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 <script src="xmlhttp.js" type="text/javascript"></script>
-<script LANGUAGE=JavaScript>
-function viewer(camera) {
-    switch (camera) {
-        case 1:
-            document.stream.src = "http://163.117.201.38/mjpg/video.mjpg";
-	        return(false);
-        case 2:
-            document.stream.src = "http://163.117.201.39/mjpg/video.mjpg";
-            return(false);
-        case 3:
-            document.stream.src = "<SIMCAMIP>";
-            return(false); 
-    }
-}
-</script>
 </head>
 <body>
 <script src="connectionTab.js" type="text/javascript"></script>
@@ -53,21 +38,22 @@ function viewer(camera) {
 <div id="page">
 	<!-- start content -->
 	<div id="contentcenter">
-			<div align="center">
-				<font size="6"><b>Video</b></font>
-     	 	</div>
-
-		   <div align="center">         
-
-<img id="cam1" name="cam1" src="fig/video1.png"  width="70" height="70" onclick="viewer(1)">&nbsp;&nbsp;
-<img id="cam2" name="cam2" src="fig/video2.png"  width="70" height="70" onclick="viewer(2)">&nbsp;&nbsp;
-<img id="cam3" name="cam3" src="fig/video3.png"  width="70" height="70" onclick="viewer(3)">
- 
-<br>
-<img id="stream" name="stream" src="http://163.117.201.38/mjpg/video.mjpg" width="625" height="500" border="0" >
-<br><br> 		
+		   <div align="center">          
+       		 <font color="#000000" size="4">Speech recognition</font>
+			<script type="text/javascript">
+			function submitform()
+			{
+    		document.forms["recognition"].submit();
+			}
+			</script>
+			<form id="recognition" action="speech">
+			<img src="fig/speech.png" width="70" height="70"/>
+				<input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech onwebkitspeechchange="submitform()">
+			</form>
+<br><br>
       		</div>
 	</div>
+
 
 	<!-- end content -->
 	
