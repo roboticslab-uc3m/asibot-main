@@ -166,19 +166,26 @@ ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
     while (getline(ifs, line)) {
         line += ' ';  // add a comma for easier parsing
         printf("line: %s.\n",line.c_str());
-        ret += "<button onClick=\"pointToText('";
         int npos=0;
         int lpos=0;
+        ConstString pointName;
+        ConstString values;
         while ((npos = (int)line.find(' ', lpos)) != string::npos) {
             ConstString subs(line.substr(lpos, npos - lpos).c_str());
-//j//            printf("Substr(%d): %s.\n",lpos,subs.c_str());
-//            ret += subs;
-            if (lpos==0) ret += subs;
-//            else ret += ",";
+            if (lpos==0) pointName = subs;
+            else {
+                values += subs;
+                values += ",";
+            }
             lpos = npos+1;
         }
+        // ret empty for now
+        ret += "<button onClick=\"pointToText('";
+        ret += pointName.c_str();
+        ret += "','";
+        ret += values.c_str();
         ret += "');\">";
-        ret += line.c_str();
+        ret += pointName.c_str();
         ret += "</button><br>";
     }
     printf("Done reading points from file: %s\n",pointsFile.c_str());
@@ -538,6 +545,7 @@ bool WebResponder::read(ConnectionReader& in) {
         printf("save.0 %s file.\n",sfile.c_str());
         string lstr = request.find("lstr").asString().c_str();
         replaceAll(lstr, "<br>", "\n");
+        replaceAll(lstr, "<equal>", "=");
         rewriteFile(sfile,lstr.c_str());
         return response.write(*out);
     } else if (code=="speech") {

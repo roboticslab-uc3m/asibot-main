@@ -56,12 +56,13 @@ Released for free under a Creative Commons Attribution 2.5 License
 <script>
 function submitEdit(form) {
     if (!form.efile.value) return false;
+    if (!confirm("Are you sure you want to edit " + form.efile.value + "?\nMake sure you have saved your most recent changes.")) return false;
     url="edit.0?efile="+form.efile.value;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
 //            alert('Contents: \n' + xmlhttp.responseText)
-            alert('Loaded: \n' + form.efile.value);
+            alert('Loaded program: ' + form.efile.value);
             document.getElementById("programname").innerHTML = form.efile.value;
 //            var dselect = document.getElementById("dfile");
 //            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
@@ -172,10 +173,11 @@ function submitDelete(form) {
                     <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
                 <br><br>
 <script>
-function pointToText(str) {
+function pointToText(pointname,values) {
 //    alert(str)
     var lstr = document.getElementById("programcontents");
-    lstr.value += 'movl(' + str + ')\n';
+    lstr.value += pointname + '=[' + values + ']\n\r';
+    lstr.value += 'simCart.movl(' + pointname + ')\n\r';
 }
 function submitSave() {
     var theFileInUse = document.getElementById("programname").innerHTML;
@@ -185,6 +187,7 @@ function submitSave() {
 //    alert("program contents: " + lstr);
     if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
     lstr = lstr.replace(/\n\r?/g, '<br>');
+    lstr = lstr.replace(/=/g, '<equal>');
     url="save.0?sfile="+theFileInUse+"&lstr="+lstr;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
