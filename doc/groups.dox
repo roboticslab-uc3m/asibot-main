@@ -30,6 +30,30 @@
 */
 
 /**
+* \defgroup asibot_examples List of ASIBOT Examples
+*
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+*/
+
+/**
+* @ingroup asibot_examples
+* \defgroup asibot_examples_cpp List of ASIBOT C++ Examples
+*
+* Documentation for each example goes in each example source.
+*
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+*/
+
+/**
+* @ingroup asibot_examples
+* \defgroup asibot_examples_py List of ASIBOT Python Examples
+*
+* Documentation for each example goes in each directory.
+*
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+*/
+
+/**
 * @ingroup asibot_libraries
 * \defgroup rlPlugins rlPlugins
 *

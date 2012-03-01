@@ -20,25 +20,13 @@ using namespace yarp::os;
  * \defgroup CartesianClient
  *
  * The \ref CartesianClient library is composed by a single class, CartesianClient. You can
- * find its PYTHON equivalent in $ASIBOT_ROOT/example/python/CartesianClient.py
+ * find its Python equivalent in $ASIBOT_ROOT/example/python/CartesianClient.py
  *
  * @section Examples
  * 
- * In C++ (assuming correct installation and a running \ref cartesianServer module)
+ * In C++ (assuming correct installation): \ref testRemoteCartesianServer
  *
-\verbatim
-cd $ASIBOT_ROOT/example/cpp
-mkdir build; cd build; cmake ..
-make -j3
-./testRemoteCartesianServer
-\endverbatim
- *
- * In PYTHON (assuming correct installation with Multi-language Support and a running \ref cartesianServer module)
- *
-\verbatim
-chmod +x $ASIBOT_ROOT/example/python/testRemoteRaveBot.py
-$ASIBOT_ROOT/example/python/testRemoteRaveBot.py
-\endverbatim
+ * In Python (assuming correct installation with Multi-language Support): \ref testRemoteCartesianServerPy
  *
  */
 
