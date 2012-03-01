@@ -232,6 +232,8 @@ echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.bashrc
 
 You may now proceed to install each individual application: \ref asibot_applications
 
+Or proceed to compile and run the ASIBOT C++ example modules: \ref asibot_examples_cpp
+
 <hr>
 
 <B>Project Organization</B>
@@ -264,7 +266,7 @@ cp yarp/yarp.py .  # If you selected CREATE_PYTHON
 sudo make install
 \endverbatim
 
-If you selected CREATE_PYTHON, you can run the PYTHON example of the \ref CartesianClient library.
+If you selected CREATE_PYTHON, you can proceed to run the ASIBOT Python example modules: \ref asibot_examples_py
 
 <hr>
 
