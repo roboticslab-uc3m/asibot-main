@@ -50,7 +50,8 @@ using namespace yarp::math;
  * @ingroup CartesianBot
  * The CartesianBot class connects to a robot (the IPositionControl, IVelocityControl and
  * IEncoders interfaces) and exposes a YARP_dev cartesian interface (implements
- * ICartesianControl). It is used by the \ref cartesianServer module.
+ * <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1dev_1_1ICartesianControl.html">ICartesianControl</a>).
+ * It is used by the \ref cartesianServer module.
  */
 
 class CartesianBot : public DeviceDriver, public RateThread, public ICartesianControl {

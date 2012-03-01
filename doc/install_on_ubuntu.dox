@@ -250,7 +250,7 @@ The project is organized in such a way that you will find:
 
  * @subsection language_support Multi-language Support (Optional)
 
-You can compile the YARP bindings with SWIG:
+You can compile the YARP bindings with SWIG (<b>note</b>: certain language bindings require certain headers/libraries):
 
 \verbatim
 sudo apt-get install swig
@@ -273,7 +273,7 @@ If you selected CREATE_PYTHON, you can proceed to run the ASIBOT Python example 
  * @subsection export_asibot Building the RaveBot and/or CartesianBot YARP devices into YARP (Completely Optional, read warning)
 
 <b>WARNING</b>: A YARP device can belong to either to the YARP project (yarpmod) <b>OR</b> to the ASIBOT project (rlPlugins).
-This is <b>mutually exclusive</b> and i.e. will make the current implementation of \ref testRaveBot not find the \ref RaveBot library.
+This is <b>mutually exclusive</b> and i.e. will make the current implementation of \ref testRaveBot and \ref cartesianServer not find the \ref RaveBot library.
 
 If you still want to export the ASIBOT libraries to the YARP yarpmod plugin library (perhaps for using the SWIG wrappers), you must:
 
