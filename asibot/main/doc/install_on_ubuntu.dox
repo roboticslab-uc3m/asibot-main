@@ -236,7 +236,7 @@ Or proceed to compile and run the ASIBOT C++ example modules: \ref asibot_exampl
 
 <hr>
 
-<B>Project Organization</B>
+ * @subsection asibot_organization Project Organization
 
 The project is organized in such a way that you will find:
 
@@ -248,7 +248,7 @@ The project is organized in such a way that you will find:
 
 <hr>
 
-<B>Multi-language Support (Optional)</B>
+ * @subsection language_support Multi-language Support (Optional)
 
 You can compile the YARP bindings with SWIG:
 
@@ -267,6 +267,45 @@ sudo make install
 \endverbatim
 
 If you selected CREATE_PYTHON, you can proceed to run the ASIBOT Python example modules: \ref asibot_examples_py
+
+<hr>
+
+ * @subsection export_asibot Building the RaveBot and/or CartesianBot YARP devices into YARP (Completely Optional, read warning)
+
+<b>WARNING</b>: A YARP device can belong to either to the YARP project (yarpmod) <b>OR</b> to the ASIBOT project (rlPlugins).
+This is <b>mutually exclusive</b> and i.e. will make the current implementation of \ref testRaveBot not find the \ref RaveBot library.
+
+If you still want to export the ASIBOT libraries to the YARP yarpmod plugin library (perhaps for using the SWIG wrappers), you must:
+
+\verbatim
+cp $ASIBOT_ROOT/example/exportable/ExternalModules.cmake.template $YARP_ROOT/conf/ExternalModules.cmake
+\endverbatim
+
+Configure the ASIBOT libraries you want in the YARP yarpmod plugin library:
+
+\verbatim
+cd $YARP_DIR
+ccmake .. -DCREATE_DEVICE_LIBRARY_MODULES=ON
+\endverbatim
+
+Press 'c' to see the library options. Set the ENABLE options you want to ON (ENABLE_yarpmod_ravebot for RaveBot, ENABLE_yarpmod_cartesianbot for CartesianBot, etc). Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project. Compile and install with this new YARP configuration with:
+
+\verbatim
+make -j3
+sudo make install
+\endverbatim
+
+They should be shown (once installed) on issuing a:
+
+\verbatim
+yarpdev --list
+\endverbatim
+
+You can test RaveBot as a YARP yarpmod through:
+
+\verbatim
+yarpdev --device ravebot
+\endverbatim
 
 <hr>
 
