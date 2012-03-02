@@ -47,7 +47,8 @@ Released for free under a Creative Commons Attribution 2.5 License
 			</script>
 			<form id="recognition" action="speech">
 			<img src="fig/speech.png" width="70" height="70"/>
-				<input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech onwebkitspeechchange="submitform()">
+				<!--input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech onwebkitspeechchange="submitform()"-->
+				<input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech="x-webkit-speech" onwebkitspeechchange="submitform()">
 			</form>
 <br><br>
       		</div>
