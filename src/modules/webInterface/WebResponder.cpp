@@ -552,7 +552,10 @@ bool WebResponder::read(ConnectionReader& in) {
         string str = readHtml("speech.html");
         response.addString(str.c_str());
         return response.write(*out);
-    }
+    } else if (code=="launcher") {
+        response.addString(readHtml("launcher.html").c_str());
+        return response.write(*out);
+    } 
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
     prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
