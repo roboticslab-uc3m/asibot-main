@@ -549,6 +549,13 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="program") {
         string str = readHtml("program.html");
 
+        //TCbegin
+        ConstString taskcreator = request.find("taskcreator").asString();
+        if(taskcreator=="on"){
+            replaceAll(str, "<POPTS>", "<script src='pTaskTab.js' type='text/javascript'></script>");
+        }
+        //TCend
+
         replaceAll(str, "<FNAME>", lastEditName.c_str());
 
         ConstString fileList = fileListCreator();
@@ -613,6 +620,13 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="assigner") {
         string str = readHtml("assigner.html");
 
+        //TCbegin
+        ConstString taskcreator = request.find("taskcreator").asString();
+        if(taskcreator=="on"){
+            replaceAll(str, "<AOPTS>", "<script src='aTaskTab.js' type='text/javascript'></script>");
+        }
+        //TCend
+
         ConstString fileList = fileListCreator();
         replaceAll(str, "<CARGARFICHEROS>", fileList.c_str());
 
@@ -630,6 +644,12 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="cTaskTab.js") {
         response.addString(readHtml("cTaskTab.js").c_str());
+        return response.write(*out);
+    } else if (code=="pTaskTab.js") {
+        response.addString(readHtml("pTaskTab.js").c_str());
+        return response.write(*out);
+    } else if (code=="aTaskTab.js") {
+        response.addString(readHtml("aTaskTab.js").c_str());
         return response.write(*out);
     }
 
