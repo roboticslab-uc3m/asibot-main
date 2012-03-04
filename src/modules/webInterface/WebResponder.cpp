@@ -555,6 +555,12 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="launcher") {
         response.addString(readHtml("launcher.html").c_str());
         return response.write(*out);
+    } else if (code=="assigner") {
+        string str = readHtml("assigner.html");
+        ConstString fileList = fileListCreator();
+        replaceAll(str, "<CARGARFICHEROS>", fileList.c_str());
+        response.addString(str.c_str());
+        return response.write(*out);
     } 
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
