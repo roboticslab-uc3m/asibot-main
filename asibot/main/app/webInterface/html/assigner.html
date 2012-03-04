@@ -36,7 +36,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 <div id="page">
 	<!-- start content -->
 	<div id="contentcenter">
-		<table id="table_left" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td>
+        <table id="table_left" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td>
             <div align="center">          
         	    <br><font size="5"><b>Program Explorer</b></font><br><br>
                 <FORM ACTION="teach" METHOD="get">
@@ -45,7 +45,7 @@ Released for free under a Creative Commons Attribution 2.5 License
                     </select>
     				<!--input type="file" id="uploaded_file" name="file" size="30"-->
                     <input type="button" onClick="submitEdit(this.form);" value="Select Program"><br><br>
-				</FORM><br>
+                </FORM><br>
 <script>
 function submitEdit(form) {
     if (!form.efile.value) return false;
@@ -68,9 +68,8 @@ function submitEdit(form) {
 
 }
 </script>
-			</div>
-            <div align="center">          
-        	    <br><font size="5"><b>Speech Explorer</b></font><br><br>
+            </div>
+            <div align="center"><br><font size="5"><b>Speech Explorer</b></font><br><br>
                 <FORM ACTION="teach" METHOD="get">
                     <select name="efile" id="efile">
                         <WORDS>
@@ -100,27 +99,26 @@ function submitEdit(form) {
 
 }
 </script>
-			</div><br>
-
+            </div><br>
         </td></tr></table> 
 <!-- space between tables begin-->
-    	<div id="table_left">
-			<div align="center"><br>
-				<font size="5">&nbsp;<b>Icon Explorer</b></font> <br>
+        <table id="table_left" width="300" cellspacing="1" cellpadding="3" border="0"><tr><td>
+			<div align="center"><center><br>
+				<font size="5">&nbsp;<b>Icon Explorer</b></font> <br><br>
 				<FORM name="myform" ACTION="save">
-        			<textarea id="programcontents" name="programcontents" style="width:295px;max-width:295px;height:350px;">
                     <CENTRALPIECE>
-                    </textarea>
-    			</FORM>
-			</div>		
-		</div>
-		<table id ="table_right"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
-		    <div align="center">          
-<br>
-		   	</div>
-   		</td></tr>
-        <tr><td> 
-            <div align="center">
+            <button name="action" type="submit" value="water"><img src="fig/drinkWater.jpg" height="80"></button>
+			<button name="action" type="submit" value="can"><img src="fig/pickCan.jpg" height="80"></button> <br><br>
+			<button name="action" type="submit" value="face"><img src="fig/washFace.jpg" height="80"></button>
+			<button name="action" type="submit" value="tooth"><img src="fig/brushTeeth.jpg" height="80"></button> <br><br>
+			<button type="submit" name="afile" value="home"><img src="fig/home.png" height="80"></button><br><br>
+
+    			</FORM></center>
+    		</div>
+	    </td></tr></table>		
+
+        <table id ="table_right" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
+            <div align="center"><br>
                 <font size="5"><b>Assign to Task</b></font><br><br>
                     <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
                 <br><br>
@@ -159,7 +157,7 @@ function submitSave() {
                     <select name="dfile" id="dfile">
                         <CARGARFICHEROS>
                     </select>
-                    <input type="button" onClick="submitDelete(this.form);" value="Delete Program">
+                    <input type="button" onClick="submitDelete(this.form);" value="Delete Task">
                     <br><br>
 	    		</FORM><br>
 <script>
@@ -188,9 +186,9 @@ function submitDelete(form) {
     return false;
 }
 </script>
-		    </div>
-   		</td></tr></table> 
-	</div>
+            </div>
+        </td></tr></table>
+    </div>
 	<!-- end content -->
 </div>
 <!-- end page -->
