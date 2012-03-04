@@ -49,6 +49,7 @@ protected:
     double stringToDouble(const ConstString& inString);
     ConstString doubleToString(const double& inDouble);
     ConstString pointButtonCreator(const ConstString& pointsFile);
+    ConstString wordOptionCreator(const ConstString& wordsFile);
     ConstString fileListCreator();
 
     yarp::dev::PolyDriver simDevice;

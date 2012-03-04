@@ -193,6 +193,42 @@ ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
 }
 
 /************************************************************************/
+ConstString WebResponder::wordOptionCreator(const ConstString& wordsFile) {
+    ConstString ret;
+    printf("Reading words from file: %s\n",wordsFile.c_str());
+    std::ifstream ifs(wordsFile.c_str());
+    if (!ifs.is_open()) {
+        printf("[warning] word file not open, assuming no words yet.\n");
+        ret += "[No words captured yet]";
+        return ret;
+    }
+    string line;
+    while (getline(ifs, line)) {
+        line += ' ';  // add a comma for easier parsing
+        printf("line: %s.\n",line.c_str());
+        int npos=0;
+        int lpos=0;
+        ConstString pointName;
+        ConstString values;
+        while ((npos = (int)line.find(' ', lpos)) != string::npos) {
+            ConstString subs(line.substr(lpos, npos - lpos).c_str());
+            if (lpos==0) pointName = subs;
+            else {
+                values += subs;
+                values += ",";
+            }
+            lpos = npos+1;
+        }
+        // ret empty for now
+        ret += "<option>";
+        ret += line.c_str();
+        ret += "</option>";
+    }
+    printf("Done reading words from file: %s\n",wordsFile.c_str());
+    return ret;
+}
+
+/************************************************************************/
 ConstString WebResponder::fileListCreator() {
     ConstString ret;
     ConstString filePath = userPath;
@@ -562,8 +598,14 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="assigner") {
         string str = readHtml("assigner.html");
+
         ConstString fileList = fileListCreator();
         replaceAll(str, "<CARGARFICHEROS>", fileList.c_str());
+
+        ConstString wordsFile = userPath + "words.ini";
+        ConstString wordOptions = wordOptionCreator(wordsFile);
+        replaceAll(str, "<WORDS>", wordOptions.c_str());
+
         response.addString(str.c_str());
         return response.write(*out);
     } 
