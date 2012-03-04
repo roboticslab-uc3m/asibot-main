@@ -552,6 +552,11 @@ bool WebResponder::read(ConnectionReader& in) {
         string str = readHtml("speech.html");
         response.addString(str.c_str());
         return response.write(*out);
+    } else if (code=="speech.0") {
+        ConstString word = request.find("word").asString();
+        appendToFile("words.ini",word);
+        response.addString(word.c_str());
+        return response.write(*out);
     } else if (code=="launcher") {
         response.addString(readHtml("launcher.html").c_str());
         return response.write(*out);
