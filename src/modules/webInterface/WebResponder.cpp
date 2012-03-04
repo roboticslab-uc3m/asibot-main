@@ -381,7 +381,14 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(readHtml("index.html").c_str());
         return response.write(*out);
     } else if (code=="joint") {
-        response.addString(readHtml("joint.html").c_str());
+        string str = readHtml("joint.html");
+        //TCbegin
+        ConstString taskcreator = request.find("taskcreator").asString();
+        if(taskcreator=="on"){
+            replaceAll(str, "<JOPTS>", "<script src='jTaskTab.js' type='text/javascript'></script>");
+        }
+        //TCend
+        response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="joint.1") {
         ConstString theJoint = request.find("joint").asString();
@@ -610,6 +617,9 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="docking") {
         response.addString(readHtml("docking.html").c_str());
+        return response.write(*out);
+    } else if (code=="jTaskTab.js") {
+        response.addString(readHtml("jTaskTab.js").c_str());
         return response.write(*out);
     }
 

@@ -45,7 +45,33 @@ Released for free under a Creative Commons Attribution 2.5 License
 				<img src="fig/roboticslab2.jpg" alt="" width="132" height="132" class="left" />
 				<p>This is <strong>Asibot Web Interface</strong>, a new, friendly way to comunicate with Asibot, the assistive robot of the <a href="http://www.uc3m.es">Universidad Carlos III de Madrid</a>. Click on <a href=#>Initialize Task Creator</a> to start the fun!</p>
 
-           		<br><br><center><img src="fig/taskCreatorButton.jpg" alt="" /></center>
+           		<br><br><center>
+                <form name="theTaskForm" id="theTaskForm" action="joint" method="get">
+                    <button name="theTaskCreate" id="theTaskCreate" type="submit" onClick="return htask(this.form)">
+                        <img src="fig/taskCreatorButton.jpg" alt="" />
+                    </button>
+                    <input name="taskcreator" id="taskcreator" type="hidden" value="on">
+                </form>
+<script>
+function htask(id) {
+    if(!confirm('Welcome to the Task Creator.\nYou will now be guided through the tabs.\nStart the wizard?')) {
+        return false;
+    } else {
+        id.submit();
+    }
+/*    url="task.0";
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            document.getElementById('thestop').elements['total'].value=xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();*/
+    return false;
+}
+</script>
+                </center>
 
 				<!--p>The interface has been developed between  <a href="http://asrob.uc3m.es">Asrob</a> and <a href="http://roboticslab.uc3m.es">Robotics Lab</a>, in the area related with assistive portable robots. The main goal of this research area is to design and develop really portable assistive robotic devices able to be transported easily by the user in his daily trip from house to office, providing the assistance in both environments.</p--><br>
 				
