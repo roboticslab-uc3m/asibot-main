@@ -39,17 +39,28 @@ Released for free under a Creative Commons Attribution 2.5 License
 		   <div align="center">          
     		<font size="6"><b>Speech Recognition</b></font><br><br>
        		 <!--font color="#000000" size="4">Speech recognition</font-->
-			<script type="text/javascript">
-			function submitform()
-			{
-    		document.forms["recognition"].submit();
-			}
-			</script>
 			<form id="recognition" action="speech">
 			<img src="fig/speech.png" width="70" height="70"/>
 				<!--input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech onwebkitspeechchange="submitform()"-->
-				<input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech="x-webkit-speech" onwebkitspeechchange="submitform()">
+				<input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech="x-webkit-speech" onwebkitspeechchange="submitSpeech(this.form)">
 			</form>
+<script type="text/javascript">
+function submitSpeech(id) {
+    word = id.word.value;
+    if(!confirm('Recorded:\n' + word + '\nWould you like to save this?')) return false;
+    url="speech.0?word=" + word;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            alert('Saved:\n' + xmlhttp.responseText);
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
+</script>
+
 <br><br>
       		</div>
 	</div>
