@@ -428,7 +428,14 @@ bool WebResponder::read(ConnectionReader& in) {
         if(realPos) realPos->stop();
         return response.write(*out);
     } else if (code=="cartesian") {
-        response.addString(readHtml("cartesian.html").c_str());
+        string str = readHtml("cartesian.html");
+        //TCbegin
+        ConstString taskcreator = request.find("taskcreator").asString();
+        if(taskcreator=="on"){
+            replaceAll(str, "<COPTS>", "<script src='cTaskTab.js' type='text/javascript'></script>");
+        }
+        //TCend
+        response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="cartesian.1") {
         ConstString theAxis = request.find("axis").asString();
@@ -620,6 +627,9 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="jTaskTab.js") {
         response.addString(readHtml("jTaskTab.js").c_str());
+        return response.write(*out);
+    } else if (code=="cTaskTab.js") {
+        response.addString(readHtml("cTaskTab.js").c_str());
         return response.write(*out);
     }
 
