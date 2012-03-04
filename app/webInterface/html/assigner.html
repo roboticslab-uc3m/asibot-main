@@ -68,33 +68,83 @@ function submitEdit(form) {
 
 }
 </script>
-			</div><br>
+			</div>
             <div align="center">          
-                <br><font size="5"><b>Create New</b></font><br><br>
-			    <FORM ACTION="create">
-                    <input name="nfile"><br><br>
-                    <input name="cprogram" id="cprogram" type="submit" value="Create Program" onClick="return fcreate(this.form);">
-	    	    </FORM><br>
+        	    <br><font size="5"><b>Speech Explorer</b></font><br><br>
+                <FORM ACTION="teach" METHOD="get">
+                    <select name="efile" id="efile">
+                        <WORDS>
+                    </select>
+    				<!--input type="file" id="uploaded_file" name="file" size="30"-->
+                    <input type="button" onClick="submitEdit(this.form);" value="Select Speech"><br><br>
+				</FORM><br>
 <script>
-function fcreate(form) {
-    if (!form.nfile.value) return false;
-    if (!confirm("Are you sure you want to create " + form.nfile.value + "?")) return false;
-    url="create.0?nfile="+form.nfile.value;
+function submitEdit(form) {
+    if (!form.efile.value) return false;
+    if (!confirm("Are you sure you want to edit " + form.efile.value + "?\nMake sure you have saved your most recent changes.")) return false;
+    url="edit.0?efile="+form.efile.value;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            alert('Created ' + xmlhttp.responseText)
-            // Now update efile and dfile
-            var eoption=document.createElement("option");
-            eoption.text=form.nfile.value;
-            var eselect = document.getElementById("efile");
-            eselect.add(eoption,eselect.options[null]);
-            eselect.selectedIndex = eselect.options.length-1;
-            var doption=document.createElement("option");
-            doption.text=form.nfile.value;
-            var dselect = document.getElementById("dfile");
-            dselect.add(doption,dselect.options[null]);
-            dselect.selectedIndex = dselect.options.length-1;
+//            alert('Contents: \n' + xmlhttp.responseText)
+            alert('Loaded program: ' + form.efile.value);
+            document.getElementById("programname").innerHTML = form.efile.value;
+//            var dselect = document.getElementById("dfile");
+//            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
+            document.getElementById("programcontents").value = xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+
+}
+</script>
+			</div><br>
+
+        </td></tr></table> 
+<!-- space between tables begin-->
+    	<div id="table_left">
+			<div align="center"><br>
+				<font size="5">&nbsp;<b>Icon Explorer</b></font> <br>
+				<FORM name="myform" ACTION="save">
+        			<textarea id="programcontents" name="programcontents" style="width:295px;max-width:295px;height:350px;">
+                    <CENTRALPIECE>
+                    </textarea>
+    			</FORM>
+			</div>		
+		</div>
+		<table id ="table_right"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
+		    <div align="center">          
+<br>
+		   	</div>
+   		</td></tr>
+        <tr><td> 
+            <div align="center">
+                <font size="5"><b>Assign to Task</b></font><br><br>
+                    <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
+                <br><br>
+<script>
+function pointToText(pointname,values) {
+//    alert(str)
+    var lstr = document.getElementById("programcontents");
+    lstr.value += pointname + '=[' + values + ']\n\r';
+    lstr.value += 'simCart.movl(' + pointname + ')\n\r';
+}
+function submitSave() {
+    var theFileInUse = document.getElementById("programname").innerHTML;
+    if (!theFileInUse) return false;
+    var lstr = document.getElementById("programcontents").value;
+//    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) return false;
+//    alert("program contents: " + lstr);
+    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
+    lstr = lstr.replace(/\n\r?/g, '<br>');
+    lstr = lstr.replace(/=/g, '<equal>');
+    url="save.0?sfile="+theFileInUse+"&lstr="+lstr;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            alert('Saved ' + xmlhttp.responseText)
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -102,9 +152,9 @@ function fcreate(form) {
     return false;
 }
 </script>
-	    	</div><br>
+		    </div>
             <div align="center">          
-                <br><font size="5"><b>Delete</b></font><br><br>
+                <br><font size="5"><b>Delete Task</b></font><br><br>
     			<FORM ACTION="delete">
                     <select name="dfile" id="dfile">
                         <CARGARFICHEROS>
@@ -131,61 +181,6 @@ function submitDelete(form) {
             }
             var dselect = document.getElementById("dfile");
             dselect.remove(dselect.selectedIndex);
-        }
-    }
-    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
-    return false;
-}
-</script>
-		    </div>
-        </td></tr></table> 
-<!-- space between tables begin-->
-    	<div id="table_left">
-			<div align="center">
-				<font size="6"><strong>&nbsp;Program: <span id="programname"><FNAME></span></strong></font> <br>
-				<FORM name="myform" ACTION="save">
-        			<textarea id="programcontents" name="programcontents" style="width:295px;max-width:295px;height:350px;">
-                    <CENTRALPIECE>
-                    </textarea>
-    			</FORM>
-			</div>		
-		</div>
-		<table id ="table_right"width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
-		    <div align="center">          
-        	    <div align="center">
-					<br><br><font size="5"><b>Captured Points</b></font><br>
-                         <POINTS>
-     	 		</div>
-<br>
-		   	</div>
-   		</td></tr>
-        <tr><td> 
-            <div align="center">
-                <br><font size="5"><b>Save Program</b></font><br><br>
-                    <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
-                <br><br>
-<script>
-function pointToText(pointname,values) {
-//    alert(str)
-    var lstr = document.getElementById("programcontents");
-    lstr.value += pointname + '=[' + values + ']\n\r';
-    lstr.value += 'simCart.movl(' + pointname + ')\n\r';
-}
-function submitSave() {
-    var theFileInUse = document.getElementById("programname").innerHTML;
-    if (!theFileInUse) return false;
-    var lstr = document.getElementById("programcontents").value;
-//    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) return false;
-//    alert("program contents: " + lstr);
-    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
-    lstr = lstr.replace(/\n\r?/g, '<br>');
-    lstr = lstr.replace(/=/g, '<equal>');
-    url="save.0?sfile="+theFileInUse+"&lstr="+lstr;
-    xmlhttp.open("GET",url,true);
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-            alert('Saved ' + xmlhttp.responseText)
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');

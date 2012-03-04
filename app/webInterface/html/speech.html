@@ -53,6 +53,7 @@ function submitSpeech(id) {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             alert('Saved:\n' + xmlhttp.responseText);
+            id.word.value = "";
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
