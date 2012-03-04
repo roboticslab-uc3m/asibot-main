@@ -608,7 +608,10 @@ bool WebResponder::read(ConnectionReader& in) {
 
         response.addString(str.c_str());
         return response.write(*out);
-    } 
+    } else if (code=="docking") {
+        response.addString(readHtml("docking.html").c_str());
+        return response.write(*out);
+    }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
     prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
