@@ -42,7 +42,7 @@
  * The implementation maps certain YARP rpc's to CartesianBot function calls. Therefore, we can interface
  * with the class from the command-line by typing:
 \verbatim
-[on terminal 3] yarp rpc /cartesianServer/rpc:i
+[on terminal 3] yarp rpc /ravebot/cartesianServer/rpc:i
 \endverbatim
  * We can get the current cartesian position (perform direct kinematics) by sending a <b>stat</b> rpc: 
 \verbatim
@@ -114,8 +114,19 @@ int main(int argc, char *argv[]) {
     rf.configure("ASIBOT_ROOT", argc, argv);
 
     if (rf.check("help")) {
-        fprintf(stdout,"Options:\n");
-        fprintf(stdout,"\t--rate    rate: ms (default: \"20\")\n");
+        printf("Options:\n");
+        printf("\t--prefix (port name prefix, default: \"/ravebot\")\n");
+        printf("\t--rate [ms] (default: \"30\")\n");
+        printf("\t--A0 [m] (dist from base to motor 2, default: \"0.3\")\n");
+        printf("\t--A1 [m] (dist from motor 2 to motor 3, default: \"0.4\")\n");
+        printf("\t--A2 [m] (dist from motor 3 to motor 4, default: \"0.4\")\n");
+        printf("\t--A3 [m] (dist from motor 4 to end-effector, default: \"0.3\")\n");
+        printf("\t--duration [s] (duration of movl movements, default: \"20\")\n");
+        printf("\t--robotDevice (device we create, default: \"controlboard\")\n");
+        printf("\t--robotSubdevice (library we use, default: \"ravebot\")\n");
+        printf("\t--robotName (port name of created device, default: \"/ravebot\")\n");
+        printf("\t--robotRemote (port to whom we connect for movj, default: \"/ravebot\")\n");
+        printf("\t--robotLocal (port we open to connect for movj, default: \"/ravebot/cartesianServer\")\n");
         return 0;
     }
 
