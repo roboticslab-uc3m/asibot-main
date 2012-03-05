@@ -256,6 +256,30 @@ ConstString WebResponder::fileListCreator() {
 }
 
 /************************************************************************/
+ConstString WebResponder::taskListCreator() {
+    ConstString ret;
+    ConstString filePath = userPath;
+    printf("Reading files from: %s\n",filePath.c_str());
+    DIR *dp;
+    struct dirent *ep;
+    dp = opendir(filePath.c_str());
+    if (dp != NULL) {
+        while (ep = readdir (dp)) {
+            string fileName(ep->d_name);
+            if((int)fileName.find(".task", 0) != string::npos) {
+                printf("[%s] was task\n",fileName.c_str());
+                ret += "<option>";
+                ret += fileName.substr(0, fileName.size()-5).c_str();
+                ret += "</option>";
+            }
+        }
+       (void) closedir (dp);
+    } else printf ("[warning] Couldn't open the directory");
+    printf("Done reading files from: %s\n",filePath.c_str());
+    return ret;
+}
+
+/************************************************************************/
 ConstString WebResponder::getCss() {
     return ConstString(readHtml("style.css").c_str());
 }
@@ -589,6 +613,14 @@ bool WebResponder::read(ConnectionReader& in) {
         deleteFile(dfile);
         printf("delete.0 %s file.\n",dfile.c_str());
         return response.write(*out);
+    } else if (code=="delete.1") {
+        ConstString dfile = userPath;
+        dfile += request.find("dfile").asString();
+        response.addString(request.find("dfile").asString());
+        dfile += ".task";
+        deleteFile(dfile);
+        printf("delete.0 %s file.\n",dfile.c_str());
+        return response.write(*out);
     } else if (code=="edit.0") {
         ConstString efile = userPath;
         efile += request.find("efile").asString();
@@ -643,6 +675,9 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString wordsFile = userPath + "words.ini";
         ConstString wordOptions = wordOptionCreator(wordsFile);
         replaceAll(str, "<WORDS>", wordOptions.c_str());
+
+        ConstString taskList = taskListCreator();
+        replaceAll(str, "<CARGARTAREAS>", taskList.c_str());
 
         response.addString(str.c_str());
         return response.write(*out);
