@@ -9,6 +9,18 @@
 // Margin, top, left, width and height center the iframe horizontally and vertically:
 //var css = 'position:fixed; z-index:9999; border:2px solid black; ' +
 //          'top:50%; left:50%; width:50em; margin:15em 0 0 10em; height:40em;';
+
+var frm2 = document.createElement('form');
+frm2.setAttribute('id', 'frm2');
+frm2.setAttribute('name', 'frm2');
+frm2.setAttribute('action', 'speech');
+document.body.appendChild(frm2);
+var hin = document.createElement('input');
+hin.setAttribute('name', 'taskcreator');
+hin.setAttribute('value', 'on');
+hin.setAttribute('type', 'hidden');
+frm2.appendChild(hin);
+
 var css2 = 'position:fixed; z-index:5000; bottom:0px; right:0px; border:2px solid black; margin:0; padding:0; ' +
           'overflow:hidden;width:23em;height:8em;'
 
@@ -23,13 +35,13 @@ document.body.appendChild(iframe2);
 
     var doc = iframe2.contentDocument;
     doc.body.style.background = 'white';
-    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="cartesian?taskcreator=on">Move on to Next Step \>\></a></td></tr></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="javascript:parent.nextTab();">Move on to Next Step \>\></a></td></tr></table>';
 
 // Make sure Firefox initializes the DOM before we try to use it.
 iframe2.addEventListener("load", function() {
     var doc = iframe2.contentDocument;
     doc.body.style.background = 'white';
-    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="cartesian?taskcreator=on">Move on to Next Step \>\></a></td></tr></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlacks.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="javascript:parent.nextTab();">Move on to Next Step \>\></a></td></tr></table>';
 //    <input type=submit name=robot value="on"><br><input type=text name=status>
 
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.
@@ -41,6 +53,13 @@ iframe2.addEventListener("load", function() {
 function closeMe2() {
     var ifr2 = parent.document.getElementById("theIframe2");
     ifr2.parentNode.removeChild(ifr2);
+    return false;
+}
+
+function nextTab(id) {
+    if(!confirm('Your next step will be recording key words for task execution.\n\nClick on OK to go on to the Speech Tab...')) return false;
+    var ifr3 = parent.document.getElementById("frm2");
+    ifr3.submit();
     return false;
 }
 
