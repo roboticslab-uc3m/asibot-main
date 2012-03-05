@@ -113,6 +113,11 @@ function submitSave() {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             alert('Saved task ' + xmlhttp.responseText)
+            var doption=document.createElement("option");
+            doption.text=tName;
+            var dselect = document.getElementById("dfile");
+            dselect.add(doption,dselect.options[null]);
+            dselect.selectedIndex = dselect.options.length-1;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -125,7 +130,7 @@ function submitSave() {
                 <br><font size="5"><b>Delete Task</b></font><br><br>
     			<FORM ACTION="delete">
                     <select name="dfile" id="dfile">
-                        <CARGARFICHEROS>
+                        <CARGARTAREAS>
                     </select>
                     <input type="button" onClick="submitDelete(this.form);" value="Delete Task">
                     <br><br>
@@ -134,19 +139,12 @@ function submitSave() {
 function submitDelete(form) {
     if (!form.dfile.value) return false;
     if (!confirm("Are you sure you want to delete " + form.dfile.value + "?")) return false;
-    url="delete.0?dfile="+form.dfile.value;
+    url="delete.1?dfile="+form.dfile.value;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             alert('Deleted ' + xmlhttp.responseText)
             // Now update efile and dfile
-            var eselect = document.getElementById("efile");
-            for(var i = 0; i < eselect.options.length; i++) {
-                if(eselect.options[i].value == form.dfile.value) {
-//                    alert (eselect.options[i].value + ' is equal');
-                    eselect.remove(i);
-                }
-            }
             var dselect = document.getElementById("dfile");
             dselect.remove(dselect.selectedIndex);
         }

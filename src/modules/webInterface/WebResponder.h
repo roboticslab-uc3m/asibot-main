@@ -51,6 +51,7 @@ protected:
     ConstString pointButtonCreator(const ConstString& pointsFile);
     ConstString wordOptionCreator(const ConstString& wordsFile);
     ConstString fileListCreator();
+    ConstString taskListCreator();
 
     yarp::dev::PolyDriver simDevice;
     yarp::dev::IPositionControl *simPos;
