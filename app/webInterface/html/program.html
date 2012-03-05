@@ -146,9 +146,7 @@ function submitDelete(form) {
 			<div align="center">
 				<font size="6"><strong>&nbsp;Program: <span id="programname"><FNAME></span></strong></font> <br>
 				<FORM name="myform" ACTION="save">
-        			<textarea id="programcontents" name="programcontents" style="width:295px;max-width:295px;height:350px;">
-                    <CENTRALPIECE>
-                    </textarea>
+        			<textarea id="programcontents" name="programcontents" style="width:295px;max-width:295px;height:350px;" spellcheck="false"><CENTRALPIECE></textarea>
     			</FORM>
 			</div>		
 		</div>
@@ -170,18 +168,24 @@ function submitDelete(form) {
 function pointToText(pointname,values) {
 //    alert(str)
     var lstr = document.getElementById("programcontents");
-    lstr.value += pointname + '=[' + values + ']\n\r';
-    lstr.value += 'simCart.movl(' + pointname + ')\n\r';
+    lstr.value += pointname + '=[' + values + ']\n';
+    lstr.value += 'simCart.movl(' + pointname + ')\n';
 }
 function submitSave() {
     var theFileInUse = document.getElementById("programname").innerHTML;
     if (!theFileInUse) return false;
+    if (theFileInUse=="[none]") {
+        alert("Can not save to [none]");
+        return false;
+    }
     var lstr = document.getElementById("programcontents").value;
 //    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) return false;
 //    alert("program contents: " + lstr);
     if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
     lstr = lstr.replace(/\n\r?/g, '<br>');
+    lstr = lstr.replace(/\n/g, '<br>');
     lstr = lstr.replace(/=/g, '<equal>');
+    lstr = lstr.replace(/#/g, '<numsign>');
     url="save.0?sfile="+theFileInUse+"&lstr="+lstr;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {

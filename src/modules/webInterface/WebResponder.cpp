@@ -183,7 +183,8 @@ ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
         ret += "<button onClick=\"pointToText('";
         ret += pointName.c_str();
         ret += "','";
-        ret += values.c_str();
+        ConstString tvalues = values.substr(0,values.length()-1);
+        ret += tvalues.c_str();
         ret += "');\">";
         ret += pointName.c_str();
         ret += "</button><br>";
@@ -575,7 +576,7 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString nfile = request.find("nfile").asString();
         response.addString(nfile);
         nfile += ".py";
-        appendToFile(nfile,"");
+        appendToFile(nfile,"#! /usr/bin/env python\nfrom AsibotTask import AsibotTask\nAsibotTask.init()");
         printf("create.0 %s file.\n",nfile.c_str());
         return response.write(*out);
     } else if (code=="delete.0") {
@@ -603,6 +604,7 @@ bool WebResponder::read(ConnectionReader& in) {
         string lstr = request.find("lstr").asString().c_str();
         replaceAll(lstr, "<br>", "\n");
         replaceAll(lstr, "<equal>", "=");
+        replaceAll(lstr, "<numsign>", "#");
         rewriteFile(sfile,lstr.c_str());
         return response.write(*out);
     } else if (code=="speech") {
