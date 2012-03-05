@@ -39,65 +39,28 @@ Released for free under a Creative Commons Attribution 2.5 License
 	<div id="contentcenter">
         <table id="table_left" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td>
             <div align="center">          
-        	    <br><font size="5"><b>Program Explorer</b></font><br><br>
-                <FORM ACTION="teach" METHOD="get">
-                    <select name="efile" id="efile">
+        	    <br><font size="5"><b>Select Program</b></font><br><br>
+                <select name="pfile" id="pfile" onchange="javascript:changeProgram(value);">
                         <CARGARFICHEROS>
-                    </select>
-    				<!--input type="file" id="uploaded_file" name="file" size="30"-->
-                    <input type="button" onClick="submitEdit(this.form);" value="Select Program"><br><br>
-                </FORM><br>
+                </select>
+                <br><br><br><br>
 <script>
-function submitEdit(form) {
-    if (!form.efile.value) return false;
-    if (!confirm("Are you sure you want to edit " + form.efile.value + "?\nMake sure you have saved your most recent changes.")) return false;
-    url="edit.0?efile="+form.efile.value;
-    xmlhttp.open("GET",url,true);
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-//            alert('Contents: \n' + xmlhttp.responseText)
-            alert('Loaded program: ' + form.efile.value);
-            document.getElementById("programname").innerHTML = form.efile.value;
-//            var dselect = document.getElementById("dfile");
-//            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
-            document.getElementById("programcontents").value = xmlhttp.responseText;
-        }
-    }
-    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
+function changeProgram(val) {
+    alert("Selected program: " + val);
     return false;
 
 }
 </script>
             </div>
             <div align="center"><br><font size="5"><b>Speech Explorer</b></font><br><br>
-                <FORM ACTION="teach" METHOD="get">
-                    <select name="efile" id="efile">
-                        <WORDS>
-                    </select>
-    				<!--input type="file" id="uploaded_file" name="file" size="30"-->
-                    <input type="button" onClick="submitEdit(this.form);" value="Select Speech"><br><br>
-				</FORM><br>
+                <select name="swords" id="swords" onchange="javascript:changeSpeech(value);">
+                    <WORDS>
+                </select>
+                <br><br><br><br><br>
 <script>
-function submitEdit(form) {
-    if (!form.efile.value) return false;
-    if (!confirm("Are you sure you want to edit " + form.efile.value + "?\nMake sure you have saved your most recent changes.")) return false;
-    url="edit.0?efile="+form.efile.value;
-    xmlhttp.open("GET",url,true);
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-//            alert('Contents: \n' + xmlhttp.responseText)
-            alert('Loaded program: ' + form.efile.value);
-            document.getElementById("programname").innerHTML = form.efile.value;
-//            var dselect = document.getElementById("dfile");
-//            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
-            document.getElementById("programcontents").value = xmlhttp.responseText;
-        }
-    }
-    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
+function changeSpeech(val) {
+    alert("Selected words: " + val);
     return false;
-
 }
 </script>
             </div><br>
@@ -106,39 +69,50 @@ function submitEdit(form) {
         <table id="table_left" width="300" cellspacing="1" cellpadding="3" border="0"><tr><td>
 			<div align="center"><center><br>
 				<font size="5">&nbsp;<b>Icon Explorer</b></font> <br><br>
-				<FORM name="myform" ACTION="save">
                     <CENTRALPIECE>
-            <button name="action" type="submit" value="water"><img src="fig/drinkWater.jpg" height="80"></button>
-			<button name="action" type="submit" value="can"><img src="fig/pickCan.jpg" height="80"></button> <br><br>
-			<button name="action" type="submit" value="face"><img src="fig/washFace.jpg" height="80"></button>
-			<button name="action" type="submit" value="tooth"><img src="fig/brushTeeth.jpg" height="80"></button> <br><br>
-			<button type="submit" name="afile" value="home"><img src="fig/home.png" height="80"></button><br><br>
-
-    			</FORM></center>
+            <button onclick="javascript:changeIcon('water');"><img src="fig/drinkWater.jpg" height="80"></button>
+			<button onclick="javascript:changeIcon('can');"><img src="fig/pickCan.jpg" height="80"></button> <br><br>
+			<button onclick="javascript:changeIcon('face');"><img src="fig/washFace.jpg" height="80"></button>
+			<button onclick="javascript:changeIcon('teeth');"><img src="fig/brushTeeth.jpg" height="80"></button> <br><br>
+			<button onclick="javascript:changeIcon('home');"><img src="fig/home.png" height="80"></button><br><br>
+            </center>
     		</div>
 	    </td></tr></table>		
-
+<script>
+function changeIcon(val) {
+    alert("Selected icon: " + val);
+    var hid = document.getElementById('iname');
+    hid.value = val;
+    return false;
+}
+</script>
         <table id ="table_right" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
             <div align="center"><br>
                 <font size="5"><b>Assign to Task</b></font><br><br>
-                    <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button>
+                    <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button><input name="iname" id="iname" type="hidden" value="null">
                 <br><br>
 <script>
-function pointToText(pointname,values) {
-//    alert(str)
-    var lstr = document.getElementById("programcontents");
-    lstr.value += pointname + '=[' + values + ']\n\r';
-    lstr.value += 'simCart.movl(' + pointname + ')\n\r';
-}
 function submitSave() {
-    var theFileInUse = document.getElementById("programname").innerHTML;
-    if (!theFileInUse) return false;
-    var lstr = document.getElementById("programcontents").value;
-//    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?")) return false;
-//    alert("program contents: " + lstr);
-    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
-    lstr = lstr.replace(/\n\r?/g, '<br>');
-    lstr = lstr.replace(/=/g, '<equal>');
+    var pFile = document.getElementById("pfile").value;
+    if (!pFile) return false;
+    var sWords = document.getElementById("swords").value;
+    if (!sWords) return false;
+    var iName = document.getElementById("iname").value;
+    if (!iName) return false;
+    if (iName == "null") {
+        alert("Please select icon.");
+        return false;
+    }
+    tname = prompt("Program: " + pFile + "\nSelected words: " + sWords + "\nIcon:" + iName, "task01");
+    if(tname==null || tname=="") {
+        alert("Task name needed");
+        return false;
+    }
+
+//    var lstr = document.getElementById("programcontents").value;
+//    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
+//    lstr = lstr.replace(/\n\r?/g, '<br>');
+/*    lstr = lstr.replace(/=/g, '<equal>');
     url="save.0?sfile="+theFileInUse+"&lstr="+lstr;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
@@ -147,7 +121,7 @@ function submitSave() {
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
+    xmlhttp.send();*/
     return false;
 }
 </script>
