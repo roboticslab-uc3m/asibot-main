@@ -664,6 +664,20 @@ bool WebResponder::read(ConnectionReader& in) {
     } else if (code=="sTaskTab.js") {
         response.addString(readHtml("sTaskTab.js").c_str());
         return response.write(*out);
+    } else if (code=="assigner.0") {
+        ConstString tname = request.find("tname").asString();
+        tname += ".task";
+        printf("assign.0 %s file.\n",tname.c_str());
+        ConstString pfile = request.find("pfile").asString();
+        ConstString swords = request.find("swords").asString();
+        ConstString iname = request.find("iname").asString();
+        ConstString lstr(pfile);
+        lstr += "\n";
+        lstr += swords + "\n";
+        lstr += iname + "\n";
+        rewriteFile(tname,lstr.c_str());
+        response.addString(tname);
+        return response.write(*out);
     }
 
     ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
