@@ -56,7 +56,7 @@ function closeMe2() {
     return false;
 }
 
-function nextTab(id) {
+function nextTab() {
     if(!confirm('Your next step will be recording key words for task execution.\n\nClick on OK to go on to the Speech Tab...')) return false;
     var ifr3 = parent.document.getElementById("frm2");
     ifr3.submit();
