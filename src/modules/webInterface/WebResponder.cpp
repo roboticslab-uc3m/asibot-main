@@ -607,6 +607,12 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="speech") {
         string str = readHtml("speech.html");
+        //TCbegin
+        ConstString taskcreator = request.find("taskcreator").asString();
+        if(taskcreator=="on"){
+            replaceAll(str, "<SOPTS>", "<script src='sTaskTab.js' type='text/javascript'></script>");
+        }
+        //TCend
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="speech.0") {
@@ -650,6 +656,9 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="aTaskTab.js") {
         response.addString(readHtml("aTaskTab.js").c_str());
+        return response.write(*out);
+    } else if (code=="sTaskTab.js") {
+        response.addString(readHtml("sTaskTab.js").c_str());
         return response.write(*out);
     }
 
