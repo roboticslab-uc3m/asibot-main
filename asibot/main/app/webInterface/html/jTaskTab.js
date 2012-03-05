@@ -35,13 +35,13 @@ document.body.appendChild(iframe2);
 
     var doc = iframe2.contentDocument;
     doc.body.style.background = 'white';
-    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="javascript:parent.nextTab(this.form);">Move on to Next Step \>\></a></td></tr></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="javascript:parent.nextTab();">Move on to Next Step \>\></a></td></tr></table>';
 
 // Make sure Firefox initializes the DOM before we try to use it.
 iframe2.addEventListener("load", function() {
     var doc = iframe2.contentDocument;
     doc.body.style.background = 'white';
-    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><form id="ns" name="ns" action="cartesian"><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="javascript:parent.nextTab();">Move on to Next Step \>\></a></td></tr><input name="taskcreator" value="on" type="hidden"></form></table>';
+    doc.body.innerHTML = '<table><tr><center><b><u>Task Creator Progress</u></b> (<a href="javascript:parent.closeMe2();">x</a>)</center></tr><tr><td><button type="submit" onClick="return htask(this.form)"><img src="fig/ballBlues.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button><button type="submit" onClick="return htask(this.form)"><img src="fig/ballWhites.png" width="30"alt=""></button></td></tr><tr><td align=center><a href="javascript:parent.nextTab();">Move on to Next Step \>\></a></td></tr></table>';
 //    <input type=submit name=robot value="on"><br><input type=text name=status>
 
     // It seems Firefox (at least 3.6) has a bug. It will report offsetWidth less than clientWidth.
@@ -56,7 +56,7 @@ function closeMe2() {
     return false;
 }
 
-function nextTab(id) {
+function nextTab() {
     if(!confirm('Your next step will be saving some points in Cartesian mode.\nYou should see your progress on the bottom right indicator has advanced.\n\nClick on OK to go on to the Cartesian movement Tab...')) return false;
     var ifr3 = parent.document.getElementById("frm2");
     ifr3.submit();
