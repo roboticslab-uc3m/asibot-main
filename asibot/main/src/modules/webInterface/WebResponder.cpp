@@ -242,9 +242,11 @@ ConstString WebResponder::fileListCreator() {
             string fileName(ep->d_name);
             if((int)fileName.find(".py", 0) != string::npos) {
                 printf("[%s] was py\n",fileName.c_str());
-                ret += "<option>";
-                ret += fileName.substr(0, fileName.size()-3).c_str();
-                ret += "</option>";
+                if((fileName != "AsibotTask.py")&&(fileName != "AsibotTask.pyc")) {
+                    ret += "<option>";
+                    ret += fileName.substr(0, fileName.size()-3).c_str();
+                    ret += "</option>";
+                }
             }
         }
        (void) closedir (dp);
@@ -576,7 +578,7 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString nfile = request.find("nfile").asString();
         response.addString(nfile);
         nfile += ".py";
-        appendToFile(nfile,"#! /usr/bin/env python\nfrom AsibotTask import AsibotTask\nAsibotTask.init()");
+        appendToFile(nfile,"#! /usr/bin/env python\nfrom AsibotTask import *\n\nsimCart = CartesianClient()\nsimCart.open('/ravebot')  # '/canbot' for real\n\nTime.delay(0.1)\n\n\n\nsimCart.close()");
         printf("create.0 %s file.\n",nfile.c_str());
         return response.write(*out);
     } else if (code=="delete.0") {
