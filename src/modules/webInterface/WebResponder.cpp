@@ -357,7 +357,7 @@ bool WebResponder::read(ConnectionReader& in) {
                 ok = false;
             } else printf ("[success] ravebot simPos available.\n");
             simCart = new CartesianClient;
-            if(!simCart->open()) {
+            if(!simCart->open("/ravebot")) {
                 printf("[error] cannot open ravebot simCart.\n");
                 ok=false;
             } else printf ("[success] opened ravebot simCart.\n");

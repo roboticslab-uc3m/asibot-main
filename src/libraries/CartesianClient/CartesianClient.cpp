@@ -6,21 +6,18 @@
 CartesianClient::CartesianClient() { }
 
 /************************************************************************/
-bool CartesianClient::open() {
-    rpcClient.open("/cartesianClient/rpc:o");
-    if (!rpcClient.addOutput("/cartesianServer/rpc:i")) {
+bool CartesianClient::open(const ConstString& serverPrefix) {
+    ConstString clientStr(serverPrefix);
+    clientStr += "/cartesianServer/rpc:o";
+    rpcClient.open(clientStr);
+    ConstString serverStr(serverPrefix);
+    serverStr += "/cartesianServer/rpc:i";
+    if (!rpcClient.addOutput(serverStr)) {
         printf("[error] no cartesian connection possible\n");
         return false;
     }
-    //valid = true;
-    //else valid = false;
     return true;
 }
-
-/************************************************************************/
-//bool CartesianClient::isValid() {
-//    return valid;
-//}
 
 /************************************************************************/
 bool CartesianClient::close() {

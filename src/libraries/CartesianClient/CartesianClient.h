@@ -43,8 +43,7 @@ protected:
     bool validClient;
 public:
     CartesianClient();
-    bool open();
-//    bool isValid();
+    bool open(const ConstString& serverPrefix);
     bool close();
     bool stat(double *xd);
     bool inv(const double *xd);
