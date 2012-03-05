@@ -103,25 +103,20 @@ function submitSave() {
         alert("Please select icon.");
         return false;
     }
-    tname = prompt("Program: " + pFile + "\nSelected words: " + sWords + "\nIcon:" + iName, "task01");
-    if(tname==null || tname=="") {
+    tName = prompt("Program: " + pFile + "\nSelected words: " + sWords + "\nIcon:" + iName, "task01");
+    if(tName==null || tName=="") {
         alert("Task name needed");
         return false;
     }
-
-//    var lstr = document.getElementById("programcontents").value;
-//    if (!confirm("Are you sure you want to save your changes to " + theFileInUse + "?\n---Program contents---\n" + lstr)) return false;
-//    lstr = lstr.replace(/\n\r?/g, '<br>');
-/*    lstr = lstr.replace(/=/g, '<equal>');
-    url="save.0?sfile="+theFileInUse+"&lstr="+lstr;
+    url="assigner.0?tname=" + tName + "&pfile="+pFile+"&swords="+sWords+"&iname="+iName;
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            alert('Saved ' + xmlhttp.responseText)
+            alert('Saved task ' + xmlhttp.responseText)
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();*/
+    xmlhttp.send();
     return false;
 }
 </script>
