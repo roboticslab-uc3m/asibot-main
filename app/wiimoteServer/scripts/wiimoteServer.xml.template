@@ -11,7 +11,7 @@
 
         <connection>
                 <from>/wiimoteServer/command:o</from>
-                <to>/cartesianServer/command:i</to>
+                <to>/ravebot/cartesianServer/command:i</to>
                 <protocol>udp</protocol>
         </connection>
 
