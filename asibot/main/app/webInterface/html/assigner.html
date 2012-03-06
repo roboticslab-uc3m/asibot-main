@@ -143,7 +143,7 @@ function submitDelete(form) {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            alert('Deleted ' + xmlhttp.responseText)
+            alert('Deleted: ' + xmlhttp.responseText)
             // Now update efile and dfile
             var dselect = document.getElementById("dfile");
             dselect.remove(dselect.selectedIndex);
