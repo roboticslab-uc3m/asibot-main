@@ -242,7 +242,7 @@ ConstString WebResponder::fileListCreator() {
             string fileName(ep->d_name);
             if((int)fileName.find(".py", 0) != string::npos) {
                 printf("[%s] was py\n",fileName.c_str());
-                if((fileName != "AsibotTask.py")&&(fileName != "AsibotTask.pyc")&&(fileName != "template.py")) {
+                if((fileName != "AsibotPy.py")&&(fileName != "AsibotPy.pyc")&&(fileName != "template.py")) {
                     ret += "<option>";
                     ret += fileName.substr(0, fileName.size()-3).c_str();
                     ret += "</option>";
