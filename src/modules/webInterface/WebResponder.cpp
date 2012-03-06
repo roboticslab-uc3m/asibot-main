@@ -280,6 +280,30 @@ ConstString WebResponder::taskListCreator() {
 }
 
 /************************************************************************/
+ConstString WebResponder::taskButtonCreator() {
+    ConstString ret;
+    ConstString filePath = userPath;
+    printf("Reading files from: %s\n",filePath.c_str());
+    DIR *dp;
+    struct dirent *ep;
+    dp = opendir(filePath.c_str());
+    if (dp != NULL) {
+        while (ep = readdir (dp)) {
+            string fileName(ep->d_name);
+            if((int)fileName.find(".task", 0) != string::npos) {
+                printf("[%s] was task\n",fileName.c_str());
+                ret += "<option>";
+                ret += fileName.substr(0, fileName.size()-5).c_str();
+                ret += "</option>";
+            }
+        }
+       (void) closedir (dp);
+    } else printf ("[warning] Couldn't open the directory");
+    printf("Done reading files from: %s\n",filePath.c_str());
+    return ret;
+}
+
+/************************************************************************/
 ConstString WebResponder::getCss() {
     return ConstString(readHtml("style.css").c_str());
 }
@@ -659,7 +683,9 @@ bool WebResponder::read(ConnectionReader& in) {
         response.addString(word.c_str());
         return response.write(*out);
     } else if (code=="launcher") {
-        response.addString(readHtml("launcher.html").c_str());
+        string str = readHtml("launcher.html");
+        //ConstString taskButtonCreator();
+        response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="assigner") {
         string str = readHtml("assigner.html");
@@ -716,13 +742,25 @@ bool WebResponder::read(ConnectionReader& in) {
         rewriteFile(tname,lstr.c_str());
         return response.write(*out);
     } else if (code=="execute") {
-        ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
-        prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
-        prefix += "</head>\n<body>\n";
-        prefix += "<h1>Execution</h1>\n";
-        response.addString(prefix);
-        response.addString("stream");
-        response.addInt(1);
+        ConstString program = request.find("program").asString();
+        printf("execute %s program.\n",program.c_str());
+        response.addString(program.c_str());
+        ConstString programPath = userPath + program;
+        ConstString cmd("python ");
+        cmd += programPath;
+        cmd += ".py";
+//        ConstString cmd("dir ");
+//        cmd += userPath;
+        int i=system (cmd.c_str());
+        printf ("The value returned was: %d.\n",i);
+//        system
+//        ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
+//        prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
+//        prefix += "</head>\n<body>\n";
+//        prefix += "<h1>Execution</h1>\n";
+//        response.addString(prefix);
+//        response.addString("stream");
+//        response.addInt(1);
         return response.write(*out);
     }
 
