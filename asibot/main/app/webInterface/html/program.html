@@ -39,39 +39,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 	<div id="contentcenter">
 		<table id="table_left" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td>
             <div align="center">          
-        	    <br><font size="5"><b>Explorer</b></font><br><br>
-                <FORM ACTION="teach" METHOD="get">
-                    <select name="efile" id="efile">
-                        <CARGARFICHEROS>
-                    </select>
-    				<!--input type="file" id="uploaded_file" name="file" size="30"-->
-                    <input type="button" onClick="submitEdit(this.form);" value="Edit Program"><br><br>
-				</FORM><br>
-<script>
-function submitEdit(form) {
-    if (!form.efile.value) return false;
-    if (!confirm("Are you sure you want to edit " + form.efile.value + "?\nMake sure you have saved your most recent changes.")) return false;
-    url="edit.0?efile="+form.efile.value;
-    xmlhttp.open("GET",url,true);
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-//            alert('Contents: \n' + xmlhttp.responseText)
-            alert('Loaded program: ' + form.efile.value);
-            document.getElementById("programname").innerHTML = form.efile.value;
-//            var dselect = document.getElementById("dfile");
-//            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
-            document.getElementById("programcontents").value = xmlhttp.responseText;
-        }
-    }
-    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
-    xmlhttp.send();
-    return false;
-
-}
-</script>
-			</div><br>
-            <div align="center">          
-                <br><font size="5"><b>Create New</b></font><br><br>
+                <br><br><font size="5"><b>Create New</b></font><br><br>
 			    <FORM ACTION="create">
                     <input name="nfile"><br><br>
                     <input name="cprogram" id="cprogram" type="submit" value="Create Program" onClick="return fcreate(this.form);">
@@ -104,6 +72,39 @@ function fcreate(form) {
 }
 </script>
 	    	</div><br>
+            <div align="center">          
+        	    <br>
+                <font size="5"><b>Explorer</b></font><br><br>
+                <FORM ACTION="teach" METHOD="get">
+                    <select name="efile" id="efile">
+                        <CARGARFICHEROS>
+                    </select>
+    				<!--input type="file" id="uploaded_file" name="file" size="30"-->
+                    <input type="button" onClick="submitEdit(this.form);" value="Edit Program"><br><br>
+				</FORM><br>
+<script>
+function submitEdit(form) {
+    if (!form.efile.value) return false;
+    if (!confirm("Are you sure you want to edit " + form.efile.value + "?\nMake sure you have saved your most recent changes.")) return false;
+    url="edit.0?efile="+form.efile.value;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+//            alert('Contents: \n' + xmlhttp.responseText)
+            alert('Loaded program: ' + form.efile.value);
+            document.getElementById("programname").innerHTML = form.efile.value;
+//            var dselect = document.getElementById("dfile");
+//            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
+            document.getElementById("programcontents").value = xmlhttp.responseText;
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+
+}
+</script>
+			</div>
             <div align="center">          
                 <br><font size="5"><b>Delete</b></font><br><br>
     			<FORM ACTION="delete">
