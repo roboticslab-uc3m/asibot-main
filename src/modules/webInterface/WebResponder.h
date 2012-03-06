@@ -12,7 +12,9 @@
 
 #include <fstream>
 #include <sstream>
-#include <dirent.h>
+#include <dirent.h>  // for listing directory contents
+
+#include <stdlib.h>  // for system
 
 #define JOYPAD_RELMOVE 5  // [deg]
 #define CJOYPAD_RELMOVE_POS 0.10  // [m]
@@ -52,6 +54,7 @@ protected:
     ConstString wordOptionCreator(const ConstString& wordsFile);
     ConstString fileListCreator();
     ConstString taskListCreator();
+    ConstString taskButtonCreator();
 
     yarp::dev::PolyDriver simDevice;
     yarp::dev::IPositionControl *simPos;
