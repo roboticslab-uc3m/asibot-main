@@ -1,16 +1,16 @@
-from AsibotTask import *
+from AsibotPy import *
 ########################################
 home=[0,0,1.4,0,0]
 ########################################
 simCart = CartesianClient()
-simCart.open('/ravebot')  # '/canbot' for real
+simCart.open('/ravebot')  # use '/canbot' for real
 ########################################
-print "hi!"
-simCart.movj(home)
-Time.delay(5)
+print 'hello, robot!'
+simCart.movl(home)  # defaults to 20 s
+Time.delay(20)
 
 
 #######################################
-print "bye!"
+print 'done!'
 simCart.close()
 
