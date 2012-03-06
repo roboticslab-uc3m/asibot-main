@@ -70,11 +70,11 @@ function changeSpeech(val) {
 			<div align="center"><center><br>
 				<font size="5">&nbsp;<b>Icon Explorer</b></font> <br><br>
                     <CENTRALPIECE>
-            <button onclick="javascript:changeIcon('water');"><img src="fig/drinkWater.jpg" height="80"></button>
-			<button onclick="javascript:changeIcon('can');"><img src="fig/pickCan.jpg" height="80"></button> <br><br>
-			<button onclick="javascript:changeIcon('face');"><img src="fig/washFace.jpg" height="80"></button>
-			<button onclick="javascript:changeIcon('teeth');"><img src="fig/brushTeeth.jpg" height="80"></button> <br><br>
-			<button onclick="javascript:changeIcon('home');"><img src="fig/home.png" height="80"></button><br><br>
+            <button onclick="javascript:changeIcon('drinkWater.jpg');"><img src="fig/drinkWater.jpg" height="80"></button>
+			<button onclick="javascript:changeIcon('pickCan.jpg');"><img src="fig/pickCan.jpg" height="80"></button> <br><br>
+			<button onclick="javascript:changeIcon('washFace.jpg');"><img src="fig/washFace.jpg" height="80"></button>
+			<button onclick="javascript:changeIcon('brushTeeth.jpg');"><img src="fig/brushTeeth.jpg" height="80"></button> <br><br>
+			<button onclick="javascript:changeIcon('home.png');"><img src="fig/home.png" height="80"></button><br><br>
             </center>
     		</div>
 	    </td></tr></table>		
@@ -112,7 +112,7 @@ function submitSave() {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            alert('Saved task ' + xmlhttp.responseText)
+            alert('Saved task: ' + xmlhttp.responseText)
             var doption=document.createElement("option");
             doption.text=tName;
             var dselect = document.getElementById("dfile");
