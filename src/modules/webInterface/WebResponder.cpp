@@ -242,7 +242,7 @@ ConstString WebResponder::fileListCreator() {
             string fileName(ep->d_name);
             if((int)fileName.find(".py", 0) != string::npos) {
                 printf("[%s] was py\n",fileName.c_str());
-                if((fileName != "AsibotTask.py")&&(fileName != "AsibotTask.pyc")) {
+                if((fileName != "AsibotTask.py")&&(fileName != "AsibotTask.pyc")&&(fileName != "template.py")) {
                     ret += "<option>";
                     ret += fileName.substr(0, fileName.size()-3).c_str();
                     ret += "</option>";
@@ -602,7 +602,9 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString nfile = request.find("nfile").asString();
         response.addString(nfile);
         nfile += ".py";
-        appendToFile(nfile,"#! /usr/bin/env python\nfrom AsibotTask import *\n\nsimCart = CartesianClient()\nsimCart.open('/ravebot')  # '/canbot' for real\n\nTime.delay(0.1)\n\n\n\nsimCart.close()");
+        ConstString templatePath = userPath + "template.py";
+        string str = readFile(templatePath);
+        appendToFile(nfile,str.c_str());
         printf("create.0 %s file.\n",nfile.c_str());
         return response.write(*out);
     } else if (code=="delete.0") {
@@ -712,6 +714,15 @@ bool WebResponder::read(ConnectionReader& in) {
         lstr += iname + "\n";
         rewriteFile(tname,lstr.c_str());
         response.addString(tname);
+        return response.write(*out);
+    } else if (code=="execute") {
+        ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
+        prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
+        prefix += "</head>\n<body>\n";
+        prefix += "<h1>Execution</h1>\n";
+        response.addString(prefix);
+        response.addString("stream");
+        response.addInt(1);
         return response.write(*out);
     }
 
