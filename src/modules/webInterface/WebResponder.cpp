@@ -703,6 +703,7 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="assigner.0") {
         ConstString tname = request.find("tname").asString();
+        response.addString(tname);
         tname += ".task";
         printf("assign.0 %s file.\n",tname.c_str());
         ConstString pfile = request.find("pfile").asString();
@@ -713,7 +714,6 @@ bool WebResponder::read(ConnectionReader& in) {
         lstr += swords + "\n";
         lstr += iname + "\n";
         rewriteFile(tname,lstr.c_str());
-        response.addString(tname);
         return response.write(*out);
     } else if (code=="execute") {
         ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
