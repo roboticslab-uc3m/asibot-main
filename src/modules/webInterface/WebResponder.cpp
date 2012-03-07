@@ -290,14 +290,45 @@ ConstString WebResponder::taskButtonCreator() {
     if (dp != NULL) {
         while (ep = readdir (dp)) {
             string fileName(ep->d_name);
+            int taskCount = 0;
             if((int)fileName.find(".task", 0) != string::npos) {
-                printf("[%s] was task\n",fileName.c_str());
-                ret += "<option>";
-                ret += fileName.substr(0, fileName.size()-5).c_str();
-                ret += "</option>";
+                printf("[%s] was task, contents...\n",fileName.c_str());
+                ConstString taskPath(userPath);
+                taskPath += fileName.c_str();
+                std::ifstream ifs(taskPath.c_str());
+                if (!ifs.is_open()) {
+                    printf("[warning] word file not open, assuming no words yet.\n");
+                    ret += "[error]";
+                    return ret;
+                }
+                string line;
+                int lineCount = 0;
+                string strProgram;
+                string strSpeech;
+                string strIcon;
+                while (getline(ifs, line)) {
+                    if (lineCount==0) strProgram = line;
+                    else if (lineCount==1) strSpeech = line;
+                    else if (lineCount==2) strIcon = line;
+                    lineCount++;
+                }
+                printf("Program: %s\nSpeech: %s\nIcon: %s\n",strProgram.c_str(),strSpeech.c_str(),strIcon.c_str());
+                ret += "<button name='program' type='submit' value='";
+                ret += strProgram.c_str();
+                ret += "'><img src='";
+                ret += resourcePath;
+                ret += "fig/";
+                ret += strIcon.c_str();
+                ret += "' height='200'></button>";
+//                printf("<button name='program' type='submit' value=");
+//                printf("%s", line.c_str());
+//                printf("</button>\n");
             }
+            if (taskCount%2==0) ret += " &nbsp;\n";
+            else ret += "<br><br>\n";
+            taskCount++;
         }
-       (void) closedir (dp);
+        (void) closedir (dp);
     } else printf ("[warning] Couldn't open the directory");
     printf("Done reading files from: %s\n",filePath.c_str());
     return ret;
@@ -684,7 +715,10 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="launcher") {
         string str = readHtml("launcher.html");
-        //ConstString taskButtonCreator();
+
+        ConstString taskList = taskButtonCreator();
+        replaceAll(str, "<BOTONESTAREAS>", taskList.c_str());
+
         response.addString(str.c_str());
         return response.write(*out);
     } else if (code=="assigner") {
