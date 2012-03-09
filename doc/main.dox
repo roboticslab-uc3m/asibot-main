@@ -2,9 +2,9 @@
   * \mainpage The ASIBOT Software Repository documentation 
 
 \image html asibotmix.jpg
-<center> <a href="http://roboticslab.uc3m.es/roboticslab/robot.php?id_robot=3" target="_blank">Read more about ASIBOT</a> </center>
+<center> <a href="http://roboticslab.uc3m.es/roboticslab/robot.php?id_robot=3">ASIBOT Publications</a> / <a href="http://www.youtube.com/playlist?list=PL9C7CA77199E91668">ASIBOT Videos</a></center>
 
-Welcome to the ASIBOT Software Repository documentation. The ASIBOT Software Repository is part of <a class="el" href="http://roboticslab.sourceforge.net">Robotics Lab @ SourceForge.net</a>.
+Welcome to the Open Source ASIBOT Software Repository documentation. The ASIBOT Software Repository is part of <a class="el" href="http://roboticslab.sourceforge.net" target="_blank">Robotics Lab @ SourceForge.net</a>.
 
 Internal links of interest:
  \li \ref install_on_ubuntu \endref
@@ -17,8 +17,8 @@ Internal links of interest:
  \li <a class="el" href="http://sourceforge.net/mailarchive/forum.php?forum_name=roboticslab-users">Mailing List Archives</a> / <a class="el" href="mailto:roboticslab-users@lists.sourceforge.net">Write to list</a>
 
 External links (related projects):
- \li <a class=el href="http://eris.liralab.it/yarpdoc/index.html">YARP</a>
- \li <a class=el href="http://eris.liralab.it/iCub/main/dox/html/index.html">iCub Software Repository Documentation</a>
+ \li <a class=el href="http://eris.liralab.it/yarpdoc/index.html" target="_blank">YARP</a>
+ \li <a class=el href="http://eris.liralab.it/iCub/main/dox/html/index.html" target="_blank">iCub Software Repository Documentation</a>
 
 This page can be edited at $ASIBOT_ROOT/main/doc/main.dox (\ref modify_asibot_main).
 
