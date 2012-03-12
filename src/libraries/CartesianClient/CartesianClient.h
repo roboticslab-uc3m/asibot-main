@@ -42,13 +42,58 @@ protected:
     RpcClient rpcClient;
     bool validClient;
 public:
+
+    /**
+     * Constructor.
+     */
     CartesianClient();
+
+    /**
+     * Configure the object and make it connect to a cartesianServer module by port name.
+     * @param serverPrefix the cartesianServer module port name prefix ('/ravebot' or '/canbot').
+     * @return true if the object and connection was created successfully
+     */
     bool open(const ConstString& serverPrefix);
+
+    /**
+     * Close the port and object graciously.
+     * @return true if the object and connection was closed successfully
+     */
     bool close();
+
+    /**
+     * Obtain the current position and orientation.
+     * [wait for reply] 
+     * @param xd returns with the array of 5 doubles.
+     * @return true/false on success/failure.
+     */
     bool stat(double *xd);
+
+    /**
+     * Ask for inverting a given pose without actually moving there.
+     * [wait for reply] 
+     * @return true/false on success/failure.
+     */
     bool inv(const double *xd);
+
+    /**
+     * Move to absolute position, interpolation at joint level.
+     * @param xd array of 5 doubles with target position/orientation.
+     * @return true/false on success/failure.
+     */
     bool movj(const double *xd);
+    
+    /**
+     * Move to absolute position, interpolation in Cartesian space.
+     * @param xd array of 5 doubles with target position/orientation.
+     * @return true/false on success/failure.
+     */
     bool movl(const double *xd);
+
+    /**
+     * Stop.
+     * @return true/false on success/failure.
+     */
     bool stop();
 };
 
