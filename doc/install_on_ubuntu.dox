@@ -250,7 +250,13 @@ The project is organized in such a way that you will find:
 
  * @subsection language_support Multi-language Support (Optional)
 
-You can compile the YARP bindings with SWIG (<b>note</b>: certain language bindings require certain headers/libraries):
+Certain language bindings require certain headers/libraries. For Python support, you can probably get away with:
+
+\verbatim
+sudo apt-get install python2.7-dev
+\endverbatim
+
+Now you can compile the YARP bindings with SWIG:
 
 \verbatim
 sudo apt-get install swig
