@@ -19,7 +19,8 @@ bool TestRaveBot::configure(ResourceFinder &rf) {
         robot_name = rf.find("name").asString();
     else robot_name = DEFAULT_ROBOT_NAME;
 
-    Property options;
+//    Property options;
+    Property options(rf.toString());  // Little hack to get rf stuff to the cartesian device
     options.put("device","controlboard");
     options.put("subdevice","ravebot");
     options.put("name","/ravebot");
