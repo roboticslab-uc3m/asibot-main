@@ -41,7 +41,9 @@ bool CartesianBot::open(Searchable& config) {
         printf("[error] you may also define subdevice,name,local,remote to open() CartesianBot\n");
         return false;
     }
-    Property options;
+
+//    Property options;
+    Property options(config.toString());
     options.put("device",config.find("robotDevice").asString());
     options.put("subdevice",config.find("robotSubdevice").asString());
     options.put("name",config.find("robotName").asString());
