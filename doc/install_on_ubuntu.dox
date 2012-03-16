@@ -288,6 +288,18 @@ echo $PWD >> `locate librarypath.txt`
 \endverbatim
 <!-- Note: juan had a strange issue, fixed by moving or renaming conflicting version /opt/matlab/sys/os/glnx86/libstdc++.so.6 -->
 
+If you selected CREATE_JAVA, now compile the ASIBOT Java classes:
+\verbatim
+cd $ASIBOT_ROOT/example/java
+javac -source 1.3 -target 1.3 *.java
+\endverbatim
+
+Then we need to add this current path to the MATLAB classpath.txt file. You can try:
+
+\verbatim
+echo $PWD >> `locate classpath.txt`
+\endverbatim
+
 Once this is done, you can proceed to run the ASIBOT MATLAB example modules: \ref asibot_examples_m
 
 <hr>
