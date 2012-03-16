@@ -256,6 +256,11 @@ Certain language bindings require certain headers/libraries. For Python support,
 sudo apt-get install python2.7-dev
 \endverbatim
 
+For Java/MATLAB support, you can probably get away with:
+\verbatim
+sudo apt-get install default-jdk
+\endverbatim
+
 Now you can compile the YARP bindings with SWIG:
 
 \verbatim
@@ -273,6 +278,15 @@ sudo make install
 \endverbatim
 
 If you selected CREATE_PYTHON, you can proceed to run the ASIBOT Python example modules: \ref asibot_examples_py
+
+Getting to make MATLAB get the YARP Java bindings is a bit tricky. We need to add the current path to the MATLAB classpath.txt file and to the MATLAB librarypath.txt file. You can try:
+
+\verbatim
+sudo updatedb  # updates the data-base that 'locate' uses
+echo $PWD >> `locate classpath.txt`
+echo $PWD >> `locate librarypath.txt`
+\endverbatim
+<!-- Note: juan had a strange issue, fixed by moving or renaming conflicting version /opt/matlab/sys/os/glnx86/libstdc++.so.6 -->
 
 <hr>
 
