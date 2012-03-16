@@ -46,6 +46,15 @@
 
 /**
 * @ingroup asibot_examples
+* \defgroup asibot_examples_m List of ASIBOT MATLAB Examples
+*
+* Documentation for each example goes in each directory.
+*
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+*/
+
+/**
+* @ingroup asibot_examples
 * \defgroup asibot_examples_py List of ASIBOT Python Examples
 *
 * Documentation for each example goes in each directory.
