@@ -26,6 +26,8 @@ using namespace yarp::os;
  * 
  * In C++ (assuming correct installation): \ref testRemoteCartesianServer
  *
+ * In MATLAB (assuming correct installation with Multi-language Support): \ref testRemoteCartesianServerM
+ *
  * In Python (assuming correct installation with Multi-language Support): \ref testRemoteCartesianServerPy
  *
  */
