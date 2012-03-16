@@ -279,7 +279,7 @@ sudo make install
 
 If you selected CREATE_PYTHON, you can proceed to run the ASIBOT Python example modules: \ref asibot_examples_py
 
-Getting to make MATLAB get the YARP Java bindings is a bit tricky. We need to add the current path to the MATLAB classpath.txt file and to the MATLAB librarypath.txt file. You can try:
+If you selected CREATE_JAVA, it is possible to make MATLAB get the YARP Java bindings. It is a bit tricky. We need to add the current path to the MATLAB classpath.txt file and to the MATLAB librarypath.txt file. You can try:
 
 \verbatim
 sudo updatedb  # updates the data-base that 'locate' uses
@@ -287,6 +287,8 @@ echo $PWD >> `locate classpath.txt`
 echo $PWD >> `locate librarypath.txt`
 \endverbatim
 <!-- Note: juan had a strange issue, fixed by moving or renaming conflicting version /opt/matlab/sys/os/glnx86/libstdc++.so.6 -->
+
+Once this is done, you can proceed to run the ASIBOT MATLAB example modules: \ref asibot_examples_m
 
 <hr>
 
