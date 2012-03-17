@@ -10,11 +10,10 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
 bool RaveBot::open(Searchable& config) {
 
     if(config.check("help")) {
-       printf("\n");
-       printf("Option: --help  -------> This help\n");
-       printf("Option: --env [env]  --> [env] env name (abs, or rel to ASIBOT_ROOT, defaults to %s)\n",DEFAULT_ENV_NAME);
-       printf("\n");
-       exit(1);
+        printf("ravebot options:\n");
+        printf("\t--help (this help)\n");
+        printf("\t--env [env] (environment name in abs, or rel to ASIBOT_ROOT, defaults to %s)\n",DEFAULT_ENV_NAME);
+        exit(1);
     }
 
     // Create the name of the scene to load, three options:
