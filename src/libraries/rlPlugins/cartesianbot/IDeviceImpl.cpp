@@ -8,9 +8,20 @@
 bool CartesianBot::open(Searchable& config) {
 
     if(config.check("help")) {
-        printf("\n");
-        printf("Usage: cartesianbot --help  -------> This help\n");
-        exit(1);
+        printf("cartesianbot options:\n");
+        printf("\t--help (this help)\n");
+        printf("\t--A0 [m] (dist from base to motor 2, default: \"0.3\")\n");
+        printf("\t--A1 [m] (dist from motor 2 to motor 3, default: \"0.4\")\n");
+        printf("\t--A2 [m] (dist from motor 3 to motor 4, default: \"0.4\")\n");
+        printf("\t--A3 [m] (dist from motor 4 to end-effector, default: \"0.3\")\n");
+        printf("\t--duration [s] (duration of movl movements, default: \"20\")\n");
+        printf("\t--maxVel [deg/s] (maximum joint velocity, default: \"7.5\")\n");
+        printf("\t--maxAcc [deg/s^2] (maximum joint acceleration, default: \"0.2\")\n");
+        printf("\t--robotDevice (device we create, default: \"controlboard\")\n");
+        printf("\t--robotSubdevice (library we use, default: \"ravebot\")\n");
+        printf("\t--robotName (port name of created device, default: \"/ravebot\")\n");
+        printf("\t--rate [ms] (default: \"30\")\n");
+        // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
     if((!config.check("A0"))||(!config.check("A1"))||(!config.check("A2"))||(!config.check("A3"))){
@@ -47,8 +58,8 @@ bool CartesianBot::open(Searchable& config) {
     options.put("device",config.find("robotDevice").asString());
     options.put("subdevice",config.find("robotSubdevice").asString());
     options.put("name",config.find("robotName").asString());
-    options.put("local",config.find("robotLocal").asString());
-    options.put("remote",config.find("robotRemote").asString());
+//    options.put("local",config.find("robotLocal").asString());
+//    options.put("remote",config.find("robotRemote").asString());
 
 /////// UNCOMMENT NEXT 3 LINES FOR USING RAVEBOT AS A LIBRARY AND OPENING FOR REMOTE ////////
 //    options.put("device","controlboard");
