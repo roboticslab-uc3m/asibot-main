@@ -13,6 +13,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     ConstString robotRemote = DEFAULT_ROBOTREMOTE;
     ConstString robotLocal = DEFAULT_ROBOTLOCAL;
 
+    printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("CartesianServer options:\n");
         printf("\t--help (this help)\n");

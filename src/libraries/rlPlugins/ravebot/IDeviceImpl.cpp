@@ -8,11 +8,12 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
 // ------------------- DeviceDriver Related ------------------------------------
 
 bool RaveBot::open(Searchable& config) {
-
+    printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         printf("RaveBot options:\n");
         printf("\t--help (this help)\n");
         printf("\t--env [env] (environment name in abs, or rel to ASIBOT_ROOT, defaults to %s)\n",DEFAULT_ENV_NAME);
+        printf("--------------------------------------------------------------\n");
         exit(1);
     }
 
@@ -31,6 +32,7 @@ bool RaveBot::open(Searchable& config) {
         exit(1);
     }
     // If it reaches up to here, we at least have one of them.
+    printf("--------------------------------------------------------------\n");
 
     // Initialize OpenRAVE-core
     RaveInitialize(true);  // Start openrave core
