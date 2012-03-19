@@ -17,15 +17,23 @@
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
 
-#define THREAD_RATE_INIT 20  // In ms, unmeaningful as ALWAYS gets overwritten by RF
 
 #define NUM_MOTORS 5
 #define CARTPOS_PRECISION 0.01  /// Meter 0.0005
 #define CARTORI_PRECISION 1.5  /// Degrees
-#define DEFAULT_DURATION 20  /// For Trajectory, 3s?
-#define DEFAULT_MAXVEL 7.5  /// deg/s
-#define DEFAULT_MAXACC 0.2  /// (?) deg/s*s
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
+
+#define DEFAULT_A0 0.3
+#define DEFAULT_A1 0.4
+#define DEFAULT_A2 0.4
+#define DEFAULT_A3 0.3
+#define DEFAULT_DURATION 20  // For Trajectory
+#define DEFAULT_MAXVEL 7.5  // deg/s
+#define DEFAULT_MAXACC 0.2  // (?) deg/s^2
+#define DEFAULT_MSCARTESIAN 30  // ms
+#define DEFAULT_ROBOTDEVICE "controlboard"
+#define DEFAULT_ROBOTSUBDEVICE "ravebot"
+#define DEFAULT_ROBOTNAME "/ravebot"
 
 //using namespace std;
 using namespace yarp::os;
@@ -58,7 +66,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
  public:
 
   // Set the Thread Rate in the class constructor
-  CartesianBot() : RateThread(THREAD_RATE_INIT) {}  // In ms
+  CartesianBot() : RateThread(DEFAULT_MSCARTESIAN) {}  // In ms
 
 // -- Helper Funcion declarations. Implementation in HelperFuncs.cpp--
 
@@ -584,7 +592,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     double startTime;
     double duration, maxVel, maxAcc;
     
-    double msPeriod;
+    double msCartesian;
 };
 
 #endif
