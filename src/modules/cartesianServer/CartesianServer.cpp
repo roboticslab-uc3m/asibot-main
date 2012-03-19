@@ -8,14 +8,31 @@ CartesianServer::CartesianServer() { }
 /************************************************************************/
 bool CartesianServer::configure(ResourceFinder &rf) {
 
-    // check our device can be wrapped in the controlboard network wrapper
-    // and accessed remotely
-    printf("================================\n");
-    printf("check our device can be accessed\n");
+    ConstString prefix = DEFAULT_PREFIX;
+    ConstString controller = DEFAULT_CONTROLLER;
+    ConstString robotRemote = DEFAULT_ROBOTREMOTE;
+    ConstString robotLocal = DEFAULT_ROBOTLOCAL;
+
+    if (rf.check("help")) {
+        printf("CartesianServer options:\n");
+        printf("\t--help (this help)\n");
+        printf("\t--prefix (port name prefix, default: \"%s\")\n",prefix.c_str());
+        printf("\t--controller (cartesian controller device, default: \"%s\")\n",controller.c_str());
+        printf("\t--robotRemote (port to whom we connect for movj, default: \"%s\")\n",robotRemote.c_str());
+        printf("\t--robotLocal (port we open to connect for movj, default: \"%s\")\n",robotLocal.c_str());
+        // Do not exit: let last layer exit so we get help from the complete chain.
+    }
+
+    if (rf.check("prefix")) prefix = rf.find("prefix").asString();
+    if (rf.check("controller")) controller = rf.find("controller").asString();
+    if (rf.check("robotRemote")) robotRemote = rf.find("robotRemote").asString();
+    if (rf.check("robotLocal")) robotLocal = rf.find("robotLocal").asString();
+    printf("CartesianServer using prefix: %s, controller: %s.\n",prefix.c_str(),controller.c_str());
+    printf("CartesianServer using robotRemote: %s, robotLocal: %s.\n",robotRemote.c_str(),robotLocal.c_str());
 
     //------------------------------CARTESIAN--------------------------------//
     Property options(rf.toString());  // Little hack to get rf stuff to the cartesian device
-    options.put("device",DEFAULT_CONTROLLER);
+    options.put("device",controller);
     cartesianDevice.open(options);
     if (!cartesianDevice.isValid()) {
         printf("[error] Class instantiation not worked.\n\n");
@@ -25,20 +42,15 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     }
     bool ok = cartesianDevice.view(icart);
     if (!ok) {
-        printf("[warning] Problems acquiring cartesian interface\n");
+        printf("[warning] CartesianServer problems acquiring cartesian interface\n");
         return false;
-    } else printf("[success] cartesianServer acquired cartesian interface\n");
+    } else printf("[success] CartesianServer acquired cartesian interface\n");
 
     //--------------------------------JOINT----------------------------------//
-    if((!rf.check("robotRemote"))||(!rf.check("robotLocal"))){
-        printf("[error] robotRemote and must be defined to configure() CartesianServer\n");
-        cartesianDevice.close();
-        return false;
-    }
     Property robotOptions(rf.toString());  // Little hack to get rf stuff to the module
     robotOptions.put("device","remote_controlboard");
-    robotOptions.put("remote",rf.find("robotRemote").asString());
-    robotOptions.put("local",rf.find("robotLocal").asString());
+    robotOptions.put("remote",robotRemote);
+    robotOptions.put("local",robotLocal);
     robotDevice.open(robotOptions);
     if (!robotDevice.isValid()) {
         printf("[error] Class instantiation not worked.\n\n");
@@ -52,10 +64,6 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     } else printf("[success] cartesianServer acquired robot interfaces\n");
 
     //---------------------CONFIGURE PORTs------------------------
-    ConstString prefix;
-    if(!rf.check("prefix")) {
-        printf("[warning] no prefix found.\n");
-    } else prefix = rf.find("prefix").asString();
     xResponder.setPositionInterface(ipos);
     xResponder.setCartesianInterface(icart);
     ConstString xRpcServerStr(prefix);
