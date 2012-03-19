@@ -18,7 +18,6 @@
 #define NUM_MOTORS 5
 #define THREAD_RATE 20  // In miliseconds. Was 0.5
 #define MOTOR_PRECISION 0.25  // In degrees. Was .75
-#define DEFAULT_REFSPEED 7.5
 #define TOOL_SPEED_ADJ 0.08  // Speed adjustment for simulation, pos.
 #define NEG_LIM -135.0
 #define POS_LIM 135.0
@@ -28,7 +27,8 @@
 #define MI_PI M_PI
 #define UNSTABLE false
 
-#define DEFAULT_ENV_NAME "/app/ravebot/models/asibot_cocina_entero.env.xml"  // on $ASIBOT_ROOT
+#define DEFAULT_ENV "asibot_cocina_entero.env.xml"
+#define DEFAULT_REFSPEED 7.5
 
 using namespace std;
 
