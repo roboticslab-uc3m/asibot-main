@@ -8,31 +8,43 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
 // ------------------- DeviceDriver Related ------------------------------------
 
 bool RaveBot::open(Searchable& config) {
+
+    modePosVel = 0;  // 0 = Pos; 1 = Vel;
+    for (unsigned int i=0; i<NUM_MOTORS; i++) {
+      joint_status[i]=0;
+      real_degrees[i]=0.0;
+      joint_vel[i]=0.0;
+      target_degrees[i]=0.0;
+      refAcc[i]=1.0;
+    }
+
+    ConstString env = DEFAULT_ENV;
+    for (unsigned int i=0; i<NUM_MOTORS; i++) refSpeed[i]=DEFAULT_REFSPEED;
+
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         printf("RaveBot options:\n");
         printf("\t--help (this help)\n");
-        printf("\t--env [env] (environment name in abs, or rel to ASIBOT_ROOT, defaults to %s)\n",DEFAULT_ENV_NAME);
-        printf("--------------------------------------------------------------\n");
-        exit(1);
+        printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
+        printf("\t--refSpeed [deg/s] (default: %f)\n",refSpeed[0]);
     }
 
-    // Create the name of the scene to load, three options:
-    //   1) User gives us nothing -> we use $ASIBOT_ROOT/default
-    //   2) User gives us abs -> we use "env"
-    //   2) User gives us rel -> we use $ASIBOT_ROOT/"env"
-    char *c_yarpmodsdir;
-    c_yarpmodsdir = getenv("ASIBOT_ROOT");
-    if(c_yarpmodsdir) {
-      printf("$ASIBOT_DIR is set to: %s\n",c_yarpmodsdir);
-    } else {
-      printf("[warning] $ASIBOT_ROOT is not set, should look like ~/asibot ...\n\n");
-      if(!config.check("env"))
-        printf("[error] no --env [env] parameter found either, leaving...\n");
-        exit(1);
+    char *asibot_root;
+    asibot_root = getenv("ASIBOT_ROOT");
+    if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
+
+    if (config.check("env")) env = config.find("env").asString();
+    if (config.check("refSpeed")) {
+        for (unsigned int i=0; i<NUM_MOTORS; i++) refSpeed[i] = config.find("refSpeed").asDouble();
     }
+    printf("RaveBot using env: %s.\n",env.c_str());
+    printf("RaveBot using refSpeed: %f.\n",refSpeed[0]);
+
     // If it reaches up to here, we at least have one of them.
     printf("--------------------------------------------------------------\n");
+    if(config.check("help")) {
+        exit(1);
+    }
 
     // Initialize OpenRAVE-core
     RaveInitialize(true);  // Start openrave core
@@ -42,48 +54,20 @@ bool RaveBot::open(Searchable& config) {
     boost::thread thviewer(boost::bind(SetViewer,penv,"qtcoin"));
     Time::delay(0.4); // wait for the viewer to init, in [s]
 
-    // Actually load the scene
-    if(config.check("env")){
-        ConstString envAsAbs = config.find("env").toString();
-        printf("Checking for [env] as absolute: ");
-        if(!penv->Load(envAsAbs.c_str())){
-            printf("not found...\n\n");
-            if(c_yarpmodsdir) {
-                std::string envAsRel(c_yarpmodsdir);
-                envAsRel.append(envAsAbs.c_str());
-                printf("Checking for [env] as relative: ");
-                if(!penv->Load(envAsRel.c_str())) {
-                    printf("not found...\n\n");
-                    std::string myEnvironment(c_yarpmodsdir);
-                    myEnvironment.append(DEFAULT_ENV_NAME);
-                    printf("Checking for default environment: ");
-                    if(!penv->Load(myEnvironment)){
-                        printf("not found... leaving!\n\n");
-                        exit(-1);
-                    } printf("found!\n");
-                } else printf("found!\n");
-            }
-        } else printf("found!\n");
-    } else {
-        std::string myEnvironment(c_yarpmodsdir);
-        myEnvironment.append(DEFAULT_ENV_NAME);
-        printf("No [env], checking for default environment: ");
-        if(!penv->Load(myEnvironment)){
-            printf("not found... leaving!\n\n");
-            exit(-1);
-        } else printf("found!\n");
-    }
 
-    // Initialize private parameters
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
-      joint_status[i]=0;
-      real_degrees[i]=0.0;
-      joint_vel[i]=0.0;
-      target_degrees[i]=0.0;
-      refSpeed[i]=DEFAULT_REFSPEED;
-      refAcc[i]=1.0;
+    // Actually load the scene
+    ConstString envAbsFile(asibot_root);
+    envAbsFile += "/app/ravebot/models/";
+    envAbsFile += env;
+
+    if(!penv->Load(envAbsFile.c_str())) {
+        printf("[warning] RaveBot could not load %s environment.\n",envAbsFile.c_str());
+        if (!penv->Load(env.c_str())) {
+            printf("[error] RaveBot could not load %s environment either.\n",env.c_str());
+            return false;
+        }
     }
-    modePosVel = 0;  // 0 = Pos; 1 = Vel.
+    printf("[success] RaveBot loaded environment.\n");
 
     // NEW: Attach a physics engine
     penv->SetPhysicsEngine(RaveCreatePhysicsEngine(penv,"ode"));
