@@ -74,12 +74,12 @@ bool RaveBot::open(Searchable& config) {
     penv->GetPhysicsEngine()->SetGravity(Vector(0,0,-9.8));
 
     // OLD: Set the transform matrix for the camera view
-    RaveTransformMatrix<float> M;
+//    RaveTransformMatrix<float> M;
 //    RaveVector<float> rotquad(0.505073f, 0.268078f, 0.395983f, 0.718493f);
-    RaveVector<float> trans(4.0, 2.0, 3.0);
-    M.trans = trans;
+//    RaveVector<float> trans(4.0, 2.0, 3.0);
+//    M.trans = trans;
 //    M.rotfromquat (rotquad);  // Doesn't work anymore...
-    RaveTransform<float> Tcamera(M);
+//    RaveTransform<float> Tcamera(M);
 
     //-- Get the robot
     std::vector<RobotBasePtr> robots;
@@ -177,6 +177,13 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername)
 
     // attach it to the environment:
     penv->AttachViewer(viewer);
+
+    RaveVector<float> _cameraTrans(2.0,3.2,2.8);
+    RaveVector<float> _cameraAxis(0.092729,0.413007,0.905995);
+    float _cameraAngle = 2.863747;
+    RaveVector<float> _cameraQuat = quatFromAxisAngle(_cameraAxis,_cameraAngle);
+    RaveTransform<float> Tcamera(_cameraQuat,_cameraTrans);
+    viewer->SetCamera(Tcamera,0.785398);
 
     // finally you call the viewer's infinite loop (this is why you need a separate thread):
     bool showgui = true;
