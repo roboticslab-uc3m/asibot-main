@@ -25,6 +25,7 @@ bool CartesianBot::open(Searchable& config) {
     ConstString strRobotSubDevice = DEFAULT_ROBOTSUBDEVICE;
     ConstString strRobotName = DEFAULT_ROBOTNAME;
 
+    printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         printf("CartesianBot options:\n");
         printf("\t--help (this help)\n");
