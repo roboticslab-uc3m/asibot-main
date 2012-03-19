@@ -113,15 +113,6 @@ int main(int argc, char *argv[]) {
     rf.setDefaultConfigFile("cartesianServer.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
-    if (rf.check("help")) {
-        printf("cartesianServer options:\n");
-        printf("\t--help (this help)\n");
-        printf("\t--prefix (port name prefix, default: \"/ravebot\")\n");
-        printf("\t--robotRemote (port to whom we connect for movj, default: \"/ravebot\")\n");
-        printf("\t--robotLocal (port we open to connect for movj, default: \"/ravebot/cartesianServer\")\n");
-        // Do not exit: let last layer exit so we get help from the complete chain.
-    }
-
     Network yarp;
     if (!yarp.checkNetwork()) {
         printf("No yarp network, bye!\n");

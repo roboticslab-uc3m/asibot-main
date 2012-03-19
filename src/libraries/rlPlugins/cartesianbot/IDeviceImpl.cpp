@@ -26,7 +26,7 @@ bool CartesianBot::open(Searchable& config) {
     ConstString strRobotName = DEFAULT_ROBOTNAME;
 
     if(config.check("help")) {
-        printf("cartesianbot options:\n");
+        printf("CartesianBot options:\n");
         printf("\t--help (this help)\n");
         printf("\t--A0 [m] (dist from base to motor 2, default: \"%f\")\n",A0);
         printf("\t--A1 [m] (dist from motor 2 to motor 3, default: \"%f\")\n",A1);
@@ -42,10 +42,10 @@ bool CartesianBot::open(Searchable& config) {
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
-    A0 = config.find("A0").asDouble();
-    A1 = config.find("A1").asDouble();
-    A2 = config.find("A2").asDouble();
-    A3 = config.find("A3").asDouble();
+    if (config.check("A0")) A0 = config.find("A0").asDouble();
+    if (config.check("A1")) A1 = config.find("A1").asDouble();
+    if (config.check("A2")) A2 = config.find("A2").asDouble();
+    if (config.check("A3")) A3 = config.find("A3").asDouble();
     printf("CartesianBot using A0: %f, A1: %f, A2: %f, A3: %f.\n",A0,A1,A2,A3);
 
     if (config.check("duration")) duration = config.find("duration").asDouble();
