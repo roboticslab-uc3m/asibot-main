@@ -11,6 +11,8 @@ include(${YARP_MODULE_PATH}/YarpPlugin.cmake)
 begin_plugin_library(rlPlugins)
 add_subdirectory(ravebot)
 add_subdirectory(cartesianbot)
+add_subdirectory(../../../../contrib/misc/ikinbot ${CMAKE_CURRENT_BINARY_DIR}/ikinbot)
+add_subdirectory(../../../../contrib/misc/kdlbot ${CMAKE_CURRENT_BINARY_DIR}/kdlbot)
 end_plugin_library(rlPlugins)
 
 IF (ENABLE_testRlPlugins)
