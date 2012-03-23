@@ -20,6 +20,16 @@ bool RaveBot::open(Searchable& config) {
 
     ConstString env = DEFAULT_ENV;
     for (unsigned int i=0; i<NUM_MOTORS; i++) refSpeed[i]=DEFAULT_REFSPEED;
+    minLimit[0] = DEFAULT_MINLIMIT0;
+    minLimit[1] = DEFAULT_MINLIMIT1;
+    minLimit[2] = DEFAULT_MINLIMIT2;
+    minLimit[3] = DEFAULT_MINLIMIT3;
+    minLimit[4] = DEFAULT_MINLIMIT4;
+    maxLimit[0] = DEFAULT_MAXLIMIT0;
+    maxLimit[1] = DEFAULT_MAXLIMIT1;
+    maxLimit[2] = DEFAULT_MAXLIMIT2;
+    maxLimit[3] = DEFAULT_MAXLIMIT3;
+    maxLimit[4] = DEFAULT_MAXLIMIT4;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
