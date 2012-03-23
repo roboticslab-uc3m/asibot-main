@@ -76,7 +76,7 @@ class toolPort : public BufferedPort<Bottle> {
  * and <a class="el" href="group__cartesianServer.html">cartesianServer</a>.
  *
  */
-class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncoders {
+class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncoders, public IControlLimits {
  public:
 
   // Set the Thread Rate in the class constructor
@@ -306,6 +306,26 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
    * @return true/false upon success/failure
    */
   virtual bool velocityMove(const double *sp);
+
+//  --------- IControlLimits Declarations. Implementation in IControlLimitsImpl.cpp ---------
+
+  /**
+   * Set the software limits for a particular axis, the behavior of the
+   * control card when these limits are exceeded, depends on the implementation.
+   * @param axis joint number (why am I telling you this)
+   * @param min the value of the lower limit
+   * @param max the value of the upper limit
+   * @return true or false on success or failure
+   */
+  virtual bool setLimits(int axis, double min, double max);
+    
+  /* Get the software limits for a particular axis.
+   * @param axis joint number (again... why am I telling you this)
+   * @param pointer to store the value of the lower limit
+   * @param pointer to store the value of the upper limit
+   * @return true if everything goes fine, false otherwise.
+   */
+  virtual bool getLimits(int axis, double *min, double *max);
 
 // -------- DeviceDriver declarations. Implementation in IDeviceImpl.cpp --------
 
