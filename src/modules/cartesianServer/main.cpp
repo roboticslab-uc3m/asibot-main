@@ -77,13 +77,14 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
 [on terminal 4] yarp write ... /ravebot/cartesianServer/command:i
 \endverbatim
  *
- * The following table depicts implemented streaming commands you can issue from this connection.
+ * The following table depicts implemented streaming commands you can issue from this connection (no acknowledgement response).
  *
  * <table>
- * <tr class="fragment"><td>streaming command format</td><td>example response</td><td>description</td></tr>
- * <tr><td>[fwd] (0.0 90.0)</td><td>[ok]</td><td>Track virtual point in front of end-effector.</td></tr>
- * <tr><td>[bkwd] (0.0 90.0)</td><td>[ok]</td><td>Track virtual point behind the end-effector.</td></tr>
- * <tr><td>[rot] (0.0 90.0)</td><td>[ok]</td><td>Track virtual point orientation.</td></tr>
+ * <tr class="fragment"><td>streaming command format</td><td>description</td></tr>
+ * <tr><td>[bkwd] (0.0 90.0)</td><td>[Track virtual point behind the end-effector] (dot(rot(z))[deg/s] rot(y')[deg])</td></tr>
+ * <tr><td>[fwd] (0.0 90.0)</td><td>[Track virtual point in front of end-effector] (dot(rot(z))[deg/s] rot(y')[deg]))</td></tr>
+ * <tr><td>[rot] (0.0 90.0)</td><td>[Track virtual point orientation] (dot(rot(z))[deg/s] rot(y')[deg]))</td></tr>
+ * <tr><td>[vmos] (0.0 1.0 0.0 0.0 0.0)</td><td>Direct velocity movement command, in the Cartesian space.</td></tr>
  * </table>
  *
  * <b>Modify</b>
