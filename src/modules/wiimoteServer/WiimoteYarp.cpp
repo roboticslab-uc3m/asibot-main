@@ -10,16 +10,20 @@ void WiimoteYarp::setSharedArea(SharedArea* _pSharedArea) {
 /************************************************************************/
 bool WiimoteYarp::open() {
 
+//    printf("Run \"wiimoteServer --help\" for options.\n");
+    printf("wiimoteServer checking for yarp network... ");
+    fflush(stdout);
+
     if (!yarp.checkNetwork()) {
-        printf("No yarp network, bye!\n");
+        printf("[fail]\nwebInterface found no yarp network (try running \"yarpserver &\"), bye!\n");
         return false;
-    }
+    } else printf("[ok]\n");
 
     port.open("/wiimoteServer/command:o");
 
-    printf("[warning] rate not defined, using default (check defines, 300 ms)\n");
-//    int rate = 300;
-//    this->setRate(rate);
+    msPortOut = DEFAULT_MSPORTOUT;
+    printf("wiimoteServer using msPortOut \"300\" ms\n",msPortOut);
+    this->setRate(msPortOut);
     pSharedArea->setCmd(VOCAB_NULL);
     this->start();
 

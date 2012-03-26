@@ -271,7 +271,10 @@ int main (int argc, char *argv[]) {
     pSharedArea = new SharedArea;
     pWiimoteYarp = new WiimoteYarp;
     pWiimoteYarp->setSharedArea(pSharedArea);
-    pWiimoteYarp->open();
+    if(!pWiimoteYarp->open()) {
+        printf("[error] failed wiimoteYarp open()\n");
+        return -1;
+    }
 
 	int c;
 	char *str_addr;

@@ -8,16 +8,16 @@
 
 using namespace yarp::os;
 
-#define THREAD_RATE_INIT 300  // In ms
+#define DEFAULT_MSPORTOUT 300  // In ms
 
 class WiimoteYarp : public RateThread {
 protected:
 	Network yarp;
     BufferedPort<Bottle> port;
     SharedArea* pSharedArea;
-    double period; // [ms]
+    double msPortOut; // [ms]
 public:
-    WiimoteYarp() : RateThread(THREAD_RATE_INIT) { }  // In ms
+    WiimoteYarp() : RateThread(DEFAULT_MSPORTOUT) { }  // In ms
     void setSharedArea(SharedArea* _pSharedArea);
     bool open();
     bool close();
