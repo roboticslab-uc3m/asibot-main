@@ -8,6 +8,12 @@ WebInterface::WebInterface() { }
 /************************************************************************/
 bool WebInterface::configure(ResourceFinder &rf) {
 
+    if (rf.check("help")) {
+        printf("Options:\n");
+        printf("\t--rate    rate: ms (default: \"20\")\n");
+        return 0;
+    }
+
     counter = 0;
     period = rf.check("period",5,"period in s").asDouble();
 
