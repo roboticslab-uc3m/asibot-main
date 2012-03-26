@@ -40,7 +40,7 @@ protected:
     bool updateModule();
     bool interruptModule();
 //    double getPeriod();
-//    int period;
+//    int sServerPeriod;
 
 public:
     CartesianServer();

@@ -300,7 +300,56 @@ bool CartesianBot::getTaskVelocities(yarp::sig::Vector &xdot, yarp::sig::Vector 
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::sig::Vector &odot) {
-    return false;
+    double realDeg[NUM_MOTORS];
+    if(!enc->getEncoders(realDeg)) {
+        printf("[warning] CartesianBot::setTaskVelocities() failed to getEncoders()\n");
+        return false;  // bad practice??
+    }
+    yarp::sig::Matrix Ja(5,5);
+    for (int i=0; i<NUM_MOTORS; i++)
+        realRad[i]=toRad(realDeg[i]);
+    Ja(0,0) = -sin(realRad[0])*(A2*sin(realRad[1] + realRad[2]) + A1*sin(realRad[1]) + A3*sin(realRad[1] + realRad[2] + realRad[3]));
+    Ja(0,1) = cos(realRad[0])*(A2*cos(realRad[1] + realRad[2]) + A1*cos(realRad[1]) + A3*cos(realRad[1] + realRad[2] + realRad[3]));
+    Ja(0,2) = cos(realRad[0])*(A2*cos(realRad[1] + realRad[2]) + A3*cos(realRad[1] + realRad[2] + realRad[3]));
+    Ja(0,3) = A3*cos(realRad[1] + realRad[2] + realRad[3])*cos(realRad[0]);
+    Ja(0,4) = 0;
+    Ja(1,0) = cos(realRad[0])*(A2*sin(realRad[1] + realRad[2]) + A1*sin(realRad[1]) + A3*sin(realRad[1] + realRad[2] + realRad[3]));
+    Ja(1,1) = sin(realRad[0])*(A2*cos(realRad[1] + realRad[2]) + A1*cos(realRad[1]) + A3*cos(realRad[1] + realRad[2] + realRad[3]));
+    Ja(1,2) = sin(realRad[0])*(A2*cos(realRad[1] + realRad[2]) + A3*cos(realRad[1] + realRad[2] + realRad[3]));
+    Ja(1,3) = A3*cos(realRad[1] + realRad[2] + realRad[3])*sin(realRad[0]);
+    Ja(1,4) = 0;
+    Ja(2,0) = 0;
+    Ja(2,1) = - A2*sin(realRad[1] + realRad[2]) - A1*sin(realRad[1]) - A3*sin(realRad[1] + realRad[2] + realRad[3]);
+    Ja(2,2) = - A2*sin(realRad[1] + realRad[2]) - A3*sin(realRad[1] + realRad[2] + realRad[3]);
+    Ja(2,3) = -A3*sin(realRad[1] + realRad[2] + realRad[3]);
+    Ja(2,4) = 0;
+    Ja(3,0) = 0;
+    Ja(3,1) = 1;
+    Ja(3,2) = 1;
+    Ja(3,3) = 1;
+    Ja(3,4) = 0;
+    Ja(4,0) = 0;
+    Ja(4,1) = 0;
+    Ja(4,2) = 0;
+    Ja(4,3) = 0;
+    Ja(4,4) = 1;
+    yarp::sig::Matrix Ja_pinv(pinv(Ja,1.0e-2));
+    yarp::sig::Vector xdotd(xdot);
+    xdotd.push_back(odot[0]);
+    xdotd.push_back(odot[1]);
+    yarp::sig::Vector t;
+    t.resize(5);
+    t = Ja_pinv * xdotd;
+    double qdot[NUM_MOTORS];
+    qdot[0] = toDeg(t[0]);
+    qdot[1] = toDeg(t[1]);
+    qdot[2] = toDeg(t[2]);
+    qdot[3] = toDeg(t[3]);
+    qdot[4] = toDeg(t[4]);
+    vel->setVelocityMode();
+    if(!vel->velocityMove(qdot))
+        printf("GIGANTIC velocity WARNING\n");
+    return true;
 }
 
 // -----------------------------------------------------------------------------
