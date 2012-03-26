@@ -64,19 +64,20 @@ int main(int argc, char *argv[]) {
     rf.setDefaultConfigFile("webInterface.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
-    if (rf.check("help")) {
-        fprintf(stdout,"Options:\n");
-        fprintf(stdout,"\t--rate    rate: ms (default: \"20\")\n");
-        return 0;
+    WebInterface mod;
+    if(rf.check("help")) {
+        return mod.runModule(rf);
     }
 
+    printf("Run \"webInterface --help\" for options.\n");
+    printf("webInterface checking for yarp network... ");
+    fflush(stdout);
     Network yarp;
     if (!yarp.checkNetwork()) {
-        printf("No yarp network, bye!\n");
+        printf("[fail]\nwebInterface found no yarp network (try running \"yarpserver &\"), bye!\n");
         return -1;
-    }
+    } else printf("[ok]\n");
 
-    WebInterface mod;
     return mod.runModule(rf);
 }
 
