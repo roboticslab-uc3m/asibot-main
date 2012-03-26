@@ -18,6 +18,7 @@ bool RaveBot::open(Searchable& config) {
       refAcc[i]=1.0;
     }
 
+    msJoint = DEFAULT_MSJOINT;
     ConstString env = DEFAULT_ENV;
     for (unsigned int i=0; i<NUM_MOTORS; i++) refSpeed[i]=DEFAULT_REFSPEED;
     minLimit[0] = DEFAULT_MINLIMIT0;
@@ -35,6 +36,7 @@ bool RaveBot::open(Searchable& config) {
     if(config.check("help")) {
         printf("RaveBot options:\n");
         printf("\t--help (this help)\n");
+        printf("\t--msJoint [ms] (rate of joint control thread, default: \"%f\")\n",msJoint);
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
         printf("\t--refSpeed [deg/s] (default: %f)\n",refSpeed[0]);
     }
@@ -44,11 +46,12 @@ bool RaveBot::open(Searchable& config) {
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
     if (config.check("env")) env = config.find("env").asString();
+    if (config.check("msJoint")) msJoint = config.find("msJoint").asDouble();
     if (config.check("refSpeed")) {
         for (unsigned int i=0; i<NUM_MOTORS; i++) refSpeed[i] = config.find("refSpeed").asDouble();
     }
     printf("RaveBot using env: %s.\n",env.c_str());
-    printf("RaveBot using refSpeed: %f.\n",refSpeed[0]);
+    printf("RaveBot using msJoint: %f, refSpeed: %f.\n",msJoint,refSpeed[0]);
 
     // If it reaches up to here, we at least have one of them.
     printf("--------------------------------------------------------------\n");
@@ -164,6 +167,7 @@ bool RaveBot::open(Searchable& config) {
     }
 
     // Start the RateThread
+    this->setRate(msJoint);
     this->start();
     
     return true;
