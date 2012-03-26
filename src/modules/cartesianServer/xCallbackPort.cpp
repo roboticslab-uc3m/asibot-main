@@ -81,6 +81,18 @@ void xCallbackPort::onRead(Bottle& b) {
         od.push_back(0.0); // rot(z'')d
         printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
         icart->goToPose(xd,od,3.0);
+    } else if (choice==VOCAB_VMOS) { ///////////////////////////////// vmos /////////////////////////////////
+        Vector cmd;
+        Bottle *lst = b.get(1).asList();
+//        printf("BKWD list of %d elements (2 needed: oz oy')\n", lst->size());
+        Vector xdotd,odotd;
+        xdotd.push_back(lst->get(0).asDouble());
+        xdotd.push_back(lst->get(1).asDouble());
+        xdotd.push_back(lst->get(2).asDouble());
+        odotd.push_back(lst->get(3).asDouble());
+        odotd.push_back(lst->get(4).asDouble());
+        printf("xdotd: %s; odotd: %s\n",xdotd.toString().c_str(),odotd.toString().c_str());
+        icart->setTaskVelocities(xdotd,odotd);
     }
 }
 
