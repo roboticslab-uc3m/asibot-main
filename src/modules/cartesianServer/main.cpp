@@ -81,9 +81,9 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
  *
  * <table>
  * <tr class="fragment"><td>streaming command format</td><td>example response</td><td>description</td></tr>
- * <tr><td>[fwd] (0.0 0.0)</td><td>[ok]</td><td>Track virtual point in front of end-effector.</td></tr>
- * <tr><td>[bkwd] (0.0 0.0)</td><td>[ok]</td><td>Track virtual point behind the end-effector.</td></tr>
- * <tr><td>[rot] (0.0 0.0)</td><td>[ok]</td><td>Track virtual point orientation.</td></tr>
+ * <tr><td>[fwd] (0.0 90.0)</td><td>[ok]</td><td>Track virtual point in front of end-effector.</td></tr>
+ * <tr><td>[bkwd] (0.0 90.0)</td><td>[ok]</td><td>Track virtual point behind the end-effector.</td></tr>
+ * <tr><td>[rot] (0.0 90.0)</td><td>[ok]</td><td>Track virtual point orientation.</td></tr>
  * </table>
  *
  * <b>Modify</b>
