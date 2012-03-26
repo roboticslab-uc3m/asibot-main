@@ -16,20 +16,15 @@
 #include <sstream>
 
 #define NUM_MOTORS 5
-#define THREAD_RATE 20  // In miliseconds. Was 0.5
 #define MOTOR_PRECISION 0.25  // In degrees. Was .75
 #define TOOL_SPEED_ADJ 0.08  // Speed adjustment for simulation, pos.
-#define NEG_LIM -135.0  // Used in practice for now, soon will dissapear
-#define POS_LIM 135.0  // Used in practice for now, soon will dissapear
-#define NEG_LIM_EXT -180.0  // Used in practice for now, soon will dissapear
-#define POS_LIM_EXT 180.0  // Used in practice for now, soon will dissapear
 //#define MI_PI 3.14159265
 #define MI_PI M_PI
 #define UNSTABLE false
 
+#define DEFAULT_MSJOINT 20  // ms
 #define DEFAULT_ENV "asibot_cocina_entero.env.xml"
 #define DEFAULT_REFSPEED 7.5
-
 #define DEFAULT_MINLIMIT0 -360.0
 #define DEFAULT_MINLIMIT1 -135.0
 #define DEFAULT_MINLIMIT2 -135.0
@@ -91,7 +86,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
  public:
 
   // Set the Thread Rate in the class constructor
-  RaveBot() : RateThread(THREAD_RATE) {}  // In ms
+  RaveBot() : RateThread(DEFAULT_MSJOINT) {}  // In ms
 
 // ------- IPositionControl declarations. Implementation in IPositionImpl.cpp -------
 
@@ -411,6 +406,8 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   std::vector<KinBody::JointPtr> mismotores;
   // YARP
   BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
+  //
+  double msJoint;
 };
 
 #endif

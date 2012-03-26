@@ -35,9 +35,9 @@ void RaveBot::run() {
         if(theToolPort.status==1) {
             if (fabs(theToolPort.target-real_tool)>MOTOR_PRECISION) {
                 if(theToolPort.target-real_tool>0)
-                    real_tool+=THREAD_RATE*TOOL_SPEED_ADJ;
+                    real_tool+=msJoint*TOOL_SPEED_ADJ;
                 else
-                    real_tool-=THREAD_RATE*TOOL_SPEED_ADJ;
+                    real_tool-=msJoint*TOOL_SPEED_ADJ;
                 printf("Tool at %f\n",real_tool);
             } else {
                 theToolPort.status = 0;
@@ -52,7 +52,7 @@ void RaveBot::run() {
 //    probot->SetJointValues(next_positions);  // More compatible with physics??
       probot->SetJointValues(next_positions);  // More compatible with physics??
     
-    penv->StepSimulation(THREAD_RATE/1000.0);  // StepSimulation must be given in seconds
+    penv->StepSimulation(msJoint/1000.0);  // StepSimulation must be given in seconds
     if(cameraFound) {
         psensorbase->GetSensorData(pcamerasensordata);
         //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
