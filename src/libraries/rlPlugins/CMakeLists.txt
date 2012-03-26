@@ -13,6 +13,7 @@ add_subdirectory(ravebot)
 add_subdirectory(cartesianbot)
 add_subdirectory(../../../../contrib/misc/ikinbot ${CMAKE_CURRENT_BINARY_DIR}/ikinbot)
 add_subdirectory(../../../../contrib/misc/kdlbot ${CMAKE_CURRENT_BINARY_DIR}/kdlbot)
+add_subdirectory(../../../../contrib/misc/cartesianbot2 ${CMAKE_CURRENT_BINARY_DIR}/cartesianbot2)
 end_plugin_library(rlPlugins)
 
 IF (ENABLE_testRlPlugins)
