@@ -40,11 +40,29 @@
  * The \ref cartesianServer module acts as the server part of a network wrapper of the CartesianBot class
  * using the CartesianServer class.
  * The implementation maps certain YARP rpc's to CartesianBot function calls. Therefore, we can interface
- * with the class from the command-line by typing:
+ * with the class from the command-line by typing (change 'ravebot' for 'canbot' for the real robot):
 \verbatim
 [on terminal 3] yarp rpc /ravebot/cartesianServer/rpc:i
 \endverbatim
- * We can get the current cartesian position (perform direct kinematics) by sending a <b>stat</b> rpc: 
+ *
+ * Remember that the use of [brackets] means we are sending a VOCAB.
+ * The use of (parenthesis) means we are sending a list, which is a Bottle inside a Bottle.
+ *
+ * We send Cartesian positions/orientations as lists of five elements:
+ * <b>x</b>[m], <b>y</b>[m], <b>z</b>[m], <b>rot(y')</b>[deg], <b>rot(z'')</b>[deg] of the end-effector in <i>absolute base coordinates</i>. The first rotation, <b>rot(z)</b>, is given by <b>x</b> and <b>y</b>.
+
+ * The following table depicts implemented RPC commands you can issue from this connection (similar to the CartesianClient class API, as it actually wraps these commands). 
+ *
+ * <table>
+ * <tr class="fragment"><td>rpc command format</td><td>example response</td><td>description</td></tr>
+ * <tr><td>[inv] (0.3 0.3 0.7 90 0)</td><td>(45.0 -41.169914 116.855705 14.314209 0.0) [ok]</td><td>Kinematic inversion without movement, returns the joint values that would be needed to reach that position.</td></tr>
+ * <tr><td>[movj] (.1 .1 .7 90 0)</td><td>[ok]</td><td>Movement with interpolation in the Joint space.</td></tr>
+ * <tr><td>[movl] (.1 .3 .8 90 0)</td><td>[ok]</td><td>Movement with interpolation in Cartesian space.</td></tr>
+ * <tr><td>[stat]</td><td>(0.0 0.0 1.4 0.0 0.0) [ok]</td><td>Status poll, returns the current cartesian position (perform direct kinematics).</td></tr>
+ * <tr><td>[stop] </td><td>[ok]</td><td>Stop.</td></tr>
+ * </table>
+ *
+ * As an example of use, we can get the current Cartesian position (perform direct kinematics) by sending a <b>stat</b> rpc: 
 \verbatim
 [on terminal 3] [stat]
 \endverbatim
@@ -52,42 +70,21 @@
 \verbatim
 Response: (0.0 0.0 1.4 0.0 0.0) [ok]
 \endverbatim
- * This corresponds to <b>x</b>[m], <b>y</b>[m], <b>z</b>[m], <b>rot(y')</b>[deg], <b>rot(z'')</b>[deg] of the end-effector in <i>absolute base coordinates</i>. The first rotation, <b>rot(z)</b>, is given by <b>x</b> and <b>y</b>.
- *
- * Another implemented behavior is kinematic inversion without movement.
+ * 
+ * The implementation also maps certain YARP streaming commands to CartesianBot function calls. Therefore, we can also interface with the class from the command-line by typing (change 'ravebot' for 'canbot' for the real robot): 
+ * 
 \verbatim
-[on terminal 3] [inv] (0.3 0.3 0.7 90 0)
-\endverbatim
- * And should get some kind of feedback, such as:
-\verbatim
-Response: (45.0 -41.169914 116.855705 14.314209 0.0) [ok]
-\endverbatim
- * Which correspond to the joint values that would be needed to reach that position.
- 
- * To actually move the robot, two rpc methods have been implemented: <b>movj</b> and <b>movl</b>
- *
- * Example with <b>movj</b>
-\verbatim
-[on terminal 3] [movj] (.1 .1 .7 90 0)
-\endverbatim
-\verbatim
-Response: [ok]
-\endverbatim
- * Example with <b>movl</b>
-\verbatim
-[on terminal 3] [movl] (.1 .3 .8 90 0)
-\endverbatim
-\verbatim
-Response: [ok]
+[on terminal 4] yarp write ... /ravebot/cartesianServer/command:i
 \endverbatim
  *
- * Of course, a <b>stop</b> rpc method has been implemented:
-\verbatim
-[on terminal X] [stop]
-\endverbatim
-\verbatim
-Response: [ok]
-\endverbatim
+ * The following table depicts implemented streaming commands you can issue from this connection.
+ *
+ * <table>
+ * <tr class="fragment"><td>streaming command format</td><td>example response</td><td>description</td></tr>
+ * <tr><td>[fwd] (0.0 0.0)</td><td>[ok]</td><td>Track virtual point in front of end-effector.</td></tr>
+ * <tr><td>[bkwd] (0.0 0.0)</td><td>[ok]</td><td>Track virtual point behind the end-effector.</td></tr>
+ * <tr><td>[rot] (0.0 0.0)</td><td>[ok]</td><td>Track virtual point orientation.</td></tr>
+ * </table>
  *
  * <b>Modify</b>
  *
