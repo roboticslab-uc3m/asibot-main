@@ -15,7 +15,8 @@ FIND_PACKAGE(YARP REQUIRED)
 #include(${CMAKE_MODULE_PATH}/FindOrocos-KDL.cmake)
 
 #INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})  # kdl name depends on version
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${ASIBOT_INCLUDE_DIRS})  # kdl name depends on version
+
 #LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
 
 ADD_LIBRARY(cartesianbot CartesianBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
