@@ -78,11 +78,6 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         if(args>2) {
             Bottle *toolLst = in.get(2).asList();
             printf("tool is list of %d elements (5 needed: x y z oy' oz'')\n", toolLst->size());
-            xd[0] -= toolLst->get(0).asDouble();
-            xd[1] -= toolLst->get(1).asDouble();
-            xd[2] -= toolLst->get(2).asDouble();
-            od[0] -= toolLst->get(3).asDouble();
-            od[1] -= toolLst->get(4).asDouble();
         } else printf("Got NO tool arg.\n");
         if(icart->askForPose(xd,od,xdhat,odhat,qdhat)){
             double qd[qdhat.size()];
