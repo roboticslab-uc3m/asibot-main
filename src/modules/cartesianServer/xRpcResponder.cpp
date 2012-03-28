@@ -9,10 +9,14 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     printf("[xRpcResponder] Got %s\n", in.toString().c_str());
     out.clear();
     ConnectionWriter *returnToSender = connection.getWriter();
-    if (returnToSender==NULL) return false;  // Warning: unknown behaviour to j.
+    if (returnToSender==NULL) return false;
     int choice = in.get(0).asVocab();
     if (in.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
-    if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
+    if (choice==VOCAB_HELP) {  ///////////////////////////////// help /////////////////////////////////
+        out.addString("Available commands: [help] [inv] [movj] [movl] [stat] [stop] more info at [http://roboticslab.sourceforge.net/asibot/group__cartesianServer.html]");
+        out.write(*returnToSender);
+        return true;
+    } else if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
         if(icart->stopControl()) {
             if(ipos->stop()) {
                 if(ipos->setPositionMode()) {
@@ -59,17 +63,27 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     } else if (choice==VOCAB_MOVJ) { ///////////////////////////////// movj /////////////////////////////////
         Vector xd,od,xdhat,odhat,qdhat;
         Bottle *lst = in.get(1).asList();
-        printf("list of %d elements (5 needed: x y z oy' oz'')\n", lst->size());
+        printf("target is list of %d elements (5 needed: x y z oy' oz'')\n", lst->size());
         if(lst->size() != 5) {
             out.addVocab(VOCAB_FAILED);
             out.write(*returnToSender);
             return false;
         }
+        int args = in.size();
         xd.push_back(lst->get(0).asDouble());
         xd.push_back(lst->get(1).asDouble());
         xd.push_back(lst->get(2).asDouble());
         od.push_back(lst->get(3).asDouble());
         od.push_back(lst->get(4).asDouble());
+        if(args>2) {
+            Bottle *toolLst = in.get(2).asList();
+            printf("tool is list of %d elements (5 needed: x y z oy' oz'')\n", toolLst->size());
+            xd[0] -= toolLst->get(0).asDouble();
+            xd[1] -= toolLst->get(1).asDouble();
+            xd[2] -= toolLst->get(2).asDouble();
+            od[0] -= toolLst->get(3).asDouble();
+            od[1] -= toolLst->get(4).asDouble();
+        } else printf("Got NO tool arg.\n");
         if(icart->askForPose(xd,od,xdhat,odhat,qdhat)){
             double qd[qdhat.size()];
             for (int i = 0; i < qdhat.size(); i++)
