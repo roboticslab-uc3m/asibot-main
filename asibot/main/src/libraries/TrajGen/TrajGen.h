@@ -6,10 +6,22 @@
 #include <stdio.h>
 
 /**
+ * @ingroup asibot_libraries
  *
- * @ingroup Traj
+ * \defgroup TrajGen
  *
- * Traj is a base class for trajectories.
+ * @brief The TrajGen library is a collection of classes for trajectory generation.
+ *
+ * The TrajGen library is a collection of classes for trajectory generation. For now the functions'
+ * implementations are so short that they have been programmed inline, so for now the library is actually
+ * header-based (no actual real static/dynamic library to be linked).
+ *
+ */
+
+/**
+ * @ingroup TrajGen
+ *
+ * @brief A base class for 1 degree-of-freedom trajectories.
  *
  */
 class Traj {
@@ -28,9 +40,9 @@ class Traj {
 
 /**
  *
- * @ingroup OrderOneTraj
+ * @ingroup TrajGen
  *
- * OrderThreeTraj generates a 1DOF order-one trajectory.
+ * @brief Generates a 1DOF order-one trajectory.
  *
  */
 class OrderOneTraj : public Traj {
@@ -75,9 +87,9 @@ class OrderOneTraj : public Traj {
 
 /**
  *
- * @ingroup OrderThreeTraj
+ * @ingroup TrajGen
  *
- * OrderThreeTraj generates a 1DOF order-three trajectory.
+ * @brief Generates a 1DOF order-three trajectory.
  *
  */
 class OrderThreeTraj : public Traj {
