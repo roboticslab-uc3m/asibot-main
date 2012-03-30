@@ -15,26 +15,19 @@
 #include <stdio.h>
 #include <sstream>
 
-#define NUM_MOTORS 5
 #define MOTOR_PRECISION 0.25  // In degrees. Was .75
 #define TOOL_SPEED_ADJ 0.08  // Speed adjustment for simulation, pos.
 //#define MI_PI 3.14159265
 #define MI_PI M_PI
 #define UNSTABLE false
 
-#define DEFAULT_MSJOINT 20  // ms
+#define DEFAULT_PHYSICS "ode"
+#define DEFAULT_MS_JOINT 20  // ms
 #define DEFAULT_ENV "asibot_cocina_entero.env.xml"
-#define DEFAULT_REFSPEED 7.5
-#define DEFAULT_MINLIMIT0 -360.0
-#define DEFAULT_MINLIMIT1 -135.0
-#define DEFAULT_MINLIMIT2 -135.0
-#define DEFAULT_MINLIMIT3 -135.0
-#define DEFAULT_MINLIMIT4 -360.0
-#define DEFAULT_MAXLIMIT0 360.0
-#define DEFAULT_MAXLIMIT1 135.0
-#define DEFAULT_MAXLIMIT2 135.0
-#define DEFAULT_MAXLIMIT3 135.0
-#define DEFAULT_MAXLIMIT4 360.0
+#define DEFAULT_NUM_MOTORS 5
+#define DEFAULT_GEN_REF_SPEED 7.5
+#define DEFAULT_GEN_MIN_LIMIT -360.0
+#define DEFAULT_GEN_MAX_LIMIT 360.0
 
 using namespace std;
 
@@ -86,7 +79,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
  public:
 
   // Set the Thread Rate in the class constructor
-  RaveBot() : RateThread(DEFAULT_MSJOINT) {}  // In ms
+  RaveBot() : RateThread(DEFAULT_MS_JOINT) {}  // In ms
 
 // ------- IPositionControl declarations. Implementation in IPositionImpl.cpp -------
 
@@ -381,15 +374,15 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
  private:
   // General Joint Motion Controller parameters //
   int modePosVel;
-  int joint_status[NUM_MOTORS];
-  double real_degrees[NUM_MOTORS];
-  double target_degrees[NUM_MOTORS];
-  double joint_vel[NUM_MOTORS];
-  double refSpeed[NUM_MOTORS];
-  double refAcc[NUM_MOTORS];
-  double minLimit[NUM_MOTORS];
-  double maxLimit[NUM_MOTORS];
   double lastTime;
+  std::vector<int> joint_status;
+  std::vector<double> realDeg;
+  std::vector<double> targetDeg;
+  std::vector<double> jointVel;
+  std::vector<double> refSpeed;
+  std::vector<double> refAcc;
+  std::vector<double> minLimit;
+  std::vector<double> maxLimit;
   // Tool-related
   double real_tool;
   toolPort theToolPort;  
@@ -407,6 +400,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   // YARP
   BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
   //
+  unsigned int numMotors;
   double msJoint;
 };
 

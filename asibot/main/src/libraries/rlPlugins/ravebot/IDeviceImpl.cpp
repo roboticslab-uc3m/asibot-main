@@ -9,54 +9,67 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
 
 bool RaveBot::open(Searchable& config) {
 
-    modePosVel = 0;  // 0 = Pos; 1 = Vel;
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
-      joint_status[i]=0;
-      real_degrees[i]=0.0;
-      joint_vel[i]=0.0;
-      target_degrees[i]=0.0;
-      refAcc[i]=1.0;
-    }
-
-    msJoint = DEFAULT_MSJOINT;
+    ConstString physics = DEFAULT_PHYSICS;
+    msJoint = DEFAULT_MS_JOINT;
     ConstString env = DEFAULT_ENV;
-    for (unsigned int i=0; i<NUM_MOTORS; i++) refSpeed[i]=DEFAULT_REFSPEED;
-    minLimit[0] = DEFAULT_MINLIMIT0;
-    minLimit[1] = DEFAULT_MINLIMIT1;
-    minLimit[2] = DEFAULT_MINLIMIT2;
-    minLimit[3] = DEFAULT_MINLIMIT3;
-    minLimit[4] = DEFAULT_MINLIMIT4;
-    maxLimit[0] = DEFAULT_MAXLIMIT0;
-    maxLimit[1] = DEFAULT_MAXLIMIT1;
-    maxLimit[2] = DEFAULT_MAXLIMIT2;
-    maxLimit[3] = DEFAULT_MAXLIMIT3;
-    maxLimit[4] = DEFAULT_MAXLIMIT4;
+    numMotors = DEFAULT_NUM_MOTORS;
+    double genRefSpeed = DEFAULT_GEN_REF_SPEED;
+    double genMinLimit = DEFAULT_GEN_MIN_LIMIT;
+    double genMaxLimit = DEFAULT_GEN_MAX_LIMIT;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         printf("RaveBot options:\n");
         printf("\t--help (this help)\n");
+        printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
         printf("\t--msJoint [ms] (rate of joint control thread, default: \"%f\")\n",msJoint);
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
-        printf("\t--refSpeed [deg/s] (default: %f)\n",refSpeed[0]);
+        printf("\t--numMotors [int] (number of motors to control, default: \"%d\")\n",numMotors);
+        printf("\t--genRefSpeed [deg/s] (default: %f)\n",genRefSpeed);
+        printf("\t--genMinLimit [deg] (default: %f)\n",genMinLimit);
+        printf("\t--genMaxLimit [deg] (default: %f)\n",genMaxLimit);
     }
 
     char *asibot_root;
     asibot_root = getenv("ASIBOT_ROOT");
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
-    if (config.check("env")) env = config.find("env").asString();
+    if (config.check("physics")) physics = config.find("physics").asString();
     if (config.check("msJoint")) msJoint = config.find("msJoint").asDouble();
-    if (config.check("refSpeed")) {
-        for (unsigned int i=0; i<NUM_MOTORS; i++) refSpeed[i] = config.find("refSpeed").asDouble();
-    }
-    printf("RaveBot using env: %s.\n",env.c_str());
-    printf("RaveBot using msJoint: %f, refSpeed: %f.\n",msJoint,refSpeed[0]);
+    if (config.check("env")) env = config.find("env").asString();
+    if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
+    if (config.check("genRefSpeed")) genRefSpeed = config.find("genRefSpeed").asDouble();
+    if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
+    if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
+    printf("RaveBot using physics: \"%s\", msJoint: %f.\n",physics.c_str(),msJoint);
+    printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
+    printf("RaveBot using genRefSpeed: %f, genMinLimit: %f, genMaxLimit: %f.\n",genRefSpeed,genMinLimit,genMaxLimit);
 
     // If it reaches up to here, we at least have one of them.
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         exit(1);
+    }
+
+    modePosVel = 0;  // 0 = Pos; 1 = Vel;
+
+    joint_status.resize(numMotors);
+    refSpeed.resize(numMotors);
+    minLimit.resize(numMotors);
+    maxLimit.resize(numMotors);
+    realDeg.resize(numMotors);
+    jointVel.resize(numMotors);
+    targetDeg.resize(numMotors);
+    refAcc.resize(numMotors);
+    for (unsigned int i=0; i<numMotors; i++) {
+        joint_status[i]=0;
+        refSpeed[i]=genRefSpeed;
+        minLimit[i]=genMinLimit;
+        maxLimit[i]=genMaxLimit;
+        realDeg[i]=0.0;
+        jointVel[i]=0.0;
+        targetDeg[i]=0.0;
+        refAcc[i]=1.0;
     }
 
     // Initialize OpenRAVE-core
@@ -83,16 +96,10 @@ bool RaveBot::open(Searchable& config) {
     printf("[success] RaveBot loaded environment.\n");
 
     // NEW: Attach a physics engine
-    penv->SetPhysicsEngine(RaveCreatePhysicsEngine(penv,"ode"));
-    penv->GetPhysicsEngine()->SetGravity(Vector(0,0,-9.8));
-
-    // OLD: Set the transform matrix for the camera view
-//    RaveTransformMatrix<float> M;
-//    RaveVector<float> rotquad(0.505073f, 0.268078f, 0.395983f, 0.718493f);
-//    RaveVector<float> trans(4.0, 2.0, 3.0);
-//    M.trans = trans;
-//    M.rotfromquat (rotquad);  // Doesn't work anymore...
-//    RaveTransform<float> Tcamera(M);
+    if(physics!="none"){
+        penv->SetPhysicsEngine(RaveCreatePhysicsEngine(penv,"ode"));
+        penv->GetPhysicsEngine()->SetGravity(Vector(0,0,-9.8));
+    }
 
     //-- Get the robot
     std::vector<RobotBasePtr> robots;
