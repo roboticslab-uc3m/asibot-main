@@ -75,13 +75,20 @@ int main(int argc, char *argv[]) {
     rf.setDefaultConfigFile("testRaveBot.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
-    Network yarp;
-    if (!yarp.checkNetwork()) {
-        printf("No yarp network, bye!\n");
-        return -1;
+    TestRaveBot mod;
+    if(rf.check("help")) {
+        return mod.runModule(rf);
     }
 
-    TestRaveBot mod;
+    printf("Run \"testRaveBot --help\" for options.\n");
+    printf("testRaveBot checking for yarp network... ");
+    fflush(stdout);
+    Network yarp;
+    if (!yarp.checkNetwork()) {
+        printf("[fail]\testRaveBot found no yarp network (try running \"yarpserver &\"), bye!\n");
+        return -1;
+    } else printf("[ok]\n");
+
     return mod.runModule(rf);
 }
 
