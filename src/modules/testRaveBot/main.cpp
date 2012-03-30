@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
     fflush(stdout);
     Network yarp;
     if (!yarp.checkNetwork()) {
-        printf("[fail] testRaveBot found no yarp network (try running \"yarpserver &\"), bye!\n");
+        printf("[fail]\ntestRaveBot found no yarp network (try running \"yarpserver &\"), bye!\n");
         return -1;
     } else printf("[ok]\n");
 
