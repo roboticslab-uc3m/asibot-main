@@ -15,19 +15,19 @@ bool RaveBot::threadInit() {
 
 void RaveBot::run() {
     std::vector<dReal> next_positions(mismotores.size());
-    for(int motor=0;motor<5;motor++){
+    for(int motor=0;motor<numMotors;motor++){
       if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
-        if (fabs(target_degrees[motor]-real_degrees[motor])<MOTOR_PRECISION){
+        if (fabs(targetDeg[motor]-realDeg[motor])<MOTOR_PRECISION){
           printf("Joint q%d reached target.\n",motor+1);
           joint_status[motor]=0;
-          joint_vel[motor]=0;
+          jointVel[motor]=0;
         // Here we should check for joint limits
         } else {
-//            real_degrees[motor]+=(joint_vel[motor])*(THREAD_RATE/1000.0);
-            real_degrees[motor]+=(joint_vel[motor])*(Time::now()-lastTime);
+//            realDeg[motor]+=(jointVel[motor])*(THREAD_RATE/1000.0);
+            realDeg[motor]+=(jointVel[motor])*(Time::now()-lastTime);
         }
       }
-      next_positions[motor]=float(real_degrees[motor]*MI_PI/180.0);
+      next_positions[motor]=float(realDeg[motor]*MI_PI/180.0);
     }
     lastTime = Time::now();
 
@@ -49,8 +49,7 @@ void RaveBot::run() {
     }
 
     // pcontroller->SetDesired(next_positions); // This function "resets" physics
-//    probot->SetJointValues(next_positions);  // More compatible with physics??
-      probot->SetJointValues(next_positions);  // More compatible with physics??
+    probot->SetJointValues(next_positions);  // More compatible with physics??
     
     penv->StepSimulation(msJoint/1000.0);  // StepSimulation must be given in seconds
     if(cameraFound) {

@@ -6,7 +6,7 @@
 // ------------------- IPositionControl Related --------------------------------
 
 bool RaveBot::getAxes(int *ax) {
-    *ax = NUM_MOTORS;
+    *ax = numMotors;
     printf("RaveBot reporting %d axes are present\n", *ax);
     return true;
 }
@@ -30,9 +30,9 @@ bool RaveBot::positionMove(int j, double ref) {
     } else printf("RaveBot::positionMove(%d,%f) [begin]\n",j,ref);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     joint_status[j]=1;
-    target_degrees[j]=ref;
-    if (ref>real_degrees[j]) joint_vel[j] = refSpeed[j];
-    else joint_vel[j] = -refSpeed[j];
+    targetDeg[j]=ref;
+    if (ref>realDeg[j]) jointVel[j] = refSpeed[j];
+    else jointVel[j] = -refSpeed[j];
     return true;
 }
 
@@ -46,14 +46,14 @@ bool RaveBot::positionMove(const double *refs) {
     } else printf("RaveBot::positionMove() [begin]\n");
     // Find out the maximum angle to move
     double max_dist = 0;
-    for(int motor=0;motor<NUM_MOTORS;motor++)
-      if (fabs(refs[motor]-real_degrees[motor])>max_dist)
-        max_dist = fabs(refs[motor]-real_degrees[motor]);
+    for(unsigned int motor=0;motor<numMotors;motor++)
+      if (fabs(refs[motor]-realDeg[motor])>max_dist)
+        max_dist = fabs(refs[motor]-realDeg[motor]);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    for(int motor=0;motor<NUM_MOTORS;motor++) {
+    for(unsigned int motor=0;motor<numMotors;motor++) {
       joint_status[motor]=1;
-      target_degrees[motor]=refs[motor];
-      joint_vel[motor] = refSpeed[motor]*(refs[motor]-real_degrees[motor])/max_dist;
+      targetDeg[motor]=refs[motor];
+      jointVel[motor] = refSpeed[motor]*(refs[motor]-realDeg[motor])/max_dist;
     }
     return true;
 }
@@ -68,9 +68,9 @@ bool RaveBot::relativeMove(int j, double delta) {
     } else printf("RaveBot::relativeMove(%d,%f) [begin]\n",j,delta);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     joint_status[j]=2;
-    target_degrees[j]=real_degrees[j]+delta;
-    if (delta>0) joint_vel[j] = refSpeed[j];
-    else joint_vel[j] = -refSpeed[j];
+    targetDeg[j]=realDeg[j]+delta;
+    if (delta>0) jointVel[j] = refSpeed[j];
+    else jointVel[j] = -refSpeed[j];
     return true;
 }
 
@@ -89,8 +89,8 @@ bool RaveBot::relativeMove(const double *deltas) {
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     for(int motor=0; motor<5; motor++) {
       joint_status[motor]=2;
-      target_degrees[motor]=real_degrees[motor]+deltas[motor];
-      joint_vel[motor] = refSpeed[motor]*(deltas[motor])/max_dist;
+      targetDeg[motor]=realDeg[motor]+deltas[motor];
+      jointVel[motor] = refSpeed[motor]*(deltas[motor])/max_dist;
     }
     return true;
 }
@@ -106,7 +106,7 @@ bool RaveBot::checkMotionDone(int j, bool *flag) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::checkMotionDone(bool *flag) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
+    for (unsigned int i=0; i<numMotors; i++) {
       if (joint_status[i]<=0) flag[i]=true;
       else flag[i]=false;      
     }
@@ -123,7 +123,7 @@ bool RaveBot::setRefSpeed(int j, double sp) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setRefSpeeds(const double *spds) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
+    for (unsigned int i=0; i<numMotors; i++) {
         refSpeed[i]=spds[i];
     }
     return true;
@@ -139,7 +139,7 @@ bool RaveBot::setRefAcceleration(int j, double acc) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setRefAccelerations(const double *accs) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
+    for (unsigned int i=0; i<numMotors; i++) {
         refAcc[i]=accs[i];
     }
     return true;
@@ -155,7 +155,7 @@ bool RaveBot::getRefSpeed(int j, double *ref) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getRefSpeeds(double *spds) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++)
+    for (unsigned int i=0; i<numMotors; i++)
       spds[i]=refSpeed[i];
     return true;
 }
@@ -170,7 +170,7 @@ bool RaveBot::getRefAcceleration(int j, double *acc) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getRefAccelerations(double *accs) {
-    for (unsigned int i=0; i<NUM_MOTORS; i++)
+    for (unsigned int i=0; i<numMotors; i++)
       accs[i]=refAcc[i];
     return true;
 }
@@ -178,7 +178,7 @@ bool RaveBot::getRefAccelerations(double *accs) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::stop(int j) {
-    joint_vel[j]=0.0;
+    jointVel[j]=0.0;
     joint_status[j]=-1;
     return true;
 }
@@ -186,8 +186,8 @@ bool RaveBot::stop(int j) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::stop() {
-    for (unsigned int i=0; i<NUM_MOTORS; i++) {
-      joint_vel[i]=0.0;
+    for (unsigned int i=0; i<numMotors; i++) {
+      jointVel[i]=0.0;
       joint_status[i]=-1;
       theToolPort.status=0;
     }
