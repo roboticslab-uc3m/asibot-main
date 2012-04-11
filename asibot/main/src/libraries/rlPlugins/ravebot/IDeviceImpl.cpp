@@ -42,7 +42,7 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
     printf("RaveBot using physics: \"%s\", msJoint: %f.\n",physics.c_str(),msJoint);
-    printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
+    printf("RaveBot using env: \"%s\", numMotors: %d.\n",env.c_str(),numMotors);
     printf("RaveBot using genRefSpeed: %f, genMinLimit: %f, genMaxLimit: %f.\n",genRefSpeed,genMinLimit,genMaxLimit);
 
     Bottle* refSpeeds;
