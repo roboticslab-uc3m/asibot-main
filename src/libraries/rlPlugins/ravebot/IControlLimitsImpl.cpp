@@ -18,6 +18,6 @@ bool RaveBot::getLimits(int axis, double *min, double *max) {
     *min = minLimit[axis];
     *max = maxLimit[axis];
     printf("Range of axis %d is: %f to %f.\n",axis,*min,*max);
-    return false;
+    return true;
 }
 
