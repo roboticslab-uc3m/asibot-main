@@ -52,7 +52,7 @@ bool CartesianBot::open(Searchable& config) {
     if (config.check("duration")) duration = config.find("duration").asDouble();
     if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
     if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
-    msCartesian = config.find("msCartesian").asDouble();
+    if (config.check("msCartesian")) msCartesian = config.find("msCartesian").asDouble();
     printf("CartesianBot using duration: %f, maxVel: %f, maxAcc: %f, msCartesian: %f.\n",duration,maxVel,maxAcc,msCartesian);
 
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
