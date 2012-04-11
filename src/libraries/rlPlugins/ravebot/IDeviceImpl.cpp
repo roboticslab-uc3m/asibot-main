@@ -45,7 +45,34 @@ bool RaveBot::open(Searchable& config) {
     printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
     printf("RaveBot using genRefSpeed: %f, genMinLimit: %f, genMaxLimit: %f.\n",genRefSpeed,genMinLimit,genMaxLimit);
 
-    // If it reaches up to here, we at least have one of them.
+    Bottle* refSpeeds;
+    if (config.check("refSpeeds")) {
+        refSpeeds = config.find("refSpeeds").asList();
+        printf("RaveBot using individual refSpeeds: %s\n",refSpeeds->toString().c_str());
+        if(refSpeeds->size() != int(numMotors)) printf("[warning] refSpeeds->size() != numMotors\n");
+    } else {
+        refSpeeds = 0;
+        printf("RaveBot not using individual refSpeeds, defaulting to genRefSpeed.\n");
+    }
+    Bottle* minLimits;
+    if (config.check("minLimits")) {
+        minLimits = config.find("minLimits").asList();
+        printf("RaveBot using individual minLimits: %s\n",minLimits->toString().c_str());
+        if(minLimits->size() != int(numMotors)) printf("[warning] minLimits->size() != numMotors\n");
+    } else {
+        minLimits = 0;
+        printf("RaveBot not using individual minLimits, defaulting to genMinLimit.\n");
+    }
+    Bottle* maxLimits;
+    if (config.check("maxLimits")) {
+        maxLimits = config.find("maxLimits").asList();
+        printf("RaveBot using individual maxLimits: %s\n",maxLimits->toString().c_str());
+        if(maxLimits->size() != int(numMotors)) printf("[warning] maxLimits->size() != numMotors\n");
+    } else {
+        maxLimits = 0;
+        printf("RaveBot not using individual maxLimits, defaulting to genMaxLimit.\n");
+    }
+
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         exit(1);
@@ -63,9 +90,12 @@ bool RaveBot::open(Searchable& config) {
     refAcc.resize(numMotors);
     for (unsigned int i=0; i<numMotors; i++) {
         joint_status[i]=0;
-        refSpeed[i]=genRefSpeed;
-        minLimit[i]=genMinLimit;
-        maxLimit[i]=genMaxLimit;
+        if(!refSpeeds) refSpeed[i]=genRefSpeed;
+        else refSpeed[i]=refSpeeds->get(i).asDouble();
+        if(!minLimits) minLimit[i]=genMinLimit;
+        else minLimit[i]=minLimits->get(i).asDouble();
+        if(!maxLimits) maxLimit[i]=genMaxLimit;
+        else maxLimit[i]=maxLimits->get(i).asDouble(); 
         realDeg[i]=0.0;
         jointVel[i]=0.0;
         targetDeg[i]=0.0;
