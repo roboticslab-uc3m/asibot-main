@@ -1,6 +1,7 @@
 # Copyright: Universidad Carlos III de Madrid (C) 2010
 # Authors: Juan G. Victores
 
+add_subdirectory(TestRaveBot)
 add_subdirectory(CartesianClient)
 add_subdirectory(CartesianServer)
 add_subdirectory(TrajGen)  # order important here
