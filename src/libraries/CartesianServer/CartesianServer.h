@@ -24,6 +24,22 @@
 using namespace yarp::os;
 using namespace yarp::dev;
 
+/**
+ * @ingroup asibot_libraries
+ *
+ * \defgroup CartesianServer
+ *
+ * The \ref CartesianServer library is composed by a single class, CartesianServer.
+ *
+ */
+
+/**
+ * @ingroup CartesianServer
+ *
+ * The CartesianServer class implements a server part that receives a connection from a remote
+ * \ref cartesianServer module.
+ * 
+ */
 class CartesianServer : public RFModule {
 protected:
     yarp::dev::PolyDriver cartesianDevice;
