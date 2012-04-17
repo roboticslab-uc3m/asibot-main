@@ -4,7 +4,7 @@
  *
  * \defgroup cartesianServer cartesianServer
  *
- * The \ref cartesianServer module creates an instance of CartesianBot and acts as the server part of a network wrapper for it.
+ * The \ref cartesianServer module creates an instance of CartesianServer to load a controller (default: "cartesianbot") and acts as the server part of a network wrapper for it.
  *
  * <b> Legal </b>
  *
