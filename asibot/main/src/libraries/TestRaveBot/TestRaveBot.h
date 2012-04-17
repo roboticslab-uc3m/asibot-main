@@ -16,6 +16,21 @@
 using namespace yarp::os;
 using namespace yarp::dev;
 
+/**
+ * @ingroup asibot_libraries
+ *
+ * \defgroup TestRaveBot
+ *
+ * The \ref TestRaveBot library is composed by a single class, TestRaveBot.
+ *
+ */
+
+/**
+ * @ingroup TestRaveBot
+ *
+ * The TestRaveBot class tests the RaveBot class as a controlboard.
+ * 
+ */
 class TestRaveBot : public RFModule {
 protected:
     yarp::dev::PolyDriver robotDevice;
