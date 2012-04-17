@@ -6,27 +6,26 @@
 // ------------------ IVelocity Related ----------------------------------------
 
 bool RaveBot::setVelocityMode() {
-    printf("RaveBot::setVelocityMode()\n");
-    modePosVel = 1;
+//    printf("RaveBot::setVelocityMode()\n");
+    if (modePosVel==1) return true;  // Simply return true if we were already in vel mode.
+    // Do anything additional before setting flag to vel...
+    modePosVel = 1;  // Set flag to vel.
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::velocityMove(int j, double sp) {
-    setVelocityMode();
-    if(modePosVel!=1) {
-        printf("RaveBot: Not in velocity mode.\n");
-        return false;
+    if(modePosVel!=1) {  // Check if we are in velocity mode.
+        if(!setVelocityMode()) return false;  // Don't do anything if we can't set velocity mode.
     }
-    if(sp>0) targetDeg[j]=180.0; // Must correct for JL
-    else targetDeg[j]=-180.0;
+    if(sp>0) targetDeg[j]=maxLimit[j];
+    else targetDeg[j]=minLimit[j];
     // Let's not limit it for now:
 //    if (sp>100) sp=100;
 //    else if (sp<-100) sp=-100;
     // Force it as is:
     jointVel[j] = sp;
-    //jointVel[j] = (THREAD_RATE*SPEED_ADJ_V*sp)/(100.0);
     joint_status[j]=3;
     return true;
 }
@@ -34,16 +33,15 @@ bool RaveBot::velocityMove(int j, double sp) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::velocityMove(const double *sp) {
-    setVelocityMode();
-    if(modePosVel!=1) {
-        printf("RaveBot: Not in velocity mode.\n");
-        return false;
+    if(modePosVel!=1) {  // Check if we are in velocity mode.
+        if(!setVelocityMode()) return false;  // Don't do anything if we can't set velocity mode.
     }
+    // Let's not limit it for now:
 //    double sp_limited[numMotors];
     printf("Vel:");
     for (unsigned int i=0; i<numMotors; i++) {
-        if(sp[i]>0) targetDeg[i]=180.0; // Must correct for JL
-        else targetDeg[i]=-180.0;
+        if(sp[i]>0) targetDeg[i]=maxLimit[i];
+        else targetDeg[i]=minLimit[i];
 //      if (sp[i]>100) sp_limited[i]=100;
 //      else if (sp[i]<-100) sp_limited[i]=-100;
 //      else sp_limited[i]=sp[i];
