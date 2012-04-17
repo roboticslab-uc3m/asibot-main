@@ -234,7 +234,7 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername)
     float _cameraAngle = 2.863747;
     RaveVector<float> _cameraQuat = quatFromAxisAngle(_cameraAxis,_cameraAngle);
     RaveTransform<float> Tcamera(_cameraQuat,_cameraTrans);
-    viewer->SetCamera(Tcamera,0.785398);
+//    viewer->SetCamera(Tcamera,0.785398);
 
     // finally you call the viewer's infinite loop (this is why you need a separate thread):
     bool showgui = true;

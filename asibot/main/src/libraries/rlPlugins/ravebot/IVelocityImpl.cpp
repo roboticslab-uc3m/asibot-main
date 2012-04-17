@@ -14,6 +14,7 @@ bool RaveBot::setVelocityMode() {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::velocityMove(int j, double sp) {
+    setVelocityMode();
     if(modePosVel!=1) {
         printf("RaveBot: Not in velocity mode.\n");
         return false;
@@ -33,6 +34,7 @@ bool RaveBot::velocityMove(int j, double sp) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::velocityMove(const double *sp) {
+    setVelocityMode();
     if(modePosVel!=1) {
         printf("RaveBot: Not in velocity mode.\n");
         return false;
