@@ -17,8 +17,6 @@
 
 #define MOTOR_PRECISION 0.25  // In degrees. Was .75
 #define TOOL_SPEED_ADJ 0.08  // Speed adjustment for simulation, pos.
-//#define MI_PI 3.14159265
-#define MI_PI M_PI
 #define UNSTABLE false
 
 #define DEFAULT_PHYSICS "ode"
