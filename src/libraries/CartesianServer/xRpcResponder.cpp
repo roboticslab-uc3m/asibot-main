@@ -83,6 +83,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             double qd[qdhat.size()];
             for (int i = 0; i < qdhat.size(); i++)
                 qd[i] = qdhat[i];
+            icart->stopControl(); // new!!!!
             ipos->setPositionMode();
             ipos->positionMove(qd);
             out.addVocab(VOCAB_OK);
