@@ -15,19 +15,19 @@ bool RaveBot::threadInit() {
 
 void RaveBot::run() {
     std::vector<dReal> next_positions(mismotores.size());
-    for(int motor=0;motor<numMotors;motor++){
-      if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
-        if (fabs(targetDeg[motor]-realDeg[motor])<MOTOR_PRECISION){
-          printf("Joint q%d reached target.\n",motor+1);
-          joint_status[motor]=0;
-          jointVel[motor]=0;
-        // Here we should check for joint limits
-        } else {
-//            realDeg[motor]+=(jointVel[motor])*(THREAD_RATE/1000.0);
-            realDeg[motor]+=(jointVel[motor])*(Time::now()-lastTime);
+    for(unsigned int motor=0;motor<numMotors;motor++){
+        if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
+            if (fabs(targetDeg[motor]-realDeg[motor])<MOTOR_PRECISION){
+                printf("Joint q%d reached target.\n",motor+1);
+                joint_status[motor]=0;
+                jointVel[motor]=0;
+                // Here we should check for joint limits
+            } else {
+                // realDeg[motor]+=(jointVel[motor])*(THREAD_RATE/1000.0);
+                realDeg[motor]+=(jointVel[motor])*(Time::now()-lastTime);
+            }
         }
-      }
-      next_positions[motor]=float(realDeg[motor]*MI_PI/180.0);
+        next_positions[motor]=float(realDeg[motor]*M_PI/180.0);
     }
     lastTime = Time::now();
 
@@ -41,17 +41,16 @@ void RaveBot::run() {
                 printf("Tool at %f\n",real_tool);
             } else {
                 theToolPort.status = 0;
-                //imlast=true;
             }
         }
-        next_positions[5] = real_tool*3.14159265/180.0;
-        next_positions[6] = -real_tool*3.14159265/180.0;
+        next_positions[5] = real_tool*M_PI/180.0;
+        next_positions[6] = -real_tool*M_PI/180.0;
     }
 
     // pcontroller->SetDesired(next_positions); // This function "resets" physics
     probot->SetJointValues(next_positions);  // More compatible with physics??
-    
     penv->StepSimulation(msJoint/1000.0);  // StepSimulation must be given in seconds
+
     if(cameraFound) {
         psensorbase->GetSensorData(pcamerasensordata);
         //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
@@ -69,5 +68,6 @@ void RaveBot::run() {
         }
         p_imagen.write();
     }
+
 }
 
