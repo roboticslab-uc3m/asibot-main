@@ -17,9 +17,9 @@ using namespace yarp::os;
 /**
  * @ingroup asibot_libraries
  *
- * \defgroup CartesianClient
+ * \defgroup CartesianClientLib
  *
- * The \ref CartesianClient library is composed by a single class, CartesianClient. You can
+ * The \ref CartesianClientLib library is composed by a single class, CartesianClient. You can
  * find its Python equivalent in $ASIBOT_ROOT/example/python/CartesianClient.py
  *
  * @section Examples
