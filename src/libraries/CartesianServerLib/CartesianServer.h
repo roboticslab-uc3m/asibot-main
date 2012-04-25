@@ -27,9 +27,9 @@ using namespace yarp::dev;
 /**
  * @ingroup asibot_libraries
  *
- * \defgroup CartesianServer
+ * \defgroup CartesianServerLib
  *
- * The \ref CartesianServer library is composed by a single class, CartesianServer.
+ * The \ref CartesianServerLib library is composed by a single class, CartesianServer.
  *
  */
 

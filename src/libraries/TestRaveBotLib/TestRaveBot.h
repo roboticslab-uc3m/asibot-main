@@ -19,9 +19,9 @@ using namespace yarp::dev;
 /**
  * @ingroup asibot_libraries
  *
- * \defgroup TestRaveBot
+ * \defgroup TestRaveBotLib
  *
- * The \ref TestRaveBot library is composed by a single class, TestRaveBot.
+ * The \ref TestRaveBotLib library is composed by a single class, TestRaveBot.
  *
  */
 
