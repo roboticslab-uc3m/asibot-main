@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "TestRaveBot")
+set(KEYWORD "TestRaveBotLib")
 
 # Start a project.
 project(${KEYWORD})
