@@ -16,7 +16,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("CartesianServer options:\n");
-        printf("\t--help (this help)\n");
+        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--prefix (port name prefix, default: \"%s\")\n",prefix.c_str());
         printf("\t--controller (cartesian controller device, default: \"%s\")\n",controller.c_str());
         printf("\t--robotRemote (port to whom we connect for movj, default: \"%s\")\n",robotRemote.c_str());
