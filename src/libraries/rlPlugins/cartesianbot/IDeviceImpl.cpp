@@ -28,7 +28,7 @@ bool CartesianBot::open(Searchable& config) {
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         printf("CartesianBot options:\n");
-        printf("\t--help (this help)\n");
+        printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--A0 [m] (dist from base to motor 2, default: \"%f\")\n",A0);
         printf("\t--A1 [m] (dist from motor 2 to motor 3, default: \"%f\")\n",A1);
         printf("\t--A2 [m] (dist from motor 3 to motor 4, default: \"%f\")\n",A2);
