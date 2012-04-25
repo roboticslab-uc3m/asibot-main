@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-set(KEYWORD "CartesianServer")
+set(KEYWORD "CartesianServerLib")
 
 # Start a project.
 project(${KEYWORD})
