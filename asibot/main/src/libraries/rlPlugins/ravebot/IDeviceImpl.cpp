@@ -16,6 +16,7 @@ bool RaveBot::open(Searchable& config) {
     double genRefSpeed = DEFAULT_GEN_REF_SPEED;
     double genMinLimit = DEFAULT_GEN_MIN_LIMIT;
     double genMaxLimit = DEFAULT_GEN_MAX_LIMIT;
+    double genJointTol = DEFAULT_GEN_JOINT_TOL;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
@@ -28,6 +29,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--genRefSpeed [deg/s] (default: \"%f\")\n",genRefSpeed);
         printf("\t--genMinLimit [deg] (default: \"%f\")\n",genMinLimit);
         printf("\t--genMaxLimit [deg] (default: \"%f\")\n",genMaxLimit);
+        printf("\t--genJointTol [deg] (default: \"%f\")\n",genJointTol);
     }
 
     char *asibot_root;
@@ -43,7 +45,8 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
     printf("RaveBot using physics: %s, msJoint: %f.\n",physics.c_str(),msJoint);
     printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
-    printf("RaveBot using genRefSpeed: %f, genMinLimit: %f, genMaxLimit: %f.\n",genRefSpeed,genMinLimit,genMaxLimit);
+    printf("RaveBot using genRefSpeed: %f, genMinLimit: %f, genMaxLimit: %f, genJointTol: %f.\n",
+        genRefSpeed,genMinLimit,genMaxLimit,genJointTol);
 
     Bottle* refSpeeds;
     if (config.check("refSpeeds")) {
@@ -72,6 +75,15 @@ bool RaveBot::open(Searchable& config) {
         maxLimits = 0;
         printf("RaveBot not using individual maxLimits, defaulting to genMaxLimit.\n");
     }
+    Bottle* jointTols;
+    if (config.check("jointTols")) {
+        jointTols = config.find("jointTols").asList();
+        printf("RaveBot using individual jointTols: %s\n",jointTols->toString().c_str());
+        if(jointTols->size() != int(numMotors)) printf("[warning] jointTols->size() != numMotors\n");
+    } else {
+        jointTols = 0;
+        printf("RaveBot not using individual jointTols, defaulting to genJointTols.\n");
+    }
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
@@ -88,6 +100,7 @@ bool RaveBot::open(Searchable& config) {
     jointVel.resize(numMotors);
     targetDeg.resize(numMotors);
     refAcc.resize(numMotors);
+    jointTol.resize(numMotors);
     for (unsigned int i=0; i<numMotors; i++) {
         joint_status[i]=0;
         if(!refSpeeds) refSpeed[i]=genRefSpeed;
@@ -96,6 +109,8 @@ bool RaveBot::open(Searchable& config) {
         else minLimit[i]=minLimits->get(i).asDouble();
         if(!maxLimits) maxLimit[i]=genMaxLimit;
         else maxLimit[i]=maxLimits->get(i).asDouble(); 
+        if(!jointTols) jointTol[i]=genJointTol;
+        else jointTol[i]=jointTols->get(i).asDouble(); 
         realDeg[i]=0.0;
         jointVel[i]=0.0;
         targetDeg[i]=0.0;

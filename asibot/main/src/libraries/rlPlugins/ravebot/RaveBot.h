@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <sstream>
 
-#define MOTOR_PRECISION 0.25  // In degrees. Was .75
+//#define MOTOR_PRECISION 0.25
 #define TOOL_SPEED_ADJ 0.08  // Speed adjustment for simulation, pos.
 #define UNSTABLE false
 
@@ -26,6 +26,7 @@
 #define DEFAULT_GEN_REF_SPEED 7.5
 #define DEFAULT_GEN_MIN_LIMIT -360.0
 #define DEFAULT_GEN_MAX_LIMIT 360.0
+#define DEFAULT_GEN_JOINT_TOL 0.25  // In degrees. Was .75
 
 using namespace std;
 
@@ -381,6 +382,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   std::vector<double> refAcc;
   std::vector<double> minLimit;
   std::vector<double> maxLimit;
+  std::vector<double> jointTol;
   // Tool-related
   double real_tool;
   toolPort theToolPort;  

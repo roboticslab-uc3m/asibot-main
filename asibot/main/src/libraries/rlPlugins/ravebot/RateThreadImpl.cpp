@@ -17,7 +17,8 @@ void RaveBot::run() {
     std::vector<dReal> next_positions(mismotores.size());
     for(unsigned int motor=0;motor<numMotors;motor++){
         if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
-            if (fabs(targetDeg[motor]-realDeg[motor])<MOTOR_PRECISION){
+//            if (fabs(targetDeg[motor]-realDeg[motor])<MOTOR_PRECISION){
+            if (fabs(targetDeg[motor]-realDeg[motor])<jointTol[motor]){
                 printf("Joint q%d reached target.\n",motor+1);
                 joint_status[motor]=0;
                 jointVel[motor]=0;
@@ -27,13 +28,15 @@ void RaveBot::run() {
                 realDeg[motor]+=(jointVel[motor])*(Time::now()-lastTime);
             }
         }
-        next_positions[motor]=float(realDeg[motor]*M_PI/180.0);
+        if(mismotores[motor]->IsPrismatic(0)) next_positions[motor] = realDeg[motor];
+        else next_positions[motor]=float(realDeg[motor]*M_PI/180.0);
     }
     lastTime = Time::now();
 
     if (toolFound) {
         if(theToolPort.status==1) {
-            if (fabs(theToolPort.target-real_tool)>MOTOR_PRECISION) {
+//            if (fabs(theToolPort.target-real_tool)>MOTOR_PRECISION) {
+            if (fabs(theToolPort.target-real_tool)>0.25) {
                 if(theToolPort.target-real_tool>0)
                     real_tool+=msJoint*TOOL_SPEED_ADJ;
                 else
