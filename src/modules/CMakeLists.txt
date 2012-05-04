@@ -7,4 +7,5 @@ add_subdirectory(testRaveBot)
 add_subdirectory(webInterfacePy)
 add_subdirectory(webInterface)
 add_subdirectory(wiimoteServer)
+add_subdirectory(../../../contrib/pendant/webInterface2 ${CMAKE_CURRENT_BINARY_DIR}/webInterface2)
 
