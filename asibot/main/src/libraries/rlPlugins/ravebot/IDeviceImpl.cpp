@@ -10,7 +10,7 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
 bool RaveBot::open(Searchable& config) {
 
     ConstString physics = DEFAULT_PHYSICS;
-    msJoint = DEFAULT_MS_JOINT;
+    jmcMs = DEFAULT_JMC_MS;
     ConstString env = DEFAULT_ENV;
     numMotors = DEFAULT_NUM_MOTORS;
     double genRefSpeed = DEFAULT_GEN_REF_SPEED;
@@ -23,7 +23,7 @@ bool RaveBot::open(Searchable& config) {
         printf("RaveBot options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
-        printf("\t--msJoint [ms] (rate of joint control thread, default: \"%f\")\n",msJoint);
+        printf("\t--jmcMs [ms] (rate of joint control thread, default: \"%f\")\n",jmcMs);
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
         printf("\t--numMotors [int] (number of motors to control, default: \"%d\")\n",numMotors);
         printf("\t--genRefSpeed [deg/s] (default: \"%f\")\n",genRefSpeed);
@@ -37,13 +37,13 @@ bool RaveBot::open(Searchable& config) {
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
     if (config.check("physics")) physics = config.find("physics").asString();
-    if (config.check("msJoint")) msJoint = config.find("msJoint").asDouble();
+    if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
     if (config.check("env")) env = config.find("env").asString();
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
     if (config.check("genRefSpeed")) genRefSpeed = config.find("genRefSpeed").asDouble();
     if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
-    printf("RaveBot using physics: %s, msJoint: %f.\n",physics.c_str(),msJoint);
+    printf("RaveBot using physics: %s, jmcMs: %f.\n",physics.c_str(),jmcMs);
     printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
     printf("RaveBot using genRefSpeed: %f, genMinLimit: %f, genMaxLimit: %f, genJointTol: %f.\n",
         genRefSpeed,genMinLimit,genMaxLimit,genJointTol);
@@ -219,7 +219,7 @@ bool RaveBot::open(Searchable& config) {
     }
 
     // Start the RateThread
-    this->setRate(msJoint);
+    this->setRate(jmcMs);
     this->start();
     
     return true;

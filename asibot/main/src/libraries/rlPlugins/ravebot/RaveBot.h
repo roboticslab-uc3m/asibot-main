@@ -20,7 +20,7 @@
 #define UNSTABLE false
 
 #define DEFAULT_PHYSICS "ode"
-#define DEFAULT_MS_JOINT 20  // ms
+#define DEFAULT_JMC_MS 20  // ms
 #define DEFAULT_ENV "asibot_cocina_entero.env.xml"
 #define DEFAULT_NUM_MOTORS 5
 #define DEFAULT_GEN_REF_SPEED 7.5
@@ -78,7 +78,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
  public:
 
   // Set the Thread Rate in the class constructor
-  RaveBot() : RateThread(DEFAULT_MS_JOINT) {}  // In ms
+  RaveBot() : RateThread(DEFAULT_JMC_MS) {}  // In ms
 
 // ------- IPositionControl declarations. Implementation in IPositionImpl.cpp -------
 
@@ -401,7 +401,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
   //
   unsigned int numMotors;
-  double msJoint;
+  double jmcMs;
 };
 
 #endif
