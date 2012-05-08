@@ -20,7 +20,7 @@ bool CartesianBot::open(Searchable& config) {
     duration = DEFAULT_DURATION;
     maxVel = DEFAULT_MAXVEL;
     maxAcc = DEFAULT_MAXACC;
-    msCartesian = DEFAULT_MSCARTESIAN;
+    cmcMs = DEFAULT_CMC_MS;
     ConstString strRobotDevice = DEFAULT_ROBOTDEVICE;
     ConstString strRobotSubDevice = DEFAULT_ROBOTSUBDEVICE;
     ConstString strRobotName = DEFAULT_ROBOTNAME;
@@ -36,7 +36,7 @@ bool CartesianBot::open(Searchable& config) {
         printf("\t--duration [s] (duration of movl movements, default: \"%f\")\n",duration);
         printf("\t--maxVel [deg/s] (maximum joint velocity, default: \"%f\")\n",maxVel);
         printf("\t--maxAcc [deg/s^2] (maximum joint acceleration, default: \"%f\")\n",maxAcc);
-        printf("\t--msCartesian [ms] (rate of cartesian control thread, default: \"%f\")\n",msCartesian);
+        printf("\t--cmcMs [ms] (rate of Cartesian Motion Controller thread, default: \"%f\")\n",cmcMs);
         printf("\t--robotDevice (device we create, default: \"%s\")\n",strRobotDevice.c_str());
         printf("\t--robotSubdevice (library we use, default: \"%s\")\n",strRobotSubDevice.c_str());
         printf("\t--robotName (port name of created device, default: \"%s\")\n",strRobotName.c_str());
@@ -52,8 +52,8 @@ bool CartesianBot::open(Searchable& config) {
     if (config.check("duration")) duration = config.find("duration").asDouble();
     if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
     if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
-    if (config.check("msCartesian")) msCartesian = config.find("msCartesian").asDouble();
-    printf("CartesianBot using duration: %f, maxVel: %f, maxAcc: %f, msCartesian: %f.\n",duration,maxVel,maxAcc,msCartesian);
+    if (config.check("cmcMs")) cmcMs = config.find("cmcMs").asDouble();
+    printf("CartesianBot using duration: %f, maxVel: %f, maxAcc: %f, cmcMs: %f.\n",duration,maxVel,maxAcc,cmcMs);
 
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
@@ -82,7 +82,7 @@ bool CartesianBot::open(Searchable& config) {
     } else printf("[success] CartesianBot acquired robot interfaces\n");
 
     // Start the RateThread
-    this->setRate(msCartesian);
+    this->setRate(cmcMs);
     this->start();
     return true;
 }

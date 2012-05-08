@@ -23,7 +23,7 @@ bool RaveBot::open(Searchable& config) {
         printf("RaveBot options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
-        printf("\t--jmcMs [ms] (rate of joint control thread, default: \"%f\")\n",jmcMs);
+        printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
         printf("\t--numMotors [int] (number of motors to control, default: \"%d\")\n",numMotors);
         printf("\t--genRefSpeed [deg/s] (default: \"%f\")\n",genRefSpeed);
