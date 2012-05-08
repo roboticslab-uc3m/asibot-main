@@ -100,7 +100,7 @@ bool RaveBot::open(Searchable& config) {
     refSpeed.resize(numMotors);
     minLimit.resize(numMotors);
     maxLimit.resize(numMotors);
-    realDeg.resize(numMotors);
+    realUnit.resize(numMotors);
     jointVel.resize(numMotors);
     targetDeg.resize(numMotors);
     refAcc.resize(numMotors);
@@ -115,7 +115,7 @@ bool RaveBot::open(Searchable& config) {
         else maxLimit[i]=maxLimits->get(i).asDouble(); 
         if(!jointTols) jointTol[i]=genJointTol;
         else jointTol[i]=jointTols->get(i).asDouble(); 
-        realDeg[i]=0.0;
+        realUnit[i]=0.0;
         jointVel[i]=0.0;
         targetDeg[i]=0.0;
         refAcc[i]=1.0;

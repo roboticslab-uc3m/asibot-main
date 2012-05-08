@@ -6,7 +6,7 @@
 // ------------------ IEncoder Related -----------------------------------------
 
 bool RaveBot::resetEncoder(int j) {
-    realDeg[j]=0.0;
+    realUnit[j]=0.0;
     return true;
   }
 
@@ -14,14 +14,14 @@ bool RaveBot::resetEncoder(int j) {
 
 bool RaveBot::resetEncoders() {
     for (unsigned int i=0; i<numMotors; i++)
-      realDeg[i]=0.0;
+      realUnit[i]=0.0;
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setEncoder(int j, double val) {
-    realDeg[j]=val;
+    realUnit[j]=val;
     return true;
 }
 
@@ -29,14 +29,14 @@ bool RaveBot::setEncoder(int j, double val) {
 
 bool RaveBot::setEncoders(const double *vals) {
     for (unsigned int i=0; i<numMotors; i++)
-      realDeg[i]=vals[i];
+      realUnit[i]=vals[i];
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoder(int j, double *v) {
-    *v=realDeg[j];
+    *v=realUnit[j];
     return true;
 }
 
@@ -44,7 +44,7 @@ bool RaveBot::getEncoder(int j, double *v) {
 
 bool RaveBot::getEncoders(double *encs) {
     for (unsigned int i=0; i<numMotors; i++)
-      encs[i]=realDeg[i];
+      encs[i]=realUnit[i];
     return true;
 }
 

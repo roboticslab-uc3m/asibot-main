@@ -17,17 +17,17 @@ void RaveBot::run() {
     std::vector<dReal> next_positions(mismotores.size());
     for(unsigned int motor=0;motor<numMotors;motor++){
         if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
-            if (fabs(targetDeg[motor]-realDeg[motor])<jointTol[motor]){
+            if (fabs(targetDeg[motor]-realUnit[motor])<jointTol[motor]){
                 printf("Joint q%d reached target.\n",motor+1);
                 joint_status[motor]=0;
                 jointVel[motor]=0;
             } else {  // TODO: check for joint limits
-                // realDeg[motor]+=(jointVel[motor])*(JMC_MS/1000.0);
-                realDeg[motor]+=(jointVel[motor])*(Time::now()-lastTime);
+                // realUnit[motor]+=(jointVel[motor])*(JMC_MS/1000.0);
+                realUnit[motor]+=(jointVel[motor])*(Time::now()-lastTime);
             }
         }
-        if(mismotores[motor]->IsPrismatic(0)) next_positions[motor] = realDeg[motor];
-        else next_positions[motor]=float(realDeg[motor]*M_PI/180.0);
+        if(mismotores[motor]->IsPrismatic(0)) next_positions[motor] = realUnit[motor];
+        else next_positions[motor]=toRad(realUnit[motor]);
     }
     lastTime = Time::now();
 
@@ -44,8 +44,8 @@ void RaveBot::run() {
                 theToolPort.status = 0;
             }
         }
-        next_positions[5] = real_tool*M_PI/180.0;
-        next_positions[6] = -real_tool*M_PI/180.0;
+        next_positions[5] = toRad(real_tool);
+        next_positions[6] = -toRad(real_tool);
     }
 
     // pcontroller->SetDesired(next_positions); // This function "resets" physics
