@@ -46,11 +46,11 @@ bool KdlBot::open(Searchable& config) {
         targetO.resize(3);
     }else printf("[warning] axisAngle not recognized!\n");
 
+    if (config.check("cmcMs")) cmcMs = config.find("cmcMs").asDouble();
     if (config.check("duration")) duration = config.find("duration").asDouble();
     if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
     if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
-    if (config.check("cmcMs")) cmcMs = config.find("cmcMs").asDouble();
-    printf("KdlBot using duration: %f, maxVel: %f, maxAcc: %f, cmcMs: %f.\n",duration,maxVel,maxAcc,cmcMs);
+    printf("KdlBot using  cmcMs: %f, duration: %f, maxVel: %f, maxAcc: %f.\n",cmcMs,duration,maxVel,maxAcc);
 
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
