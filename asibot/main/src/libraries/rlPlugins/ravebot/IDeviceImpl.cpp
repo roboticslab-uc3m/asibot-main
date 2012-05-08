@@ -9,53 +9,57 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
 
 bool RaveBot::open(Searchable& config) {
 
-    ConstString physics = DEFAULT_PHYSICS;
-    jmcMs = DEFAULT_JMC_MS;
-    ConstString env = DEFAULT_ENV;
     numMotors = DEFAULT_NUM_MOTORS;
-    double genRefSpeed = DEFAULT_GEN_REF_SPEED;
+
+    ConstString env = DEFAULT_ENV;
+    double genJointTol = DEFAULT_GEN_JOINT_TOL;
     double genMinLimit = DEFAULT_GEN_MIN_LIMIT;
     double genMaxLimit = DEFAULT_GEN_MAX_LIMIT;
-    double genJointTol = DEFAULT_GEN_JOINT_TOL;
+    double genRefSpeed = DEFAULT_GEN_REF_SPEED;
+    jmcMs = DEFAULT_JMC_MS;
+    ConstString physics = DEFAULT_PHYSICS;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
         printf("RaveBot options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
-        printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
-        printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
         printf("\t--numMotors [int] (number of motors to control, default: \"%d\")\n",numMotors);
-        printf("\t--genRefSpeed [deg/s] (default: \"%f\")\n",genRefSpeed);
-        printf("\t--genMinLimit [deg] (default: \"%f\")\n",genMinLimit);
-        printf("\t--genMaxLimit [deg] (default: \"%f\")\n",genMaxLimit);
-        printf("\t--genJointTol [deg] (default: \"%f\")\n",genJointTol);
+
+        printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
+        printf("\t--genJointTol [units] (default: \"%f\")\n",genJointTol);
+        printf("\t--genMinLimit [units] (default: \"%f\")\n",genMinLimit);
+        printf("\t--genMaxLimit [units] (default: \"%f\")\n",genMaxLimit);
+        printf("\t--genRefSpeed [units/s] (default: \"%f\")\n",genRefSpeed);
+        printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
+        printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
     }
 
     char *asibot_root;
     asibot_root = getenv("ASIBOT_ROOT");
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
-    if (config.check("physics")) physics = config.find("physics").asString();
-    if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
-    if (config.check("env")) env = config.find("env").asString();
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
-    if (config.check("genRefSpeed")) genRefSpeed = config.find("genRefSpeed").asDouble();
+    if (config.check("env")) env = config.find("env").asString();
+    printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
+
+    if (config.check("genJointTol")) genJointTol = config.find("genJointTol").asDouble();
     if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
-    printf("RaveBot using physics: %s, jmcMs: %f.\n",physics.c_str(),jmcMs);
-    printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
-    printf("RaveBot using genRefSpeed: %f, genMinLimit: %f, genMaxLimit: %f, genJointTol: %f.\n",
-        genRefSpeed,genMinLimit,genMaxLimit,genJointTol);
+    if (config.check("genRefSpeed")) genRefSpeed = config.find("genRefSpeed").asDouble();
+    if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
+    if (config.check("physics")) physics = config.find("physics").asString();
+    printf("RaveBot using genJointTol: %f, genMinLimit: %f, genMaxLimit: %f, genRefSpeed: %f.\n",
+        genJointTol,genMinLimit,genMaxLimit,genRefSpeed);
+    printf("RaveBot using jmcMs: %f, physics: %s.\n",jmcMs,physics.c_str());
 
-    Bottle* refSpeeds;
-    if (config.check("refSpeeds")) {
-        refSpeeds = config.find("refSpeeds").asList();
-        printf("RaveBot using individual refSpeeds: %s\n",refSpeeds->toString().c_str());
-        if(refSpeeds->size() != int(numMotors)) printf("[warning] refSpeeds->size() != numMotors\n");
+    Bottle* jointTols;
+    if (config.check("jointTols")) {
+        jointTols = config.find("jointTols").asList();
+        printf("RaveBot using individual jointTols: %s\n",jointTols->toString().c_str());
+        if(jointTols->size() != int(numMotors)) printf("[warning] jointTols->size() != numMotors\n");
     } else {
-        refSpeeds = 0;
-        printf("RaveBot not using individual refSpeeds, defaulting to genRefSpeed.\n");
+        jointTols = 0;
+        printf("RaveBot not using individual jointTols, defaulting to genJointTols.\n");
     }
     Bottle* minLimits;
     if (config.check("minLimits")) {
@@ -75,14 +79,14 @@ bool RaveBot::open(Searchable& config) {
         maxLimits = 0;
         printf("RaveBot not using individual maxLimits, defaulting to genMaxLimit.\n");
     }
-    Bottle* jointTols;
-    if (config.check("jointTols")) {
-        jointTols = config.find("jointTols").asList();
-        printf("RaveBot using individual jointTols: %s\n",jointTols->toString().c_str());
-        if(jointTols->size() != int(numMotors)) printf("[warning] jointTols->size() != numMotors\n");
+    Bottle* refSpeeds;
+    if (config.check("refSpeeds")) {
+        refSpeeds = config.find("refSpeeds").asList();
+        printf("RaveBot using individual refSpeeds: %s\n",refSpeeds->toString().c_str());
+        if(refSpeeds->size() != int(numMotors)) printf("[warning] refSpeeds->size() != numMotors\n");
     } else {
-        jointTols = 0;
-        printf("RaveBot not using individual jointTols, defaulting to genJointTols.\n");
+        refSpeeds = 0;
+        printf("RaveBot not using individual refSpeeds, defaulting to genRefSpeed.\n");
     }
 
     printf("--------------------------------------------------------------\n");

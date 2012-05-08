@@ -17,14 +17,12 @@ void RaveBot::run() {
     std::vector<dReal> next_positions(mismotores.size());
     for(unsigned int motor=0;motor<numMotors;motor++){
         if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
-//            if (fabs(targetDeg[motor]-realDeg[motor])<MOTOR_PRECISION){
             if (fabs(targetDeg[motor]-realDeg[motor])<jointTol[motor]){
                 printf("Joint q%d reached target.\n",motor+1);
                 joint_status[motor]=0;
                 jointVel[motor]=0;
-                // Here we should check for joint limits
-            } else {
-                // realDeg[motor]+=(jointVel[motor])*(THREAD_RATE/1000.0);
+            } else {  // TODO: check for joint limits
+                // realDeg[motor]+=(jointVel[motor])*(JMC_MS/1000.0);
                 realDeg[motor]+=(jointVel[motor])*(Time::now()-lastTime);
             }
         }
