@@ -14,13 +14,10 @@ void xCallbackPort::onRead(Bottle& b) {
     } else if (choice==VOCAB_FWD) { ///////////////////////////////// fwd /////////////////////////////////
         Vector cmd;
         Bottle *lst = b.get(1).asList();
-//        printf("FWD list of %d elements (2 needed: oz oy')\n", lst->size());
         cmd.push_back(lst->get(0).asDouble());
         cmd.push_back(lst->get(1).asDouble());
         Vector x,o,xd,od;
         if(!icart->getPose(x,o)) return;
-//        printf("xCallbackPort::onRead() Problem statement:\n");
-//        printf("x: %s; o: %s\n",x.toString().c_str(),o.toString().c_str());
         double ozDeg = (atan2(x[1],x[0]))*180.0/M_PI;
         double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
         double PrPd = PrP + VPOINT_DIST*sin((cmd[1])*M_PI/180.0);
@@ -36,13 +33,10 @@ void xCallbackPort::onRead(Bottle& b) {
     } else if (choice==VOCAB_BKWD) { ///////////////////////////////// bkwd /////////////////////////////////
         Vector cmd;
         Bottle *lst = b.get(1).asList();
-//        printf("BKWD list of %d elements (2 needed: oz oy')\n", lst->size());
         cmd.push_back(lst->get(0).asDouble());
         cmd.push_back(lst->get(1).asDouble());
         Vector x,o,xd,od;
         if(!icart->getPose(x,o)) return;
-//        printf("xCallbackPort::onRead() Problem statement:\n");
-//        printf("x: %s; o: %s\n",x.toString().c_str(),o.toString().c_str());
         double ozDeg = (atan2(x[1],x[0]))*180.0/M_PI;
         double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
         double PrPd = PrP - VPOINT_DIST*sin((cmd[1])*M_PI/180.0); 
@@ -62,13 +56,10 @@ void xCallbackPort::onRead(Bottle& b) {
     } else if (choice==VOCAB_ROT) { ///////////////////////////////// rot /////////////////////////////////
         Vector cmd;
         Bottle *lst = b.get(1).asList();
-//        printf("BKWD list of %d elements (2 needed: oz oy')\n", lst->size());
         cmd.push_back(lst->get(0).asDouble());
         cmd.push_back(lst->get(1).asDouble());
         Vector x,o,xd,od;
         if(!icart->getPose(x,o)) return;
-//        printf("xCallbackPort::onRead() Problem statement:\n");
-//        printf("x: %s; o: %s\n",x.toString().c_str(),o.toString().c_str());
         double ozDeg = (atan2(x[1],x[0]))*180.0/M_PI;
         double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
         double PrPd = PrP;
@@ -84,13 +75,12 @@ void xCallbackPort::onRead(Bottle& b) {
     } else if (choice==VOCAB_VMOS) { ///////////////////////////////// vmos /////////////////////////////////
         Vector cmd;
         Bottle *lst = b.get(1).asList();
-//        printf("BKWD list of %d elements (2 needed: oz oy')\n", lst->size());
         Vector xdotd,odotd;
         xdotd.push_back(lst->get(0).asDouble());
         xdotd.push_back(lst->get(1).asDouble());
         xdotd.push_back(lst->get(2).asDouble());
-        odotd.push_back(lst->get(3).asDouble());
-        odotd.push_back(lst->get(4).asDouble());
+        for (int i = 3; i < lst->size(); i++)
+            odotd.push_back(lst->get(i).asDouble());
         printf("xdotd: %s; odotd: %s\n",xdotd.toString().c_str(),odotd.toString().c_str());
         icart->setTaskVelocities(xdotd,odotd);
     }
