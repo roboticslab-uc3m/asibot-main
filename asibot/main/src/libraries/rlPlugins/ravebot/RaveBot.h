@@ -80,6 +80,22 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   // Set the Thread Rate in the class constructor
   RaveBot() : RateThread(DEFAULT_JMC_MS) {}  // In ms
 
+// -- Helper Funcion declarations. Implementation in HelperFuncs.cpp--
+
+    /**
+    * Simple function to pass from degrees to radians. 
+    * @param inDeg angle value in degrees.
+    * @return angle value in radians.
+    */
+    double toRad(const double _inDeg);
+
+    /**
+    * Simple function to pass from radians to degrees.
+    * @param _inRad angle value in radians.
+    * @return angle value in degrees.
+    */
+    double toDeg(const double _inRad);
+
 // ------- IPositionControl declarations. Implementation in IPositionImpl.cpp -------
 
   /**
@@ -375,7 +391,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   int modePosVel;
   double lastTime;
   std::vector<int> joint_status;
-  std::vector<double> realDeg;
+  std::vector<double> realUnit;
   std::vector<double> targetDeg;
   std::vector<double> jointVel;
   std::vector<double> refSpeed;
