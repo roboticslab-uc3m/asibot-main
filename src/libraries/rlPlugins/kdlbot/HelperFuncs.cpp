@@ -55,15 +55,7 @@ bool KdlBot::fwdKin(const yarp::sig::Vector &inDeg, yarp::sig::Vector &x, yarp::
     x.push_back(fOutCart.p.data[1]);  // Adds memory slot and data
     x.push_back(fOutCart.p.data[2]);  // Adds memory slot and data
 
-    if(angleRepr == "eulerYZ") {  // ASIBOT
-        double alfa, beta, gamma;
-        fOutCart.M.GetEulerZYZ(alfa, beta, gamma);
-        o.clear();
-        o.push_back(toDeg(beta));  // Adds memory slot and data
-        o.push_back(toDeg(gamma));  // Adds memory slot and data
-        printf("[HelperFuncs] KDL computed current cart: %f %f %f | %f %f.\n",
-            fOutCart.p.data[0],fOutCart.p.data[1],fOutCart.p.data[2],o[0],o[1]);
-    } else {
+    if (angleRepr == "axisAngle") {
         o.resize(4);
         KDL::Vector rotVector = fOutCart.M.GetRot();
         o[3] = fOutCart.M.GetRotAngle(rotVector);  // Normalizes as colateral effect
@@ -72,6 +64,25 @@ bool KdlBot::fwdKin(const yarp::sig::Vector &inDeg, yarp::sig::Vector &x, yarp::
         o[2] = rotVector[2];
         printf("[HelperFuncs] KDL computed current cart: %f %f %f | %f %f %f %f.\n",
             fOutCart.p.data[0],fOutCart.p.data[1],fOutCart.p.data[2],o[0],o[1],o[2],o[3]);
+    } else if (angleRepr == "eulerYZ") {  // ASIBOT
+        double alfa, beta, gamma;
+        fOutCart.M.GetEulerZYZ(alfa, beta, gamma);
+        o.clear();
+        o.push_back(toDeg(beta));  // Adds memory slot and data
+        o.push_back(toDeg(gamma));  // Adds memory slot and data
+        printf("[HelperFuncs] KDL computed current cart: %f %f %f | %f %f.\n",
+            fOutCart.p.data[0],fOutCart.p.data[1],fOutCart.p.data[2],o[0],o[1]);
+    } else if (angleRepr == "eulerZYZ") {
+        double alfa, beta, gamma;
+        fOutCart.M.GetEulerZYZ(alfa, beta, gamma);
+        o.clear();
+        o.push_back(toDeg(alfa));  // Adds memory slot and data
+        o.push_back(toDeg(beta));  // Adds memory slot and data
+        o.push_back(toDeg(gamma));  // Adds memory slot and data
+        printf("[HelperFuncs] KDL computed current cart: %f %f %f | %f %f %f.\n",
+            fOutCart.p.data[0],fOutCart.p.data[1],fOutCart.p.data[2],o[0],o[1],o[2]);
+    } else {
+        printf("[HelperFuncs] KDL computed current cart: %f %f %f\n");
     }
 
     return true;
