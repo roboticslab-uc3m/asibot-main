@@ -27,10 +27,10 @@
 #define DEFAULT_A1 0.4
 #define DEFAULT_A2 0.4
 #define DEFAULT_A3 0.3
-#define DEFAULT_DURATION 20  // For Trajectory
-#define DEFAULT_MAXVEL 7.5  // deg/s
-#define DEFAULT_MAXACC 0.2  // (?) deg/s^2
 #define DEFAULT_CMC_MS 30  // ms
+#define DEFAULT_DURATION 20  // For Trajectory
+#define DEFAULT_MAXACC 0.2  // units/s^2
+#define DEFAULT_MAXVEL 7.5  // units/s
 #define DEFAULT_ROBOTDEVICE "controlboard"
 #define DEFAULT_ROBOTSUBDEVICE "ravebot"
 #define DEFAULT_ROBOTNAME "/ravebot"

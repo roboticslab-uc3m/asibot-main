@@ -27,8 +27,8 @@ bool RaveBot::open(Searchable& config) {
 
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
         printf("\t--genJointTol [units] (default: \"%f\")\n",genJointTol);
-        printf("\t--genMinLimit [units] (default: \"%f\")\n",genMinLimit);
         printf("\t--genMaxLimit [units] (default: \"%f\")\n",genMaxLimit);
+        printf("\t--genMinLimit [units] (default: \"%f\")\n",genMinLimit);
         printf("\t--genRefSpeed [units/s] (default: \"%f\")\n",genRefSpeed);
         printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
@@ -43,13 +43,13 @@ bool RaveBot::open(Searchable& config) {
     printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
 
     if (config.check("genJointTol")) genJointTol = config.find("genJointTol").asDouble();
-    if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
+    if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
     if (config.check("genRefSpeed")) genRefSpeed = config.find("genRefSpeed").asDouble();
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
     if (config.check("physics")) physics = config.find("physics").asString();
-    printf("RaveBot using genJointTol: %f, genMinLimit: %f, genMaxLimit: %f, genRefSpeed: %f.\n",
-        genJointTol,genMinLimit,genMaxLimit,genRefSpeed);
+    printf("RaveBot using genJointTol: %f, genMaxLimit: %f, genMinLimit: %f, genRefSpeed: %f.\n",
+        genJointTol,genMaxLimit,genMinLimit,genRefSpeed);
     printf("RaveBot using jmcMs: %f, physics: %s.\n",jmcMs,physics.c_str());
 
     Bottle* jointTols;
@@ -61,15 +61,6 @@ bool RaveBot::open(Searchable& config) {
         jointTols = 0;
         printf("RaveBot not using individual jointTols, defaulting to genJointTols.\n");
     }
-    Bottle* minLimits;
-    if (config.check("minLimits")) {
-        minLimits = config.find("minLimits").asList();
-        printf("RaveBot using individual minLimits: %s\n",minLimits->toString().c_str());
-        if(minLimits->size() != int(numMotors)) printf("[warning] minLimits->size() != numMotors\n");
-    } else {
-        minLimits = 0;
-        printf("RaveBot not using individual minLimits, defaulting to genMinLimit.\n");
-    }
     Bottle* maxLimits;
     if (config.check("maxLimits")) {
         maxLimits = config.find("maxLimits").asList();
@@ -78,6 +69,15 @@ bool RaveBot::open(Searchable& config) {
     } else {
         maxLimits = 0;
         printf("RaveBot not using individual maxLimits, defaulting to genMaxLimit.\n");
+    }
+    Bottle* minLimits;
+    if (config.check("minLimits")) {
+        minLimits = config.find("minLimits").asList();
+        printf("RaveBot using individual minLimits: %s\n",minLimits->toString().c_str());
+        if(minLimits->size() != int(numMotors)) printf("[warning] minLimits->size() != numMotors\n");
+    } else {
+        minLimits = 0;
+        printf("RaveBot not using individual minLimits, defaulting to genMinLimit.\n");
     }
     Bottle* refSpeeds;
     if (config.check("refSpeeds")) {
