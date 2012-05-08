@@ -17,10 +17,10 @@ bool CartesianBot::open(Searchable& config) {
     A1 = DEFAULT_A1;
     A2 = DEFAULT_A2;
     A3 = DEFAULT_A3;
-    duration = DEFAULT_DURATION;
-    maxVel = DEFAULT_MAXVEL;
-    maxAcc = DEFAULT_MAXACC;
     cmcMs = DEFAULT_CMC_MS;
+    duration = DEFAULT_DURATION;
+    maxAcc = DEFAULT_MAXACC;
+    maxVel = DEFAULT_MAXVEL;
     ConstString strRobotDevice = DEFAULT_ROBOTDEVICE;
     ConstString strRobotSubDevice = DEFAULT_ROBOTSUBDEVICE;
     ConstString strRobotName = DEFAULT_ROBOTNAME;
@@ -33,10 +33,10 @@ bool CartesianBot::open(Searchable& config) {
         printf("\t--A1 [m] (dist from motor 2 to motor 3, default: \"%f\")\n",A1);
         printf("\t--A2 [m] (dist from motor 3 to motor 4, default: \"%f\")\n",A2);
         printf("\t--A3 [m] (dist from motor 4 to end-effector, default: \"%f\")\n",A3);
-        printf("\t--duration [s] (duration of movl movements, default: \"%f\")\n",duration);
-        printf("\t--maxVel [deg/s] (maximum joint velocity, default: \"%f\")\n",maxVel);
-        printf("\t--maxAcc [deg/s^2] (maximum joint acceleration, default: \"%f\")\n",maxAcc);
         printf("\t--cmcMs [ms] (rate of Cartesian Motion Controller thread, default: \"%f\")\n",cmcMs);
+        printf("\t--duration [s] (duration of movl movements, default: \"%f\")\n",duration);
+        printf("\t--maxAcc [units/s^2] (maximum joint acceleration, default: \"%f\")\n",maxAcc);
+        printf("\t--maxVel [units/s] (maximum joint velocity, default: \"%f\")\n",maxVel);
         printf("\t--robotDevice (device we create, default: \"%s\")\n",strRobotDevice.c_str());
         printf("\t--robotSubdevice (library we use, default: \"%s\")\n",strRobotSubDevice.c_str());
         printf("\t--robotName (port name of created device, default: \"%s\")\n",strRobotName.c_str());
@@ -49,11 +49,11 @@ bool CartesianBot::open(Searchable& config) {
     if (config.check("A3")) A3 = config.find("A3").asDouble();
     printf("CartesianBot using A0: %f, A1: %f, A2: %f, A3: %f.\n",A0,A1,A2,A3);
 
-    if (config.check("duration")) duration = config.find("duration").asDouble();
-    if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
-    if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
     if (config.check("cmcMs")) cmcMs = config.find("cmcMs").asDouble();
-    printf("CartesianBot using duration: %f, maxVel: %f, maxAcc: %f, cmcMs: %f.\n",duration,maxVel,maxAcc,cmcMs);
+    if (config.check("duration")) duration = config.find("duration").asDouble();
+    if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
+    if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
+    printf("CartesianBot using cmcMs: %f, duration: %f, maxAcc: %f, maxVel: %f.\n",cmcMs,duration,maxAcc,maxVel);
 
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
