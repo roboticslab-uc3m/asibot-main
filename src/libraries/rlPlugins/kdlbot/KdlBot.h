@@ -28,8 +28,8 @@
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
 
-#define CARTPOS_PRECISION 0.01  /// Meter 0.0005
-#define CARTORI_PRECISION 1.5  /// Degrees
+#define CARTPOS_PRECISION 0.01  /// [m]
+#define CARTORI_PRECISION 1.5  /// [deg]
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 #define DEFAULT_ANGLE_REPR "axisAngle"  // ConstString
@@ -100,7 +100,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     /**
     * Perform forward kinematics.
     */
-    bool fwdKin(const yarp::sig::Vector &inDeg, yarp::sig::Vector &x, yarp::sig::Vector &o);
+    bool fwdKin(const yarp::sig::Vector &inUnits, yarp::sig::Vector &x, yarp::sig::Vector &o);
 
 
 // ------- ICartesianControl declarations. Implementation in ICartesianImpl.cpp -------
