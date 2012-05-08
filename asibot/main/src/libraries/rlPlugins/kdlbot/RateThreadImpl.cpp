@@ -7,14 +7,14 @@
 
 bool KdlBot::threadInit() {
     printf("[success] cartesianbot threadInit() started %f ms ratethread\n",getRate());
-    double dRealDeg[numMotors];
-    if(!enc->getEncoders(dRealDeg)) {
+    double dRealUnits[numMotors];
+    if(!enc->getEncoders(dRealUnits)) {
         printf("[warning] KdlBot::threadInit() failed to getEncoders()\n");
         return false;  // bad practice??
     }
-    yarp::sig::Vector realDeg(numMotors,dRealDeg);
+    yarp::sig::Vector realUnits(numMotors,dRealUnits);
     yarp::sig::Vector x,o;
-    fwdKin(realDeg,x,o);
+    fwdKin(realUnits,x,o);
     printf("inside end of init\n");
     return true;
 }
@@ -23,14 +23,14 @@ bool KdlBot::threadInit() {
 
 void KdlBot::run() {
     if (cmc_status>0) {  // If it is movement
-        double dRealDeg[numMotors];
-        if(!enc->getEncoders(dRealDeg)) {
+        double dRealUnits[numMotors];
+        if(!enc->getEncoders(dRealUnits)) {
             printf("[warning] KdlBot::run() failed to getEncoders()\n");
             return;  // bad practice??
         }
-        yarp::sig::Vector realDeg(numMotors,dRealDeg);
+        yarp::sig::Vector realUnits(numMotors,dRealUnits);
         yarp::sig::Vector x,o;
-        fwdKin(realDeg,x,o);
+        fwdKin(realUnits,x,o);
         bool done = true;
         if(fabs(x[0]-targetX[0])>CARTPOS_PRECISION) done = false;
         if(fabs(x[1]-targetX[1])>CARTPOS_PRECISION) done = false;
