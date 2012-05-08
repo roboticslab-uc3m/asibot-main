@@ -21,7 +21,7 @@ bool KdlBot::open(Searchable& config) {
     if(config.check("help")) {
         printf("KdlBot options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--angleRepr (axisAngle or eulerYZ. default: \"%s\")\n",angleRepr.c_str());
+        printf("\t--angleRepr (axisAngle, eulerYZ, or eulerZYZ. default: \"%s\")\n",angleRepr.c_str());
         printf("\t--cmcMs [ms] (rate of Cartesian Motion Controller thread, default: \"%f\")\n",cmcMs);
         printf("\t--duration [s] (duration of movl movements, default: \"%f\")\n",duration);
         printf("\t--maxVel [deg/s] (maximum joint velocity, default: \"%f\")\n",maxVel);
@@ -38,10 +38,12 @@ bool KdlBot::open(Searchable& config) {
     printf("KdlBot using numMotors: %d, angleRepr: %s.\n",numMotors,angleRepr.c_str());
 
     targetX.resize(3);
-    if(angleRepr == "eulerYZ") {
-        targetO.resize(2);
-    }else if(angleRepr == "axisAngle") {
+    if(angleRepr == "axisAngle") {
         targetO.resize(4);
+    }else if(angleRepr == "eulerYZ") {
+        targetO.resize(2);
+    }else if(angleRepr == "eulerZYZ") {
+        targetO.resize(3);
     }else printf("[warning] axisAngle not recognized!\n");
 
     if (config.check("duration")) duration = config.find("duration").asDouble();
