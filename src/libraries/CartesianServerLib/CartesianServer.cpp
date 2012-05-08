@@ -8,8 +8,8 @@ CartesianServer::CartesianServer() { }
 /************************************************************************/
 bool CartesianServer::configure(ResourceFinder &rf) {
 
-    ConstString prefix = DEFAULT_PREFIX;
     ConstString controller = DEFAULT_CONTROLLER;
+    ConstString prefix = DEFAULT_PREFIX;
     ConstString robotRemote = DEFAULT_ROBOTREMOTE;
     ConstString robotLocal = DEFAULT_ROBOTLOCAL;
 
@@ -17,18 +17,18 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     if (rf.check("help")) {
         printf("CartesianServer options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--prefix (port name prefix, default: \"%s\")\n",prefix.c_str());
         printf("\t--controller (cartesian controller device, default: \"%s\")\n",controller.c_str());
+        printf("\t--prefix (port name prefix, default: \"%s\")\n",prefix.c_str());
         printf("\t--robotRemote (port to whom we connect for movj, default: \"%s\")\n",robotRemote.c_str());
         printf("\t--robotLocal (port we open to connect for movj, default: \"%s\")\n",robotLocal.c_str());
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
-    if (rf.check("prefix")) prefix = rf.find("prefix").asString();
     if (rf.check("controller")) controller = rf.find("controller").asString();
+    if (rf.check("prefix")) prefix = rf.find("prefix").asString();
     if (rf.check("robotRemote")) robotRemote = rf.find("robotRemote").asString();
     if (rf.check("robotLocal")) robotLocal = rf.find("robotLocal").asString();
-    printf("CartesianServer using prefix: %s, controller: %s.\n",prefix.c_str(),controller.c_str());
+    printf("CartesianServer using controller: %s,  prefix: %s.\n",controller.c_str(),prefix.c_str());
     printf("CartesianServer using robotRemote: %s, robotLocal: %s.\n",robotRemote.c_str(),robotLocal.c_str());
 
     //------------------------------CARTESIAN--------------------------------//
