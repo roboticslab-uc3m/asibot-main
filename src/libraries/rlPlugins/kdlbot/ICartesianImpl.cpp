@@ -118,6 +118,36 @@ bool KdlBot::getDesired(yarp::sig::Vector &xdhat, yarp::sig::Vector &odhat,
 bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                             yarp::sig::Vector &xdhat, yarp::sig::Vector &odhat,
                             yarp::sig::Vector &qdhat) {
+    double currentUnits[numMotors];
+    if(!enc->getEncoders(currentUnits)) {
+        printf("[warning] KdlBot::getPose() failed to getEncoders()\n");
+        return false;
+    }
+    JntArray currentRads = JntArray(numMotors);
+    for (int motor=0; motor<numMotors; motor++) {
+        if(isPrismatic[motor]) currentRads(motor)=currentUnits[motor];
+        else currentRads(motor)=toRad(currentUnits[motor]);
+    }
+
+    Frame frameXd;
+    frameXd.p.data[0]=xd[0];
+    frameXd.p.data[1]=xd[1];
+    frameXd.p.data[2]=xd[2];
+    if (angleRepr == "eulerZYZ") {
+        frameXd.M.EulerZYZ(od[0], od[1], od[2]);
+    }
+    
+    ChainFkSolverPos_recursive fksolver = ChainFkSolverPos_recursive(theChain);
+    ChainFkSolverPos_recursive fksolver1(theChain);  // Forward position solver.
+    ChainIkSolverVel_pinv iksolver_vel (theChain);
+    ChainIkSolverPos_NR iksolver_pos (theChain,fksolver,iksolver_vel,100,1e-6);
+    JntArray qd = JntArray(numMotors);
+    int ret = iksolver_pos.CartToJnt(currentRads,frameXd,qd);
+
+    printf("[HelperFuncs] KDL computed needed q:\n");
+    for (int motor=0; motor<numMotors; motor++)
+        printf("q%d:%f   ",motor+1,qd(motor));
+    printf("\n");
     return true;
 }
 
