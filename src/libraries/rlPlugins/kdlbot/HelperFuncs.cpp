@@ -39,21 +39,20 @@ bool KdlBot::getMatrixFromProperties(Searchable &options, ConstString &tag, yarp
 
 bool KdlBot::fwdKin(const yarp::sig::Vector &inDeg, yarp::sig::Vector &x, yarp::sig::Vector &o) {
     JntArray inRad = JntArray(numMotors);
-    Frame outCart;
+    Frame H_0_N;
     for (int motor=0; motor<numMotors; motor++) {
         if(isPrismatic[motor]) inRad(motor)=inDeg[motor];
         else inRad(motor)=toRad(inDeg[motor]);
     }
     ChainFkSolverPos_recursive fksolver = ChainFkSolverPos_recursive(theChain);
     ChainFkSolverPos_recursive fksolver1(theChain);  // Forward position solver.
-    fksolver.JntToCart(inRad,outCart);
-    Frame fOutCart = outCart * HN;
-//    Frame fOutCart = outCart;
+    fksolver.JntToCart(inRad,H_0_N);
+    Frame fOutCart = H0 * H_0_N * HN;
 
     x.clear();
-    x.push_back(fOutCart.p.data[0]);  // Adds memory slot and data
-    x.push_back(fOutCart.p.data[1]);  // Adds memory slot and data
-    x.push_back(fOutCart.p.data[2]);  // Adds memory slot and data
+    x.push_back(fOutCart.p.data[0]);  // pushed on as [0]
+    x.push_back(fOutCart.p.data[1]);  // pushed on as [1]
+    x.push_back(fOutCart.p.data[2]);  // pushed on as [2]
 
     if (angleRepr == "axisAngle") {
         o.resize(4);
@@ -68,21 +67,21 @@ bool KdlBot::fwdKin(const yarp::sig::Vector &inDeg, yarp::sig::Vector &x, yarp::
         double alfa, beta, gamma;
         fOutCart.M.GetEulerZYZ(alfa, beta, gamma);
         o.clear();
-        o.push_back(toDeg(beta));  // Adds memory slot and data
-        o.push_back(toDeg(gamma));  // Adds memory slot and data
+        o.push_back(toDeg(beta));  // pushed on as [0]
+        o.push_back(toDeg(gamma));  // pushed on as [1]
         printf("[HelperFuncs] KDL computed current cart: %f %f %f | %f %f.\n",
             fOutCart.p.data[0],fOutCart.p.data[1],fOutCart.p.data[2],o[0],o[1]);
     } else if (angleRepr == "eulerZYZ") {
         double alfa, beta, gamma;
         fOutCart.M.GetEulerZYZ(alfa, beta, gamma);
         o.clear();
-        o.push_back(toDeg(alfa));  // Adds memory slot and data
-        o.push_back(toDeg(beta));  // Adds memory slot and data
-        o.push_back(toDeg(gamma));  // Adds memory slot and data
+        o.push_back(toDeg(alfa));  // pushed on as [0]
+        o.push_back(toDeg(beta));  // pushed on as [1]
+        o.push_back(toDeg(gamma));  // pushed on as [2]
         printf("[HelperFuncs] KDL computed current cart: %f %f %f | %f %f %f.\n",
             fOutCart.p.data[0],fOutCart.p.data[1],fOutCart.p.data[2],o[0],o[1],o[2]);
     } else {
-        printf("[HelperFuncs] KDL computed current cart: %f %f %f\n");
+        printf("[HelperFuncs] KDL computed current cart: %f %f %f\n",fOutCart.p.data[0],fOutCart.p.data[1],fOutCart.p.data[2]);
     }
 
     return true;

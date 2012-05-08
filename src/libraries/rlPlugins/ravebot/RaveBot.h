@@ -26,7 +26,7 @@
 #define DEFAULT_GEN_REF_SPEED 7.5
 #define DEFAULT_GEN_MIN_LIMIT -360.0
 #define DEFAULT_GEN_MAX_LIMIT 360.0
-#define DEFAULT_GEN_JOINT_TOL 0.25  // In degrees. Was .75
+#define DEFAULT_GEN_JOINT_TOL 0.25  // In units. Was .75
 
 using namespace std;
 
