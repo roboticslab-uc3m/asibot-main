@@ -32,12 +32,12 @@
 #define CARTORI_PRECISION 1.5  /// Degrees
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
+#define DEFAULT_ANGLE_REPR "axisAngle"  // ConstString
+#define DEFAULT_CMC_MS 30       // ms
+#define DEFAULT_DURATION 20     // For Trajectory
+#define DEFAULT_MAXVEL 7.5      // unit/s
+#define DEFAULT_MAXACC 0.2      // unit/s^2
 #define DEFAULT_NUM_MOTORS 5
-#define DEFAULT_ANGLE_REPR "axisAngle"
-#define DEFAULT_DURATION 20  // For Trajectory
-#define DEFAULT_MAXVEL 7.5  // deg/s
-#define DEFAULT_MAXACC 0.2  // (?) deg/s^2
-#define DEFAULT_CMC_MS 30  // ms
 #define DEFAULT_ROBOTDEVICE "controlboard"
 #define DEFAULT_ROBOTSUBDEVICE "ravebot"
 #define DEFAULT_ROBOTNAME "/ravebot"
@@ -613,7 +613,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     ConstString angleRepr;
     double duration, maxVel, maxAcc, cmcMs;
 
-    Frame HN;
+    Frame H0, HN;
 };
 
 #endif

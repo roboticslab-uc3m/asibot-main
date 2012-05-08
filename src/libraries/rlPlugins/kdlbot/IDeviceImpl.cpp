@@ -7,12 +7,12 @@
 
 bool KdlBot::open(Searchable& config) {
 
-    numMotors = DEFAULT_NUM_MOTORS;     // unsigned int
-    angleRepr = DEFAULT_ANGLE_REPR;     // ConstString
-    duration = DEFAULT_DURATION;        // double
-    maxVel = DEFAULT_MAXVEL;            // double
-    maxAcc = DEFAULT_MAXACC;            // double
-    cmcMs = DEFAULT_CMC_MS;  // double
+    angleRepr = DEFAULT_ANGLE_REPR; // ConstString
+    cmcMs = DEFAULT_CMC_MS;         // double
+    duration = DEFAULT_DURATION;    // double
+    maxVel = DEFAULT_MAXVEL;        // double
+    maxAcc = DEFAULT_MAXACC;        // double
+    numMotors = DEFAULT_NUM_MOTORS; // unsigned int
     ConstString strRobotDevice = DEFAULT_ROBOTDEVICE;
     ConstString strRobotSubDevice = DEFAULT_ROBOTSUBDEVICE;
     ConstString strRobotName = DEFAULT_ROBOTNAME;
@@ -21,12 +21,12 @@ bool KdlBot::open(Searchable& config) {
     if(config.check("help")) {
         printf("KdlBot options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--angleRepr (axisAngle or eYZ. default: \"%s\")\n",angleRepr.c_str());
-        printf("\t--numMotors (default: \"%d\")\n",numMotors);
+        printf("\t--angleRepr (axisAngle or eulerYZ. default: \"%s\")\n",angleRepr.c_str());
+        printf("\t--cmcMs [ms] (rate of Cartesian Motion Controller thread, default: \"%f\")\n",cmcMs);
         printf("\t--duration [s] (duration of movl movements, default: \"%f\")\n",duration);
         printf("\t--maxVel [deg/s] (maximum joint velocity, default: \"%f\")\n",maxVel);
         printf("\t--maxAcc [deg/s^2] (maximum joint acceleration, default: \"%f\")\n",maxAcc);
-        printf("\t--cmcMs [ms] (rate of Cartesian Motion Controller thread, default: \"%f\")\n",cmcMs);
+        printf("\t--numMotors (default: \"%d\")\n",numMotors);
         printf("\t--robotDevice (device we create, default: \"%s\")\n",strRobotDevice.c_str());
         printf("\t--robotSubdevice (library we use, default: \"%s\")\n",strRobotSubDevice.c_str());
         printf("\t--robotName (port name of created device, default: \"%s\")\n",strRobotName.c_str());
@@ -38,7 +38,7 @@ bool KdlBot::open(Searchable& config) {
     printf("KdlBot using numMotors: %d, angleRepr: %s.\n",numMotors,angleRepr.c_str());
 
     targetX.resize(3);
-    if(angleRepr == "eYZ") {
+    if(angleRepr == "eulerYZ") {
         targetO.resize(2);
     }else if(angleRepr == "axisAngle") {
         targetO.resize(4);
@@ -54,6 +54,17 @@ bool KdlBot::open(Searchable& config) {
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
     if (config.check("robotName")) strRobotName = config.find("robotName").asString();
     printf("KdlBot using robotDevice: %s, robotSubDevice: %s, robotName: %s.\n",strRobotDevice.c_str(),strRobotSubDevice.c_str(),strRobotName.c_str());
+
+    yarp::sig::Matrix ymH0(4,4);
+    ConstString ycsH0("H0");
+    if(!getMatrixFromProperties(config,ycsH0,ymH0)){
+        ymH0.eye();
+        printf("KdlBot using default H0: H0 = I\n");
+    }
+    else printf("KdlBot using custom H0:\n%s\n",ymH0.toString().c_str());
+    Vector kdlVec0(ymH0(0,3),ymH0(1,3),ymH0(2,3));
+    Rotation kdlRot0( ymH0(0,0),ymH0(0,1),ymH0(0,2),ymH0(1,0),ymH0(1,1),ymH0(1,2),ymH0(2,0),ymH0(2,1),ymH0(2,2));
+    H0 = Frame(kdlRot0,kdlVec0);
 
     for(int motor=0;motor<numMotors;motor++) {
         ConstString link("link_");
@@ -88,16 +99,17 @@ bool KdlBot::open(Searchable& config) {
 
         printf("%s, x: %f, y: %f, z: %f.\n",linkType.c_str(),linkX,linkY,linkZ);
     }
-    yarp::sig::Matrix yM(4,4);
-    ConstString yCS("HN");
-    if(!getMatrixFromProperties(config,yCS,yM)){
-        yM.eye();
-        printf("KdlBot using default HN:\n%s\n",yM.toString().c_str());
+
+    yarp::sig::Matrix ymHN(4,4);
+    ConstString ycsHN("HN");
+    if(!getMatrixFromProperties(config,ycsHN,ymHN)){
+        ymHN.eye();
+        printf("KdlBot using default HN: HN = I\n");
     }
-    else printf("KdlBot using custom HN:\n%s\n",yM.toString().c_str());
-    Vector kdlVec(yM(0,3),yM(1,3),yM(2,3));
-    Rotation kdlRot( yM(0,0),yM(0,1),yM(0,2),yM(1,0),yM(1,1),yM(1,2),yM(2,0),yM(2,1),yM(2,2));
-    HN = Frame(kdlRot,kdlVec);
+    else printf("KdlBot using custom HN:\n%s\n",ymHN.toString().c_str());
+    Vector kdlVecN(ymHN(0,3),ymHN(1,3),ymHN(2,3));
+    Rotation kdlRotN( ymHN(0,0),ymHN(0,1),ymHN(0,2),ymHN(1,0),ymHN(1,1),ymHN(1,2),ymHN(2,0),ymHN(2,1),ymHN(2,2));
+    HN = Frame(kdlRotN,kdlVecN);
 
     cmc_status = 0;
     startTime = 0;

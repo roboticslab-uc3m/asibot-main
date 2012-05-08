@@ -47,15 +47,15 @@ bool KdlBot::fwdKin(const yarp::sig::Vector &inDeg, yarp::sig::Vector &x, yarp::
     ChainFkSolverPos_recursive fksolver = ChainFkSolverPos_recursive(theChain);
     ChainFkSolverPos_recursive fksolver1(theChain);  // Forward position solver.
     fksolver.JntToCart(inRad,outCart);
-//    Frame fOutCart = outCart * HN;
-    Frame fOutCart = outCart;
+    Frame fOutCart = outCart * HN;
+//    Frame fOutCart = outCart;
 
     x.clear();
     x.push_back(fOutCart.p.data[0]);  // Adds memory slot and data
     x.push_back(fOutCart.p.data[1]);  // Adds memory slot and data
     x.push_back(fOutCart.p.data[2]);  // Adds memory slot and data
 
-    if(angleRepr == "eYZ") {  // ASIBOT
+    if(angleRepr == "eulerYZ") {  // ASIBOT
         double alfa, beta, gamma;
         fOutCart.M.GetEulerZYZ(alfa, beta, gamma);
         o.clear();
