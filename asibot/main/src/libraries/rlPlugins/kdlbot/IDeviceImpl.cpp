@@ -50,7 +50,7 @@ bool KdlBot::open(Searchable& config) {
     if (config.check("duration")) duration = config.find("duration").asDouble();
     if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
     if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
-    printf("KdlBot using  cmcMs: %f, duration: %f, maxAcc: %f, maxVel: %f.\n",cmcMs,duration,maxAcc,maxVel);
+    printf("KdlBot using cmcMs: %f, duration: %f, maxAcc: %f, maxVel: %f.\n",cmcMs,duration,maxAcc,maxVel);
 
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
