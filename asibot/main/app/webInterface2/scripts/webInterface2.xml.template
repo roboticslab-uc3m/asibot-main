@@ -1,11 +1,11 @@
 <application>
-<name>webInterface App</name>
+<name>webInterface2 App</name>
         <module>
                 <name>cartesianServer</name>
                 <node>console</node>
         </module>
         <module>
-                <name>webInterface</name>
+                <name>webInterface2</name>
                 <node>console</node>
         </module>
 

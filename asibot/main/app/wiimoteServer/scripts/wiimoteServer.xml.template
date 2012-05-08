@@ -2,11 +2,11 @@
 <name>wiimoteServer App</name>
         <module>
                 <name>cartesianServer</name>
-                <node>console</node>
+                <node>localhost</node>
         </module>
         <module>
                 <name>wiimoteServer</name>
-                <node>console</node>
+                <node>localhost</node>
         </module>
 
         <connection>
