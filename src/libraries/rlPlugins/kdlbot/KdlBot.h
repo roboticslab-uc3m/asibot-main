@@ -37,7 +37,7 @@
 #define DEFAULT_DURATION 20  // For Trajectory
 #define DEFAULT_MAXVEL 7.5  // deg/s
 #define DEFAULT_MAXACC 0.2  // (?) deg/s^2
-#define DEFAULT_MSCARTESIAN 30  // ms
+#define DEFAULT_CMC_MS 30  // ms
 #define DEFAULT_ROBOTDEVICE "controlboard"
 #define DEFAULT_ROBOTSUBDEVICE "ravebot"
 #define DEFAULT_ROBOTNAME "/ravebot"
@@ -74,7 +74,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
  public:
 
   // Set the Thread Rate in the class constructor
-  KdlBot() : RateThread(DEFAULT_MSCARTESIAN) {}  // In ms
+  KdlBot() : RateThread(DEFAULT_CMC_MS) {}  // In ms
 
 // -- Helper Funcion declarations. Implementation in HelperFuncs.cpp--
 
@@ -611,7 +611,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     
     unsigned int numMotors;
     ConstString angleRepr;
-    double duration, maxVel, maxAcc, msCartesian;
+    double duration, maxVel, maxAcc, cmcMs;
 
     Frame HN;
 };
