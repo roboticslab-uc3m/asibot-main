@@ -37,12 +37,12 @@ bool KdlBot::getMatrixFromProperties(Searchable &options, ConstString &tag, yarp
 
 // -----------------------------------------------------------------------------
 
-bool KdlBot::fwdKin(const yarp::sig::Vector &inDeg, yarp::sig::Vector &x, yarp::sig::Vector &o) {
+bool KdlBot::fwdKin(const yarp::sig::Vector &inUnits, yarp::sig::Vector &x, yarp::sig::Vector &o) {
     JntArray inRad = JntArray(numMotors);
     Frame H_0_N;
     for (int motor=0; motor<numMotors; motor++) {
-        if(isPrismatic[motor]) inRad(motor)=inDeg[motor];
-        else inRad(motor)=toRad(inDeg[motor]);
+        if(isPrismatic[motor]) inRad(motor)=inUnits[motor];
+        else inRad(motor)=toRad(inUnits[motor]);
     }
     ChainFkSolverPos_recursive fksolver = ChainFkSolverPos_recursive(theChain);
     ChainFkSolverPos_recursive fksolver1(theChain);  // Forward position solver.

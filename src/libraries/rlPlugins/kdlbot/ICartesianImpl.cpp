@@ -17,14 +17,14 @@ bool KdlBot::getTrackingMode(bool *f) {
 
 // -----------------------------------------------------------------------------
 
-bool KdlBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {  // interface is in [deg]
-    double dRealDeg[numMotors];
-    if(!enc->getEncoders(dRealDeg)) {
+bool KdlBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
+    double dRealUnits[numMotors];
+    if(!enc->getEncoders(dRealUnits)) {
         printf("[warning] KdlBot::getPose() failed to getEncoders()\n");
         return false;
     }
-    yarp::sig::Vector realDeg(numMotors,dRealDeg);
-    return fwdKin(realDeg,x,o);
+    yarp::sig::Vector realUnits(numMotors,dRealUnits);
+    return fwdKin(realUnits,x,o);
 }
 
 // ----------------------------------------------------------------------------- 
