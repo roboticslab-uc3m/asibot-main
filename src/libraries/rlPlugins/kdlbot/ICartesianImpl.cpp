@@ -146,11 +146,12 @@ bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od
     ChainIkSolverPos_NR iksolver_pos (theChain,fksolver,iksolver_vel,500,1e-6);
     JntArray qd = JntArray(numMotors);
     int ret = iksolver_pos.CartToJnt(currentRads,frameXd,qd);
-    printf("[HelperFuncs] KDL computed needed degrees (ret = %d):\n",ret);
-    for (int motor=0; motor<numMotors; motor++)
-//        printf("\tq%d:%f",motor+1,toDeg(qd(motor)));
-        printf("%f ",toDeg(qd(motor)));
-    printf("\n");
+    printf("[HelperFuncs] KDL ret = %d:\n",ret);
+    for (int motor=0; motor<numMotors; motor++) {
+        if(isPrismatic[motor]) qdhat.push_back(qd(motor));
+        else qdhat.push_back(toRad(qd(motor)));
+    }
+
     return true;
 }
 
