@@ -133,20 +133,23 @@ bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od
     frameXd.p.data[0]=xd[0];
     frameXd.p.data[1]=xd[1];
     frameXd.p.data[2]=xd[2];
-    if (angleRepr == "eulerZYZ") {
-        frameXd.M.EulerZYZ(od[0], od[1], od[2]);
+    if (angleRepr == "eulerYZ") {
+        frameXd.M = Rotation::EulerZYZ(atan2(xd[1],xd[0]),toRad(od[0]), toRad(od[1]));
+    } else if (angleRepr == "eulerZYZ") {
+        frameXd.M = Rotation::EulerZYZ(toRad(od[0]), toRad(od[1]), toRad(od[2]));
+    } else {
+        printf("[warning] KDL no compatible angleRepr\n");
     }
-    
-    ChainFkSolverPos_recursive fksolver = ChainFkSolverPos_recursive(theChain);
-    ChainFkSolverPos_recursive fksolver1(theChain);  // Forward position solver.
-    ChainIkSolverVel_pinv iksolver_vel (theChain);
-    ChainIkSolverPos_NR iksolver_pos (theChain,fksolver,iksolver_vel,100,1e-6);
+
+    ChainFkSolverPos_recursive fksolver(theChain);
+    ChainIkSolverVel_pinv iksolver_vel(theChain);
+    ChainIkSolverPos_NR iksolver_pos (theChain,fksolver,iksolver_vel,500,1e-6);
     JntArray qd = JntArray(numMotors);
     int ret = iksolver_pos.CartToJnt(currentRads,frameXd,qd);
-
-    printf("[HelperFuncs] KDL computed needed q:\n");
+    printf("[HelperFuncs] KDL computed needed degrees (ret = %d):\n",ret);
     for (int motor=0; motor<numMotors; motor++)
-        printf("q%d:%f   ",motor+1,qd(motor));
+//        printf("\tq%d:%f",motor+1,toDeg(qd(motor)));
+        printf("%f ",toDeg(qd(motor)));
     printf("\n");
     return true;
 }
