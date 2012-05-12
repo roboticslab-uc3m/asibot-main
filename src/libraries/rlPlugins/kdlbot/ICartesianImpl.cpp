@@ -143,7 +143,22 @@ bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od
 
     ChainFkSolverPos_recursive fksolver(theChain);
     ChainIkSolverVel_pinv iksolver_vel(theChain);
-    ChainIkSolverPos_NR iksolver_pos (theChain,fksolver,iksolver_vel,500,1e-6);
+//    ChainIkSolverPos_NR iksolver_pos (theChain,fksolver,iksolver_vel,500,1e-6);
+    JntArray qMin = JntArray(numMotors);
+    JntArray qMax = JntArray(numMotors);
+    for (int motor=0; motor<numMotors; motor++) {
+        double _qMin, _qMax;
+        if(!lim->getLimits(motor,&(_qMin),&(_qMax))) return false;
+        if(isPrismatic[motor]) {
+            qMin(motor)=_qMin;
+            qMax(motor)=_qMax;
+        } else {
+            qMin(motor)=toRad(_qMin);
+            qMax(motor)=toRad(_qMax);
+        }
+    }
+    ChainIkSolverPos_NR_JL iksolver_pos (theChain,qMin,qMax,fksolver,iksolver_vel,500,1e-6);
+
     JntArray qd = JntArray(numMotors);
     int ret = iksolver_pos.CartToJnt(currentRads,frameXd,qd);
     printf("[HelperFuncs] KDL ret = %d:\n",ret);
@@ -220,13 +235,17 @@ bool KdlBot::setRestWeights(const yarp::sig::Vector &newRestWeights, yarp::sig::
 // -----------------------------------------------------------------------------
 
 bool KdlBot::getLimits(const int axis, double *min, double *max) {
+    if(!lim->getLimits(axis,min,max)) return false;  // should pass to JMC
+    printf("Range of axis %d is: %f to %f.\n",axis,*min,*max);
     return false;
 }
 
 // -----------------------------------------------------------------------------
 
 bool KdlBot::setLimits(const int axis, const double min, const double max) {
-    return false;
+    if(!lim->setLimits(axis,min,max)) return false;  // should pass to JMC
+    printf("[KdlBotRange of axis %d set to: %f to %f on JMC\n",axis,min,max);
+    return true;
 }
 
 // -----------------------------------------------------------------------------

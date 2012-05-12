@@ -21,7 +21,7 @@ bool KdlBot::open(Searchable& config) {
     if(config.check("help")) {
         printf("KdlBot options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--angleRepr (axisAngle, eulerYZ, or eulerZYZ. default: \"%s\")\n",angleRepr.c_str());
+        printf("\t--angleRepr (axisAngle, eulerYZ, or eulerZYZ (default: \"%s\")\n",angleRepr.c_str());
         printf("\t--cmcMs [ms] (rate of Cartesian Motion Controller thread, default: \"%f\")\n",cmcMs);
         printf("\t--duration [s] (duration of movl movements, default: \"%f\")\n",duration);
         printf("\t--maxAcc [units/s^2] (maximum joint acceleration, default: \"%f\")\n",maxAcc);
@@ -132,10 +132,20 @@ bool KdlBot::open(Searchable& config) {
     ok = robotDevice.view(pos);
     ok = ok && robotDevice.view(vel);
     ok = ok && robotDevice.view(enc);
+    ok = ok && robotDevice.view(lim);
     if (!ok) {
         printf("[error] KdlBot problems acquiring robot interfaces\n");
         return false;
     } else printf("[success] KdlBot acquired robot interfaces\n");
+
+    int ax; 
+    pos->getAxes(&ax);
+    printf("[success] KdlBot pull joint limits:\n");
+    double min,max;
+    for (int i=0;i<ax;i++){
+        lim->getLimits(i,&min,&max);
+        printf("[KdlBot] q%d: %f to %f\n",i+1,min,max);
+    }
 
     cmc_status = 0;
     _orient = new RotationalInterpolation_SingleAxis();
