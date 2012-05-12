@@ -594,6 +594,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     IEncoders *enc;
     IPositionControl *pos;
     IVelocityControl *vel;
+    IControlLimits *lim;
 
     int cmc_status;
     bool withOri;
