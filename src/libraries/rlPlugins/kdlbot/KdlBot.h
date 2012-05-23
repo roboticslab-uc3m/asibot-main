@@ -615,7 +615,8 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     ConstString angleRepr;
     double duration, maxVel, maxAcc, cmcMs;
 
-    Frame H0, HN;
+//    Frame H0, HN;
+//    Frame HN;
 };
 
 #endif
