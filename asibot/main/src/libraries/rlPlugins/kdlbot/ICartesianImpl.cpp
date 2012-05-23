@@ -162,6 +162,9 @@ bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od
     JntArray qd = JntArray(numMotors);
     int ret = iksolver_pos.CartToJnt(currentRads,frameXd,qd);
     printf("[HelperFuncs] KDL ret = %d:\n",ret);
+
+    if(ret<0) return false;
+
     for (int motor=0; motor<numMotors; motor++) {
         if(isPrismatic[motor]) qdhat.push_back(qd(motor));
         else qdhat.push_back(toDeg(qd(motor)));
