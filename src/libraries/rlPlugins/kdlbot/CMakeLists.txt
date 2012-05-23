@@ -15,12 +15,10 @@ FIND_PACKAGE(Eigen2 REQUIRED)
 include(${CMAKE_MODULE_PATH}/FindOrocos-KDL.cmake)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})  # kdl name depends on version
 LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
 
 ADD_LIBRARY(kdlbot KdlBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
 TARGET_LINK_LIBRARIES(kdlbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
-#TARGET_LINK_LIBRARIES(kdlbot ${YARP_LIBRARIES})
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins kdlbot ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES} CACHE INTERNAL "appended libraries") 

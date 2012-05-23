@@ -164,7 +164,7 @@ bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od
     printf("[HelperFuncs] KDL ret = %d:\n",ret);
     for (int motor=0; motor<numMotors; motor++) {
         if(isPrismatic[motor]) qdhat.push_back(qd(motor));
-        else qdhat.push_back(toRad(qd(motor)));
+        else qdhat.push_back(toDeg(qd(motor)));
     }
 
     return true;
