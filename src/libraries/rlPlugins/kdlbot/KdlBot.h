@@ -29,8 +29,8 @@
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
 
-#define CARTPOS_PRECISION 0.01  /// [m]
-#define CARTORI_PRECISION 1.5  /// [deg]
+#define DEFAULT_EPS 0.01
+
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 #define DEFAULT_ANGLE_REPR "axisAngle"  // ConstString
@@ -604,8 +604,9 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     double _eqradius;
     bool _aggregate;
 
-    yarp::sig::Vector targetX,targetO;
+//    yarp::sig::Vector targetX,targetO;
     yarp::sig::Vector isPrismatic;
+    KDL::Frame targetF;
 
     Chain theChain;
 
