@@ -29,7 +29,8 @@
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
 
-#define DEFAULT_EPS 0.01
+#define CARTPOS_PRECISION 0.001
+#define CARTORI_PRECISION 0.1
 
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
@@ -599,14 +600,14 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     int cmc_status;
     bool withOri;
 
-    Trajectory* currentTrajectory;
+    Trajectory_Segment* currentTrajectory;
     RotationalInterpolation_SingleAxis* _orient;
     double _eqradius;
     bool _aggregate;
 
-//    yarp::sig::Vector targetX,targetO;
     yarp::sig::Vector isPrismatic;
     KDL::Frame targetF;
+    yarp::sig::Vector targetO;
 
     Chain theChain;
 

@@ -31,19 +31,29 @@ void KdlBot::run() {
         yarp::sig::Vector realUnits(numMotors,dRealUnits);
         yarp::sig::Vector x,o;
         fwdKin(realUnits,x,o);
-        bool done = false;
-        KDL::Vector currentX(x[0],x[1],x[2]);
-        KDL::Rotation currentO;
+        bool done = true;
+        KDL::Frame currentF;
+        currentF.p.data[0]=x[0];
+        currentF.p.data[1]=x[1];
+        currentF.p.data[2]=x[2];
         if (angleRepr == "eulerYZ") {  // ASIBOT
-            KDL::Rotation currentO = Rotation::EulerZYZ(atan2(x[1],x[0]),toRad(o[0]), toRad(o[1]));
+            currentF.M = Rotation::EulerZYZ(atan2(x[1],x[0]),toRad(o[0]), toRad(o[1]));
         } else if (angleRepr == "eulerZYZ") {
-            KDL::Rotation currentO = Rotation::EulerZYZ(toRad(o[0]), toRad(o[1]), toRad(o[2]));
+            currentF.M = Rotation::EulerZYZ(toRad(o[0]), toRad(o[1]), toRad(o[2]));
         } else {  // axisAngle, etc.
             printf("[warning] KDL no compatible angleRepr\n");
         }
-        KDL::Frame currentF(currentO,currentX);
 
-        if(KDL::Equal(currentF, targetF, DEFAULT_EPS)) done = true;
+/*        for(int s=0;s<3;s++) {
+            printf("fabs(x[%d]-targetF.p.data[%d]: %f\n",s,s,fabs(x[s]-targetF.p.data[s]));
+            if(fabs(x[s]-targetF.p.data[s])>CARTPOS_PRECISION) done = false;
+        }
+        for(int s=0;s<o.size();s++) {
+            printf("fabs(o[%d]-targetO[%d]: %f\n",s,s,fabs(o[s]-targetO[s]));
+            if(fabs(o[s]-targetO[s])>CARTORI_PRECISION) done = false;
+        }*/
+        if(!Equal(currentF,targetF,0.005)) done = false;
+        
         if (done) {
             printf("Target reached in %f.\n",Time::now()-startTime);
             startTime = 0;
@@ -64,24 +74,42 @@ void KdlBot::run() {
 //            ChainIkSolverVel_wdls iksolverv_wdls(theChain, _eps, _maxiter);
 //            int ret_ik_v = iksolverv_wdls.CartToJnt(q_current,T_current,qdot_current);
 
-            ChainIkSolverVel_pinv iksolverv(theChain);
+            double sTime = Time::now()-startTime;
+            if(sTime>currentTrajectory->Duration()){
+                printf ("[warning] out of time at %f.\n",sTime);
+                startTime = 0;
+                pos->setPositionMode();
+                cmc_status=0;
+                return;  // bad practice??
+            }
+
+            KDL::Frame desiredF = currentTrajectory->Pos(sTime);
+            KDL::Twist desiredT = currentTrajectory->Vel(sTime);
 
             JntArray currentRads = JntArray(numMotors);
             for (int motor=0; motor<numMotors; motor++) {
                 if(isPrismatic[motor]) currentRads(motor)=dRealUnits[motor];
                 else currentRads(motor)=toRad(dRealUnits[motor]);
             }
+
             KDL::Twist currentT = diff(currentF, targetF);
+            for(unsigned int i=0; i<6; i++) {
+                currentT(i) *= GAIN;
+                currentT(i) += desiredT(i);
+            }
+
             JntArray kdlqdot = JntArray(numMotors);
+
+            ChainIkSolverVel_pinv iksolverv(theChain);
             int ret = iksolverv.CartToJnt(currentRads,currentT,kdlqdot);
 
             double qdot[numMotors];
             for (int motor=0; motor<numMotors; motor++) {
                 if(isPrismatic[motor]) qdot[motor]=kdlqdot(motor);
                 else qdot[motor]=toDeg(kdlqdot(motor));
-            }  
+            }
             if(!vel->velocityMove(qdot))
-                printf("GIGANTIC velocity WARNING\n");
+                printf("[kdlbot::run] GIGANTIC velocity WARNING\n");
 
         }
     } else {  // If it is stopped or breaked, reamain unchanged
