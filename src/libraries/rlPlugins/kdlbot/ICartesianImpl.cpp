@@ -36,39 +36,7 @@ bool KdlBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o)
 // -----------------------------------------------------------------------------
 
 bool KdlBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
-    printf("KdlBot::goToPose() Begin setting absolute base movement.\n");
-    targetX[0]=xd[0];
-    targetX[1]=xd[1];
-    targetX[2]=xd[2];
-    targetO[0]=od[0];
-    targetO[1]=od[1];
-//    printf("KdlBot::goToPose() Problem statement:\n");
-//    printf("xd: %s\nod: %s\n",xd.toString().c_str(),od.toString().c_str());
-    yarp::sig::Vector x,o;
-    getPose(x,o);
-    double trajT=duration;
-    if (t>0) trajT = t;
-/*    printf("[goToPose] begin: trajPrP dump(100 samples).\n");
-    trajPrP->dump(100);
-    printf("[goToPose] end: trajPrP dump(100 samples).\n");
-    printf("[goToPose] begin: trajPhP dump(100 samples).\n");
-    trajPhP->dump(100);
-    printf("[goToPose] end: trajPhP dump(100 samples).\n");
-    printf("[goToPose] begin: trajOyP dump(100 samples).\n");
-    trajOyP->dump(100);
-    printf("[goToPose] end: trajOyP dump(100 samples).\n");
-    printf("[goToPose] begin: trajOz dump(100 samples).\n");
-    trajOz->dump(100);
-    printf("[goToPose] end: trajOz dump(100 samples).\n");
-    printf("[goToPose] begin: trajOzPP dump(100 samples).\n");
-    trajOzPP->dump(100);
-    printf("[goToPose] end: trajOzPP dump(100 samples).\n");*/
-    startTime = Time::now();
-    withOri=true;
-    vel->setVelocityMode();
-    cmc_status=1;
-    printf("KdlBot::goToPose() End setting absolute base movement.\n");
-    return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,20 +50,50 @@ bool KdlBot::goToPosition(const yarp::sig::Vector &xd, const double t) {
 bool KdlBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                               const double t) {
     printf("[KdlBot] Begin setting absolute base movement.\n");
-    targetX[0]=xd[0];
-    targetX[1]=xd[1];
-    targetX[2]=xd[2];
-    targetO[0]=od[0];
-    targetO[1]=od[1];
+
+    KDL::Vector targetX(xd[0],xd[1],xd[2]);
+    KDL::Rotation targetO;
+    if (angleRepr == "eulerYZ") {  // ASIBOT
+        KDL::Rotation targetO = Rotation::EulerZYZ(atan2(xd[1],xd[0]),toRad(od[0]), toRad(od[1]));
+    } else if (angleRepr == "eulerZYZ") {
+        KDL::Rotation targetO = Rotation::EulerZYZ(toRad(od[0]), toRad(od[1]), toRad(od[2]));
+    } else {  // axisAngle, etc.
+        printf("[warning] KDL no compatible angleRepr\n");
+    }
+    targetF = KDL::Frame(targetO,targetX);
+
     yarp::sig::Vector x,o;
-    getPose(x,o);
+    if(!getPose(x,o)) {
+        printf("[goToPoseSync] getPose failed.\n");
+        return false;
+    }
+    KDL::Vector initX(x[0],x[1],x[2]);
+    KDL::Rotation initO;
+    if (angleRepr == "eulerYZ") {  // ASIBOT
+        KDL::Rotation initO = Rotation::EulerZYZ(atan2(x[1],x[0]),toRad(o[0]), toRad(o[1]));
+    } else if (angleRepr == "eulerZYZ") {
+        KDL::Rotation initO = Rotation::EulerZYZ(toRad(o[0]), toRad(o[1]), toRad(o[2]));
+    } else {  // axisAngle, etc.
+        printf("[warning] KDL no compatible angleRepr\n");
+    }
+    KDL::Frame initF(initO,initX);
+
     double trajT=duration;
     if (t>0) trajT = t;
-    printf("[goToPose] end: trajOzPP dump(100 samples).\n");
+
+    _orient = new RotationalInterpolation_SingleAxis();
+    double _eqradius = 1; //0.000001;
+    bool _aggregate = true;
+ 
+    KDL::Path_Line testPathLine(initF, targetF, _orient, _eqradius, _aggregate);
+    KDL::VelocityProfile_Trap testVelocityProfile(maxVel, maxAcc);
+    KDL::Trajectory_Segment testTrajectory(testPathLine.Clone(), testVelocityProfile.Clone(), duration, _aggregate);
+
     startTime = Time::now();
     withOri=true;
     vel->setVelocityMode();
     cmc_status=1;
+
     printf("[KdlBot] End setting absolute base movement.\n");
     return true;
 }
