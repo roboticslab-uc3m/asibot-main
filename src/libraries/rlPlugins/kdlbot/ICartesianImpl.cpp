@@ -51,32 +51,36 @@ bool KdlBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &
                               const double t) {
     printf("[KdlBot] Begin setting absolute base movement.\n");
 
-    KDL::Vector targetX(xd[0],xd[1],xd[2]);
-    KDL::Rotation targetO;
+    for (int s=0;s<od.size();s++)
+        targetO[s]=od[s];
+
+    targetF.p.data[0] = xd[0];
+    targetF.p.data[1] = xd[1];
+    targetF.p.data[2] = xd[2];
     if (angleRepr == "eulerYZ") {  // ASIBOT
-        KDL::Rotation targetO = Rotation::EulerZYZ(atan2(xd[1],xd[0]),toRad(od[0]), toRad(od[1]));
+        targetF.M = Rotation::EulerZYZ(atan2(xd[1],xd[0]),toRad(od[0]), toRad(od[1]));
     } else if (angleRepr == "eulerZYZ") {
-        KDL::Rotation targetO = Rotation::EulerZYZ(toRad(od[0]), toRad(od[1]), toRad(od[2]));
+        targetF.M = Rotation::EulerZYZ(toRad(od[0]), toRad(od[1]), toRad(od[2]));
     } else {  // axisAngle, etc.
         printf("[warning] KDL no compatible angleRepr\n");
     }
-    targetF = KDL::Frame(targetO,targetX);
 
     yarp::sig::Vector x,o;
     if(!getPose(x,o)) {
         printf("[goToPoseSync] getPose failed.\n");
         return false;
     }
-    KDL::Vector initX(x[0],x[1],x[2]);
-    KDL::Rotation initO;
+    KDL::Frame initF;
+    initF.p.data[0] = x[0];
+    initF.p.data[1] = x[1];
+    initF.p.data[2] = x[2];
     if (angleRepr == "eulerYZ") {  // ASIBOT
-        KDL::Rotation initO = Rotation::EulerZYZ(atan2(x[1],x[0]),toRad(o[0]), toRad(o[1]));
+        initF.M = Rotation::EulerZYZ(atan2(x[1],x[0]),toRad(o[0]), toRad(o[1]));
     } else if (angleRepr == "eulerZYZ") {
-        KDL::Rotation initO = Rotation::EulerZYZ(toRad(o[0]), toRad(o[1]), toRad(o[2]));
+        initF.M = Rotation::EulerZYZ(toRad(o[0]), toRad(o[1]), toRad(o[2]));
     } else {  // axisAngle, etc.
         printf("[warning] KDL no compatible angleRepr\n");
     }
-    KDL::Frame initF(initO,initX);
 
     double trajT=duration;
     if (t>0) trajT = t;
@@ -87,7 +91,8 @@ bool KdlBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &
  
     KDL::Path_Line testPathLine(initF, targetF, _orient, _eqradius, _aggregate);
     KDL::VelocityProfile_Trap testVelocityProfile(maxVel, maxAcc);
-    KDL::Trajectory_Segment testTrajectory(testPathLine.Clone(), testVelocityProfile.Clone(), duration, _aggregate);
+//    KDL::Trajectory_Segment testTrajectory(testPathLine.Clone(), testVelocityProfile.Clone(), duration, _aggregate);
+    currentTrajectory = new Trajectory_Segment(testPathLine.Clone(), testVelocityProfile.Clone(), duration, _aggregate);
 
     startTime = Time::now();
     withOri=true;
