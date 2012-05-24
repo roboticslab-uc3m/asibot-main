@@ -37,13 +37,12 @@ bool KdlBot::open(Searchable& config) {
     if (config.check("angleRepr")) angleRepr = config.find("angleRepr").asString();
     printf("KdlBot using numMotors: %d, angleRepr: %s.\n",numMotors,angleRepr.c_str());
 
-//    targetX.resize(3);
     if(angleRepr == "axisAngle") {
-//        targetO.resize(4);
+        targetO.resize(4);
     }else if(angleRepr == "eulerYZ") {
-//        targetO.resize(2);
+        targetO.resize(2);
     }else if(angleRepr == "eulerZYZ") {
-//        targetO.resize(3);
+        targetO.resize(3);
     }else printf("[warning] axisAngle not recognized!\n");
 
     if (config.check("cmcMs")) cmcMs = config.find("cmcMs").asDouble();
