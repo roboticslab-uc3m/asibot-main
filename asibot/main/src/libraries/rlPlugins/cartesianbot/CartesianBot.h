@@ -122,9 +122,12 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * @param od a 4-d vector which is filled with the actual 
     * orientation using axis-angle representation xa, ya, za, theta 
     * (meters and radians). 
+    * @param stamp the stamp of the encoders employed to compute the
+    *              pose.
     * @return true/false on success/failure.
     */
-    virtual bool getPose(yarp::sig::Vector &x, yarp::sig::Vector &o);
+    virtual bool getPose(yarp::sig::Vector &x, yarp::sig::Vector &o,
+                         yarp::os::Stamp *stamp=NULL);
 
     /**
     * Get the current pose of the specified link belonging to the 
@@ -135,10 +138,13 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     *         x,y,z (meters) of the given link reference frame.
     * @param od a 4-d vector which is filled with the actual 
     * orientation of the given link reference frame using axis-angle
-    * representation xa, ya, za, theta (meters and radians). 
+    * representation xa, ya, za, theta (meters and radians).
+    * @param stamp the stamp of the encoders employed to compute the
+    *              pose.
     * @return true/false on success/failure.
     */
-    virtual bool getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o);
+    virtual bool getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o,
+                         yarp::os::Stamp *stamp=NULL);
 
     /**
     * Move the end-effector to a specified pose (position
