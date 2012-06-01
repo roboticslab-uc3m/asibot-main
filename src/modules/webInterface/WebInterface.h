@@ -11,6 +11,8 @@
 
 #include "WebResponder.h"
 
+#define DEFAULT_IP "localhost"
+
 using namespace yarp::os;
 
 class WebInterface : public RFModule {
