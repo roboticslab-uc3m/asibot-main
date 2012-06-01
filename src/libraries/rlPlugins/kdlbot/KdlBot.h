@@ -33,7 +33,7 @@
 
 #define DEFAULT_ANGLE_REPR "axisAngle"  // ConstString
 #define DEFAULT_CMC_MS 30       // ms
-#define DEFAULT_EPS 20     // Epsilon
+#define DEFAULT_EPSILON 0.005     // Precision tolerance
 #define DEFAULT_DURATION 20     // For Trajectory
 #define DEFAULT_MAXVEL 7.5      // unit/s
 #define DEFAULT_MAXACC 0.2      // unit/s^2
@@ -619,7 +619,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     
     unsigned int numMotors;
     ConstString angleRepr;
-    double eps, duration, maxVel, maxAcc, cmcMs;
+    double epsilon, duration, maxVel, maxAcc, cmcMs;
 
 //    Frame H0, HN;
 //    Frame HN;

@@ -52,7 +52,7 @@ void KdlBot::run() {
             printf("fabs(o[%d]-targetO[%d]: %f\n",s,s,fabs(o[s]-targetO[s]));
             if(fabs(o[s]-targetO[s])>CARTORI_PRECISION) done = false;
         }*/
-        if(!Equal(currentF,targetF,0.005)) done = false;
+        if(!Equal(currentF,targetF,epsilon)) done = false;
         
         if (done) {
             printf("Target reached in %f.\n",Time::now()-startTime);
