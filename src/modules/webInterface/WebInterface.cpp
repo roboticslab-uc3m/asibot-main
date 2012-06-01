@@ -34,8 +34,10 @@ bool WebInterface::configure(ResourceFinder &rf) {
     int port_number = rf.check("port",Value(0)).asInt();
 
     contact = Contact::byName(name);
+    ConstString contactIp = rf.check("ip",DEFAULT_IP,"contact ip").asString();
     if (port_number!=0) {
-        contact = contact.addSocket("","",port_number);
+//        contact = contact.addSocket("","",port_number);
+        contact = contact.addSocket("",contactIp,port_number);
     }
     if (!server.open(contact)) return false;
     contact = server.where();
