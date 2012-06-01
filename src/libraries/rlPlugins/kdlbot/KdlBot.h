@@ -29,13 +29,11 @@
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
 
-#define CARTPOS_PRECISION 0.001
-#define CARTORI_PRECISION 0.1
-
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
 #define DEFAULT_ANGLE_REPR "axisAngle"  // ConstString
 #define DEFAULT_CMC_MS 30       // ms
+#define DEFAULT_EPS 20     // Epsilon
 #define DEFAULT_DURATION 20     // For Trajectory
 #define DEFAULT_MAXVEL 7.5      // unit/s
 #define DEFAULT_MAXACC 0.2      // unit/s^2
@@ -137,9 +135,12 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     * @param od a 4-d vector which is filled with the actual 
     * orientation using axis-angle representation xa, ya, za, theta 
     * (meters and radians). 
+    * @param stamp the stamp of the encoders employed to compute the
+    *              pose.
     * @return true/false on success/failure.
     */
-    virtual bool getPose(yarp::sig::Vector &x, yarp::sig::Vector &o);
+    virtual bool getPose(yarp::sig::Vector &x, yarp::sig::Vector &o,
+                         yarp::os::Stamp *stamp=NULL);
 
     /**
     * Get the current pose of the specified link belonging to the 
@@ -150,10 +151,13 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     *         x,y,z (meters) of the given link reference frame.
     * @param od a 4-d vector which is filled with the actual 
     * orientation of the given link reference frame using axis-angle
-    * representation xa, ya, za, theta (meters and radians). 
+    * representation xa, ya, za, theta (meters and radians).
+    * @param stamp the stamp of the encoders employed to compute the
+    *              pose.
     * @return true/false on success/failure.
     */
-    virtual bool getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o);
+    virtual bool getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o,
+                         yarp::os::Stamp *stamp=NULL);
 
     /**
     * Move the end-effector to a specified pose (position
@@ -615,7 +619,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     
     unsigned int numMotors;
     ConstString angleRepr;
-    double duration, maxVel, maxAcc, cmcMs;
+    double eps, duration, maxVel, maxAcc, cmcMs;
 
 //    Frame H0, HN;
 //    Frame HN;
