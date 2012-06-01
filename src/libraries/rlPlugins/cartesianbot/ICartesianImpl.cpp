@@ -15,21 +15,21 @@ bool CartesianBot::getTrackingMode(bool *f) {
     return false;
 }
 
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------- 
 
-bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {  // interface is in [deg]
+bool CartesianBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os::Stamp *stamp) {
+    return false;
+}
+
+// ----------------------------------------------------------------------------- 
+
+bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os::Stamp *stamp) {
     double realDeg[NUM_MOTORS];
     if(!enc->getEncoders(realDeg)) {
         printf("[warning] CartesianBot::getPose() failed to getEncoders()\n");
         return false;
     }
     return fwdKin(realDeg,x,o);
-}
-
-// ----------------------------------------------------------------------------- 
-
-bool CartesianBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o) {
-    return false;
 }
 
 // -----------------------------------------------------------------------------

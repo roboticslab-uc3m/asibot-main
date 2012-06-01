@@ -15,9 +15,15 @@ bool KdlBot::getTrackingMode(bool *f) {
     return false;
 }
 
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------- 
 
-bool KdlBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
+bool KdlBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os::Stamp *stamp) {
+    return false;
+}
+
+// ----------------------------------------------------------------------------- 
+
+bool KdlBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os::Stamp *stamp) {
     double dRealUnits[numMotors];
     if(!enc->getEncoders(dRealUnits)) {
         printf("[warning] KdlBot::getPose() failed to getEncoders()\n");
@@ -25,12 +31,6 @@ bool KdlBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o) {
     }
     yarp::sig::Vector realUnits(numMotors,dRealUnits);
     return fwdKin(realUnits,x,o);
-}
-
-// ----------------------------------------------------------------------------- 
-
-bool KdlBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o) {
-    return false;
 }
 
 // -----------------------------------------------------------------------------
