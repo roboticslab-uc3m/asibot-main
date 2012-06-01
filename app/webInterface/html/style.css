@@ -16,6 +16,10 @@ body {
 	color: #6E6E6E;
 }
 
+button {
+    -webkit-appearance: none;
+}
+
 input, textarea {
 	background: #FFFFFF url(fig/img09.gif) repeat-x;
 	border: 1px solid #FFFFFF;
