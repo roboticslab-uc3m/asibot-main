@@ -2,11 +2,11 @@
 <name>webInterface App</name>
         <module>
                 <name>cartesianServer</name>
-                <node>console</node>
+                <node>localhost</node>
         </module>
         <module>
                 <name>webInterface</name>
-                <node>console</node>
+                <node>localhost</node>
         </module>
 
 </application>
