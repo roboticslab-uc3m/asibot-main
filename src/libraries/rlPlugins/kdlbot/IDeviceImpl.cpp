@@ -10,7 +10,7 @@ bool KdlBot::open(Searchable& config) {
     angleRepr = DEFAULT_ANGLE_REPR; // ConstString
     cmcMs = DEFAULT_CMC_MS;         // double
     duration = DEFAULT_DURATION;    // double
-    eps = DEFAULT_EPS;              // double
+    epsilon = DEFAULT_EPSILON;      // double
     maxVel = DEFAULT_MAXVEL;        // double
     maxAcc = DEFAULT_MAXACC;        // double
     numMotors = DEFAULT_NUM_MOTORS; // unsigned int
@@ -25,7 +25,7 @@ bool KdlBot::open(Searchable& config) {
         printf("\t--angleRepr (axisAngle, eulerYZ, or eulerZYZ (default: \"%s\")\n",angleRepr.c_str());
         printf("\t--cmcMs [ms] (rate of Cartesian Motion Controller thread, default: \"%f\")\n",cmcMs);
         printf("\t--duration [s] (duration of movl movements, default: \"%f\")\n",duration);
-        printf("\t--eps (epsilon for tolerance, default: \"%f\")\n",eps);
+        printf("\t--epsilon (epsilon for tolerance, default: \"%f\")\n",epsilon);
         printf("\t--maxAcc [units/s^2] (maximum joint acceleration, default: \"%f\")\n",maxAcc);
         printf("\t--maxVel [units/s] (maximum joint velocity, default: \"%f\")\n",maxVel);
         printf("\t--numMotors (default: \"%d\")\n",numMotors);
@@ -49,10 +49,10 @@ bool KdlBot::open(Searchable& config) {
 
     if (config.check("cmcMs")) cmcMs = config.find("cmcMs").asDouble();
     if (config.check("duration")) duration = config.find("duration").asDouble();
-    if (config.check("eps")) eps = config.find("eps").asDouble();
+    if (config.check("epsilon")) epsilon = config.find("epsilon").asDouble();
     if (config.check("maxAcc")) maxAcc = config.find("maxAcc").asDouble();
     if (config.check("maxVel")) maxVel = config.find("maxVel").asDouble();
-    printf("KdlBot using cmcMs: %f, duration: %f, eps: %f, maxAcc: %f, maxVel: %f.\n",cmcMs,duration,eps,maxAcc,maxVel);
+    printf("KdlBot using cmcMs: %f, duration: %f, epsilon: %f, maxAcc: %f, maxVel: %f.\n",cmcMs,duration,epsilon,maxAcc,maxVel);
 
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
