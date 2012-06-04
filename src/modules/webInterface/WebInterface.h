@@ -11,7 +11,10 @@
 
 #include "WebResponder.h"
 
-#define DEFAULT_IP "localhost"
+#define DEFAULT_PERIOD 5   // [s]
+#define DEFAULT_RESOURCES "robots.uc3m.es"
+#define DEFAULT_WEB_IP "localhost"
+#define DEFAULT_WEB_PORT 8080
 
 using namespace yarp::os;
 
@@ -20,7 +23,7 @@ protected:
 
     Port server;
     WebResponder responder;
-    Contact contact;
+    Contact contact;  // will get webIp and webPort
 
     bool updateModule();
     bool interruptModule();

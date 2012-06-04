@@ -8,41 +8,56 @@ WebInterface::WebInterface() { }
 /************************************************************************/
 bool WebInterface::configure(ResourceFinder &rf) {
 
+    period = DEFAULT_PERIOD;  // double
+    ConstString resources = DEFAULT_RESOURCES;
+    ConstString webIp = DEFAULT_WEB_IP;
+    int webPort = DEFAULT_WEB_PORT;
+    
+    printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
-        printf("Options:\n");
-        printf("\t--rate    rate: ms (default: \"20\")\n");
-        return 0;
+        printf("WebInterface Options:\n");
+        printf("\t--period [s] (default: \"%f\")\n",period);
+        printf("\t--resources (default: \"%s\")\n",resources.c_str());
+        printf("\t--webIp (default: \"%s\")\n",webIp.c_str());
+        printf("\t--webPort (default: \"%d\")\n",webPort);
     }
 
     counter = 0;
-    period = rf.check("period",5,"period in s").asDouble();
+    if(rf.check("period")) period = rf.find("period").asDouble();
+    if(rf.check("resources")) resources = rf.find("resources").asString();
+    if(rf.check("webIp")) webIp = rf.find("webIp").asString();
+    if(rf.check("webPort")) webPort = rf.find("webPort").asInt();
+    printf("WebInterface using period: %f, resources: %s.\n", period,resources.c_str());
+    printf("WebInterface using webIp: %s, webPort: %d.\n",webIp.c_str(),webPort);
 
-    responder.init();
     ConstString htmlPath = rf.getContextPath() + "/../html/";
-    printf("htmlPath: %s\n",htmlPath.c_str());
+    printf("WebInterface using htmlPath: %s\n",htmlPath.c_str());
     responder.setHtmlPath(htmlPath);
     ConstString userPath = rf.getContextPath() + "/../user/";
-    printf("userPath: %s\n",userPath.c_str());
+    printf("WebInterface using userPath: %s\n",userPath.c_str());
     responder.setUserPath(userPath);
     ConstString resourcePath = "http://";
-    resourcePath += rf.check("resources","localhost","resource path").asString() + "/";
-    printf("resourcePath: %s\n",resourcePath.c_str());
+    resourcePath += resources + "/";
+    printf("WebInterface using resourcePath: %s\n",resourcePath.c_str());
     responder.setResourcePath(resourcePath);
+
+    printf("--------------------------------------------------------------\n");
+    if(rf.check("help")) {
+        exit(1);
+    }
+
+    responder.init();
     server.setReader(responder);
 
     ConstString name = rf.check("name",Value("/web")).asString();
-    int port_number = rf.check("port",Value(0)).asInt();
 
     contact = Contact::byName(name);
-    ConstString contactIp = rf.check("ip",DEFAULT_IP,"contact ip").asString();
-    if (port_number!=0) {
-//        contact = contact.addSocket("","",port_number);
-        contact = contact.addSocket("",contactIp,port_number);
+    if (webPort!=0) {
+        contact = contact.addSocket("",webIp,webPort);
     }
     if (!server.open(contact)) return false;
     contact = server.where();
 
-    printf("[success] WebInterface configured.\n");
     return true;
 }
 
