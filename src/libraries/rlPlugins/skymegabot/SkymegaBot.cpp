@@ -44,13 +44,8 @@ bool SkymegaBot::velocityMove(int j, double sp) {
     direccion <<= 6;  // shift 6 positions
     cmdByte |= direccion;
     printf("cmdByte (post-dir): 0x%x\n",cmdByte);
-/*    char buf[256];
-    printf("sending: %c\n",cmdByte);
-    strcpy(buf,&cmdByte);*/
-//    int res = serialport_write(fd, (char*)&cmdByte);
     int res = serialport_writebyte(fd, cmdByte);
     if(res==-1) return false;
-    
     return true;
 }
 
