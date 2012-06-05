@@ -83,7 +83,7 @@ function connectReal() {
                     alert('Not found realState');
                 else
                     doc.getElementById('realState').src = 'fig/realCon.jpg';
-                alert('Disconnected from Real Robot');
+                alert('Connected to Real Robot');
             }
         }
     }
