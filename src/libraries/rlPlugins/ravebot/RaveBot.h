@@ -13,6 +13,7 @@
 //#include <openrave/kinbody.h>
 
 #include <stdio.h>
+#include <iostream>
 #include <sstream>
 
 //#define MOTOR_PRECISION 0.25
