@@ -18,6 +18,7 @@ project(asibot)
 ##### options
 option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FALSE)
 option(ENABLE_findRedCan "Choose if you want to compile findRedCan" FALSE)
+option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_testRaveBot "Choose if you want to compile testRaveBot" FALSE)
 option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
 option(ENABLE_webInterface "Choose if you want to compile webInterface" FALSE)
