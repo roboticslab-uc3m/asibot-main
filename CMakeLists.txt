@@ -23,7 +23,6 @@ option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
 option(ENABLE_webInterface "Choose if you want to compile webInterface" FALSE)
 option(ENABLE_webInterfacePy "Choose if you want to compile webInterfacePy" FALSE)
 option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
-option(ENABLE_webInterface2 "Choose if you want to compile experimental webInterface2" FALSE)
 
 if(MSVC)
   MESSAGE(STATUS "Running on windows")    
