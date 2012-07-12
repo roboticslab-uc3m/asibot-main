@@ -18,24 +18,24 @@ double PremultH::getPeriod() {
 bool PremultH::configure(ResourceFinder &rf) {
     watchdog = DEFAULT_WATCHDOG;  // double
 
-    printf("--------------------------------------------------------------\n");
+    fprintf(stdout,"--------------------------------------------------------------\n");
     if(rf.check("help")) {
        printf("PremultH Options:\n");
        printf("\t--watchdog ([s] default: \"%f\")\n",watchdog);
     }
     if(rf.check("watchdog")) watchdog = rf.find("watchdog").asDouble();
-    printf("PremultH using watchdog [s]: %f.\n",watchdog);
+    fprintf(stdout,"PremultH using watchdog [s]: %f.\n",watchdog);
 
     // yarp::sig::Matrix ymH(4,4);
     H.resize(4,4);
     ConstString ycsH("H");
     if(!getMatrixFromProperties(rf,ycsH,H)){
         H.eye();
-        printf("PremultH using default H: H = I\n");
+        fprintf(stdout,"PremultH using default H: H = I\n");
     }
-    else printf("PremultH using custom H:\n%s\n",H.toString().c_str());
+    else fprintf(stdout,"PremultH using custom H:\n%s\n",H.toString().c_str());
 
-    printf("--------------------------------------------------------------\n");
+    fprintf(stdout,"--------------------------------------------------------------\n");
     if(rf.check("help")) {
        return false;
     }
