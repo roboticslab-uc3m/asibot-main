@@ -41,10 +41,10 @@ void SharedArea::getLongLC(double _longLineCoords[6]) {
                             shortCoords[4] - shortCoords[1],
                             shortCoords[5] - shortCoords[2] };
 
-    double gain = 2;
-    _longLineCoords[0] = shortCoords[0];
-    _longLineCoords[1] = shortCoords[1];
-    _longLineCoords[2] = shortCoords[2];
+    double gain = 30;
+    _longLineCoords[0] = shortCoords[0] - (direction[0] * gain);
+    _longLineCoords[1] = shortCoords[1] - (direction[1] * gain);
+    _longLineCoords[2] = shortCoords[2] - (direction[2] * gain);
     _longLineCoords[3] = shortCoords[0] + (direction[0] * gain);
     _longLineCoords[4] = shortCoords[1] + (direction[1] * gain);
     _longLineCoords[5] = shortCoords[2] + (direction[2] * gain);
