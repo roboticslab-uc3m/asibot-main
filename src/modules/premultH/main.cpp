@@ -12,7 +12,7 @@
  *
  * Author: <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>
  *
- * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $ECRO_ROOT/main/doc/LGPL.TXT
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see $ASIBOT_ROOT/main/doc/LGPL.TXT
  *
  */
 
