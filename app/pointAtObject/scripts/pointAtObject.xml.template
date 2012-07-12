@@ -1,0 +1,9 @@
+<application>
+<name>pointAtObject App</name>
+        <module>
+                <name>pointAtObjectServer</name>
+                <node>localhost</node>
+        </module>
+
+</application>
+
