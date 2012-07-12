@@ -30,6 +30,7 @@ void PremultPorts::onRead(Bottle& b) {
             originalH(0,3) = inListElement->get(0).asDouble();
             originalH(1,3) = inListElement->get(1).asDouble();
             originalH(2,3) = inListElement->get(2).asDouble();
+            printf("PremultH using custom H:\n%s\n",H->toString().c_str());
             yarp::sig::Matrix endH = (*H) * originalH;
             Bottle outListElement;
             outListElement.addDouble(endH(0,3));
