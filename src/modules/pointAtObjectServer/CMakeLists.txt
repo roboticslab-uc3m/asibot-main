@@ -2,6 +2,8 @@
 
 cmake_minimum_required(VERSION 2.6)
 
+IF (ENABLE_pointAtObjectServer)
+
 set(KEYWORD "pointAtObjectServer")
 
 # Start a project.
@@ -35,3 +37,6 @@ if (folder_source)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
+
+ENDIF (ENABLE_pointAtObjectServer)
+

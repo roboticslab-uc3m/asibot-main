@@ -3,6 +3,7 @@
 
 add_subdirectory(cartesianServer)
 add_subdirectory(findRedCan)
+add_subdirectory(pointAtObjectServer)
 add_subdirectory(premultH)
 add_subdirectory(testRaveBot)
 add_subdirectory(webInterfacePy)
