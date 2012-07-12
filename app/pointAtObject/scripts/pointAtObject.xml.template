@@ -7,7 +7,7 @@
         <module>
                 <name>premultH</name>
                 <node>localhost</node>
-                <parameters>--H (1 0 0 0   0 -1 0 0   0 0 -1 0   0 0 0 0)</parameters>
+                <parameters>--context pointAtObject/conf</parameters>
         </module>
 
         <connection>
