@@ -44,7 +44,7 @@ bool PointAtObjectServer::init() {
     timerCallback->setSharedArea(&sharedArea);
     renderWindowInteractor->AddObserver(vtkCommand::TimerEvent, timerCallback);
     timerCallback->init();
-    int timerId = renderWindowInteractor->CreateRepeatingTimer(500);  // [ms]
+    int timerId = renderWindowInteractor->CreateRepeatingTimer(1000);  // [ms]
     std::cout << "timerId: " << timerId << std::endl;
 
     // Configure and open lineCallbackPort
