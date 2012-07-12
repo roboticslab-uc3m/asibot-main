@@ -4,6 +4,22 @@
                 <name>pointAtObjectServer</name>
                 <node>localhost</node>
         </module>
+        <module>
+                <name>premultH</name>
+                <node>localhost</node>
+                <parameters>--H (1 0 0 0   0 -1 0 0   0 0 -1 0   0 0 0 0)</parameters>
+        </module>
+
+        <connection>
+                <from>/kinect/skeleton</from>
+                <to>/in</to>
+                <protocol>udp</protocol>
+        </connection>
+        <connection>
+                <from>/out</from>
+                <to>/pointAtObject:i</to>
+                <protocol>udp</protocol>
+        </connection>
 
 </application>
 
