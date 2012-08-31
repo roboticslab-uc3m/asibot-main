@@ -16,5 +16,8 @@ include_directories(${YARP_INCLUDE_DIRS})
 ADD_LIBRARY(skymegabot SkymegaBot.h SkymegaBot.cpp HelperFuncs.cpp)
 TARGET_LINK_LIBRARIES(skymegabot ${YARP_LIBRARIES})
 
+# Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins skymegabot CACHE INTERNAL "appended libraries") 
+
 ENDIF (NOT SKIP_skymegabot)
 
