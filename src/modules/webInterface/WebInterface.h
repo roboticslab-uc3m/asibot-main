@@ -12,7 +12,7 @@
 #include "WebResponder.h"
 
 #define DEFAULT_PERIOD 5   // [s]
-#define DEFAULT_RESOURCES "robots.uc3m.es"
+#define DEFAULT_RESOURCES "robots.uc3m.es/webInterface/html"
 #define DEFAULT_WEB_IP "localhost"
 #define DEFAULT_WEB_PORT 8080
 
