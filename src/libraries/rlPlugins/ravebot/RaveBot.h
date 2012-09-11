@@ -4,6 +4,7 @@
 #define __RAVEBOT_H__
 
 #include <yarp/os/all.h>
+#include <yarp/os/Semaphore.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 #include <yarp/dev/Drivers.h>
 #include <yarp/dev/PolyDriver.h>
@@ -384,6 +385,11 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      */
     void run();
 
+// ----- Shared Area Funcion declarations. Implementation in SharedArea.cpp -----
+    void setEncRaw(const int Index, const int Position);
+    int getEncRaw(const int Index);
+    int getEncExposed(const int Index);
+
 // ------------------------------- Private -------------------------------------
   private:
     // General Joint Motion Controller parameters //
@@ -392,6 +398,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     //
     int modePosVel;
     double lastTime;
+    Semaphore encRawMutex;  // SharedArea
     std::vector<double> encRaw;
     std::vector<double> encRawExposed;  // For conversion.
     std::vector<int> jointStatus;
