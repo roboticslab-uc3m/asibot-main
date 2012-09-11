@@ -16,17 +16,29 @@ bool RaveBot::threadInit() {
 void RaveBot::run() {
     std::vector<dReal> encExposed(mismotores.size());
     for(unsigned int motor=0;motor<numMotors;motor++){
-        if((jointStatus[motor]==1)||(jointStatus[motor]==2)||(jointStatus[motor]==3)||(jointStatus[motor]==5)) {
-            if (fabs(targetExposed[motor]-encRaw[motor])<jointTol[motor]){
-                printf("Joint q%d reached target.\n",motor+1);
-                jointStatus[motor]=0;
-                velRaw[motor]=0;
-            } else {  // TODO: check for joint limits
-                // encRaw[motor]+=(velRaw[motor])*(JMC_MS/1000.0);
-                encRaw[motor]+=(velRaw[motor])*(Time::now()-lastTime);
+        if((jointStatus[motor]==1)||(jointStatus[motor]==2)||(jointStatus[motor]==3)) {  // if set to move...
+            if ((getEncExposed(motor) > maxLimit[motor])  && (velRaw[motor]>0)) {  // SW max JL
+                stop(motor);  // puts jointStatus[motor]=0;
+                printf("[warning] Moving joint q%d at configured max joint limit, stopping.\n",motor+1);
+            } else if ((getEncExposed(motor) < minLimit[motor]) && (velRaw[motor]<0)) {  // SW min JL
+                stop(motor);  // puts jointStatus[motor]=0;
+                printf("[warning] Moving joint q%d at configured min joint limit, stopping.\n",motor+1);
+            } else if((jointStatus[motor]==1)||(jointStatus[motor]==2)) {  // check if target reached in pos or rel
+                if ( (velRaw[motor] > 0) &&  // moving positive...
+                    (getEncExposed(motor) > (targetExposed[motor]-jointTol[motor])) ) {
+                    stop(motor);  // puts jointStatus[motor]=0;
+                    printf("Joint q%d reached target.\n",motor+1);
+                } else if ( (velRaw[motor] < 0) &&  // moving negative...
+                    (getEncExposed(motor) < (targetExposed[motor]+jointTol[motor])) ) {
+                    stop(motor);  // puts jointStatus[motor]=0;
+                    printf("Joint q%d reached target.\n",motor+1);
+                } else {
+                    // encRaw[motor]+=(velRaw[motor])*(JMC_MS/1000.0);
+                    encRaw[motor]+=(velRaw[motor])*(Time::now()-lastTime);
+                }
             }
         }
-        if(mismotores[motor]->IsPrismatic(0)) encExposed[motor] = encRaw[motor];
+        if(mismotores[motor]->IsPrismatic(0)) encExposed[motor] = encRaw[motor]/1000.0;
         else encExposed[motor]=toRad(encRaw[motor]);
     }
     lastTime = Time::now();
@@ -71,4 +83,6 @@ void RaveBot::run() {
     }
 
 }
+
+// -----------------------------------------------------------------------------
 
