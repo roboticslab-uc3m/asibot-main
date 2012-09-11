@@ -17,13 +17,15 @@
 #include <sstream>
 
 #define DEFAULT_NUM_MOTORS 5
-#define DEFAULT_JMC_MS 20  // [ms]
 
 #define DEFAULT_ENV "asibot_cocina_entero.env.xml"
+#define DEFAULT_GEN_ENC_RAW_EXPOSED 1.0  // Ratio.
 #define DEFAULT_GEN_JOINT_TOL 0.25  // Exposed.
 #define DEFAULT_GEN_MAX_LIMIT 360.0  // Exposed.
 #define DEFAULT_GEN_MIN_LIMIT -360.0  // Exposed.
 #define DEFAULT_GEN_REF_SPEED 7.5  // Exposed.
+#define DEFAULT_GEN_VEL_RAW_EXPOSED 1.0  // Ratio.
+#define DEFAULT_JMC_MS 20  // [ms]
 #define DEFAULT_PHYSICS "ode"
 
 #define TOOL_SPEED_ADJ 0.08  // Speed adjustment for tool movement (only simulation).
@@ -386,15 +388,14 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     void run();
 
 // ----- Shared Area Funcion declarations. Implementation in SharedArea.cpp -----
-    void setEncRaw(const int Index, const int Position);
-    int getEncRaw(const int Index);
-    int getEncExposed(const int Index);
+    void setEncRaw(const int Index, const double Position);
+    double getEncRaw(const int Index);
+    double getEncExposed(const int Index);
 
 // ------------------------------- Private -------------------------------------
   private:
     // General Joint Motion Controller parameters //
     unsigned int numMotors;
-    double jmcMs;
     //
     int modePosVel;
     double lastTime;
@@ -410,6 +411,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<double> targetExposed;  // Exposed.
     std::vector<double> velRawExposed;  // For conversion.
     std::vector<double> velRaw;
+    double jmcMs;
     // Tool-related
     double real_tool;
     toolPort theToolPort;  

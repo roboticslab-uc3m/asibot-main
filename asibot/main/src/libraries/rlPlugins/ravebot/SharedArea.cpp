@@ -4,7 +4,7 @@
 
 // ----------------------------------------------------------------------------
 
-void RaveBot::setEncRaw(const int Index, const int Position) {
+void RaveBot::setEncRaw(const int Index, const double Position) {
     // printf("[SharedArea] setEncRaw.\n");
     encRawMutex.wait();
     encRaw[Index] = Position;
@@ -13,9 +13,9 @@ void RaveBot::setEncRaw(const int Index, const int Position) {
 
 // ----------------------------------------------------------------------------
 
-int RaveBot::getEncRaw(const int Index) {
+double RaveBot::getEncRaw(const int Index) {
     // printf("[SharedArea] getEncRaw.\n");
-    int Position;
+    double Position;
     encRawMutex.wait();
     Position = encRaw[Index];
     encRawMutex.post();
@@ -24,8 +24,8 @@ int RaveBot::getEncRaw(const int Index) {
 
 // ----------------------------------------------------------------------------
 
-int RaveBot::getEncExposed(const int Index) {
-    int RawPosition;
+double RaveBot::getEncExposed(const int Index) {
+    double RawPosition;
     encRawMutex.wait();
     RawPosition = encRaw[Index];
     encRawMutex.post();
