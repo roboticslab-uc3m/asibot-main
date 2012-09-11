@@ -16,10 +16,10 @@ bool RaveBot::threadInit() {
 void RaveBot::run() {
     std::vector<dReal> next_positions(mismotores.size());
     for(unsigned int motor=0;motor<numMotors;motor++){
-        if((joint_status[motor]==1)||(joint_status[motor]==2)||(joint_status[motor]==3)||(joint_status[motor]==5)) {
+        if((jointStatus[motor]==1)||(jointStatus[motor]==2)||(jointStatus[motor]==3)||(jointStatus[motor]==5)) {
             if (fabs(targetDeg[motor]-realUnit[motor])<jointTol[motor]){
                 printf("Joint q%d reached target.\n",motor+1);
-                joint_status[motor]=0;
+                jointStatus[motor]=0;
                 jointVel[motor]=0;
             } else {  // TODO: check for joint limits
                 // realUnit[motor]+=(jointVel[motor])*(JMC_MS/1000.0);
