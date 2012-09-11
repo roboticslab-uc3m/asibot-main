@@ -6,7 +6,7 @@
 // ------------------ IEncoder Related -----------------------------------------
 
 bool RaveBot::resetEncoder(int j) {
-    encRaw[j]=0.0;
+    setEncoder(j,0.0);
     return true;
   }
 
