@@ -34,10 +34,19 @@ bool RaveBot::positionMove(int j, double ref) {
     }
     printf("RaveBot::positionMove(%d,%f) f[begin]\n",j,ref);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    jointStatus[j]=1;
     targetExposed[j]=ref;
-    if (ref>encRaw[j]) velRaw[j] = refSpeed[j];
-    else velRaw[j] = -refSpeed[j];
+    if (fabs(targetExposed[j]-getEncExposed(j))<jointTol[j]) {
+        stop(j);  // puts jointStatus[j]=0;
+        printf("Joint q%d reached target.\n",j+1);
+        return true;
+    } else if ( ref > getEncExposed(j) ) {
+        //if(!velocityMove(j, refSpeed[j])) return false;
+        velRaw[j] = (refSpeed[j] * velRawExposed[j]);
+    } else {
+        //if(!velocityMove(j, -refSpeed[j])) return false;
+        velRaw[j] = -(refSpeed[j] * velRawExposed[j]);
+    }
+    jointStatus[j] = 1;  // overwrites the 3 status left by the velocity command
     printf("RaveBot::positionMove(%d,%f) f[end]\n",j,ref);
     return true;
 }
