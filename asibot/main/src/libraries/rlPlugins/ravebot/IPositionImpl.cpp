@@ -35,9 +35,9 @@ bool RaveBot::positionMove(int j, double ref) {
     printf("RaveBot::positionMove(%d,%f) f[begin]\n",j,ref);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     jointStatus[j]=1;
-    targetDeg[j]=ref;
-    if (ref>realUnit[j]) jointVel[j] = refSpeed[j];
-    else jointVel[j] = -refSpeed[j];
+    targetExposed[j]=ref;
+    if (ref>encRaw[j]) velRaw[j] = refSpeed[j];
+    else velRaw[j] = -refSpeed[j];
     printf("RaveBot::positionMove(%d,%f) f[end]\n",j,ref);
     return true;
 }
@@ -53,11 +53,11 @@ bool RaveBot::positionMove(const double *refs) {
     // Find out the maximum time to move
     double max_time = 0;
     for(unsigned int motor=0;motor<numMotors;motor++) {
-        printf("dist[%d]: %f\n",motor,fabs(refs[motor]-realUnit[motor]));
+        printf("dist[%d]: %f\n",motor,fabs(refs[motor]-encRaw[motor]));
         printf("refSpeed[%d]: %f\n",motor,refSpeed[motor]);
-//        printf("diff: %f\n",fabs(refs[motor]-realUnit[motor])/refSpeed[motor]);
-        if (fabs((refs[motor]-realUnit[motor])/refSpeed[motor])>max_time) {
-            max_time = fabs((refs[motor]-realUnit[motor])/refSpeed[motor]);  // the max_dist motor will be at refSpeed
+//        printf("diff: %f\n",fabs(refs[motor]-encRaw[motor])/refSpeed[motor]);
+        if (fabs((refs[motor]-encRaw[motor])/refSpeed[motor])>max_time) {
+            max_time = fabs((refs[motor]-encRaw[motor])/refSpeed[motor]);  // the max_dist motor will be at refSpeed
             printf("-->candidate: %f\n",max_time);
         }
     }
@@ -65,9 +65,9 @@ bool RaveBot::positionMove(const double *refs) {
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     for(unsigned int motor=0;motor<numMotors;motor++) {
         jointStatus[motor]=1;
-        targetDeg[motor]=refs[motor];
-        jointVel[motor] = (refs[motor]-realUnit[motor])/max_time;
-        printf("jointVel[%d]: %f\n",motor,jointVel[motor]);
+        targetExposed[motor]=refs[motor];
+        velRaw[motor] = (refs[motor]-encRaw[motor])/max_time;
+        printf("velRaw[%d]: %f\n",motor,velRaw[motor]);
     }
     printf("RaveBot::positionMove() f[end]\n");
     return true;
@@ -89,9 +89,9 @@ bool RaveBot::relativeMove(int j, double delta) {
     printf("RaveBot::relativeMove(%d,%f) f[begin]\n",j,delta);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     jointStatus[j]=2;
-    targetDeg[j]=realUnit[j]+delta;
-    if (delta>0) jointVel[j] = refSpeed[j];
-    else jointVel[j] = -refSpeed[j];
+    targetExposed[j]=encRaw[j]+delta;
+    if (delta>0) velRaw[j] = refSpeed[j];
+    else velRaw[j] = -refSpeed[j];
     printf("RaveBot::relativeMove(%d,%f) f[end]\n",j,delta);
     return true;
 }
@@ -115,8 +115,8 @@ bool RaveBot::relativeMove(const double *deltas) {
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     for(int motor=0; motor<5; motor++) {
       jointStatus[motor]=2;
-      targetDeg[motor]=realUnit[motor]+deltas[motor];
-      jointVel[motor] = (deltas[motor])/time_max_dist;
+      targetExposed[motor]=encRaw[motor]+deltas[motor];
+      velRaw[motor] = (deltas[motor])/time_max_dist;
     }
     printf("RaveBot::relativeMove() f[end]\n");
     return true;
@@ -205,7 +205,7 @@ bool RaveBot::getRefAccelerations(double *accs) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::stop(int j) {
-    jointVel[j]=0.0;
+    velRaw[j]=0.0;
     jointStatus[j]=-1;
     return true;
 }
@@ -214,7 +214,7 @@ bool RaveBot::stop(int j) {
 
 bool RaveBot::stop() {
     for (unsigned int i=0; i<numMotors; i++) {
-      jointVel[i]=0.0;
+      velRaw[i]=0.0;
       jointStatus[i]=-1;
       theToolPort.status=0;
     }

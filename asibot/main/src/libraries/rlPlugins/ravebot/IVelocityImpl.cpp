@@ -21,13 +21,13 @@ bool RaveBot::velocityMove(int j, double sp) {
         return false;
     }
     if (j>=numMotors) return false;
-    if(sp>0) targetDeg[j]=maxLimit[j];
-    else targetDeg[j]=minLimit[j];
+    if(sp>0) targetExposed[j]=maxLimit[j];
+    else targetExposed[j]=minLimit[j];
     // Let's not limit velocity it for now:
     //    if (sp>100) sp=100;
     //    else if (sp<-100) sp=-100;
     // Force it as is:
-    jointVel[j] = sp;
+    velRaw[j] = sp;
     jointStatus[j]=3;
     return true;
 }
@@ -36,7 +36,7 @@ bool RaveBot::velocityMove(int j, double sp) {
 
 bool RaveBot::velocityMove(const double *sp) {
     printf("Vel:");
-    for (unsigned int i=0; i<numMotors; i++) printf(" %+.6f",jointVel[i]);
+    for (unsigned int i=0; i<numMotors; i++) printf(" %+.6f",velRaw[i]);
     printf("\n");
     bool ok = true;
     for(int i=0;i<numMotors;i++)
