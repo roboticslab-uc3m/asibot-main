@@ -10,24 +10,22 @@
 #include <yarp/sig/all.h>
 
 #include <openrave-core.h>
-//#include <openrave/kinbody.h>
 
 #include <stdio.h>
 #include <iostream>
 #include <sstream>
 
-//#define MOTOR_PRECISION 0.25
-#define TOOL_SPEED_ADJ 0.08  // Speed adjustment for simulation, pos.
+#define TOOL_SPEED_ADJ 0.08  // Speed adjustment for tool simulation, pos.
 #define UNSTABLE false
 
-#define DEFAULT_PHYSICS "ode"
-#define DEFAULT_JMC_MS 20  // ms
-#define DEFAULT_ENV "asibot_cocina_entero.env.xml"
 #define DEFAULT_NUM_MOTORS 5
-#define DEFAULT_GEN_REF_SPEED 7.5
-#define DEFAULT_GEN_MIN_LIMIT -360.0
-#define DEFAULT_GEN_MAX_LIMIT 360.0
+#define DEFAULT_ENV "asibot_cocina_entero.env.xml"
+#define DEFAULT_PHYSICS "ode"
 #define DEFAULT_GEN_JOINT_TOL 0.25  // In units. Was .75
+#define DEFAULT_GEN_MAX_LIMIT 360.0
+#define DEFAULT_GEN_MIN_LIMIT -360.0
+#define DEFAULT_GEN_REF_SPEED 7.5
+#define DEFAULT_JMC_MS 20  // ms
 
 using namespace std;
 
@@ -386,12 +384,14 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   void run();
 
 // ------------------------------- Private -------------------------------------
-
  private:
   // General Joint Motion Controller parameters //
+  unsigned int numMotors;
+  double jmcMs;
+  //
   int modePosVel;
   double lastTime;
-  std::vector<int> joint_status;
+  std::vector<int> jointStatus;
   std::vector<double> realUnit;
   std::vector<double> targetDeg;
   std::vector<double> jointVel;
@@ -416,9 +416,6 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
   std::vector<KinBody::JointPtr> mismotores;
   // YARP
   BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
-  //
-  unsigned int numMotors;
-  double jmcMs;
 };
 
 #endif

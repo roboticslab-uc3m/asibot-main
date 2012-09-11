@@ -20,40 +20,29 @@ bool RaveBot::velocityMove(int j, double sp) {
         printf("[fail] RaveBot will not velocityMove as not in velocityMode\n");
         return false;
     }
+    if (j>=numMotors) return false;
     if(sp>0) targetDeg[j]=maxLimit[j];
     else targetDeg[j]=minLimit[j];
     // Let's not limit velocity it for now:
-//    if (sp>100) sp=100;
-//    else if (sp<-100) sp=-100;
+    //    if (sp>100) sp=100;
+    //    else if (sp<-100) sp=-100;
     // Force it as is:
     jointVel[j] = sp;
-    joint_status[j]=3;
+    jointStatus[j]=3;
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::velocityMove(const double *sp) {
-    if(modePosVel!=1) {  // Check if we are in velocity mode.
-        printf("[fail] RaveBot will not velocityMove as not in velocityMode\n");
-        return false;
-    }
-    // Let's not limit velocity it for now:
-//    double sp_limited[numMotors];
     printf("Vel:");
-    for (unsigned int i=0; i<numMotors; i++) {
-        if(sp[i]>0) targetDeg[i]=maxLimit[i];
-        else targetDeg[i]=minLimit[i];
-//      if (sp[i]>100) sp_limited[i]=100;
-//      else if (sp[i]<-100) sp_limited[i]=-100;
-//      else sp_limited[i]=sp[i];
-//      jointVel[i] = (THREAD_RATE*SPEED_ADJ_V*sp_limited[i])/(100.0);
-        // Force it as is:
-        jointVel[i] = sp[i];
-        printf(" %+.6f",jointVel[i]);
-        joint_status[i]=3;
-    }
+    for (unsigned int i=0; i<numMotors; i++) printf(" %+.6f",jointVel[i]);
     printf("\n");
-    return true;
+    bool ok = true;
+    for(int i=0;i<numMotors;i++)
+        ok &= velocityMove(i,sp[i]);
+    return ok;
 }
+
+// ----------------------------------------------------------------------------
 
