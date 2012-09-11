@@ -34,12 +34,14 @@ void RaveBot::run() {
                     printf("Joint q%d reached target.\n",motor+1);
                 } else {
                     // encRaw[motor]+=(velRaw[motor])*(JMC_MS/1000.0);
-                    encRaw[motor]+=(velRaw[motor])*(Time::now()-lastTime);
+                    // encRaw[motor]+=(velRaw[motor])*(Time::now()-lastTime);
+                    setEncRaw(motor, getEncRaw(motor)+(velRaw[motor])*(Time::now()-lastTime));
                 }
             }
         }
-        if(mismotores[motor]->IsPrismatic(0)) encExposed[motor] = encRaw[motor]/1000.0;
-        else encExposed[motor]=toRad(encRaw[motor]);
+        //if(mismotores[motor]->IsPrismatic(0)) encExposed[motor] = encRaw[motor]/1000.0;
+        //else encExposed[motor]=toRad(encRaw[motor]);
+        encExposed[motor] = getEncExposed(motor);
     }
     lastTime = Time::now();
 
