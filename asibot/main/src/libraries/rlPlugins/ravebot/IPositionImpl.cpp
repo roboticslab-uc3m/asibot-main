@@ -34,7 +34,7 @@ bool RaveBot::positionMove(int j, double ref) {
     }
     printf("RaveBot::positionMove(%d,%f) f[begin]\n",j,ref);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    joint_status[j]=1;
+    jointStatus[j]=1;
     targetDeg[j]=ref;
     if (ref>realUnit[j]) jointVel[j] = refSpeed[j];
     else jointVel[j] = -refSpeed[j];
@@ -64,7 +64,7 @@ bool RaveBot::positionMove(const double *refs) {
     printf("max_time[final]: %f\n",max_time);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     for(unsigned int motor=0;motor<numMotors;motor++) {
-        joint_status[motor]=1;
+        jointStatus[motor]=1;
         targetDeg[motor]=refs[motor];
         jointVel[motor] = (refs[motor]-realUnit[motor])/max_time;
         printf("jointVel[%d]: %f\n",motor,jointVel[motor]);
@@ -88,7 +88,7 @@ bool RaveBot::relativeMove(int j, double delta) {
     }
     printf("RaveBot::relativeMove(%d,%f) f[begin]\n",j,delta);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    joint_status[j]=2;
+    jointStatus[j]=2;
     targetDeg[j]=realUnit[j]+delta;
     if (delta>0) jointVel[j] = refSpeed[j];
     else jointVel[j] = -refSpeed[j];
@@ -114,7 +114,7 @@ bool RaveBot::relativeMove(const double *deltas) {
         }
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     for(int motor=0; motor<5; motor++) {
-      joint_status[motor]=2;
+      jointStatus[motor]=2;
       targetDeg[motor]=realUnit[motor]+deltas[motor];
       jointVel[motor] = (deltas[motor])/time_max_dist;
     }
@@ -125,7 +125,7 @@ bool RaveBot::relativeMove(const double *deltas) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::checkMotionDone(int j, bool *flag) {
-    if (joint_status[j]<=0) *flag=true;
+    if (jointStatus[j]<=0) *flag=true;
     else *flag=false;
     return true;
 }
@@ -134,7 +134,7 @@ bool RaveBot::checkMotionDone(int j, bool *flag) {
 
 bool RaveBot::checkMotionDone(bool *flag) {
     for (unsigned int i=0; i<numMotors; i++) {
-      if (joint_status[i]<=0) flag[i]=true;
+      if (jointStatus[i]<=0) flag[i]=true;
       else flag[i]=false;      
     }
     return true;
@@ -206,7 +206,7 @@ bool RaveBot::getRefAccelerations(double *accs) {
 
 bool RaveBot::stop(int j) {
     jointVel[j]=0.0;
-    joint_status[j]=-1;
+    jointStatus[j]=-1;
     return true;
 }
 
@@ -215,7 +215,7 @@ bool RaveBot::stop(int j) {
 bool RaveBot::stop() {
     for (unsigned int i=0; i<numMotors; i++) {
       jointVel[i]=0.0;
-      joint_status[i]=-1;
+      jointStatus[i]=-1;
       theToolPort.status=0;
     }
     return true;

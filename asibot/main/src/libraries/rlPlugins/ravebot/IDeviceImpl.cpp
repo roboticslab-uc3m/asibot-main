@@ -40,7 +40,7 @@ bool RaveBot::open(Searchable& config) {
 
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
     if (config.check("env")) env = config.find("env").asString();
-    printf("RaveBot using env: %s, numMotors: %d.\n",env.c_str(),numMotors);
+    printf("RaveBot using numMotors: %d, env: %s.\n",numMotors,env.c_str());
 
     if (config.check("genJointTol")) genJointTol = config.find("genJointTol").asDouble();
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
@@ -96,7 +96,7 @@ bool RaveBot::open(Searchable& config) {
 
     modePosVel = 0;  // 0 = Pos; 1 = Vel;
 
-    joint_status.resize(numMotors);
+    jointStatus.resize(numMotors);
     refSpeed.resize(numMotors);
     minLimit.resize(numMotors);
     maxLimit.resize(numMotors);
@@ -106,7 +106,7 @@ bool RaveBot::open(Searchable& config) {
     refAcc.resize(numMotors);
     jointTol.resize(numMotors);
     for (unsigned int i=0; i<numMotors; i++) {
-        joint_status[i]=0;
+        jointStatus[i]=0;
         if(!refSpeeds) refSpeed[i]=genRefSpeed;
         else refSpeed[i]=refSpeeds->get(i).asDouble();
         if(!minLimits) minLimit[i]=genMinLimit;
