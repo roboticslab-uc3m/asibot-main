@@ -10,13 +10,15 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
 bool RaveBot::open(Searchable& config) {
 
     numMotors = DEFAULT_NUM_MOTORS;
+    jmcMs = DEFAULT_JMC_MS;
 
     ConstString env = DEFAULT_ENV;
     double genJointTol = DEFAULT_GEN_JOINT_TOL;
-    double genMinLimit = DEFAULT_GEN_MIN_LIMIT;
     double genMaxLimit = DEFAULT_GEN_MAX_LIMIT;
+    double genMinLimit = DEFAULT_GEN_MIN_LIMIT;
     double genRefSpeed = DEFAULT_GEN_REF_SPEED;
-    jmcMs = DEFAULT_JMC_MS;
+    double genEncRawExposed = DEFAULT_GEN_ENC_RAW_EXPOSED;
+    double genVelRawExposed = DEFAULT_GEN_VEL_RAW_EXPOSED;
     ConstString physics = DEFAULT_PHYSICS;
 
     printf("--------------------------------------------------------------\n");
@@ -30,6 +32,8 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--genMaxLimit [units] (default: \"%f\")\n",genMaxLimit);
         printf("\t--genMinLimit [units] (default: \"%f\")\n",genMinLimit);
         printf("\t--genRefSpeed [units/s] (default: \"%f\")\n",genRefSpeed);
+        printf("\t--genEncRawExposed (encoder [raw / exposed] ratio, default: \"%f\")\n",genEncRawExposed);
+        printf("\t--genVelRawExposed (velocity [raw / exposed] ratio, default: \"%f\")\n",genVelRawExposed);
         printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
     }
@@ -46,10 +50,13 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
     if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
     if (config.check("genRefSpeed")) genRefSpeed = config.find("genRefSpeed").asDouble();
+    if (config.check("genEncRawExposed")) genEncRawExposed = config.find("genEncRawExposed").asDouble();
+    if (config.check("genVelRawExposed")) genVelRawExposed = config.find("genVelRawExposed").asDouble();    
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
     if (config.check("physics")) physics = config.find("physics").asString();
     printf("RaveBot using genJointTol: %f, genMaxLimit: %f, genMinLimit: %f, genRefSpeed: %f.\n",
         genJointTol,genMaxLimit,genMinLimit,genRefSpeed);
+    printf("RaveBot using genEncRawExposed: %f, genVelRawExposed: %f.\n", genEncRawExposed, genVelRawExposed);
     printf("RaveBot using jmcMs: %f, physics: %s.\n",jmcMs,physics.c_str());
 
     Bottle* jointTols;
@@ -88,6 +95,24 @@ bool RaveBot::open(Searchable& config) {
         refSpeeds = 0;
         printf("RaveBot not using individual refSpeeds, defaulting to genRefSpeed.\n");
     }
+    Bottle* encRawExposeds;
+    if (config.check("encRawExposeds")) {
+        encRawExposeds = config.find("encRawExposeds").asList();
+        printf("RaveBot using individual encRawExposeds: %s\n",encRawExposeds->toString().c_str());
+        if(encRawExposeds->size() != int(numMotors)) printf("[warning] encRawExposeds->size() != numMotors\n");
+    } else {
+        encRawExposeds = 0;
+        printf("RaveBot not using individual encRawExposeds, defaulting to genEncRawExposed.\n");
+    }
+    Bottle* velRawExposeds;
+    if (config.check("velRawExposeds")) {
+        velRawExposeds = config.find("velRawExposeds").asList();
+        printf("RaveBot using individual velRawExposeds: %s\n",velRawExposeds->toString().c_str());
+        if(velRawExposeds->size() != int(numMotors)) printf("[warning] velRawExposeds->size() != numMotors\n");
+    } else {
+        velRawExposeds = 0;
+        printf("RaveBot not using individual velRawExposeds, defaulting to genVelRawExposed.\n");
+    }
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
@@ -96,15 +121,13 @@ bool RaveBot::open(Searchable& config) {
 
     modePosVel = 0;  // 0 = Pos; 1 = Vel;
 
+    encRawExposed.resize(numMotors);
     jointStatus.resize(numMotors);
-    refSpeed.resize(numMotors);
-    minLimit.resize(numMotors);
-    maxLimit.resize(numMotors);
-    encRaw.resize(numMotors);
-    velRaw.resize(numMotors);
-    targetExposed.resize(numMotors);
-    refAcc.resize(numMotors);
     jointTol.resize(numMotors);
+    maxLimit.resize(numMotors);
+    minLimit.resize(numMotors);
+    refSpeed.resize(numMotors);
+    velRawExposed.resize(numMotors);
     for (unsigned int i=0; i<numMotors; i++) {
         jointStatus[i]=0;
         if(!refSpeeds) refSpeed[i]=genRefSpeed;
@@ -115,11 +138,15 @@ bool RaveBot::open(Searchable& config) {
         else maxLimit[i]=maxLimits->get(i).asDouble(); 
         if(!jointTols) jointTol[i]=genJointTol;
         else jointTol[i]=jointTols->get(i).asDouble(); 
-        encRaw[i]=0.0;
-        velRaw[i]=0.0;
-        targetExposed[i]=0.0;
-        refAcc[i]=1.0;
+        if(!encRawExposeds) encRawExposed[i]=genEncRawExposed;
+        else encRawExposed[i]=encRawExposeds->get(i).asDouble(); 
+        if(!velRawExposeds) velRawExposed[i]=genVelRawExposed;
+        else velRawExposed[i]=velRawExposeds->get(i).asDouble(); 
     }
+    encRaw.resize(numMotors, 0.0);
+    refAcc.resize(numMotors, 1.0);
+    targetExposed.resize(numMotors, 0.0);
+    velRaw.resize(numMotors, 0.0);
 
     // Initialize OpenRAVE-core
     RaveInitialize(true);  // Start openrave core
