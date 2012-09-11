@@ -21,13 +21,7 @@ bool RaveBot::velocityMove(int j, double sp) {
         return false;
     }
     if (j>=numMotors) return false;
-    if(sp>0) targetExposed[j]=maxLimit[j];
-    else targetExposed[j]=minLimit[j];
-    // Let's not limit velocity it for now:
-    //    if (sp>100) sp=100;
-    //    else if (sp<-100) sp=-100;
-    // Force it as is:
-    velRaw[j] = sp;
+    velRaw[j] = (sp * velRawExposed[j]);
     jointStatus[j]=3;
     return true;
 }
