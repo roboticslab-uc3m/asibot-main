@@ -14,7 +14,7 @@ bool RaveBot::threadInit() {
 // -----------------------------------------------------------------------------
 
 void RaveBot::run() {
-    std::vector<dReal> encExposed(mismotores.size());
+    std::vector<dReal> dEncRaw(mismotores.size());
     for(unsigned int motor=0;motor<numMotors;motor++){
         if((jointStatus[motor]==1)||(jointStatus[motor]==2)||(jointStatus[motor]==3)) {  // if set to move...
             if ((getEncExposed(motor) > maxLimit[motor])  && (velRaw[motor]>0)) {  // SW max JL
@@ -39,9 +39,7 @@ void RaveBot::run() {
                 }
             }
         }
-        //if(mismotores[motor]->IsPrismatic(0)) encExposed[motor] = encRaw[motor]/1000.0;
-        //else encExposed[motor]=toRad(encRaw[motor]);
-        encExposed[motor] = getEncExposed(motor);
+        dEncRaw[motor] = getEncRaw(motor);
     }
     lastTime = Time::now();
 
@@ -58,12 +56,12 @@ void RaveBot::run() {
                 theToolPort.status = 0;
             }
         }
-        encExposed[5] = toRad(real_tool);
-        encExposed[6] = -toRad(real_tool);
+        dEncRaw[5] = toRad(real_tool);
+        dEncRaw[6] = -toRad(real_tool);
     }
 
-    // pcontroller->SetDesired(encExposed); // This function "resets" physics
-    probot->SetJointValues(encExposed);  // More compatible with physics??
+    // pcontroller->SetDesired(dEncRaw); // This function "resets" physics
+    probot->SetJointValues(dEncRaw);  // More compatible with physics??
     penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
 
     if(cameraFound) {
