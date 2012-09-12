@@ -110,7 +110,7 @@ bool RaveBot::relativeMove(int j, double delta) {
 
 // -----------------------------------------------------------------------------
 
-bool RaveBot::relativeMove(const double *deltas) {
+bool RaveBot::relativeMove(const double *deltas) {  // encExposed = deltas + encExposed
     if(modePosVel!=0) {  // Check if we are in position mode.
         printf("[fail] RaveBot will not relativeMove as not in positionMode\n");
         return false;
@@ -119,16 +119,17 @@ bool RaveBot::relativeMove(const double *deltas) {
     // Find out the maximum angle to move
     double max_dist = 0;
     double time_max_dist = 0;
-    for(int motor=0;motor<5;motor++)
+    for(unsigned int motor=0;motor<numMotors;motor++)
         if (fabs(deltas[motor])>max_dist) {
             max_dist = fabs(deltas[motor]);
             time_max_dist = max_dist/refSpeed[motor];  // the max_dist motor will be at refSpeed
         }
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
-    for(int motor=0; motor<5; motor++) {
+    for(unsigned int motor=0; motor<numMotors; motor++) {
+      targetExposed[motor]=getEncExposed(motor)+deltas[motor];
+      velRaw[motor] = ((deltas[motor])/time_max_dist)*velRawExposed[motor];
+      printf("velRaw[%d]: %f\n",motor,velRaw[motor]);
       jointStatus[motor]=2;
-      targetExposed[motor]=encRaw[motor]+deltas[motor];
-      velRaw[motor] = (deltas[motor])/time_max_dist;
     }
     printf("RaveBot::relativeMove() f[end]\n");
     return true;
