@@ -19,12 +19,12 @@
 #define DEFAULT_NUM_MOTORS 5
 
 #define DEFAULT_ENV "asibot_cocina_entero.env.xml"
-#define DEFAULT_GEN_ENC_RAW_EXPOSED 1.0  // Ratio.
+#define DEFAULT_GEN_ENC_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_GEN_JOINT_TOL 0.25  // Exposed.
 #define DEFAULT_GEN_MAX_LIMIT 360.0  // Exposed.
 #define DEFAULT_GEN_MIN_LIMIT -360.0  // Exposed.
 #define DEFAULT_GEN_REF_SPEED 7.5  // Exposed.
-#define DEFAULT_GEN_VEL_RAW_EXPOSED 1.0  // Ratio.
+#define DEFAULT_GEN_VEL_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_JMC_MS 20  // [ms]
 #define DEFAULT_PHYSICS "ode"
 
