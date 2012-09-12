@@ -6,73 +6,74 @@
 // ------------------ IEncoder Related -----------------------------------------
 
 bool RaveBot::resetEncoder(int j) {
-    setEncoder(j,0.0);
-    return true;
+    if ((unsigned int)j>numMotors) return false;
+    return setEncoder(j,0.0);
   }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::resetEncoders() {
-    for (unsigned int i=0; i<numMotors; i++)
-      encRaw[i]=0.0;
-    return true;
+    bool ok = true;
+    for(unsigned int i=0;i<numMotors;i++)
+        ok &= resetEncoder(i);
+    return ok;
 }
 
 // -----------------------------------------------------------------------------
 
-bool RaveBot::setEncoder(int j, double val) {
-    encRaw[j]=val;
+bool RaveBot::setEncoder(int j, double val) {  // encExposed = val;
+    setEncRaw(j, val * encRawExposed[j]);
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setEncoders(const double *vals) {
-    for (unsigned int i=0; i<numMotors; i++)
-      encRaw[i]=vals[i];
-    return true;
+    bool ok = true;
+    for(unsigned int i=0;i<numMotors;i++)
+        ok &= setEncoder(i,vals[i]);
+    return ok;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoder(int j, double *v) {
-    *v=encRaw[j];
+    *v=getEncRaw(j);
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoders(double *encs) {
-    for (unsigned int i=0; i<numMotors; i++)
-      encs[i]=encRaw[i];
-    return true;
+    bool ok = true;
+    for(unsigned int i=0;i<numMotors;i++)
+        ok &= getEncoder(i,&encs[i]);
+    return ok;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoderSpeed(int j, double *sp) {
-    *sp=velRaw[j];
-    return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoderSpeeds(double *spds) {
-    for (unsigned int i=0; i<numMotors; i++)
-      spds[i]=velRaw[i];
-    return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoderAcceleration(int j, double *spds) {
-    return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoderAccelerations(double *accs) {
-    return true;
+    return false;
 }
 
+// -----------------------------------------------------------------------------
 

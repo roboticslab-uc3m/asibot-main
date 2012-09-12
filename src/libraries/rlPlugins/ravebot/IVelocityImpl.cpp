@@ -15,12 +15,12 @@ bool RaveBot::setVelocityMode() {
 
 // -----------------------------------------------------------------------------
 
-bool RaveBot::velocityMove(int j, double sp) {
+bool RaveBot::velocityMove(int j, double sp) {  // velExposed = sp;
+    if ((unsigned int)j>numMotors) return false;
     if(modePosVel!=1) {  // Check if we are in velocity mode.
         printf("[fail] RaveBot will not velocityMove as not in velocityMode\n");
         return false;
     }
-    if (j>=numMotors) return false;
     velRaw[j] = (sp * velRawExposed[j]);
     jointStatus[j]=3;
     return true;
@@ -33,7 +33,7 @@ bool RaveBot::velocityMove(const double *sp) {
     for (unsigned int i=0; i<numMotors; i++) printf(" %+.6f",velRaw[i]);
     printf("\n");
     bool ok = true;
-    for(int i=0;i<numMotors;i++)
+    for(unsigned int i=0;i<numMotors;i++)
         ok &= velocityMove(i,sp[i]);
     return ok;
 }
