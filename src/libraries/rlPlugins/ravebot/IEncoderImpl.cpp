@@ -38,7 +38,7 @@ bool RaveBot::setEncoders(const double *vals) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoder(int j, double *v) {
-    *v=getEncRaw(j);
+    *v=getEncExposed(j);
     return true;
 }
 
