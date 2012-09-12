@@ -16,6 +16,8 @@ bool RaveBot::threadInit() {
 void RaveBot::run() {
     std::vector<dReal> dEncRaw(mismotores.size());
     for(unsigned int motor=0;motor<numMotors;motor++){
+        setEncRaw(motor, getEncRaw(motor)+(velRaw[motor])*(Time::now()-lastTime));
+        dEncRaw[motor] = getEncRaw(motor);
         if((jointStatus[motor]==1)||(jointStatus[motor]==2)||(jointStatus[motor]==3)) {  // if set to move...
             if ((getEncExposed(motor) > maxLimit[motor])  && (velRaw[motor]>0)) {  // SW max JL
                 stop(motor);  // puts jointStatus[motor]=0;
@@ -32,14 +34,9 @@ void RaveBot::run() {
                     (getEncExposed(motor) < (targetExposed[motor]+jointTol[motor])) ) {
                     stop(motor);  // puts jointStatus[motor]=0;
                     printf("Joint q%d reached target.\n",motor+1);
-                } else {
-                    // encRaw[motor]+=(velRaw[motor])*(JMC_MS/1000.0);
-                    // encRaw[motor]+=(velRaw[motor])*(Time::now()-lastTime);
-                    setEncRaw(motor, getEncRaw(motor)+(velRaw[motor])*(Time::now()-lastTime));
                 }
             }
         }
-        dEncRaw[motor] = getEncRaw(motor);
     }
     lastTime = Time::now();
 
