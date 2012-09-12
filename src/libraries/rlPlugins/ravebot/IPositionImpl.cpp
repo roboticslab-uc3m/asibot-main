@@ -53,7 +53,7 @@ bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
 
 // -----------------------------------------------------------------------------
 
-bool RaveBot::positionMove(const double *refs) {
+bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
     if(modePosVel!=0) {  // Check if we are in position mode.
         printf("[fail] RaveBot will not positionMove as not in positionMode\n");
         return false;
@@ -62,31 +62,24 @@ bool RaveBot::positionMove(const double *refs) {
     // Find out the maximum time to move
     double max_time = 0;
     for(unsigned int motor=0;motor<numMotors;motor++) {
-        printf("dist[%d]: %f\n",motor,fabs(refs[motor]-encRaw[motor]));
+        printf("dist[%d]: %f\n",motor,fabs(refs[motor]-getEncExposed(motor)));
         printf("refSpeed[%d]: %f\n",motor,refSpeed[motor]);
-//        printf("diff: %f\n",fabs(refs[motor]-encRaw[motor])/refSpeed[motor]);
-        if (fabs((refs[motor]-encRaw[motor])/refSpeed[motor])>max_time) {
-            max_time = fabs((refs[motor]-encRaw[motor])/refSpeed[motor]);  // the max_dist motor will be at refSpeed
+        if (fabs((refs[motor]-getEncExposed(motor))/refSpeed[motor])>max_time) {
+            max_time = fabs((refs[motor]-getEncExposed(motor))/refSpeed[motor]);
             printf("-->candidate: %f\n",max_time);
         }
     }
     printf("max_time[final]: %f\n",max_time);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     for(unsigned int motor=0;motor<numMotors;motor++) {
-        jointStatus[motor]=1;
         targetExposed[motor]=refs[motor];
-        velRaw[motor] = (refs[motor]-encRaw[motor])/max_time;
+        velRaw[motor] = ((refs[motor]-getEncExposed(motor))/max_time)*velRawExposed[motor];
         printf("velRaw[%d]: %f\n",motor,velRaw[motor]);
+        jointStatus[motor]=1;
     }
     printf("RaveBot::positionMove() f[end]\n");
     return true;
 }
-
-//printf("max_dist[%d]: %f\n",motor,max_dist);
-//printf("refSpeed[%d]: %f\n",motor,refSpeed[motor]);
-//printf("time_max_dist[%d]: %f\n",motor,time_max_dist);
-//printf("max_dist[final]: %f\n",max_dist);
-//printf("time_max_dist[final]: %f\n",time_max_dist);
 
 // -----------------------------------------------------------------------------
 
