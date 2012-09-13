@@ -335,3 +335,33 @@ bool KdlBot::restoreContext(const int id) {
 
 // -----------------------------------------------------------------------------
 
+bool KdlBot::getInfo(yarp::os::Bottle &info) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool KdlBot::registerEvent(yarp::dev::CartesianEvent &event) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool KdlBot::unregisterEvent(yarp::dev::CartesianEvent &event) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool KdlBot::setReferenceMode(const bool f) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool KdlBot::getReferenceMode(bool *f) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
