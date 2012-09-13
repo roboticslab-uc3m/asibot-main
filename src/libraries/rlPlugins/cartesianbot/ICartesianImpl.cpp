@@ -389,3 +389,33 @@ bool CartesianBot::restoreContext(const int id) {
 
 // -----------------------------------------------------------------------------
 
+bool CartesianBot::getInfo(yarp::os::Bottle &info) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool CartesianBot::registerEvent(yarp::dev::CartesianEvent &event) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool CartesianBot::unregisterEvent(yarp::dev::CartesianEvent &event) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool CartesianBot::setReferenceMode(const bool f) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool CartesianBot::getReferenceMode(bool *f) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
