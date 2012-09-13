@@ -128,6 +128,32 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     virtual bool getTrackingMode(bool *f);
 
     /**
+    * Ask the controller to close the loop with the low-level joints
+    * set-points in place of the actual encoders feedback. [wait for
+    * reply] 
+    * @param f true for reference mode, false otherwise. 
+    * @return true/false on success/failure. 
+    *  
+    * @note When the reference mode is enabled the controller makes 
+    *       use of the low-level joints set-points that result from
+    *       the integration of the velocity commands in place of the
+    *       actual encoders feedbacks. This modality is particularly
+    *       useful in a scenario where the velocity commands are
+    *       executed by the control boards with resort to torque
+    *       actuation.
+    */
+    virtual bool setReferenceMode(const bool f);
+
+    /**
+    * Get the current controller reference mode. [wait for reply]
+    * @param f here is returned true if controller makes use of the 
+    *         low-level joints set-points, false if it employs
+    *         actual encoders feedback.
+    * @return true/false on success/failure. 
+    */
+    virtual bool getReferenceMode(bool *f);
+
+    /**
     * Get the current pose of the end-effector. [do not wait for 
     * reply] 
     * @param x a 3-d vector which is filled with the actual 
@@ -549,6 +575,31 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     *       the trajectory time and so on.
     */
     virtual bool restoreContext(const int id);
+
+    /**
+    * Returns useful info on the operating state of the controller. 
+    * [wait for reply] 
+    * @param info is a property-like bottle containing the info.
+    * @return true/false on success/failure. 
+    */
+    virtual bool getInfo(yarp::os::Bottle &info);
+
+    /**
+    * Register an event. 
+    * @param event the event to be registered.
+    * @return true/false on success/failure. 
+    *  
+    * @note the special type "*" can be used to attach a callback to
+    *       all the available events.
+    */
+    virtual bool registerEvent(yarp::dev::CartesianEvent &event);
+
+    /**
+    * Unregister an event.
+    * @param event the event to be unregistered.
+    * @return true/false on success/failure. 
+    */
+    virtual bool unregisterEvent(yarp::dev::CartesianEvent &event);
 
 // -------- DeviceDriver declarations. Implementation in IDeviceImpl.cpp --------
 
