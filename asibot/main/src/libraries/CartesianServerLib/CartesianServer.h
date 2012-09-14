@@ -16,10 +16,10 @@
 #include "xRpcResponder.h"
 #include "xCallbackPort.h"
 
-#define DEFAULT_PREFIX "/ravebot"
 #define DEFAULT_CONTROLLER "cartesianbot"
-#define DEFAULT_ROBOTREMOTE "/ravebot"
-#define DEFAULT_ROBOTLOCAL "/ravebot/cartesianServer"
+#define DEFAULT_PREFIX "/ravebot"
+#define DEFAULT_MOVJ_LOCAL "/ravebot/movjCartesianServer"
+#define DEFAULT_MOVJ_REMOTE "/ravebot"
 
 using namespace yarp::os;
 using namespace yarp::dev;
