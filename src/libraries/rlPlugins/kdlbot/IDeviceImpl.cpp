@@ -14,9 +14,11 @@ bool KdlBot::open(Searchable& config) {
     maxVel = DEFAULT_MAXVEL;        // double
     maxAcc = DEFAULT_MAXACC;        // double
     numMotors = DEFAULT_NUM_MOTORS; // unsigned int
-    ConstString strRobotDevice = DEFAULT_ROBOTDEVICE;
-    ConstString strRobotSubDevice = DEFAULT_ROBOTSUBDEVICE;
-    ConstString strRobotName = DEFAULT_ROBOTNAME;
+    ConstString strRobotDevice = DEFAULT_ROBOT_DEVICE;
+    ConstString strRobotSubDevice = DEFAULT_ROBOT_SUBDEVICE;
+    ConstString strRobotName = DEFAULT_ROBOT_NAME;
+    ConstString strRobotLocal = DEFAULT_ROBOT_LOCAL;
+    ConstString strRobotRemote = DEFAULT_ROBOT_REMOTE;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
@@ -32,6 +34,8 @@ bool KdlBot::open(Searchable& config) {
         printf("\t--robotDevice (device we create, default: \"%s\")\n",strRobotDevice.c_str());
         printf("\t--robotSubdevice (library we use, default: \"%s\")\n",strRobotSubDevice.c_str());
         printf("\t--robotName (port name of created device, default: \"%s\")\n",strRobotName.c_str());
+        printf("\t--robotLocal (if accesing remote, local port name, default: \"%s\")\n",strRobotLocal.c_str());
+        printf("\t--robotRemote (if accesing remote, remote port name, default: \"%s\")\n",strRobotRemote.c_str());
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
@@ -58,6 +62,7 @@ bool KdlBot::open(Searchable& config) {
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
     if (config.check("robotName")) strRobotName = config.find("robotName").asString();
     printf("KdlBot using robotDevice: %s, robotSubDevice: %s, robotName: %s.\n",strRobotDevice.c_str(),strRobotSubDevice.c_str(),strRobotName.c_str());
+    printf("CartesianBot using robotLocal: %s, robotRemote: %s.\n",strRobotLocal.c_str(),strRobotRemote.c_str());
 
     yarp::sig::Matrix ymH0(4,4);
     ConstString ycsH0("H0");
@@ -119,6 +124,11 @@ bool KdlBot::open(Searchable& config) {
     
     printf("KdlBot chain number of segments including none-joint (H0 and HN): %d\n",theChain.getNrOfSegments());
 
+    if( (strRobotDevice=="remote_controlboard") && (config.check("help")) ) {
+        printf("--------------------------------------------------------------\n");
+        exit(1);
+    }
+
     cmc_status = 0;
     startTime = 0;
 
@@ -126,11 +136,14 @@ bool KdlBot::open(Searchable& config) {
     options.put("device",strRobotDevice);
     options.put("subdevice",strRobotSubDevice);
     options.put("name",strRobotName);
+    options.put("local",strRobotLocal);
+    options.put("remote",strRobotRemote);
 
     robotDevice.open(options);
     if (!robotDevice.isValid()) {
-        printf("Robot device not available. Here are the known devices:\n");
-        printf("%s", Drivers::factory().toString().c_str());
+        // printf("Robot device not available. Here are the known devices:\n");
+        // printf("%s", Drivers::factory().toString().c_str());
+        fprintf(stderr,"Robot device not available.\n");
         return 0;
     }
 
