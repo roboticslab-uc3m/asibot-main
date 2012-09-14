@@ -21,9 +21,11 @@ bool CartesianBot::open(Searchable& config) {
     duration = DEFAULT_DURATION;
     maxAcc = DEFAULT_MAXACC;
     maxVel = DEFAULT_MAXVEL;
-    ConstString strRobotDevice = DEFAULT_ROBOTDEVICE;
-    ConstString strRobotSubDevice = DEFAULT_ROBOTSUBDEVICE;
-    ConstString strRobotName = DEFAULT_ROBOTNAME;
+    ConstString strRobotDevice = DEFAULT_ROBOT_DEVICE;
+    ConstString strRobotSubDevice = DEFAULT_ROBOT_SUBDEVICE;
+    ConstString strRobotName = DEFAULT_ROBOT_NAME;
+    ConstString strRobotLocal = DEFAULT_ROBOT_LOCAL;
+    ConstString strRobotRemote = DEFAULT_ROBOT_REMOTE;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
@@ -40,6 +42,8 @@ bool CartesianBot::open(Searchable& config) {
         printf("\t--robotDevice (device we create, default: \"%s\")\n",strRobotDevice.c_str());
         printf("\t--robotSubdevice (library we use, default: \"%s\")\n",strRobotSubDevice.c_str());
         printf("\t--robotName (port name of created device, default: \"%s\")\n",strRobotName.c_str());
+        printf("\t--robotLocal (if accesing remote, local port name, default: \"%s\")\n",strRobotLocal.c_str());
+        printf("\t--robotRemote (if accesing remote, remote port name, default: \"%s\")\n",strRobotRemote.c_str());
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
@@ -58,18 +62,29 @@ bool CartesianBot::open(Searchable& config) {
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
     if (config.check("robotName")) strRobotName = config.find("robotName").asString();
+    if (config.check("robotLocal")) strRobotLocal = config.find("robotLocal").asString();
+    if (config.check("robotRemote")) strRobotRemote = config.find("robotRemote").asString();
     printf("CartesianBot using robotDevice: %s, robotSubDevice: %s, robotName: %s.\n",strRobotDevice.c_str(),strRobotSubDevice.c_str(),strRobotName.c_str());
+    printf("CartesianBot using robotLocal: %s, robotRemote: %s.\n",strRobotLocal.c_str(),strRobotRemote.c_str());
+
+    if( (strRobotDevice=="remote_controlboard") && (config.check("help")) ) {
+        printf("--------------------------------------------------------------\n");
+        exit(1);
+    }
 
     Property options(config.toString());
     options.put("device",strRobotDevice);
     options.put("subdevice",strRobotSubDevice);
     options.put("name",strRobotName);
+    options.put("local",strRobotLocal);
+    options.put("remote",strRobotRemote);
 
     robotDevice.open(options);
     if (!robotDevice.isValid()) {
-        printf("Robot device not available. Here are the known devices:\n");
-        printf("%s", Drivers::factory().toString().c_str());
-        return 0;
+        //%printf("Robot device not available. Here are the known devices:\n");
+        //printf("%s", Drivers::factory().toString().c_str());
+        fprintf(stderr,"Robot device not available.\n");
+        return false;
     }
 
     bool ok;

@@ -31,9 +31,11 @@
 #define DEFAULT_DURATION 20  // For Trajectory
 #define DEFAULT_MAXACC 0.2  // units/s^2
 #define DEFAULT_MAXVEL 7.5  // units/s
-#define DEFAULT_ROBOTDEVICE "controlboard"
-#define DEFAULT_ROBOTSUBDEVICE "ravebot"
-#define DEFAULT_ROBOTNAME "/ravebot"
+#define DEFAULT_ROBOT_DEVICE "controlboard"
+#define DEFAULT_ROBOT_SUBDEVICE "ravebot"
+#define DEFAULT_ROBOT_NAME "/ravebot"
+#define DEFAULT_ROBOT_LOCAL "N/A"
+#define DEFAULT_ROBOT_REMOTE "N/A"
 
 //using namespace std;
 using namespace yarp::os;
