@@ -10,8 +10,8 @@ bool CartesianServer::configure(ResourceFinder &rf) {
 
     ConstString controller = DEFAULT_CONTROLLER;
     ConstString prefix = DEFAULT_PREFIX;
-    ConstString robotRemote = DEFAULT_ROBOTREMOTE;
-    ConstString robotLocal = DEFAULT_ROBOTLOCAL;
+    ConstString movjLocal = DEFAULT_MOVJ_LOCAL;
+    ConstString movjRemote = DEFAULT_MOVJ_REMOTE;
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
@@ -19,17 +19,17 @@ bool CartesianServer::configure(ResourceFinder &rf) {
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--controller (cartesian controller device, default: \"%s\")\n",controller.c_str());
         printf("\t--prefix (port name prefix, default: \"%s\")\n",prefix.c_str());
-        printf("\t--robotRemote (port to whom we connect for movj, default: \"%s\")\n",robotRemote.c_str());
-        printf("\t--robotLocal (port we open to connect for movj, default: \"%s\")\n",robotLocal.c_str());
+        printf("\t--movjLocal (port we open to connect for movj, default: \"%s\")\n",movjLocal.c_str());
+        printf("\t--movjRemote (port to whom we connect for movj, default: \"%s\")\n",movjRemote.c_str());
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
     if (rf.check("controller")) controller = rf.find("controller").asString();
     if (rf.check("prefix")) prefix = rf.find("prefix").asString();
-    if (rf.check("robotRemote")) robotRemote = rf.find("robotRemote").asString();
-    if (rf.check("robotLocal")) robotLocal = rf.find("robotLocal").asString();
+    if (rf.check("movjRemote")) movjRemote = rf.find("movjRemote").asString();
+    if (rf.check("movjLocal")) movjLocal = rf.find("movjLocal").asString();
     printf("CartesianServer using controller: %s,  prefix: %s.\n",controller.c_str(),prefix.c_str());
-    printf("CartesianServer using robotRemote: %s, robotLocal: %s.\n",robotRemote.c_str(),robotLocal.c_str());
+    printf("CartesianServer using movjLocal: %s, movjRemote: %s.\n",movjLocal.c_str(),movjRemote.c_str());
 
     //------------------------------CARTESIAN--------------------------------//
     Property options(rf.toString());  // Little hack to get rf stuff to the cartesian device
@@ -50,12 +50,12 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     //--------------------------------JOINT----------------------------------//
     Property robotOptions(rf.toString());  // Little hack to get rf stuff to the module
     robotOptions.put("device","remote_controlboard");
-    robotOptions.put("remote",robotRemote);
-    robotOptions.put("local",robotLocal);
+    robotOptions.put("remote",movjRemote);
+    robotOptions.put("local",movjLocal);
     robotDevice.open(robotOptions);
     if (!robotDevice.isValid()) {
         printf("[error] Class instantiation not worked.\n\n");
-        printf("[error] robotRemote not valid, has a remotely accessible device been open?\n\n");
+        printf("[error] movjRemote not valid, has a remotely accessible device been open?\n\n");
         return false;
     }
     bool ok2 = robotDevice.view(ipos);
@@ -95,4 +95,6 @@ bool CartesianServer::interruptModule() {
     xPort.close();
     return true;
 }
+
+/************************************************************************/
 
