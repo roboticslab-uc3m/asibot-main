@@ -61,6 +61,8 @@ bool KdlBot::open(Searchable& config) {
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
     if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
     if (config.check("robotName")) strRobotName = config.find("robotName").asString();
+    if (config.check("robotLocal")) strRobotLocal = config.find("robotLocal").asString();
+    if (config.check("robotRemote")) strRobotRemote = config.find("robotRemote").asString();
     printf("KdlBot using robotDevice: %s, robotSubDevice: %s, robotName: %s.\n",strRobotDevice.c_str(),strRobotSubDevice.c_str(),strRobotName.c_str());
     printf("CartesianBot using robotLocal: %s, robotRemote: %s.\n",strRobotLocal.c_str(),strRobotRemote.c_str());
 
