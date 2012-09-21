@@ -41,7 +41,7 @@ bool CartesianClient::stat(double *x) {
 }
 
 /************************************************************************/
-bool CartesianClient::inv(const double *xd) {
+bool CartesianClient::inv(const double *xd, double *q) {
     Bottle miOutput, miInput;
     miOutput.clear();
     miOutput.addVocab(VOCAB_INV);
@@ -50,6 +50,9 @@ bool CartesianClient::inv(const double *xd) {
         dBottle.addDouble(xd[i]);
     miOutput.addList() = dBottle;
     rpcClient.write(miOutput, miInput);
+    Bottle* data = miInput.get(0).asList();
+    for (int i=0; i<data->size(); i++)
+        q[i] = data->get(i).asDouble();
     return true;
 }
 
@@ -87,4 +90,6 @@ bool CartesianClient::stop() {
     rpcClient.write(miOutput, miInput);
     return true;
 }
+
+/************************************************************************/
 
