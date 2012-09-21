@@ -174,7 +174,7 @@ bool RaveBot::open(Searchable& config) {
     // NEW: Attach a physics engine
     if(physics!="none"){
         penv->SetPhysicsEngine(RaveCreatePhysicsEngine(penv,"ode"));
-        penv->GetPhysicsEngine()->SetGravity(Vector(0,0,-9.8));
+        penv->GetPhysicsEngine()->SetGravity(OpenRAVE::Vector(0,0,-9.8));
     }
 
     //-- Get the robot
@@ -241,6 +241,10 @@ bool RaveBot::open(Searchable& config) {
     mismotores = bodies[0]->GetJoints();  // KinBody::JointPtr
     // if(mismotores.size()>int(numMotors)) ... // old tool trick
 
+    //-- world rpc server
+    worldRpcServer.open("/ravebot/world");
+    worldRpcServer.setReader(worldRpcResponder);
+
     // Start the RateThread
     this->setRate(jmcMs);
     this->start();
@@ -251,9 +255,14 @@ bool RaveBot::open(Searchable& config) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::close() {
+    printf("RaveBot::close() Closing worldRpcServer...\n");
+    worldRpcServer.interrupt();
+    worldRpcServer.close();
 //    pthviewer->join(); // wait for the viewer thread to exit
 //    printf("RaveBot: close()\n");
+    printf("RaveBot::close() Destroyed worldRpcServer. Closing environment...\n");
     penv->Destroy(); // destroy
+    printf("[success] RaveBot::close() Closed.\n");
     return true;
 }
 
