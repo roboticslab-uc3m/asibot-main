@@ -239,9 +239,9 @@ bool RaveBot::open(Searchable& config) {
     penv->GetBodies(bodies);  // std::vector<KinBodyPtr> bodies;
     //-- Joints
     mismotores = bodies[0]->GetJoints();  // KinBody::JointPtr
-    // if(mismotores.size()>int(numMotors)) ... // old tool trick
 
     //-- world rpc server
+    worldRpcResponder.setEnvironment(penv);
     worldRpcServer.open("/ravebot/world");
     worldRpcServer.setReader(worldRpcResponder);
 
