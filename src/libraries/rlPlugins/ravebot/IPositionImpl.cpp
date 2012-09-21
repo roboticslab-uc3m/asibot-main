@@ -239,7 +239,6 @@ bool RaveBot::stop() {
     bool ok = true;
     for(unsigned int i=0;i<numMotors;i++)
         ok &= stop(i);
-    theToolPort.status=0;
     return ok;
 }
 

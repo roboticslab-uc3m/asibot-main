@@ -239,15 +239,7 @@ bool RaveBot::open(Searchable& config) {
     penv->GetBodies(bodies);  // std::vector<KinBodyPtr> bodies;
     //-- Joints
     mismotores = bodies[0]->GetJoints();  // KinBody::JointPtr
-    if(mismotores.size()>int(numMotors)) { // Big hack
-        Value toolportvalue = config.check("toolport","/ravebot/tool:i","checking if given an alternate tool port name");
-        theToolPort.open(toolportvalue.asString());
-        toolFound = true;
-        theToolPort.useCallback();
-    } else {
-        toolFound = false;
-        printf("No tool attatched.\n");
-    }
+    // if(mismotores.size()>int(numMotors)) ... // old tool trick
 
     // Start the RateThread
     this->setRate(jmcMs);

@@ -28,7 +28,6 @@
 #define DEFAULT_JMC_MS 20  // [ms]
 #define DEFAULT_PHYSICS "ode"
 
-#define TOOL_SPEED_ADJ 0.08  // Speed adjustment for tool movement (only simulation).
 #define UNSTABLE false
 
 using namespace std;
@@ -37,21 +36,6 @@ using namespace yarp::os;
 using namespace yarp::dev;
 
 using namespace OpenRAVE;
-
-class toolPort : public BufferedPort<Bottle> {
-  public:
-    toolPort() : status(0) {}
-    double target;
-    bool status;
-  private:
-    virtual void onRead(Bottle& b) {
-        printf("[toolPort::callback] Got %s, ", b.toString().c_str());
-        if (b.get(0).getCode() == BOTTLE_TAG_DOUBLE) {
-            target = b.get(0).asDouble();
-            status = 1;
-        }
-    }
-};
 
 /**
  * @ingroup rlPlugins
@@ -412,11 +396,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<double> velRawExposed;  // For conversion.
     std::vector<double> velRaw;
     double jmcMs;
-    // Tool-related
-    double real_tool;
-    toolPort theToolPort;  
     // Rave-specific parameters //
-    bool toolFound;
     bool cameraFound;
     EnvironmentBasePtr penv;
     PhysicsEngineBasePtr pe;
