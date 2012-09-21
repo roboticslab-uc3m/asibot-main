@@ -40,23 +40,6 @@ void RaveBot::run() {
     }
     lastTime = Time::now();
 
-    if (toolFound) {
-        if(theToolPort.status==1) {
-//            if (fabs(theToolPort.target-real_tool)>MOTOR_PRECISION) {
-            if (fabs(theToolPort.target-real_tool)>0.25) {
-                if(theToolPort.target-real_tool>0)
-                    real_tool+=jmcMs*TOOL_SPEED_ADJ;
-                else
-                    real_tool-=jmcMs*TOOL_SPEED_ADJ;
-                printf("Tool at %f\n",real_tool);
-            } else {
-                theToolPort.status = 0;
-            }
-        }
-        dEncRaw[5] = toRad(real_tool);
-        dEncRaw[6] = -toRad(real_tool);
-    }
-
     // pcontroller->SetDesired(dEncRaw); // This function "resets" physics
     probot->SetJointValues(dEncRaw);  // More compatible with physics??
     penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
