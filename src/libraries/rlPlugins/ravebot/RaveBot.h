@@ -16,6 +16,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "WorldRpcResponder.h"
+
 #define DEFAULT_NUM_MOTORS 5
 
 #define DEFAULT_ENV "asibot_cocina_entero.env.xml"
@@ -408,6 +410,9 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<KinBody::JointPtr> mismotores;
     // YARP_sig (simulated camera image publishing)
     BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
+    // world rpc server
+    RpcServer worldRpcServer;
+    WorldRpcResponder worldRpcResponder;
 };
 
 #endif
