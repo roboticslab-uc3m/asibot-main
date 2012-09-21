@@ -27,7 +27,10 @@ protected:
     */
     virtual bool read(ConnectionReader& connection);
 
-    EnvironmentBasePtr pEnv;
+    KinBodyPtr kinBodyPtr;
+
+    EnvironmentBasePtr pEnv;  // set in setEnvironment
+    RobotBasePtr pRobot;  // set in setRobot
 public:
 
     /**
@@ -36,9 +39,9 @@ public:
     void setEnvironment(EnvironmentBasePtr _pEnv);
 
     /**
-    * Register a position interface for the PortReader.
+    * Register an OpenRAVE robot.
     */
-    //void setPositionInterface(yarp::dev::IPositionControl* _ipos);
+    void setRobot(RobotBasePtr _pRobot);
 };
 
 #endif  // __WORLD_RPC_RESPONDER__

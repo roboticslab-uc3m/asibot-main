@@ -22,16 +22,19 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
             if (in.get(2).asString() == "box") {
                 { // lock the environment!           
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
-                KinBodyPtr kinBodyPtr = RaveCreateKinBody(pEnv,"");
+                kinBodyPtr = RaveCreateKinBody(pEnv,"");
                 kinBodyPtr->SetName("testbody");
                 std::vector<AABB> boxes(1);
-                boxes[0].extents = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
-                boxes[0].pos = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
+                boxes[0].extents = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
+                boxes[0].pos = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
                 kinBodyPtr->InitFromBoxes(boxes,true); 
                 pEnv->Add(kinBodyPtr,true);
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
+        } else if (in.get(1).asString()=="grab") {
+            pRobot->Grab(kinBodyPtr);
+            out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
@@ -46,6 +49,12 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
 
 void WorldRpcResponder::setEnvironment(EnvironmentBasePtr _pEnv) {
     pEnv = _pEnv;
+}
+
+/************************************************************************/
+
+void WorldRpcResponder::setRobot(RobotBasePtr _pRobot) {
+    pRobot = _pRobot;
 }
 
 /************************************************************************/

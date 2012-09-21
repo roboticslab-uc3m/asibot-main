@@ -242,6 +242,7 @@ bool RaveBot::open(Searchable& config) {
 
     //-- world rpc server
     worldRpcResponder.setEnvironment(penv);
+    worldRpcResponder.setRobot(probot);
     worldRpcServer.open("/ravebot/world");
     worldRpcServer.setReader(worldRpcResponder);
 
@@ -287,4 +288,6 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername)
     bool showgui = true;
     viewer->main(showgui);
 }
+
+// -----------------------------------------------------------------------------
 
