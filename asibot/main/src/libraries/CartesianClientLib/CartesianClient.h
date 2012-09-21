@@ -36,7 +36,7 @@ using namespace yarp::os;
  * @ingroup CartesianClient
  *
  * The CartesianClient class implements a client part that connects to a remote
- * \ref cartesianServer module.
+ * \ref cartesianServer module. Warning: Be careful with NUM_AXES, depends on angle representation!
  * 
  */
 class CartesianClient {
@@ -66,7 +66,7 @@ public:
     /**
      * Obtain the current position and orientation.
      * [wait for reply] 
-     * @param xd returns with the array of 5 doubles.
+     * @param xd returns with the array of position/orientation doubles.
      * @return true/false on success/failure.
      */
     bool stat(double *xd);
@@ -74,20 +74,22 @@ public:
     /**
      * Ask for inverting a given pose without actually moving there.
      * [wait for reply] 
+     * @param xd array of doubles with target position/orientation.
+     * @param q returns with the array of doubles of joint values.
      * @return true/false on success/failure.
      */
-    bool inv(const double *xd);
+    bool inv(const double *xd, double *q);
 
     /**
      * Move to absolute position, interpolation at joint level.
-     * @param xd array of 5 doubles with target position/orientation.
+     * @param xd array of doubles with target position/orientation.
      * @return true/false on success/failure.
      */
     bool movj(const double *xd);
     
     /**
      * Move to absolute position, interpolation in Cartesian space.
-     * @param xd array of 5 doubles with target position/orientation.
+     * @param xd array of doubles with target position/orientation.
      * @return true/false on success/failure.
      */
     bool movl(const double *xd);
