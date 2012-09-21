@@ -265,8 +265,8 @@ Now you can compile the YARP bindings with SWIG:
 
 \verbatim
 sudo apt-get install swig
-cd $YARP_ROOT/example/swig
-ccmake .  # Have seen issues with out-of-source build
+cd $YARP_ROOT/bindings; mkdir build; cd build  # note: was at $YARP_ROOT/example/swig before 2012-09-05
+ccmake ..
 \endverbatim
 
 Press 'c' to refresh the cache. A set of options should be available, set the CREATE options you need to ON. Press 'c' to configure. If you chose CREATE_JAVA between your options, set PREPARE_CLASS_FILES to ON now. Press 'c' and 'g' now. Compile the project:
@@ -286,12 +286,13 @@ sudo updatedb  # updates the data-base that 'locate' uses
 echo $PWD >> `locate classpath.txt`
 echo $PWD >> `locate librarypath.txt`
 \endverbatim
-<!-- Note: juan had a strange issue, fixed by moving or renaming conflicting version /opt/matlab/sys/os/glnx86/libstdc++.so.6 -->
+
+Note: Sometimes an issue due to a conflicting version $MATLAB_ROOT/sys/os/glnx86/libstdc++.so.6 can occur, and can usually be fixed by simply moving or renaming.
 
 If you selected CREATE_JAVA, now compile the ASIBOT Java classes:
 \verbatim
 cd $ASIBOT_ROOT/example/java
-javac -source 1.3 -target 1.3 -classpath $YARP_ROOT/example/swig/ *.java
+javac -source 1.3 -target 1.3 -classpath $YARP_ROOT/example/swig/ *.java  # good for most versions of MATLAB
 \endverbatim
 
 Then we need to add this current path to the MATLAB classpath.txt file. You can try:
