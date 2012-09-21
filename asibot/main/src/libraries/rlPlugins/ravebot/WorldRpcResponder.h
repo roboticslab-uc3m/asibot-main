@@ -6,15 +6,14 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 
-#define VOCAB_HELP VOCAB4('h','e','l','p')
-#define VOCAB_MY_STOP VOCAB4('s','t','o','p')
-#define VOCAB_STAT VOCAB4('s','t','a','t')
-#define VOCAB_MOVL VOCAB4('m','o','v','l')
-#define VOCAB_MOVJ VOCAB4('m','o','v','j')
-#define VOCAB_INV VOCAB3('i','n','v')
+#include <openrave-core.h>
+#include <openrave/kinbody.h>
+
 #define VOCAB_FAILED VOCAB4('f','a','i','l')
+#define VOCAB_OK VOCAB2('o','k')
 
 using namespace yarp::os;
+using namespace OpenRAVE;
 
 /**
  * @ingroup WorldRpcResponder
@@ -28,12 +27,13 @@ protected:
     */
     virtual bool read(ConnectionReader& connection);
 
+    EnvironmentBasePtr pEnv;
 public:
 
     /**
-    * Register a cartesian interface for the PortReader.
+    * Register an OpenRAVE environment.
     */
-    //void setCartesianInterface(yarp::dev::ICartesianControl* _icart);
+    void setEnvironment(EnvironmentBasePtr _pEnv);
 
     /**
     * Register a position interface for the PortReader.
