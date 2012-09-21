@@ -287,7 +287,7 @@ echo $PWD >> `locate classpath.txt`
 echo $PWD >> `locate librarypath.txt`
 \endverbatim
 
-Note: Sometimes an issue due to a conflicting version $MATLAB_ROOT/sys/os/glnx86/libstdc++.so.6 can occur, and can usually be fixed by simply moving or renaming.
+Note: Sometimes an issue due to a conflicting version of libstdc++.so.6 can occur. This can usually be fixed by simply moving or renaming $MATLAB_ROOT/sys/os/glnx86/libstdc++.so.6.
 
 If you selected CREATE_JAVA, now compile the ASIBOT Java classes:
 \verbatim
