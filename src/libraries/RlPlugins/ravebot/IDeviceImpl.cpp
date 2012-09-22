@@ -154,6 +154,7 @@ bool RaveBot::open(Searchable& config) {
     penv->SetDebugLevel(Level_Debug);  // Relatively new function
     penv->StopSimulation();  // NEEDED??
     boost::thread thviewer(boost::bind(SetViewer,penv,"qtcoin"));
+    orThreads.add_thread(&thviewer);
     Time::delay(0.4); // wait for the viewer to init, in [s]
 
 
@@ -259,8 +260,11 @@ bool RaveBot::close() {
     printf("RaveBot::close() Closing worldRpcServer...\n");
     worldRpcServer.interrupt();
     worldRpcServer.close();
-//    pthviewer->join(); // wait for the viewer thread to exit
-//    printf("RaveBot: close()\n");
+    this->stop();
+    penv->StopSimulation();  // NEEDED??
+    ViewerBasePtr tmpV = penv->GetViewer();
+    printf("RaveBot: close() joining...\n");
+    orThreads.join_all(); // wait for the viewer thread to exit
     printf("RaveBot::close() Destroyed worldRpcServer. Closing environment...\n");
     penv->Destroy(); // destroy
     printf("[success] RaveBot::close() Closed.\n");
@@ -275,7 +279,7 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername)
     BOOST_ASSERT(!!viewer);
 
     // attach it to the environment:
-    penv->Add(viewer);  // penv->AttachViewer(viewer);
+    penv->AddViewer(viewer);  // penv->AttachViewer(viewer);
 
     RaveVector<float> _cameraTrans(2.0,3.2,2.8);
     RaveVector<float> _cameraAxis(0.092729,0.413007,0.905995);
