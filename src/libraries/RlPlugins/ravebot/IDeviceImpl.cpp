@@ -275,7 +275,7 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername)
     BOOST_ASSERT(!!viewer);
 
     // attach it to the environment:
-    penv->AttachViewer(viewer);
+    penv->Add(viewer);  // penv->AttachViewer(viewer);
 
     RaveVector<float> _cameraTrans(2.0,3.2,2.8);
     RaveVector<float> _cameraAxis(0.092729,0.413007,0.905995);
