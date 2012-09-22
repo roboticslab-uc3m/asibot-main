@@ -33,8 +33,13 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
         } else if (in.get(1).asString()=="grab") {
-            pRobot->Grab(kinBodyPtr);
-            out.addVocab(VOCAB_OK);
+            if (in.get(2).asInt()==1) {
+                pRobot->Grab(kinBodyPtr);
+                out.addVocab(VOCAB_OK);
+            } else if (in.get(2).asInt()==0) {
+                pRobot->Release(kinBodyPtr);
+                out.addVocab(VOCAB_OK);
+            } else out.addVocab(VOCAB_FAILED);
         } else
             out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
