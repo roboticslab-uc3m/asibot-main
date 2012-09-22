@@ -37,7 +37,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     cartesianDevice.open(options);
     if (!cartesianDevice.isValid()) {
         printf("[error] Class instantiation not worked.\n\n");
-        printf("Be sure CMake \"ENABLE_rlPlugins_cartesianbot\" variable is set \"ON\"\n");
+        printf("Be sure CMake \"ENABLE_RlPlugins_cartesianbot\" variable is set \"ON\"\n");
         printf("\"SKIP_cartesianbot is set\" --> should be --> \"ENABLE_cartesianbot is set\"\n\n");
         return false;
     }

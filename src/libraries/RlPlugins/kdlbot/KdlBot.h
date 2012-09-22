@@ -52,14 +52,14 @@ using namespace yarp::math;
 using namespace KDL;
 
 /**
- * @ingroup rlPlugins
+ * @ingroup RlPlugins
  * \defgroup KdlBot
  *
  * The \ref KdlBot library is composed by a single class, KdlBot.
  *
  * <b>Installation</b>
  *
- * The plugin is compiled when ENABLE_rlPlugins_cartesianbot is activated (not default). For further
+ * The plugin is compiled when ENABLE_RlPlugins_cartesianbot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  */

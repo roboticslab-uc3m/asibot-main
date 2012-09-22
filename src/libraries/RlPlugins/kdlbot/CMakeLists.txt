@@ -21,7 +21,7 @@ ADD_LIBRARY(kdlbot KdlBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cp
 TARGET_LINK_LIBRARIES(kdlbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
-set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} rlPlugins kdlbot ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES} CACHE INTERNAL "appended libraries") 
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} RlPlugins kdlbot ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES} CACHE INTERNAL "appended libraries") 
 
 ENDIF (NOT SKIP_kdlbot)
 
