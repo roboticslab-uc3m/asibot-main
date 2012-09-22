@@ -175,8 +175,8 @@ cd asibot/main; mkdir build; cd build; ccmake ..
 Press 'c' to refresh the cache. A set of options should be available, set the ENABLE options you need to ON. The following is a set of options which <b>if set to ON</b> will provide you with the ASIBOT simulator with motor control and direct/inverse kinematics.
 
   \li <B>ENABLE_cartesianServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref cartesianServer module.
-  \li <B>ENABLE_rlPlugins_cartesianbot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref CartesianBot library (part of \ref rlPlugins).
-  \li <B>ENABLE_rlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref RaveBot library (part of \ref rlPlugins).
+  \li <B>ENABLE_RlPlugins_cartesianbot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref CartesianBot library (part of \ref RlPlugins).
+  \li <B>ENABLE_RlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref RaveBot library (part of \ref RlPlugins).
 
 The following is a list of other options.
 
@@ -307,7 +307,7 @@ Once this is done, you can proceed to run the ASIBOT MATLAB example modules: \re
 
  * @subsection export_asibot Building the RaveBot and/or CartesianBot YARP devices into YARP (Completely Optional, read warning)
 
-<b>WARNING</b>: A YARP device can belong to either to the YARP project (yarpmod) <b>OR</b> to the ASIBOT project (rlPlugins).
+<b>WARNING</b>: A YARP device can belong to either to the YARP project (yarpmod) <b>OR</b> to the ASIBOT project (RlPlugins).
 This is <b>mutually exclusive</b> and i.e. will make the current implementation of \ref testRaveBot and \ref cartesianServer not find the \ref RaveBot library.
 
 If you still want to export the ASIBOT libraries to the YARP yarpmod plugin library (perhaps for using the SWIG wrappers), you must:
