@@ -44,14 +44,14 @@ using namespace yarp::math;
 ////using namespace yarp::sig;
 
 /**
- * @ingroup rlPlugins
+ * @ingroup RlPlugins
  * \defgroup CartesianBot
  *
  * The \ref CartesianBot library is composed by a single class, CartesianBot.
  *
  * <b>Installation</b>
  *
- * The plugin is compiled when ENABLE_rlPlugins_cartesianbot is activated (not default). For further
+ * The plugin is compiled when ENABLE_RlPlugins_cartesianbot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  */

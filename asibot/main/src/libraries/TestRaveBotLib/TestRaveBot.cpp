@@ -29,7 +29,7 @@ bool TestRaveBot::configure(ResourceFinder &rf) {
     
     if (!robotDevice.isValid()) {
         printf("[error] Class instantiation not worked.\n\n");
-        printf("Be sure CMake \"ENABLE_rlPlugins_ravebot\" variable is set \"ON\"\n");
+        printf("Be sure CMake \"ENABLE_RlPlugins_ravebot\" variable is set \"ON\"\n");
         printf("\"SKIP_ravebot is set\" --> should be --> \"ENABLE_ravebot is set\"\n\n");
         // robotDevice.close();  // un-needed?
         return false;

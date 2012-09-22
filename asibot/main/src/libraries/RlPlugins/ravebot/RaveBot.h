@@ -40,7 +40,7 @@ using namespace yarp::dev;
 using namespace OpenRAVE;
 
 /**
- * @ingroup rlPlugins
+ * @ingroup RlPlugins
  * \defgroup RaveBot
  *
  * \image html ravebot.png
@@ -49,7 +49,7 @@ using namespace OpenRAVE;
  *
  * <b>Installation</b>
  *
- * The plugin is compiled when ENABLE_rlPlugins_ravebot is activated (not default). For further
+ * The plugin is compiled when ENABLE_RlPlugins_ravebot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  */
 
