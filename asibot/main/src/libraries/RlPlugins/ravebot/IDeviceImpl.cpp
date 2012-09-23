@@ -257,16 +257,16 @@ bool RaveBot::open(Searchable& config) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::close() {
-    printf("RaveBot::close() Closing worldRpcServer...\n");
+    printf("RaveBot::close() Closing ports...\n");
     worldRpcServer.interrupt();
     worldRpcServer.close();
-    this->stop();
     penv->StopSimulation();  // NEEDED??
-    ViewerBasePtr tmpV = penv->GetViewer();
+    this->askToStop();
+    printf("RaveBot::close() Ports closed. Closing environment...\n");
+    penv->Destroy(); // destroy
+    Time::delay(0.4);
     printf("RaveBot: close() joining...\n");
     orThreads.join_all(); // wait for the viewer thread to exit
-    printf("RaveBot::close() Destroyed worldRpcServer. Closing environment...\n");
-    penv->Destroy(); // destroy
     printf("[success] RaveBot::close() Closed.\n");
     return true;
 }
