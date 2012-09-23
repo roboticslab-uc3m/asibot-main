@@ -183,7 +183,7 @@ bool RaveBot::open(Searchable& config) {
     penv->GetRobots(robots);
     //-- Robot 0
     probot = robots.at(0);  // which is a RobotBasePtr
-    printf("Robot: %s.\n", probot->GetName().c_str());
+    printf("Robot 0 name: %s.\n", probot->GetName().c_str());
 
     if(!UNSTABLE) {
         std::vector<KinBody::LinkPtr> links = probot->GetLinks();
@@ -196,30 +196,36 @@ bool RaveBot::open(Searchable& config) {
     while ( (robotIter < robots.size()) && (!cameraFound) ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
         if(sensors.size() > 0) {
-            printf("Sensors found on robot %d (%s).\n",robotIter,robots.at(robotIter)->GetName().c_str());
+            printf("%d sensors found on robot %d (%s).\n",sensors.size(),robotIter,robots.at(robotIter)->GetName().c_str());
             psensorbase = sensors.at(0)->GetSensor();
-            if(psensorbase != NULL) {
-                printf("Good sensorbase...\n");
-                std::string tipo = psensorbase->GetDescription();
-                printf("%s\n",tipo.c_str());
-                tipo = psensorbase->GetName();
-                printf("%s\n",tipo.c_str());
-                // Get some camera parameter info
-                boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
-                int imgw = pcamerageomdata->width;
-                int imgh = pcamerageomdata->height;
-                printf("Camera width: %d, height: %d.\n",imgw,imgh);
-                // Get a pointer to access the camera data stream
-                pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera));
-                // Activate the camera
-                stringstream sin, sout;
-                sin << "power 1";
-                if (psensorbase->SendCommand(sout,sin))
-                    cout << "Sending power camera on command success, response: " << sout.str() << endl;
-                else printf("[error] Could not power camera on.\n");
-                p_imagen.open("/ravebot/img:o");
-                cameraFound = true;
-            } else printf("[warning] Bad sensorbase, may break in future because of this.\n");
+            if(!psensorbase) {
+                printf("[warning] Bad sensorbase, may break in future because of this.\n");
+                break;
+            }
+            std::string tipo = psensorbase->GetName();
+            printf("Sensor 0 name: %s\n",tipo.c_str());
+            tipo = psensorbase->GetDescription();
+            printf("Sensor 0 description: %s\n",tipo.c_str());
+            if(psensorbase->Supports(SensorBase::SensorType(2))) printf("Sensor 0 supports ST_Camera.\n");
+            else {
+                printf("Sensor 0 does not support ST_Camera.\n");
+                break;
+            }
+            // Get some camera parameter info
+            boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
+            int imgw = pcamerageomdata->width;
+            int imgh = pcamerageomdata->height;
+            printf("Camera width: %d, height: %d.\n",imgw,imgh);
+            // Get a pointer to access the camera data stream
+            pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera));
+            // Activate the camera
+            stringstream sin, sout;
+            sin << "power 1";
+            if (psensorbase->SendCommand(sout,sin))
+                cout << "Sending power camera on command success, response: " << sout.str() << endl;
+            else printf("[error] Could not power camera on.\n");
+            p_imagen.open("/ravebot/img:o");
+            cameraFound = true;
         } else printf("No sensors found on robot %d (%s).\n",robotIter,robots.at(robotIter)->GetName().c_str());
         robotIter++;
     }
