@@ -206,7 +206,7 @@ bool RaveBot::open(Searchable& config) {
                 printf("Sensor 0 supports ST_Camera.\n");
                 // Activate the camera
                 psensorbase->Configure(SensorBase::CC_PowerOn);
-                // Show the camera image on screen
+                // Show the camera image in a separate window
                 //psensorbase->Configure(SensorBase::CC_RenderDataOn);
                 // Get some camera parameter info
                 //boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
@@ -215,6 +215,12 @@ bool RaveBot::open(Searchable& config) {
                 pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera));
                 p_imagen.open("/ravebot/img:o");
                 cameraFound = true;
+            } else if(psensorbase->Supports(SensorBase::ST_Laser)) {
+                printf("Sensor 0 supports ST_Laser.\n");
+                // Activate the sensor
+                psensorbase->Configure(SensorBase::CC_PowerOn);
+                // Paint the rays in the OpenRAVE viewer
+                psensorbase->Configure(SensorBase::CC_RenderDataOn);
             } else printf("No supported sensor found on robot %d.\n", robotIter);
         } else printf("No sensors found on robot %d (%s).\n",robotIter,robots.at(robotIter)->GetName().c_str());
         robotIter++;
