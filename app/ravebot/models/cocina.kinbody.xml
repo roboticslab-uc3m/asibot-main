@@ -1,4 +1,4 @@
-<KinBody name="cocina">
+<KinBody name="Cocina">
   <RotationAxis>1 0 0 0</RotationAxis>
   <Body type="static">
     <Geom type="trimesh">
