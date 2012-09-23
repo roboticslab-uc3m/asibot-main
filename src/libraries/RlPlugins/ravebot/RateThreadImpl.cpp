@@ -63,24 +63,47 @@ void RaveBot::run() {
     }
     if(laserFound) {
         plasersensorbase->GetSensorData(plasersensordata);
-        std::vector< RaveVector< dReal > > currentFrameP = plasersensordata->positions;
-        std::vector< RaveVector< dReal > > currentFrameR = plasersensordata->ranges;
-        std::vector< dReal > currentFrameI = plasersensordata->intensity;
-        //printf("VectorP size: %d ",currentFrameP.size()); // = 1;
-        //printf("VectorR size: %d ",currentFrameR.size()); // = 3072;
-        //printf("VectorI size: %d\n",currentFrameI.size()); // = 3072;
-/*        yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen.prepare(); 
-        i_imagen.resize(640,480);  // Tamaño de la pantalla (640,480)
-        yarp::sig::PixelRgb p;
-        for (int i_x = 0; i_x < i_imagen.width(); ++i_x) {
-            for (int i_y = 0; i_y < i_imagen.height(); ++i_y) {
-                p.r = pcamerasensordata->vimagedata[3*(i_x+(i_y*i_imagen.width()))];
-                p.g = pcamerasensordata->vimagedata[1+3*(i_x+(i_y*i_imagen.width()))];
-                p.b = pcamerasensordata->vimagedata[2+3*(i_x+(i_y*i_imagen.width()))];
-                i_imagen.safePixel(i_x,i_y) = p;
+        std::vector< RaveVector< dReal > > sensorPositions = plasersensordata->positions;
+        std::vector< RaveVector< dReal > > sensorRanges = plasersensordata->ranges;
+        std::vector< dReal > sensorIntensity = plasersensordata->intensity;
+        //printf("sensorPositions size: %d ",sensorPositions.size()); // = 1; xyz of the fixed 3d sensor position.
+        //printf("sensorRanges size: %d ",sensorRanges.size()); // 64 * 48 = 3072;
+        //printf("sensorIntensity size: %d\n",sensorIntensity.size()); // 64 * 48 = 3072;
+        //for(unsigned int i=0;i<sensorRanges.size();i++) {
+        //   printf("sensorRanges[%d].x: %f  sensorRanges[%d].y: %f  sensorRanges[%d].z: %f sensorIntensity[%d]: %.2f\n",i,sensorRanges[i].x,i,sensorRanges[i].y,i,sensorRanges[i].z,i,sensorIntensity[i]);  // intensity always 1.0 or 0.0 in 3d sensor
+        //}
+        /*Transform tinv = plasersensordata->__trans.inverse();
+        for(size_t i = 0; i < _data->ranges.size(); ++i) {
+            float* p = (float*)(&_pointcloud2msg.data.at(i*_pointcloud2msg.point_step));
+            if( i < _data->positions.size() ) {
+                Vector v = tinv*(_data->ranges[i] + _data->positions[i]);
+                p[0] = (float)v.x;
+                p[1] = (float)v.y;
+                p[2] = (float)v.z;
+            } else if( _data->positions.size() > 0 ) {
+                Vector v = tinv*(_data->ranges[i] + _data->positions[0]);
+                p[0] = (float)v.x;
+                p[1] = (float)v.y;
+                p[2] = (float)v.z;
+            } else {
+                Vector v = tinv*_data->ranges[i];
+                p[0] = (float)v.x;
+                p[1] = (float)v.y;
+                p[2] = (float)v.z;
+            }
+            if( _data->intensity.size()==_data->ranges.size() ) {
+                p[3] = _data->intensity[i];
+            }
+        }*/
+        yarp::sig::ImageOf<yarp::sig::PixelFloat>& i_depth = p_depth.prepare(); 
+        i_depth.resize(48,64);  // Tamaño de la pantalla (64,48)
+        for (int i_x = 0; i_x < i_depth.width(); ++i_x) {
+            for (int i_y = 0; i_y < i_depth.height(); ++i_y) {
+                double p = sensorRanges[i_x+(i_y*i_depth.width())].z;
+                i_depth.safePixel(i_x,i_y) = p*50;  // Should adjust this value depending on max/min dist
             }
         }
-        p_imagen.write();*/
+        p_depth.write();
     }
 
 }
