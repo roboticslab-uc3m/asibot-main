@@ -197,35 +197,23 @@ bool RaveBot::open(Searchable& config) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
         if(sensors.size() > 0) {
             printf("%d sensors found on robot %d (%s).\n",sensors.size(),robotIter,robots.at(robotIter)->GetName().c_str());
-            psensorbase = sensors.at(0)->GetSensor();
-            if(!psensorbase) {
-                printf("[warning] Bad sensorbase, may break in future because of this.\n");
-                break;
-            }
+            psensorbase = sensors.at(0)->GetSensor();  // this should be safe because (sensors.size() > 0)
             std::string tipo = psensorbase->GetName();
             printf("Sensor 0 name: %s\n",tipo.c_str());
             tipo = psensorbase->GetDescription();
             printf("Sensor 0 description: %s\n",tipo.c_str());
-            if(psensorbase->Supports(SensorBase::SensorType(2))) printf("Sensor 0 supports ST_Camera.\n");
-            else {
-                printf("Sensor 0 does not support ST_Camera.\n");
-                break;
-            }
-            // Get some camera parameter info
-            boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
-            int imgw = pcamerageomdata->width;
-            int imgh = pcamerageomdata->height;
-            printf("Camera width: %d, height: %d.\n",imgw,imgh);
-            // Get a pointer to access the camera data stream
-            pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera));
-            // Activate the camera
-            stringstream sin, sout;
-            sin << "power 1";
-            if (psensorbase->SendCommand(sout,sin))
-                cout << "Sending power camera on command success, response: " << sout.str() << endl;
-            else printf("[error] Could not power camera on.\n");
-            p_imagen.open("/ravebot/img:o");
-            cameraFound = true;
+            if(psensorbase->Supports(SensorBase::ST_Camera)) {
+                printf("Sensor 0 supports ST_Camera.\n");
+                // Activate the camera
+                psensorbase->Configure(SensorBase::CC_PowerOn);
+                // Get some camera parameter info
+                //boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
+                //printf("Camera width: %d, height: %d.\n",pcamerageomdata->width,pcamerageomdata->height);
+                // Get a pointer to access the camera data stream
+                pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera));
+                p_imagen.open("/ravebot/img:o");
+                cameraFound = true;
+            } else printf("No supported sensor found on robot %d.\n", robotIter);
         } else printf("No sensors found on robot %d (%s).\n",robotIter,robots.at(robotIter)->GetName().c_str());
         robotIter++;
     }
