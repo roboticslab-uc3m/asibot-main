@@ -399,18 +399,21 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<double> velRaw;
     double jmcMs;
     // Rave-specific parameters //
-    bool cameraFound;
     EnvironmentBasePtr penv;
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
     ControllerBasePtr pcontrol;
     SensorBasePtr psensorbase;
-    boost::shared_ptr<SensorBase::CameraSensorData> pcamerasensordata;
     std::vector<KinBodyPtr> bodies;
     std::vector<KinBody::JointPtr> mismotores;
     boost::thread_group orThreads;
+    boost::shared_ptr<SensorBase::CameraSensorData> pcamerasensordata;
+    boost::shared_ptr<SensorBase::LaserSensorData> plasersensordata;
+    bool cameraFound;
+    bool laserFound;
     // YARP_sig (simulated camera image publishing)
     BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
+    BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> > p_depth;
     // world rpc server
     RpcServer worldRpcServer;
     WorldRpcResponder worldRpcResponder;
