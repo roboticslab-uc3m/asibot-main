@@ -47,7 +47,7 @@ void RaveBot::run() {
     if(cameraFound) {
         pcamerasensorbase->GetSensorData(pcamerasensordata);
         //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
-        // printf("Vector size: %d",currentFrame.size()); // = 480 * 640 * 3 = 921600;
+        //printf("Vector size: %d\n",currentFrame.size()); // = 480 * 640 * 3 = 921600;
         yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen.prepare(); 
         i_imagen.resize(640,480);  // Tamaño de la pantalla (640,480)
         yarp::sig::PixelRgb p;
@@ -63,8 +63,12 @@ void RaveBot::run() {
     }
     if(laserFound) {
         plasersensorbase->GetSensorData(plasersensordata);
-        //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
-        // printf("Vector size: %d",currentFrame.size()); // = 480 * 640 * 3 = 921600;
+        std::vector< RaveVector< dReal > > currentFrameP = plasersensordata->positions;
+        std::vector< RaveVector< dReal > > currentFrameR = plasersensordata->ranges;
+        std::vector< dReal > currentFrameI = plasersensordata->intensity;
+        //printf("VectorP size: %d ",currentFrameP.size()); // = 1;
+        //printf("VectorR size: %d ",currentFrameR.size()); // = 3072;
+        //printf("VectorI size: %d\n",currentFrameI.size()); // = 3072;
 /*        yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen.prepare(); 
         i_imagen.resize(640,480);  // Tamaño de la pantalla (640,480)
         yarp::sig::PixelRgb p;
