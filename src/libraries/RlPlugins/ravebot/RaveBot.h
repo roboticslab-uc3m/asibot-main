@@ -403,10 +403,11 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
     ControllerBasePtr pcontrol;
-    SensorBasePtr psensorbase;
     std::vector<KinBodyPtr> bodies;
     std::vector<KinBody::JointPtr> mismotores;
     boost::thread_group orThreads;
+    SensorBasePtr pcamerasensorbase;
+    SensorBasePtr plasersensorbase;
     boost::shared_ptr<SensorBase::CameraSensorData> pcamerasensordata;
     boost::shared_ptr<SensorBase::LaserSensorData> plasersensordata;
     bool cameraFound;

@@ -45,7 +45,7 @@ void RaveBot::run() {
     penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
 
     if(cameraFound) {
-        psensorbase->GetSensorData(pcamerasensordata);
+        pcamerasensorbase->GetSensorData(pcamerasensordata);
         //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
         // printf("Vector size: %d",currentFrame.size()); // = 480 * 640 * 3 = 921600;
         yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen.prepare(); 
@@ -60,6 +60,23 @@ void RaveBot::run() {
             }
         }
         p_imagen.write();
+    }
+    if(laserFound) {
+        plasersensorbase->GetSensorData(plasersensordata);
+        //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
+        // printf("Vector size: %d",currentFrame.size()); // = 480 * 640 * 3 = 921600;
+/*        yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen.prepare(); 
+        i_imagen.resize(640,480);  // Tamaño de la pantalla (640,480)
+        yarp::sig::PixelRgb p;
+        for (int i_x = 0; i_x < i_imagen.width(); ++i_x) {
+            for (int i_y = 0; i_y < i_imagen.height(); ++i_y) {
+                p.r = pcamerasensordata->vimagedata[3*(i_x+(i_y*i_imagen.width()))];
+                p.g = pcamerasensordata->vimagedata[1+3*(i_x+(i_y*i_imagen.width()))];
+                p.b = pcamerasensordata->vimagedata[2+3*(i_x+(i_y*i_imagen.width()))];
+                i_imagen.safePixel(i_x,i_y) = p;
+            }
+        }
+        p_imagen.write();*/
     }
 
 }
