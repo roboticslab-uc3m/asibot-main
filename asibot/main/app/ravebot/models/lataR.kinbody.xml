@@ -1,4 +1,4 @@
-<KinBody name="lataR">
+<KinBody name="LataR">
   <Body type="dynamic">
     <Geom type="cylinder">
       <RotationAxis>1 0 0 -90</RotationAxis>
