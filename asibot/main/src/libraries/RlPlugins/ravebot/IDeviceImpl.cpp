@@ -192,6 +192,7 @@ bool RaveBot::open(Searchable& config) {
     }
 
     cameraFound = false;
+    laserFound = false;
     unsigned int robotIter = 0;
     while ( (robotIter < robots.size()) && (!cameraFound) ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
@@ -221,6 +222,10 @@ bool RaveBot::open(Searchable& config) {
                 psensorbase->Configure(SensorBase::CC_PowerOn);
                 // Paint the rays in the OpenRAVE viewer
                 psensorbase->Configure(SensorBase::CC_RenderDataOn);
+                // Get a pointer to access the laser data stream
+                plasersensordata = boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Laser));
+                p_depth.open("/ravebot/depth:o");
+                laserFound = true;
             } else printf("No supported sensor found on robot %d.\n", robotIter);
         } else printf("No sensors found on robot %d (%s).\n",robotIter,robots.at(robotIter)->GetName().c_str());
         robotIter++;
@@ -264,6 +269,14 @@ bool RaveBot::close() {
     worldRpcServer.close();
     penv->StopSimulation();  // NEEDED??
     this->askToStop();
+    if(cameraFound) {
+        p_imagen.interrupt();
+        p_imagen.close();
+    }
+    if(laserFound) {
+        p_depth.interrupt();
+        p_depth.close();
+    }
     printf("RaveBot::close() Ports closed. Closing environment...\n");
     penv->Destroy(); // destroy
     Time::delay(0.4);
