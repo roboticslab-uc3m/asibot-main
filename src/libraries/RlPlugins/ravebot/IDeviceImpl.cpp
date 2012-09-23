@@ -198,32 +198,34 @@ bool RaveBot::open(Searchable& config) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
         if(sensors.size() > 0) {
             printf("%d sensors found on robot %d (%s).\n",sensors.size(),robotIter,robots.at(robotIter)->GetName().c_str());
-            psensorbase = sensors.at(0)->GetSensor();  // this should be safe because (sensors.size() > 0)
+            SensorBasePtr psensorbase = sensors.at(0)->GetSensor();  // this should be safe because (sensors.size() > 0)
             std::string tipo = psensorbase->GetName();
             printf("Sensor 0 name: %s\n",tipo.c_str());
             tipo = psensorbase->GetDescription();
             printf("Sensor 0 description: %s\n",tipo.c_str());
             if(psensorbase->Supports(SensorBase::ST_Camera)) {
                 printf("Sensor 0 supports ST_Camera.\n");
+                pcamerasensorbase = psensorbase;
                 // Activate the camera
-                psensorbase->Configure(SensorBase::CC_PowerOn);
+                pcamerasensorbase->Configure(SensorBase::CC_PowerOn);
                 // Show the camera image in a separate window
-                //psensorbase->Configure(SensorBase::CC_RenderDataOn);
+                //pcamerasensorbase->Configure(SensorBase::CC_RenderDataOn);
                 // Get some camera parameter info
                 //boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
                 //printf("Camera width: %d, height: %d.\n",pcamerageomdata->width,pcamerageomdata->height);
                 // Get a pointer to access the camera data stream
-                pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera));
+                pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(pcamerasensorbase->CreateSensorData(SensorBase::ST_Camera));
                 p_imagen.open("/ravebot/img:o");
                 cameraFound = true;
             } else if(psensorbase->Supports(SensorBase::ST_Laser)) {
                 printf("Sensor 0 supports ST_Laser.\n");
+                plasersensorbase = psensorbase;
                 // Activate the sensor
-                psensorbase->Configure(SensorBase::CC_PowerOn);
+                plasersensorbase->Configure(SensorBase::CC_PowerOn);
                 // Paint the rays in the OpenRAVE viewer
-                psensorbase->Configure(SensorBase::CC_RenderDataOn);
+                plasersensorbase->Configure(SensorBase::CC_RenderDataOn);
                 // Get a pointer to access the laser data stream
-                plasersensordata = boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Laser));
+                plasersensordata = boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(plasersensorbase->CreateSensorData(SensorBase::ST_Laser));
                 p_depth.open("/ravebot/depth:o");
                 laserFound = true;
             } else printf("No supported sensor found on robot %d.\n", robotIter);
