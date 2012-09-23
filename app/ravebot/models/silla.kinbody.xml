@@ -1,9 +1,9 @@
-<KinBody name="silla">
-  <RotationAxis>1 0 0 0</RotationAxis>
-  <Body type="static">
-    <Geom type="trimesh">
-      <Data>./ivs/silla.iv</Data>
-      <Render>./ivs/silla.iv</Render>
-    </Geom>      
-  </Body>
+<KinBody name="Silla">
+    <RotationAxis>1 0 0 0</RotationAxis>
+    <Body type="static">
+        <Geom type="trimesh">
+            <Data>./ivs/silla.iv</Data>
+            <Render>./ivs/silla.iv</Render>
+        </Geom>      
+    </Body>
 </KinBody>
