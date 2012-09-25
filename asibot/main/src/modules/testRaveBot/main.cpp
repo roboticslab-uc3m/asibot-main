@@ -51,6 +51,39 @@
 Response: [ok]
 \endverbatim
  *
+ * The RaveBot class also attaches a WorldRpcResponder that provides certain interaction with the
+ * environment. We can interface with the class from the command-line by typing:
+\verbatim
+[on terminal 4] yarp rpc /ravebot/world
+\endverbatim
+ * It is possible to create boxes. Example of a .1m^3 box situated at 1 meter Z:
+\verbatim
+[on terminal 4] world mk box .1 .1 .1 0 0 1
+\endverbatim
+ * Grab last created box (no fingers needed, just pure magic!):
+\verbatim
+[on terminal 4] world grab 1
+\endverbatim
+ * Release last created box (no fingers needed, just pure magic!):
+\verbatim
+[on terminal 4] world grab 0
+\endverbatim
+ *
+ * The RaveBot class additionally streams the data of the last camera sensor sensor it finds. We can
+ * view this data from the command-line by typing:
+\verbatim
+[on terminal 5] yarpview /yarpview/img:i
+[on terminal 5] yarp connect /ravebot/img:o /yarpview/img:i 
+\endverbatim
+ * 
+ * The RaveBot class also streams the data of the last depth sensor sensor it finds. We can
+ * view this data from the command-line by typing:
+\verbatim
+[on terminal 6] yarpview /yarpview/depth:i
+[on terminal 6] yarp connect /ravebot/depth:o /yarpview/depth:i 
+\endverbatim
+ * 
+ *
  * <b>Modify</b>
  * 
  * This file can be edited at 
