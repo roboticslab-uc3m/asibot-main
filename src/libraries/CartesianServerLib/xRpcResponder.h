@@ -10,6 +10,8 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
+#define MAX_NUM_MOTORS 100
+
 #define VOCAB_HELP VOCAB4('h','e','l','p')
 #define VOCAB_MY_STOP VOCAB4('s','t','o','p')
 #define VOCAB_STAT VOCAB4('s','t','a','t')
