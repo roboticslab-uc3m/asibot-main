@@ -67,7 +67,8 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             printf("[not implemented] tool is list of %d elements\n", toolLst->size());
         }
         if(icart->askForPose(xd,od,xdhat,odhat,qdhat)){
-            double qd[qdhat.size()];
+            //double qd[qdhat.size()];
+            double qd[MAX_NUM_MOTORS];  // should actually do a malloc depending on qdhat.size() 
             for (int i = 0; i < qdhat.size(); i++)
                 qd[i] = qdhat[i];
             icart->stopControl(); // new!!!!
