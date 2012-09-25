@@ -26,6 +26,8 @@ endforeach(header_file ${folder_header})
 
 include_directories(${YARP_INCLUDE_DIRS} ${ASIBOT_INCLUDE_DIRS})
 
+link_directories(${ASIBOT_LINK_DIRS})
+
 # Set up our main executable.
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
