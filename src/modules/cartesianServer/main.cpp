@@ -45,8 +45,10 @@
 [on terminal 3] yarp rpc /ravebot/cartesianServer/rpc:i
 \endverbatim
  *
- * Remember that the use of [brackets] means we are sending a VOCAB.
- * The use of (parenthesis) means we are sending a list, which is a Bottle inside a Bottle.
+ * Note 1: The default configuration also loads a YARP controlboard device, so you can interact with it as in \ref testRaveBot too.
+ *
+ * Note 2: Remember that the use of [brackets] means we are sending a VOCAB. The use of (parenthesis) means
+ * we are sending a list, which is a Bottle inside a Bottle.
  *
  * We send Cartesian positions/orientations as lists of five elements:
  * <b>x</b>[m], <b>y</b>[m], <b>z</b>[m], <b>rot(y')</b>[deg], <b>rot(z'')</b>[deg] of the end-effector in <i>absolute base coordinates</i>. The first rotation, <b>rot(z)</b>, is given by <b>x</b> and <b>y</b>.
