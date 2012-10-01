@@ -14,7 +14,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world grab _obj_ _num_ 0/1, world mk sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos).");
+        out.addString("Available commands: help, world del all, world grab _obj_ _num_ 0/1, world mk sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos).");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -48,6 +48,31 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 ssphKinBodyPtrs.push_back(ssphKinBodyPtr);
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
+            } if (in.get(2).asString() == "scyl") {
+                { // lock the environment!           
+                OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
+                KinBodyPtr scylKinBodyPtr = RaveCreateKinBody(pEnv,"");
+                ConstString scylName("scyl_");
+                scylName += ConstString::toString(scylKinBodyPtrs.size()+1);
+                scylKinBodyPtr->SetName(scylName.c_str());
+                std::list<KinBody::Link::GeometryInfo> scylInfoList;
+                KinBody::Link::GeometryInfo scylInfo;
+                scylInfo._type = KinBody::Link::GeomCylinder;
+                Transform pose(Vector(1,0,0,0),Vector(in.get(5).asDouble(),in.get(6).asDouble(),in.get(7).asDouble()));
+                scylInfo._t = pose;  // scylInfo._t[0,3] = 0.1;
+                Vector volume;
+                volume.x = in.get(3).asDouble();
+                volume.y = in.get(4).asDouble();
+                scylInfo._vGeomData = volume;
+                scylInfo._bVisible = true;
+                //scylInfo._fTransparency = 0.5;
+                //scylInfo._vDiffuseColor = [1,0,0];
+                scylInfoList.push_back(scylInfo);
+                scylKinBodyPtr->InitFromGeometries(scylInfoList);
+                pEnv->Add(scylKinBodyPtr,true);
+                scylKinBodyPtrs.push_back(scylKinBodyPtr);
+                }  // the environment is not locked anymore
+                out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
         } else if ((in.get(1).asString()=="del")&&(in.get(2).asString()=="all")) {
             for (unsigned int i=0;i<sboxKinBodyPtrs.size();i++) {
@@ -58,6 +83,10 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 pEnv->Remove(ssphKinBodyPtrs[i]);
             }
             ssphKinBodyPtrs.clear();
+            for (unsigned int i=0;i<scylKinBodyPtrs.size();i++) {
+                pEnv->Remove(scylKinBodyPtrs[i]);
+            }
+            scylKinBodyPtrs.clear();
             out.addVocab(VOCAB_OK);
         } else if (in.get(1).asString()=="grab") {
             if(in.get(2).asString()=="sbox") {
@@ -79,6 +108,17 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                         out.addVocab(VOCAB_OK);
                     } else if (in.get(4).asInt()==0) {
                         pRobot->Release(ssphKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else out.addVocab(VOCAB_FAILED);
+                } else out.addVocab(VOCAB_FAILED);
+            } else if(in.get(2).asString()=="scyl") {
+                int inIndex = (in.get(3).asInt());
+                if ( (inIndex>=1) && (inIndex<=(int)scylKinBodyPtrs.size()) ) {
+                    if (in.get(4).asInt()==1) {
+                        pRobot->Grab(scylKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else if (in.get(4).asInt()==0) {
+                        pRobot->Release(scylKinBodyPtrs[inIndex-1]);
                         out.addVocab(VOCAB_OK);
                     } else out.addVocab(VOCAB_FAILED);
                 } else out.addVocab(VOCAB_FAILED);
