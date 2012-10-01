@@ -2,7 +2,7 @@
 
 /**
  * 
- * \defgroup premultH
+ * \defgroup premultH premultH
  *
  * premultH means Premultiply Homogeneous Transformation Matrix
  *
