@@ -71,6 +71,17 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                         out.addVocab(VOCAB_OK);
                     } else out.addVocab(VOCAB_FAILED);
                 } else out.addVocab(VOCAB_FAILED);
+            } else if(in.get(2).asString()=="ssph") {
+                int inIndex = (in.get(3).asInt());
+                if ( (inIndex>=1) && (inIndex<=(int)ssphKinBodyPtrs.size()) ) {
+                    if (in.get(4).asInt()==1) {
+                        pRobot->Grab(ssphKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else if (in.get(4).asInt()==0) {
+                        pRobot->Release(ssphKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else out.addVocab(VOCAB_FAILED);
+                } else out.addVocab(VOCAB_FAILED);
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
