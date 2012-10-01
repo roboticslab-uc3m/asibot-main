@@ -95,6 +95,11 @@ Response: [ok]
 [on terminal 4] world grab scyl 1 0
 \endverbatim
  *
+ * Delete all of the created objects with the following command:
+\verbatim
+[on terminal 4] world del all
+\endverbatim
+ *
  *
  * The RaveBot class additionally streams the data of the last camera sensor sensor it finds. We can
  * view this data from the command-line by typing:
