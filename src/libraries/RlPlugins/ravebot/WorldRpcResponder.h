@@ -31,8 +31,16 @@ protected:
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pRobot;  // set in setRobot
+
+    unsigned int boxCounter, sboxCounter, cylCounter, scylCounter, sphCounter, ssphCounter;
+
 public:
 
+    /**
+    * Reset object counters.
+    */
+    void resetCounters();
+    
     /**
     * Register an OpenRAVE environment.
     */
