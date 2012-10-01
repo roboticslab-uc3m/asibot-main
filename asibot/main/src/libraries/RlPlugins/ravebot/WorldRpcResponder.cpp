@@ -19,16 +19,19 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
         return true;
     } else if (choice=="world") {
         if (in.get(1).asString() == "mk") {
-            if (in.get(2).asString() == "box") {
+            if (in.get(2).asString() == "sbox") {
                 { // lock the environment!           
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 kinBodyPtr = RaveCreateKinBody(pEnv,"");
-                kinBodyPtr->SetName("testbody");
+                ConstString sboxName("sbox");
+                sboxName += ConstString::toString(boxCounter+1);
+                kinBodyPtr->SetName(sboxName.c_str());
                 std::vector<AABB> boxes(1);
                 boxes[0].extents = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
                 boxes[0].pos = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
                 kinBodyPtr->InitFromBoxes(boxes,true); 
                 pEnv->Add(kinBodyPtr,true);
+                boxCounter++;
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
@@ -48,6 +51,14 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     out.addVocab(VOCAB_FAILED);
     out.write(*returnToSender);
     return false;
+}
+
+/************************************************************************/
+
+void WorldRpcResponder::resetCounters() {
+    boxCounter = 0; sboxCounter = 0;
+    cylCounter = 0; scylCounter = 0;
+    sphCounter = 0; ssphCounter = 0;
 }
 
 /************************************************************************/

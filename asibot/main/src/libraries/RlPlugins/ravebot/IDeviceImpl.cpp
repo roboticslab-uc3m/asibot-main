@@ -253,6 +253,7 @@ bool RaveBot::open(Searchable& config) {
     //-- world rpc server
     worldRpcResponder.setEnvironment(penv);
     worldRpcResponder.setRobot(probot);
+    worldRpcResponder.resetCounters();
     worldRpcServer.open("/ravebot/world");
     worldRpcServer.setReader(worldRpcResponder);
 
