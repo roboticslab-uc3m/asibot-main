@@ -27,13 +27,16 @@ protected:
     */
     virtual bool read(ConnectionReader& connection);
 
-    //KinBodyPtr kinBodyPtr;
+    // box/sbox/cyl/scyl/sph/ssph
+    std::vector<KinBodyPtr> boxKinBodyPtrs;
     std::vector<KinBodyPtr> sboxKinBodyPtrs;
+    std::vector<KinBodyPtr> cylKinBodyPtrs;
+    std::vector<KinBodyPtr> scylKinBodyPtrs;
+    std::vector<KinBodyPtr> sphKinBodyPtrs;
+    std::vector<KinBodyPtr> ssphKinBodyPtrs;
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pRobot;  // set in setRobot
-
-    unsigned int boxCounter, sboxCounter, cylCounter, scylCounter, sphCounter, ssphCounter;
 
 public:
 
