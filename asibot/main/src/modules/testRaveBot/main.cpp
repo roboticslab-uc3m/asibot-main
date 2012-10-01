@@ -56,18 +56,45 @@ Response: [ok]
 \verbatim
 [on terminal 4] yarp rpc /ravebot/world
 \endverbatim
- * It is possible to create boxes. Example of a .1m^3 box situated at 1 meter X, 2 meters Y, 1.5 meter Z:
+ * It is possible to create static (not affected by gravity) boxes. Example of a .1m^3 static box situated at 1 meter X, 2 meters Y, 1.5 meter Z:
 \verbatim
-[on terminal 4] world mk box .1 .1 .1 1 2 1.5
+[on terminal 4] world mk sbox .1 .1 .1 1 2 1.5
 \endverbatim
- * Grab last created box (no fingers needed, just pure magic!):
+ * Grab the first created static box (no fingers needed, just pure magic!):
 \verbatim
-[on terminal 4] world grab 1
+[on terminal 4] world grab sbox 1 1
 \endverbatim
- * Release last created box (no fingers needed, just pure magic!):
+ * Release the first created static box (no fingers needed, just pure magic!):
 \verbatim
-[on terminal 4] world grab 0
+[on terminal 4] world grab sbox 1 0
 \endverbatim
+ *
+ * It is possible to create static (not affected by gravity) spheres. Example of a static shpere of .05 meter radius, situated at 2 meters X, 1.5 meter Y, 1 meter Z:
+\verbatim
+[on terminal 4] world mk ssph .05 2 1.5 1
+\endverbatim
+ * Grab the first created static sphere (no fingers needed, just pure magic!):
+\verbatim
+[on terminal 4] world grab ssph 1 1
+\endverbatim
+ * Release the first created static sphere (no fingers needed, just pure magic!):
+\verbatim
+[on terminal 4] world grab ssph 1 0
+\endverbatim
+ *
+ * It is possible to create static (not affected by gravity) cylinders. Example of a static cylinder of .05 meter radius and 1 meter height, situated at 1.2 meters X, 1.3 meter Y, 1.4 meter Z:
+\verbatim
+[on terminal 4] world mk scyl .05 1 1.2 1.3 1.4
+\endverbatim
+ * Grab the first created static cylinder (no fingers needed, just pure magic!):
+\verbatim
+[on terminal 4] world grab scyl 1 1
+\endverbatim
+ * Release the first created static cylinder (no fingers needed, just pure magic!):
+\verbatim
+[on terminal 4] world grab scyl 1 0
+\endverbatim
+ *
  *
  * The RaveBot class additionally streams the data of the last camera sensor sensor it finds. We can
  * view this data from the command-line by typing:
