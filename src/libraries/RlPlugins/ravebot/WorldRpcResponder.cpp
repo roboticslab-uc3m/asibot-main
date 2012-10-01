@@ -23,7 +23,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 { // lock the environment!           
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr sboxKinBodyPtr = RaveCreateKinBody(pEnv,"");
-                ConstString sboxName("sbox");
+                ConstString sboxName("sbox_");
                 sboxName += ConstString::toString(sboxKinBodyPtrs.size()+1);
                 sboxKinBodyPtr->SetName(sboxName.c_str());
                 std::vector<AABB> boxes(1);
@@ -42,15 +42,19 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
             sboxKinBodyPtrs.clear();
             out.addVocab(VOCAB_OK);
         } else if (in.get(1).asString()=="grab") {
-            if (in.get(2).asInt()==1) {
-                //pRobot->Grab(kinBodyPtr);
-                out.addVocab(VOCAB_OK);
-            } else if (in.get(2).asInt()==0) {
-                //pRobot->Release(kinBodyPtr);
-                out.addVocab(VOCAB_OK);
+            if(in.get(2).asString()=="sbox") {
+                int inIndex = (in.get(3).asInt());
+                if ( (inIndex>=1) && (inIndex<=(int)sboxKinBodyPtrs.size()) ) {
+                    if (in.get(4).asInt()==1) {
+                        pRobot->Grab(sboxKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else if (in.get(4).asInt()==0) {
+                        pRobot->Release(sboxKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else out.addVocab(VOCAB_FAILED);
+                } else out.addVocab(VOCAB_FAILED);
             } else out.addVocab(VOCAB_FAILED);
-        } else
-            out.addVocab(VOCAB_FAILED);
+        } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
         return true;
     } 
