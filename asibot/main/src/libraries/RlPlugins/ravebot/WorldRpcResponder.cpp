@@ -14,7 +14,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world mk box (three params for size) (three params for pos).");
+        out.addString("Available commands: help, world del all, world grab _obj_ _num_ 0/1, world mk sbox (three params for size) (three params for pos).");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
