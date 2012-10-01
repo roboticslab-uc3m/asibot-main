@@ -14,7 +14,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world grab _obj_ _num_ 0/1, world mk sbox (three params for size) (three params for pos).");
+        out.addString("Available commands: help, world del all, world grab _obj_ _num_ 0/1, world mk sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos).");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -34,12 +34,30 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 sboxKinBodyPtrs.push_back(sboxKinBodyPtr);
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
+            } if (in.get(2).asString() == "ssph") {
+                { // lock the environment!           
+                OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
+                KinBodyPtr ssphKinBodyPtr = RaveCreateKinBody(pEnv,"");
+                ConstString ssphName("ssph_");
+                ssphName += ConstString::toString(ssphKinBodyPtrs.size()+1);
+                ssphKinBodyPtr->SetName(ssphName.c_str());
+                std::vector<Vector> spheres(1);
+                spheres.push_back( Vector(in.get(4).asDouble(), in.get(5).asDouble(), in.get(6).asDouble(), in.get(3).asDouble() ));
+                ssphKinBodyPtr->InitFromSpheres(spheres,true); 
+                pEnv->Add(ssphKinBodyPtr,true);
+                ssphKinBodyPtrs.push_back(ssphKinBodyPtr);
+                }  // the environment is not locked anymore
+                out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
         } else if ((in.get(1).asString()=="del")&&(in.get(2).asString()=="all")) {
             for (unsigned int i=0;i<sboxKinBodyPtrs.size();i++) {
                 pEnv->Remove(sboxKinBodyPtrs[i]);
             }
             sboxKinBodyPtrs.clear();
+            for (unsigned int i=0;i<ssphKinBodyPtrs.size();i++) {
+                pEnv->Remove(ssphKinBodyPtrs[i]);
+            }
+            ssphKinBodyPtrs.clear();
             out.addVocab(VOCAB_OK);
         } else if (in.get(1).asString()=="grab") {
             if(in.get(2).asString()=="sbox") {
