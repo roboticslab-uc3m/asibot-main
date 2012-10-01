@@ -27,7 +27,8 @@ protected:
     */
     virtual bool read(ConnectionReader& connection);
 
-    KinBodyPtr kinBodyPtr;
+    //KinBodyPtr kinBodyPtr;
+    std::vector<KinBodyPtr> sboxKinBodyPtrs;
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pRobot;  // set in setRobot
@@ -36,11 +37,6 @@ protected:
 
 public:
 
-    /**
-    * Reset object counters.
-    */
-    void resetCounters();
-    
     /**
     * Register an OpenRAVE environment.
     */
