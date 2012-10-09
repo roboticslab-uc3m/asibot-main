@@ -19,7 +19,24 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
         return true;
     } else if (choice=="world") {
         if (in.get(1).asString() == "mk") {
-            if (in.get(2).asString() == "sbox") {
+            if (in.get(2).asString() == "box") {
+                { // lock the environment!           
+                OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
+                KinBodyPtr boxKinBodyPtr = RaveCreateKinBody(pEnv,"");
+                ConstString boxName("box_");
+                boxName += ConstString::toString(boxKinBodyPtrs.size()+1);
+                boxKinBodyPtr->SetName(boxName.c_str());
+                //
+                std::vector<AABB> boxes(1);
+                boxes[0].extents = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
+                boxes[0].pos = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
+                boxKinBodyPtr->InitFromBoxes(boxes,true); 
+                //
+                pEnv->Add(boxKinBodyPtr,true);
+                boxKinBodyPtrs.push_back(boxKinBodyPtr);
+                }  // the environment is not locked anymore
+                out.addVocab(VOCAB_OK);
+            } else if (in.get(2).asString() == "sbox") {
                 { // lock the environment!           
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr sboxKinBodyPtr = RaveCreateKinBody(pEnv,"");
@@ -80,6 +97,10 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
         } else if ((in.get(1).asString()=="del")&&(in.get(2).asString()=="all")) {
+            for (unsigned int i=0;i<boxKinBodyPtrs.size();i++) {
+                pEnv->Remove(boxKinBodyPtrs[i]);
+            }
+            boxKinBodyPtrs.clear();
             for (unsigned int i=0;i<sboxKinBodyPtrs.size();i++) {
                 pEnv->Remove(sboxKinBodyPtrs[i]);
             }
