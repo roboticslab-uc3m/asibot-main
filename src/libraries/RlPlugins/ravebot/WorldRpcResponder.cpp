@@ -26,49 +26,54 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 ConstString sboxName("sbox_");
                 sboxName += ConstString::toString(sboxKinBodyPtrs.size()+1);
                 sboxKinBodyPtr->SetName(sboxName.c_str());
+                //
                 std::vector<AABB> boxes(1);
                 boxes[0].extents = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
                 boxes[0].pos = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
                 sboxKinBodyPtr->InitFromBoxes(boxes,true); 
+                //
                 pEnv->Add(sboxKinBodyPtr,true);
                 sboxKinBodyPtrs.push_back(sboxKinBodyPtr);
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
-            } if (in.get(2).asString() == "ssph") {
+            } else if (in.get(2).asString() == "ssph") {
                 { // lock the environment!           
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr ssphKinBodyPtr = RaveCreateKinBody(pEnv,"");
                 ConstString ssphName("ssph_");
                 ssphName += ConstString::toString(ssphKinBodyPtrs.size()+1);
                 ssphKinBodyPtr->SetName(ssphName.c_str());
+                //
                 std::vector<Vector> spheres(1);
                 spheres.push_back( Vector(in.get(4).asDouble(), in.get(5).asDouble(), in.get(6).asDouble(), in.get(3).asDouble() ));
                 ssphKinBodyPtr->InitFromSpheres(spheres,true); 
+                //
                 pEnv->Add(ssphKinBodyPtr,true);
                 ssphKinBodyPtrs.push_back(ssphKinBodyPtr);
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
-            } if (in.get(2).asString() == "scyl") {
+            } else if (in.get(2).asString() == "scyl") {
                 { // lock the environment!           
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr scylKinBodyPtr = RaveCreateKinBody(pEnv,"");
                 ConstString scylName("scyl_");
                 scylName += ConstString::toString(scylKinBodyPtrs.size()+1);
                 scylKinBodyPtr->SetName(scylName.c_str());
+                //
                 std::list<KinBody::Link::GeometryInfo> scylInfoList;
                 KinBody::Link::GeometryInfo scylInfo;
                 scylInfo._type = KinBody::Link::GeomCylinder;
                 Transform pose(Vector(1,0,0,0),Vector(in.get(5).asDouble(),in.get(6).asDouble(),in.get(7).asDouble()));
-                scylInfo._t = pose;  // scylInfo._t[0,3] = 0.1;
+                scylInfo._t = pose;
                 Vector volume;
                 volume.x = in.get(3).asDouble();
                 volume.y = in.get(4).asDouble();
                 scylInfo._vGeomData = volume;
                 scylInfo._bVisible = true;
-                //scylInfo._fTransparency = 0.5;
                 //scylInfo._vDiffuseColor = [1,0,0];
                 scylInfoList.push_back(scylInfo);
                 scylKinBodyPtr->InitFromGeometries(scylInfoList);
+                //
                 pEnv->Add(scylKinBodyPtr,true);
                 scylKinBodyPtrs.push_back(scylKinBodyPtr);
                 }  // the environment is not locked anymore
