@@ -116,7 +116,18 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
             scylKinBodyPtrs.clear();
             out.addVocab(VOCAB_OK);
         } else if (in.get(1).asString()=="grab") {
-            if(in.get(2).asString()=="sbox") {
+            if(in.get(2).asString()=="box") {
+                int inIndex = (in.get(3).asInt());
+                if ( (inIndex>=1) && (inIndex<=(int)boxKinBodyPtrs.size()) ) {
+                    if (in.get(4).asInt()==1) {
+                        pRobot->Grab(boxKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else if (in.get(4).asInt()==0) {
+                        pRobot->Release(boxKinBodyPtrs[inIndex-1]);
+                        out.addVocab(VOCAB_OK);
+                    } else out.addVocab(VOCAB_FAILED);
+                } else out.addVocab(VOCAB_FAILED);
+            } else if(in.get(2).asString()=="sbox") {
                 int inIndex = (in.get(3).asInt());
                 if ( (inIndex>=1) && (inIndex<=(int)sboxKinBodyPtrs.size()) ) {
                     if (in.get(4).asInt()==1) {
