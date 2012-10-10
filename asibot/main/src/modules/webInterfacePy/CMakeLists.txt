@@ -1,4 +1,4 @@
-# A cmake file to get started with for new projects.
+# created by "yarp cmake" & Juan G Victores 2012 @ UC3M
 
 cmake_minimum_required(VERSION 2.6)
 
