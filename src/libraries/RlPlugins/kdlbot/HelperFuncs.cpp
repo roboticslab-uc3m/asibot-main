@@ -38,9 +38,9 @@ bool KdlBot::getMatrixFromProperties(Searchable &options, ConstString &tag, yarp
 // -----------------------------------------------------------------------------
 
 bool KdlBot::fwdKin(const yarp::sig::Vector &inUnits, yarp::sig::Vector &x, yarp::sig::Vector &o) {
-    JntArray inRad = JntArray(numMotors);
+    JntArray inRad = JntArray(cmcNumMotors);
     Frame fOutCart;
-    for (int motor=0; motor<numMotors; motor++) {
+    for (int motor=0; motor<cmcNumMotors; motor++) {
         if(isPrismatic[motor]) inRad(motor)=inUnits[motor];
         else inRad(motor)=toRad(inUnits[motor]);
     }

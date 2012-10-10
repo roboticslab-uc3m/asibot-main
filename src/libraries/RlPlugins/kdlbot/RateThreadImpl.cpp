@@ -7,12 +7,12 @@
 
 bool KdlBot::threadInit() {
     printf("[success] cartesianbot threadInit() started %f ms ratethread\n",getRate());
-    double dRealUnits[numMotors];
+    double dRealUnits[cmcNumMotors];
     if(!enc->getEncoders(dRealUnits)) {
         printf("[warning] KdlBot::threadInit() failed to getEncoders()\n");
         return false;  // bad practice??
     }
-    yarp::sig::Vector realUnits(numMotors,dRealUnits);
+    yarp::sig::Vector realUnits(cmcNumMotors,dRealUnits);
     yarp::sig::Vector x,o;
     fwdKin(realUnits,x,o);
     printf("inside end of init\n");
@@ -23,12 +23,12 @@ bool KdlBot::threadInit() {
 
 void KdlBot::run() {
     if (cmc_status>0) {  // If it is movement
-        double dRealUnits[numMotors];
+        double dRealUnits[cmcNumMotors];
         if(!enc->getEncoders(dRealUnits)) {
             printf("[warning] KdlBot::run() failed to getEncoders()\n");
             return;  // bad practice??
         }
-        yarp::sig::Vector realUnits(numMotors,dRealUnits);
+        yarp::sig::Vector realUnits(cmcNumMotors,dRealUnits);
         yarp::sig::Vector x,o;
         fwdKin(realUnits,x,o);
         bool done = true;
@@ -86,8 +86,8 @@ void KdlBot::run() {
             KDL::Frame desiredF = currentTrajectory->Pos(sTime);
             KDL::Twist desiredT = currentTrajectory->Vel(sTime);
 
-            JntArray currentRads = JntArray(numMotors);
-            for (int motor=0; motor<numMotors; motor++) {
+            JntArray currentRads = JntArray(cmcNumMotors);
+            for (int motor=0; motor<cmcNumMotors; motor++) {
                 if(isPrismatic[motor]) currentRads(motor)=dRealUnits[motor];
                 else currentRads(motor)=toRad(dRealUnits[motor]);
             }
@@ -98,13 +98,13 @@ void KdlBot::run() {
                 currentT(i) += desiredT(i);
             }
 
-            JntArray kdlqdot = JntArray(numMotors);
+            JntArray kdlqdot = JntArray(cmcNumMotors);
 
             ChainIkSolverVel_pinv iksolverv(theChain);
             int ret = iksolverv.CartToJnt(currentRads,currentT,kdlqdot);
 
-            double qdot[numMotors];
-            for (int motor=0; motor<numMotors; motor++) {
+            double qdot[cmcNumMotors];
+            for (int motor=0; motor<cmcNumMotors; motor++) {
                 if(isPrismatic[motor]) qdot[motor]=kdlqdot(motor);
                 else qdot[motor]=toDeg(kdlqdot(motor));
             }
