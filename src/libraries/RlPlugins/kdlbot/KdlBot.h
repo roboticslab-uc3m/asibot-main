@@ -37,7 +37,7 @@
 #define DEFAULT_DURATION 20     // For Trajectory
 #define DEFAULT_MAXVEL 7.5      // unit/s
 #define DEFAULT_MAXACC 0.2      // unit/s^2
-#define DEFAULT_NUM_MOTORS 5
+#define DEFAULT_CMC_NUM_MOTORS 5
 #define DEFAULT_ROBOT_DEVICE "controlboard"
 #define DEFAULT_ROBOT_SUBDEVICE "ravebot"
 #define DEFAULT_ROBOT_NAME "/ravebot"
@@ -670,7 +670,7 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
 
     double startTime;
     
-    unsigned int numMotors;
+    unsigned int cmcNumMotors;
     ConstString angleRepr;
     double epsilon, duration, maxVel, maxAcc, cmcMs;
 
