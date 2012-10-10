@@ -100,6 +100,14 @@ Response: [ok]
 [on terminal 4] world del all
 \endverbatim
  *
+ * <b>New!</b> You can even grab pre-existent objects of the environment. For example, in the ASIBOT kitchen environment:
+\verbatim
+[on terminal 4] world grab obj LataR 1
+\endverbatim
+ * Release the pre-existent objects of the environment changing the last parameter:
+\verbatim
+[on terminal 4] world grab obj LataR 0
+\endverbatim
  *
  * The RaveBot class additionally streams the data of the last camera sensor sensor it finds. We can
  * view this data from the command-line by typing:
