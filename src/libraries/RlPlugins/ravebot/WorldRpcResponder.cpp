@@ -35,6 +35,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 pEnv->Add(boxKinBodyPtr,true);
                 boxKinBodyPtrs.push_back(boxKinBodyPtr);
                 }  // the environment is not locked anymore
+                printf("[warning] box behaviour static as in sbox.\n");
                 out.addVocab(VOCAB_OK);
             } else if (in.get(2).asString() == "sbox") {
                 { // lock the environment!           
