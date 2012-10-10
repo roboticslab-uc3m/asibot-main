@@ -160,6 +160,21 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                         out.addVocab(VOCAB_OK);
                     } else out.addVocab(VOCAB_FAILED);
                 } else out.addVocab(VOCAB_FAILED);
+            } else if (in.get(2).asString()=="obj") {
+                KinBodyPtr objPtr = pEnv->GetKinBody(in.get(3).asString().c_str());
+                if(objPtr) {
+                    printf("object %s exists\n", in.get(3).asString().c_str());
+                    if (in.get(4).asInt()==1) {
+                        pRobot->Grab(objPtr);
+                        out.addVocab(VOCAB_OK);
+                    } else if (in.get(4).asInt()==0) {
+                        pRobot->Release(objPtr);
+                        out.addVocab(VOCAB_OK);
+                    } else out.addVocab(VOCAB_FAILED);
+                } else {  // null pointer
+                    printf("object %s does not exist\n", in.get(3).asString().c_str());
+                    out.addVocab(VOCAB_FAILED);
+                }
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
