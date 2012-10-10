@@ -14,7 +14,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world grab _obj_ _num_ 0/1, world mk sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos).");
+        out.addString("Available commands: help, world del all, world mk sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1.");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -163,7 +163,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
             } else if (in.get(2).asString()=="obj") {
                 KinBodyPtr objPtr = pEnv->GetKinBody(in.get(3).asString().c_str());
                 if(objPtr) {
-                    printf("object %s exists\n", in.get(3).asString().c_str());
+                    printf("[success] object %s exists.\n", in.get(3).asString().c_str());
                     if (in.get(4).asInt()==1) {
                         pRobot->Grab(objPtr);
                         out.addVocab(VOCAB_OK);
@@ -172,7 +172,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                         out.addVocab(VOCAB_OK);
                     } else out.addVocab(VOCAB_FAILED);
                 } else {  // null pointer
-                    printf("object %s does not exist\n", in.get(3).asString().c_str());
+                    printf("[warning] object %s does not exist.\n", in.get(3).asString().c_str());
                     out.addVocab(VOCAB_FAILED);
                 }
             } else out.addVocab(VOCAB_FAILED);
