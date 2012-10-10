@@ -24,12 +24,12 @@ bool KdlBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vector &o,
 // ----------------------------------------------------------------------------- 
 
 bool KdlBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os::Stamp *stamp) {
-    double dRealUnits[numMotors];
+    double dRealUnits[cmcNumMotors];
     if(!enc->getEncoders(dRealUnits)) {
         printf("[warning] KdlBot::getPose() failed to getEncoders()\n");
         return false;
     }
-    yarp::sig::Vector realUnits(numMotors,dRealUnits);
+    yarp::sig::Vector realUnits(cmcNumMotors,dRealUnits);
     return fwdKin(realUnits,x,o);
 }
 
@@ -121,13 +121,13 @@ bool KdlBot::getDesired(yarp::sig::Vector &xdhat, yarp::sig::Vector &odhat,
 bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                             yarp::sig::Vector &xdhat, yarp::sig::Vector &odhat,
                             yarp::sig::Vector &qdhat) {
-    double currentUnits[numMotors];
+    double currentUnits[cmcNumMotors];
     if(!enc->getEncoders(currentUnits)) {
         printf("[warning] KdlBot::getPose() failed to getEncoders()\n");
         return false;
     }
-    JntArray currentRads = JntArray(numMotors);
-    for (int motor=0; motor<numMotors; motor++) {
+    JntArray currentRads = JntArray(cmcNumMotors);
+    for (int motor=0; motor<cmcNumMotors; motor++) {
         if(isPrismatic[motor]) currentRads(motor)=currentUnits[motor];
         else currentRads(motor)=toRad(currentUnits[motor]);
     }
@@ -147,9 +147,9 @@ bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od
     ChainFkSolverPos_recursive fksolver(theChain);
     ChainIkSolverVel_pinv iksolver_vel(theChain);
 //    ChainIkSolverPos_NR iksolver_pos (theChain,fksolver,iksolver_vel,500,1e-6);
-    JntArray qMin = JntArray(numMotors);
-    JntArray qMax = JntArray(numMotors);
-    for (int motor=0; motor<numMotors; motor++) {
+    JntArray qMin = JntArray(cmcNumMotors);
+    JntArray qMax = JntArray(cmcNumMotors);
+    for (int motor=0; motor<cmcNumMotors; motor++) {
         double _qMin, _qMax;
         if(!lim->getLimits(motor,&(_qMin),&(_qMax))) return false;
         if(isPrismatic[motor]) {
@@ -162,13 +162,13 @@ bool KdlBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od
     }
     ChainIkSolverPos_NR_JL iksolver_pos (theChain,qMin,qMax,fksolver,iksolver_vel,500,1e-6);
 
-    JntArray qd = JntArray(numMotors);
+    JntArray qd = JntArray(cmcNumMotors);
     int ret = iksolver_pos.CartToJnt(currentRads,frameXd,qd);
     printf("[HelperFuncs] KDL ret = %d:\n",ret);
 
     if(ret<0) return false;
 
-    for (int motor=0; motor<numMotors; motor++) {
+    for (int motor=0; motor<cmcNumMotors; motor++) {
         if(isPrismatic[motor]) qdhat.push_back(qd(motor));
         else qdhat.push_back(toDeg(qd(motor)));
     }

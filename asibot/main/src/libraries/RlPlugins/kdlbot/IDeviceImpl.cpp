@@ -13,7 +13,7 @@ bool KdlBot::open(Searchable& config) {
     epsilon = DEFAULT_EPSILON;      // double
     maxVel = DEFAULT_MAXVEL;        // double
     maxAcc = DEFAULT_MAXACC;        // double
-    numMotors = DEFAULT_NUM_MOTORS; // unsigned int
+    cmcNumMotors = DEFAULT_CMC_NUM_MOTORS; // unsigned int
     ConstString strRobotDevice = DEFAULT_ROBOT_DEVICE;
     ConstString strRobotSubDevice = DEFAULT_ROBOT_SUBDEVICE;
     ConstString strRobotName = DEFAULT_ROBOT_NAME;
@@ -30,7 +30,7 @@ bool KdlBot::open(Searchable& config) {
         printf("\t--epsilon (epsilon for tolerance, default: \"%f\")\n",epsilon);
         printf("\t--maxAcc [units/s^2] (maximum joint acceleration, default: \"%f\")\n",maxAcc);
         printf("\t--maxVel [units/s] (maximum joint velocity, default: \"%f\")\n",maxVel);
-        printf("\t--numMotors (default: \"%d\")\n",numMotors);
+        printf("\t--cmcNumMotors (default: \"%d\")\n",cmcNumMotors);
         printf("\t--robotDevice (device we create, default: \"%s\")\n",strRobotDevice.c_str());
         printf("\t--robotSubdevice (library we use, default: \"%s\")\n",strRobotSubDevice.c_str());
         printf("\t--robotName (port name of created device, default: \"%s\")\n",strRobotName.c_str());
@@ -39,9 +39,9 @@ bool KdlBot::open(Searchable& config) {
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
-    if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
+    if (config.check("cmcNumMotors")) cmcNumMotors = config.find("cmcNumMotors").asDouble();
     if (config.check("angleRepr")) angleRepr = config.find("angleRepr").asString();
-    printf("KdlBot using numMotors: %d, angleRepr: %s.\n",numMotors,angleRepr.c_str());
+    printf("KdlBot using cmcNumMotors: %d, angleRepr: %s.\n",cmcNumMotors,angleRepr.c_str());
 
     if(angleRepr == "axisAngle") {
         targetO.resize(4);
@@ -78,7 +78,7 @@ bool KdlBot::open(Searchable& config) {
     // H0 = Frame(kdlRot0,kdlVec0);
     theChain.addSegment(Segment((Joint::None), Frame(kdlRot0,kdlVec0)));
 
-    for(int motor=0;motor<numMotors;motor++) {
+    for(int motor=0;motor<cmcNumMotors;motor++) {
         ConstString link("link_");
         link+=ConstString::toString(motor);
         Bottle &bLink=config.findGroup(link);
