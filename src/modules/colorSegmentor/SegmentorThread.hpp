@@ -3,9 +3,6 @@
 #ifndef __FINDER_THREAD_HPP__
 #define __FINDER_THREAD_HPP__
 
-#include "pxToReal.h"  // My own image->real space converter
-
-// #include <yarp/os/all.h>
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Module.h>
 #include <yarp/os/Network.h>
@@ -21,16 +18,14 @@
 #include "BlobResult.h"  // Main blob library include
 
 #define DEFAULT_MS_FINDER 20  // In ms, unmeaningful as ALWAYS gets overwritten by RF
-#define DEFAULT_TOLERANCE  5  // amplitude is double!
-#define DEFAULT_RGB_R 180  //227
-#define DEFAULT_RGB_G 100  //219
-#define DEFAULT_RGB_B 120  //250
+
+#define DEFAULT_ALGORITHM "default"
+#define DEFAULT_MAX_NUM_BLOBS 2
 #define DEFAULT_THRESHOLD 50
 
 using namespace yarp::os;
 using namespace yarp::sig;
 using namespace yarp::sig::draw;
-// using namespace yarp::math;
 
 class SegmentorThread : public RateThread {
 private:
@@ -38,8 +33,8 @@ private:
     BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
     Port *pOutPort;
     //
-    pxToReal myPxToReal;
-    //
+    ConstString algorithm;
+    int maxNumBlobs;
     int threshold;
 
 public:

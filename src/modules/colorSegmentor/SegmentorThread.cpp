@@ -20,18 +20,24 @@ void SegmentorThread::setOutPort(Port * _pOutPort) {
 /************************************************************************/
 void SegmentorThread::init(ResourceFinder &rf) {
 
+    algorithm = DEFAULT_ALGORITHM;
+    maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
     threshold = DEFAULT_THRESHOLD;
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
+        printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--threshold (default: \"%d\")\n",threshold);
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
+    if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
+    if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
     if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
-    printf("SegmentorThread using threshold: %d.\n",threshold);
+    printf("SegmentorThread using algorithm: %s, maxNumBlobs: %d, threshold: %d.\n",algorithm.c_str(),maxNumBlobs,threshold);
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
@@ -65,6 +71,8 @@ void SegmentorThread::run() {
                                              IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)img->getIplImage(), rgb, CV_RGB2BGR);
 
+    // --- ALGORITHM STARTS SOMEWHERE HERE ---
+    
     IplImage* r = NULL;
     IplImage* g = NULL;
     IplImage* rMg = NULL;
@@ -88,44 +96,43 @@ void SegmentorThread::run() {
 
     // printf("Publish biggest out of %d blob(s)...\n",blobs.GetNumBlobs());
 
-    // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
-    // Better than Filter:
-    CBlob biggestBlob;
-    blobs.GetNthBlob( CBlobGetArea(), 0, biggestBlob );
+    Bottle container;
+    int numBlobs = blobs.GetNumBlobs();
+    if (numBlobs > maxNumBlobs) numBlobs = maxNumBlobs;
 
-    CBlobGetXCenter getXCenter;
-    CBlobGetYCenter getYCenter;
+    for (int i=0;i<numBlobs;i++) {  // from biggest to smallest
+        // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
+        // Better than Filter:
+        CBlob biggestBlob;
+        blobs.GetNthBlob( CBlobGetArea(), i, biggestBlob );
 
-    int myx = getXCenter( biggestBlob );
-    int myy = getYCenter( biggestBlob );
+        CBlobGetXCenter getXCenter;
+        CBlobGetYCenter getYCenter;
 
-    // add a blue circle
-    PixelRgb blue(0,0,255);
-    addCircle(*img,blue,myx,myy,10);
+        int myx = getXCenter( biggestBlob );
+        int myy = getYCenter( biggestBlob );
+
+        // add a blue circle
+        PixelRgb blue(0,0,255);
+        addCircle(*img,blue,myx,myy,10);
+
+        // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
+        // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
+
+        Bottle b_xy;
+        b_xy.addDouble(myx);
+        b_xy.addDouble(myy);
+        container.addList() = b_xy;
+    }
+
     pOutImg->prepare() = *img;
     pOutImg->write();
 
-    // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
-    // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
-
-    double resX,resY;
-    Bottle b_xy;
-    b_xy.addString("lata");
-    if(myPxToReal.localizar(myx,myy,resX,resY)) {
-        printf("Final: %f, %f.\n",resX,resY);
-        b_xy.addString("roja");
-        b_xy.addDouble(resX);
-        b_xy.addDouble(resY);
-    } else {
-        b_xy.addString("no detectada");
-    }
-
-    pOutPort->write(b_xy);
+    pOutPort->write(container);
 
     cvReleaseImage( &rgb ); //release the memory for the image
     cvReleaseImage( &r ); //release the memory for the image
     cvReleaseImage( &g ); //release the memory for the image
     cvReleaseImage( &rMg ); //release the memory for the image
-
 }
 
