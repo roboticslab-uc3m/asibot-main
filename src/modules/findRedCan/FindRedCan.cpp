@@ -20,9 +20,9 @@ bool FindRedCan::configure(ResourceFinder &rf) {
     finderThread.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
-    inImg.open("/findRedPoint/img:i");
-    outImg.open("/findRedPoint/img:o");
-    outPort.open("/findRedPoint/state:o");
+    inImg.open("/findRedCan/img:i");
+    outImg.open("/findRedCan/img:o");
+    outPort.open("/findRedCan/state:o");
 
     return true;
 }

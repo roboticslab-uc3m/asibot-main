@@ -99,6 +99,12 @@ void FinderThread::run() {
     int myx = getXCenter( biggestBlob );
     int myy = getYCenter( biggestBlob );
 
+    // add a blue circle
+    PixelRgb blue(0,0,255);
+    addCircle(*img,blue,myx,myy,10);
+    pOutImg->prepare() = *img;
+    pOutImg->write();
+
     // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
     // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
 

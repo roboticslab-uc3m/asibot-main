@@ -32,7 +32,8 @@
 
 using namespace yarp::os;
 using namespace yarp::sig;
-using namespace yarp::math;
+using namespace yarp::sig::draw;
+// using namespace yarp::math;
 
 class FinderThread : public RateThread {
 private:
