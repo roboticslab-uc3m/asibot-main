@@ -2,9 +2,9 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_findRedCan)
+IF (ENABLE_colorSegmentor)
 
-set(KEYWORD "findRedCan")
+set(KEYWORD "colorSegmentor")
 
 # Start a project.
 project(${KEYWORD})
@@ -34,5 +34,5 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
-ENDIF (ENABLE_findRedCan)
+ENDIF (ENABLE_colorSegmentor)
 

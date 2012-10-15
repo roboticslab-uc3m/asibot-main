@@ -2,11 +2,11 @@
 
 /**
  * 
- * \defgroup findRedCan findRedCan
+ * \defgroup colorSegmentor colorSegmentor
  *
- * \image html findRedCan.png
+ * \image html colorSegmentor.png
  * 
- * The \ref findRedCan module tracks a red can and streams its location in the format "lata roja [cm] [cm]" through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> output called <b>/redCan:o</b>. The current implementation uses blobs and OpenCV, so a cvNamedWindow with the tracking is simultaneously displayed. yarpdev --device opencv_grabber --movie http://CAMERA_IP/mjpg/video.mjpg
+ * The \ref colorSegmentor module tracks a red can and streams its location in the format "lata roja [cm] [cm]" through a <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> output called <b>/redCan:o</b>. The current implementation uses blobs and OpenCV, so a cvNamedWindow with the tracking is simultaneously displayed. yarpdev --device opencv_grabber --movie http://CAMERA_IP/mjpg/video.mjpg
  *
  * <b> Legal </b>
  *
@@ -20,42 +20,42 @@
  *
  * <b>Installation</b>
  *
- * The module is compiled when ENABLE_findRedCan is activated (default: OFF). For further
+ * The module is compiled when ENABLE_colorSegmentor is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
  * <b>Running</b> (assuming correct installation)
  *
  * yarp server &
  *
- * $ASIBOT_DIR/bin/findRedCan
+ * $ASIBOT_DIR/bin/colorSegmentor
  *
  * <b>Modify</b>
  *
- * This file can be edited at src/modules/findRedCan/main.cpp
+ * This file can be edited at src/modules/colorSegmentor/main.cpp
  *
  */
 
-#include "FindRedCan.hpp"
+#include "ColorSegmentor.hpp"
 
 int main(int argc, char** argv) {
 
     ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("findRedCan/conf");
-    rf.setDefaultConfigFile("findRedCan.ini");
+    rf.setDefaultContext("colorSegmentor/conf");
+    rf.setDefaultConfigFile("colorSegmentor.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
-    FindRedCan mod;
+    ColorSegmentor mod;
     if(rf.check("help")) {
         return mod.runModule(rf);
     }
 
-    printf("Run \"findRedCan --help\" for options.\n");
-    printf("findRedCan checking for yarp network... ");
+    printf("Run \"colorSegmentor --help\" for options.\n");
+    printf("colorSegmentor checking for yarp network... ");
     fflush(stdout);
     Network yarp;
     if (!yarp.checkNetwork()) {
-        printf("[fail]\nfindRedCan found no yarp network (try running \"yarpserver &\"), bye!\n");
+        printf("[fail]\ncolorSegmentor found no yarp network (try running \"yarpserver &\"), bye!\n");
         return -1;
     } else printf("[ok]\n");
 
