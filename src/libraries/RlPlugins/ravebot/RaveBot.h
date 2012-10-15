@@ -411,6 +411,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     boost::shared_ptr<SensorBase::CameraSensorData> pcamerasensordata;
     boost::shared_ptr<SensorBase::LaserSensorData> plasersensordata;
     bool cameraFound;
+    int cameraWidth, cameraHeight;
     bool laserFound;
     // YARP_sig (simulated camera image publishing)
     BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
