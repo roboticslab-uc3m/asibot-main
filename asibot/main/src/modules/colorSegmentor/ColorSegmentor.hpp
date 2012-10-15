@@ -3,14 +3,14 @@
 #ifndef __COLOR_SEGMENTOR_HPP__
 #define __COLOR_SEGMENTOR_HPP__
 
-#include "FinderThread.hpp"
+#include "SegmentorThread.hpp"
 
 using namespace yarp::os;
 using namespace yarp::sig;
 
 class ColorSegmentor : public RFModule {
   private:
-    FinderThread finderThread;
+    SegmentorThread finderThread;
     //
     BufferedPort<ImageOf<PixelRgb> > inImg;
     BufferedPort<ImageOf<PixelRgb> > outImg;
