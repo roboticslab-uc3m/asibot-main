@@ -2,7 +2,7 @@
 # Order may be important here
 
 add_subdirectory(cartesianServer)
-add_subdirectory(findRedCan)
+add_subdirectory(colorSegmentor)
 add_subdirectory(pointAtObjectServer)
 add_subdirectory(premultH)
 add_subdirectory(testRaveBot)
