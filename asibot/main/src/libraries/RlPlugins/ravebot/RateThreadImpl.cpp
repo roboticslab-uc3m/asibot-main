@@ -47,9 +47,9 @@ void RaveBot::run() {
     if(cameraFound) {
         pcamerasensorbase->GetSensorData(pcamerasensordata);
         //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
-        //printf("Vector size: %d\n",currentFrame.size()); // = 480 * 640 * 3 = 921600;
+        //printf("Vector size: %d\n",currentFrame.size()); // i.e. 480 * 640 * 3 = 921600;
         yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen.prepare(); 
-        i_imagen.resize(640,480);  // Tamaño de la pantalla (640,480)
+        i_imagen.resize(cameraWidth,cameraHeight);  // Tamaño de la pantalla
         yarp::sig::PixelRgb p;
         for (int i_x = 0; i_x < i_imagen.width(); ++i_x) {
             for (int i_y = 0; i_y < i_imagen.height(); ++i_y) {
