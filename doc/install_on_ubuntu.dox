@@ -135,7 +135,8 @@ We'll do this from source to assure the CMake file is created.
 
 \verbatim
 sudo apt-get install libavformat-dev libavcodec-dev libswscale-dev
-svn co https://code.ros.org/svn/opencv/trunk/opencv
+wget https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.2/OpenCV-2.4.2.tar.bz2  # superseeds: svn co https://code.ros.org/svn/opencv/trunk/opencv
+tar xvf OpenCV-2.4.2.tar.bz2
 cd opencv; mkdir build; cd build
 cmake ..  # Make sure you see Video I/O: -- FFMPEG: YES
 make -j3; sudo make install
@@ -292,7 +293,7 @@ Note: Sometimes an issue due to a conflicting version of libstdc++.so.6 can occu
 If you selected CREATE_JAVA, now compile the ASIBOT Java classes:
 \verbatim
 cd $ASIBOT_ROOT/example/java
-javac -source 1.3 -target 1.3 -classpath $YARP_ROOT/example/swig/ *.java  # good for most versions of MATLAB
+javac -source 1.3 -target 1.3 -classpath $YARP_ROOT/bindings/build *.java  # note: was at $YARP_ROOT/example/swig before 2012-09-05
 \endverbatim
 
 Then we need to add this current path to the MATLAB classpath.txt file. You can try:
