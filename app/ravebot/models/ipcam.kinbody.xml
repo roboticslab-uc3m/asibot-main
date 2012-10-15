@@ -1,10 +1,10 @@
 
-<KinBody name="Kinect_kinbody">
+<KinBody name="Ipcam_kinbody">
     <!--Body type="dynamic" name="linkK"-->
-    <Body type="static" name="linkK">
-        <Geom type="trimesh">
-            <!--Data>./wrls/kinect.wrl</Data-->
-            <Render>./wrls/kinect.wrl</Render>
+    <Body type="static" name="linkI">
+        <Geom type="box">
+            <diffuseColor>1 1 1</diffuseColor>
+            <Extents>0.010 0.010 0.020</Extents>
         </Geom>
     </Body>
 </KinBody>
