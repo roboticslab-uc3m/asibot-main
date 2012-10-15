@@ -108,87 +108,24 @@ void FinderThread::run() {
     // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
     // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
 
+    double resX,resY;
+    Bottle b_xy;
+    b_xy.addString("lata");
+    if(myPxToReal.localizar(myx,myy,resX,resY)) {
+        printf("Final: %f, %f.\n",resX,resY);
+        b_xy.addString("roja");
+        b_xy.addDouble(resX);
+        b_xy.addDouble(resY);
+    } else {
+        b_xy.addString("no detectada");
+    }
+
+    pOutPort->write(b_xy);
+
     cvReleaseImage( &rgb ); //release the memory for the image
     cvReleaseImage( &r ); //release the memory for the image
     cvReleaseImage( &g ); //release the memory for the image
     cvReleaseImage( &rMg ); //release the memory for the image
 
 }
-
-/*int main(int argc, char** argv) {
-
-//        biggestBlob.FillBlob( bloby, CV_RGB(255,0,0));
-        cvCircle(rgb, cvPoint(myx,myy), 10, cvScalar(0,255,0), 1);
-
-        if (conX) {
-            cvShowImage("Image from camera", rgb);
-        }
-
-        double resX,resY;
-        b_xy.clear();
-        b_xy.addString("lata");
-        if(ipCam.localizar(myx,myy,resX,resY)) {
-            printf("Final: %f, %f.\n",resX,resY);
-            b_xy.addString("roja");
-            b_xy.addDouble(resX);
-            b_xy.addDouble(resY);
-        } else {
-            b_xy.addString("no detectada");
-        }
-
-        p_xy.write(b_xy);
-
-        if(rgb!=NULL) {
-            cvReleaseImage( &rgb ); //release the memory for the image
-            rgb = NULL;
-        }
-        if(r!=NULL) {
-            cvReleaseImage( &r ); //release the memory for the image
-            r = NULL;
-        }
-        if(g!=NULL) {
-            cvReleaseImage( &g ); //release the memory for the image
-            g = NULL;
-        }
-        if(rMg!=NULL) {
-            cvReleaseImage( &rMg ); //release the memory for the image
-            rMg = NULL;
-        }
-        if(bloby!=NULL) {
-            cvReleaseImage( &bloby ); //release the memory for the image
-            bloby = NULL;
-        }
-        if(currentFrame!=NULL) {
-            cvReleaseImage( &currentFrame ); //release the memory for the image
-            currentFrame = NULL;
-        }
-
-//        if (cvWaitKey(10) >= 0)
-        if (cvWaitKey(10) == 'q')
-            break;
-
-    }
-
-    if (conX) {
-        cvNamedWindow("Image from camera", CV_WINDOW_AUTOSIZE);
-        cvShowImage("Image from camera", rgb);
-        cvWaitKey(0);
-    }
-
-    cvDestroyWindow("Image from camera"); //destroy the window
-    cvReleaseImage( &rgb ); //release the memory for the image
-    cvReleaseImage( &r ); //release the memory for the image
-    cvReleaseImage( &g ); //release the memory for the image
-    cvReleaseImage( &rMg ); //release the memory for the image
-//    cvReleaseImage( &bloby ); //release the memory for the image
-    cvReleaseImage( &currentFrame ); //release the memory for the image
-
-    p_xy.close();
-
-    return 0;
-}
-*/
-
-
-
 
