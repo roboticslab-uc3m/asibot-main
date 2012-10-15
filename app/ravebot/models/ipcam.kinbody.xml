@@ -1,0 +1,11 @@
+
+<KinBody name="Kinect_kinbody">
+    <!--Body type="dynamic" name="linkK"-->
+    <Body type="static" name="linkK">
+        <Geom type="trimesh">
+            <!--Data>./wrls/kinect.wrl</Data-->
+            <Render>./wrls/kinect.wrl</Render>
+        </Geom>
+    </Body>
+</KinBody>
+
