@@ -17,7 +17,7 @@ project(asibot)
 
 ##### options
 option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FALSE)
-option(ENABLE_findRedCan "Choose if you want to compile findRedCan" FALSE)
+option(ENABLE_colorSegmentor "Choose if you want to compile colorSegmentor" FALSE)
 option(ENABLE_pointAtObjectServer "Choose if you want to compile pointAtObjectServer" FALSE)
 option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_testRaveBot "Choose if you want to compile testRaveBot" FALSE)
