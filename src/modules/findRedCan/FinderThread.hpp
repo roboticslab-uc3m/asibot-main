@@ -3,10 +3,7 @@
 #ifndef __FINDER_THREAD_HPP__
 #define __FINDER_THREAD_HPP__
 
-// #include <iostream>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include "pxToReal.h"  // My own image->real space converter
+#include "pxToReal.h"  // My own image->real space converter
 
 // #include <yarp/os/all.h>
 #include <yarp/os/RFModule.h>
@@ -40,6 +37,8 @@ private:
     BufferedPort<ImageOf<PixelRgb> > *pInImg;
     BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
     Port *pOutPort;
+    //
+    pxToReal myPxToReal;
     //
     int threshold;
 
