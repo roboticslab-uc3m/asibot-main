@@ -1,37 +1,37 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include "FinderThread.hpp"
+#include "SegmentorThread.hpp"
 
 /************************************************************************/
-void FinderThread::setInImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg) {
+void SegmentorThread::setInImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg) {
     pInImg = _pInImg;
 }
 
 /************************************************************************/
-void FinderThread::setOutImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pOutImg) {
+void SegmentorThread::setOutImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pOutImg) {
     pOutImg = _pOutImg;
 }
 
 /************************************************************************/
-void FinderThread::setOutPort(Port * _pOutPort) {
+void SegmentorThread::setOutPort(Port * _pOutPort) {
     pOutPort = _pOutPort;
 }
 
 /************************************************************************/
-void FinderThread::init(ResourceFinder &rf) {
+void SegmentorThread::init(ResourceFinder &rf) {
 
     threshold = DEFAULT_THRESHOLD;
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
-        printf("FinderThread options:\n");
+        printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--threshold (default: \"%d\")\n",threshold);
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
     if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
-    printf("FinderThread using threshold: %d.\n",threshold);
+    printf("SegmentorThread using threshold: %d.\n",threshold);
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
@@ -45,8 +45,8 @@ void FinderThread::init(ResourceFinder &rf) {
 }
 
 /************************************************************************/
-void FinderThread::run() {
-    // printf("[FinderThread] run()\n");
+void SegmentorThread::run() {
+    // printf("[SegmentorThread] run()\n");
 
     ImageOf<PixelRgb> *img = pInImg->read(false);
     if (img==NULL) {
@@ -57,7 +57,7 @@ void FinderThread::run() {
     // printf("Got img!\n");
 
     // int code = img->getPixelCode();
-    // printf("[FinderThread] img->getPixelCode() gets pixel code: %d\n", code);
+    // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
     
     ///// Get the image biggest blob /////
     IplImage *rgb = cvCreateImage(cvSize(img->width(),  

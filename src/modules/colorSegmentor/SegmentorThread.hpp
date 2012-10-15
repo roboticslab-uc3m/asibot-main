@@ -32,7 +32,7 @@ using namespace yarp::sig;
 using namespace yarp::sig::draw;
 // using namespace yarp::math;
 
-class FinderThread : public RateThread {
+class SegmentorThread : public RateThread {
 private:
     BufferedPort<ImageOf<PixelRgb> > *pInImg;
     BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
@@ -43,7 +43,7 @@ private:
     int threshold;
 
 public:
-    FinderThread() : RateThread(DEFAULT_MS_FINDER) {}  // In ms
+    SegmentorThread() : RateThread(DEFAULT_MS_FINDER) {}  // In ms
 
     void setInImg(BufferedPort<ImageOf<PixelRgb> > * _pInImg);
     void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
