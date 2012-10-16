@@ -82,6 +82,7 @@ void SegmentorThread::run() {
     cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
 
     Bottle container;
+    //ImageOf<PixelBgr> yarpReturnImage;
 
     if (algorithm=="redMinusGreen") {
 
@@ -97,26 +98,29 @@ void SegmentorThread::run() {
 
         // printf("Publish biggest out of %d blob(s)...\n",blobs.GetNumBlobs());
 
-
         int numBlobs = blobs.GetNumBlobs();
         if (numBlobs > maxNumBlobs) numBlobs = maxNumBlobs;
 
         for (int i=0;i<numBlobs;i++) {  // from biggest to smallest
             // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
             // Better than Filter:
-            CBlob biggestBlob;
-            blobs.GetNthBlob( CBlobGetArea(), i, biggestBlob );
+            CBlob bigBlob;
+            blobs.GetNthBlob( CBlobGetArea(), i, bigBlob );
 
             CBlobGetXCenter getXCenter;
             CBlobGetYCenter getYCenter;
 
-            int myx = getXCenter( biggestBlob );
-            int myy = getYCenter( biggestBlob );
+            int myx = getXCenter( bigBlob );
+            int myy = getYCenter( bigBlob );
 
             // add a blue circle
+            // cvSub( rgb, r, rgb);
+            // yarpReturnImage.wrapIplImage(rgb);
             PixelRgb blue(0,0,255);
             addCircle(*img,blue,myx,myy,10);
-
+            CvRect bb = bigBlob.GetBoundingBox();
+            addRectangleOutline(*img,blue,bb.x,bb.y,bb.width,bb.height);
+            
             // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
             // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
 

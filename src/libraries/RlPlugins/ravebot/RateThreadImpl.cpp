@@ -44,34 +44,36 @@ void RaveBot::run() {
     probot->SetJointValues(dEncRaw);  // More compatible with physics??
     penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
 
-    if(cameraFound) {
-        pcamerasensorbase->GetSensorData(pcamerasensordata);
+
+    for(unsigned int camIter = 0; camIter<pcamerasensorbase.size(); camIter++ ) {
+        pcamerasensorbase[camIter]->GetSensorData(pcamerasensordata[camIter]);
         //std::vector<uint8_t> currentFrame = pcamerasensordata->vimagedata;
         //printf("Vector size: %d\n",currentFrame.size()); // i.e. 480 * 640 * 3 = 921600;
-        yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen.prepare(); 
-        i_imagen.resize(cameraWidth,cameraHeight);  // Tamaño de la pantalla
+        yarp::sig::ImageOf<yarp::sig::PixelRgb>& i_imagen = p_imagen[camIter]->prepare(); 
+        i_imagen.resize(cameraWidth[camIter],cameraHeight[camIter]);  // Tamaño de la pantalla
         yarp::sig::PixelRgb p;
         for (int i_x = 0; i_x < i_imagen.width(); ++i_x) {
             for (int i_y = 0; i_y < i_imagen.height(); ++i_y) {
-                p.r = pcamerasensordata->vimagedata[3*(i_x+(i_y*i_imagen.width()))];
-                p.g = pcamerasensordata->vimagedata[1+3*(i_x+(i_y*i_imagen.width()))];
-                p.b = pcamerasensordata->vimagedata[2+3*(i_x+(i_y*i_imagen.width()))];
+                p.r = pcamerasensordata[camIter]->vimagedata[3*(i_x+(i_y*i_imagen.width()))];
+                p.g = pcamerasensordata[camIter]->vimagedata[1+3*(i_x+(i_y*i_imagen.width()))];
+                p.b = pcamerasensordata[camIter]->vimagedata[2+3*(i_x+(i_y*i_imagen.width()))];
                 i_imagen.safePixel(i_x,i_y) = p;
             }
         }
-        p_imagen.write();
+        p_imagen[camIter]->write();
     }
-    if(laserFound) {
-        plasersensorbase->GetSensorData(plasersensordata);
-        std::vector< RaveVector< dReal > > sensorPositions = plasersensordata->positions;
-        std::vector< RaveVector< dReal > > sensorRanges = plasersensordata->ranges;
-        std::vector< dReal > sensorIntensity = plasersensordata->intensity;
+    
+    for(unsigned int laserIter = 0; laserIter<plasersensorbase.size(); laserIter++ ) {
+        plasersensorbase[laserIter]->GetSensorData(plasersensordata[laserIter]);
+        std::vector< RaveVector< dReal > > sensorPositions = plasersensordata[laserIter]->positions;
+        std::vector< RaveVector< dReal > > sensorRanges = plasersensordata[laserIter]->ranges;
+        std::vector< dReal > sensorIntensity = plasersensordata[laserIter]->intensity;
         //printf("sensorPositions size: %d ",sensorPositions.size()); // = 1; xyz of the fixed 3d sensor position.
         //printf("sensorRanges size: %d ",sensorRanges.size()); // 64 * 48 = 3072;
         //printf("sensorIntensity size: %d\n",sensorIntensity.size()); // 64 * 48 = 3072;
         //for(unsigned int i=0;i<sensorRanges.size();i++) {
         //   printf("sensorRanges[%d].x: %f  sensorRanges[%d].y: %f  sensorRanges[%d].z: %f sensorIntensity[%d]: %.2f\n",i,sensorRanges[i].x,i,sensorRanges[i].y,i,sensorRanges[i].z,i,sensorIntensity[i]);  // intensity always 1.0 or 0.0 in 3d sensor
-        //}
+        //}*/
         /*Transform tinv = plasersensordata->__trans.inverse();
         for(size_t i = 0; i < _data->ranges.size(); ++i) {
             float* p = (float*)(&_pointcloud2msg.data.at(i*_pointcloud2msg.point_step));
@@ -95,7 +97,7 @@ void RaveBot::run() {
                 p[3] = _data->intensity[i];
             }
         }*/
-        yarp::sig::ImageOf<yarp::sig::PixelFloat>& i_depth = p_depth.prepare(); 
+        yarp::sig::ImageOf<yarp::sig::PixelFloat>& i_depth = p_depth[laserIter]->prepare(); 
         i_depth.resize(48,64);  // Tamaño de la pantalla (64,48)
         for (int i_x = 0; i_x < i_depth.width(); ++i_x) {
             for (int i_y = 0; i_y < i_depth.height(); ++i_y) {
@@ -103,7 +105,7 @@ void RaveBot::run() {
                 i_depth.safePixel(i_x,i_y) = p*50;  // Should adjust this value depending on max/min dist
             }
         }
-        p_depth.write();
+        p_depth[laserIter]->write();
     }
 
 }
