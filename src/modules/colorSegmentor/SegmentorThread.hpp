@@ -19,8 +19,8 @@
 
 #define DEFAULT_MS_FINDER 20  // In ms, unmeaningful as ALWAYS gets overwritten by RF
 
-#define DEFAULT_ALGORITHM "default"
-#define DEFAULT_MAX_NUM_BLOBS 2
+#define DEFAULT_ALGORITHM "redMinusGreen"
+#define DEFAULT_MAX_NUM_BLOBS 1
 #define DEFAULT_THRESHOLD 50
 
 using namespace yarp::os;
