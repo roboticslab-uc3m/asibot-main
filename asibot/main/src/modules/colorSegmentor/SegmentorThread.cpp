@@ -73,57 +73,62 @@ void SegmentorThread::run() {
 
     // --- ALGORITHM STARTS SOMEWHERE HERE ---
     
-    IplImage* r = NULL;
-    IplImage* g = NULL;
-    IplImage* rMg = NULL;
+    IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+    IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+    IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
 
-    r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-    g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-    rMg = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-
-    cvSplit( rgb, NULL, NULL, r, NULL );  // get green as in (const rgb, b, g r, NULL)
+    cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
     cvSplit( rgb, NULL, g, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
-
-    cvSub(r,g,rMg,NULL);  // resta
-
-    cvCmpS( rMg, threshold, rMg, CV_CMP_GE );  // binarize
-
-    // get blobs and filter them using its area
-    CBlobResult blobs;
-
-    // find blobs in image
-    blobs = CBlobResult( rMg, NULL, 0 ); // 255 for inverse (black blobs on white bg)
-
-    // printf("Publish biggest out of %d blob(s)...\n",blobs.GetNumBlobs());
+    cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
 
     Bottle container;
-    int numBlobs = blobs.GetNumBlobs();
-    if (numBlobs > maxNumBlobs) numBlobs = maxNumBlobs;
 
-    for (int i=0;i<numBlobs;i++) {  // from biggest to smallest
-        // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
-        // Better than Filter:
-        CBlob biggestBlob;
-        blobs.GetNthBlob( CBlobGetArea(), i, biggestBlob );
+    if (algorithm=="redMinusGreen") {
 
-        CBlobGetXCenter getXCenter;
-        CBlobGetYCenter getYCenter;
+        IplImage* rMg = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        cvSub(r,g,rMg,NULL);  // subtract
+        cvCmpS( rMg, threshold, rMg, CV_CMP_GE );  // binarize
 
-        int myx = getXCenter( biggestBlob );
-        int myy = getYCenter( biggestBlob );
+        // get blobs and filter them using its area
+        CBlobResult blobs;
 
-        // add a blue circle
-        PixelRgb blue(0,0,255);
-        addCircle(*img,blue,myx,myy,10);
+        // find blobs in image
+        blobs = CBlobResult( rMg, NULL, 0 ); // 255 for inverse (black blobs on white bg)
 
-        // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
-        // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
+        // printf("Publish biggest out of %d blob(s)...\n",blobs.GetNumBlobs());
 
-        Bottle b_xy;
-        b_xy.addDouble(myx);
-        b_xy.addDouble(myy);
-        container.addList() = b_xy;
-    }
+
+        int numBlobs = blobs.GetNumBlobs();
+        if (numBlobs > maxNumBlobs) numBlobs = maxNumBlobs;
+
+        for (int i=0;i<numBlobs;i++) {  // from biggest to smallest
+            // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
+            // Better than Filter:
+            CBlob biggestBlob;
+            blobs.GetNthBlob( CBlobGetArea(), i, biggestBlob );
+
+            CBlobGetXCenter getXCenter;
+            CBlobGetYCenter getYCenter;
+
+            int myx = getXCenter( biggestBlob );
+            int myy = getYCenter( biggestBlob );
+
+            // add a blue circle
+            PixelRgb blue(0,0,255);
+            addCircle(*img,blue,myx,myy,10);
+
+            // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
+            // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
+
+            Bottle b_xy;
+            b_xy.addDouble(myx);
+            b_xy.addDouble(myy);
+            container.addList() = b_xy;
+        }
+
+        cvReleaseImage( &rMg ); //release the memory for the image
+
+    } else printf("[warning] Unrecognized algorithm.\n");
 
     pOutImg->prepare() = *img;
     pOutImg->write();
@@ -133,6 +138,7 @@ void SegmentorThread::run() {
     cvReleaseImage( &rgb ); //release the memory for the image
     cvReleaseImage( &r ); //release the memory for the image
     cvReleaseImage( &g ); //release the memory for the image
-    cvReleaseImage( &rMg ); //release the memory for the image
+    cvReleaseImage( &b ); //release the memory for the image
+
 }
 
