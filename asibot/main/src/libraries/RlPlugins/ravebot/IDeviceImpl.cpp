@@ -191,48 +191,57 @@ bool RaveBot::open(Searchable& config) {
         plink->SetStatic(true);
     }
 
-    cameraFound = false;
-    laserFound = false;
-    unsigned int robotIter = 0;
-    while ( (robotIter < robots.size()) && (!cameraFound) ) {
+    for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
-        if(sensors.size() > 0) {
-            printf("%d sensors found on robot %d (%s).\n",sensors.size(),robotIter,robots.at(robotIter)->GetName().c_str());
-            SensorBasePtr psensorbase = sensors.at(0)->GetSensor();  // this should be safe because (sensors.size() > 0)
+        printf("Sensors found on robot %d (%s): %d.\n",robotIter,robots.at(robotIter)->GetName().c_str(),sensors.size());
+        for ( unsigned int sensorIter = 0; sensorIter<sensors.size(); sensorIter++ ) {
+            SensorBasePtr psensorbase = sensors.at(sensorIter)->GetSensor();
             std::string tipo = psensorbase->GetName();
-            printf("Sensor 0 name: %s\n",tipo.c_str());
-            tipo = psensorbase->GetDescription();
-            printf("Sensor 0 description: %s\n",tipo.c_str());
-            if(psensorbase->Supports(SensorBase::ST_Camera)) {
-                printf("Sensor 0 supports ST_Camera.\n");
-                pcamerasensorbase = psensorbase;
+            printf("Sensor %d name: %s\n",sensorIter,tipo.c_str());
+            // tipo = psensorbase->GetDescription();
+            // printf("Sensor %d description: %s\n",sensorIter,tipo.c_str());
+            if (psensorbase->Supports(SensorBase::ST_Camera)) {
+                printf("Sensor %d supports ST_Camera.\n", sensorIter);
                 // Activate the camera
-                pcamerasensorbase->Configure(SensorBase::CC_PowerOn);
+                psensorbase->Configure(SensorBase::CC_PowerOn);
                 // Show the camera image in a separate window
-                //pcamerasensorbase->Configure(SensorBase::CC_RenderDataOn);
+                // pcamerasensorbase->Configure(SensorBase::CC_RenderDataOn);
                 // Get some camera parameter info
                 boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
-                //printf("Camera width: %d, height: %d.\n",pcamerageomdata->width,pcamerageomdata->height);
-                cameraWidth = pcamerageomdata->width;
-                cameraHeight = pcamerageomdata->height;
+                // printf("Camera width: %d, height: %d.\n",pcamerageomdata->width,pcamerageomdata->height);
+                cameraWidth.push_back(pcamerageomdata->width);
+                cameraHeight.push_back(pcamerageomdata->height);
                 // Get a pointer to access the camera data stream
-                pcamerasensordata = boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(pcamerasensorbase->CreateSensorData(SensorBase::ST_Camera));
-                p_imagen.open("/ravebot/img:o");
-                cameraFound = true;
-            } else if(psensorbase->Supports(SensorBase::ST_Laser)) {
-                printf("Sensor 0 supports ST_Laser.\n");
-                plasersensorbase = psensorbase;
+                pcamerasensordata.push_back(boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera)));
+                pcamerasensorbase.push_back(psensorbase);  // "save"
+                BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >;
+                ConstString tmpName("/ravebot/camera_");
+                tmpName += ConstString::toString(pcamerasensorbase.size());
+                tmpName += "/img:o";
+                tmpPort->open(tmpName);
+                p_imagen.push_back(tmpPort);
+            } else if (psensorbase->Supports(SensorBase::ST_Laser)) {
+                printf("Sensor %d supports ST_Laser.\n", sensorIter);
                 // Activate the sensor
-                plasersensorbase->Configure(SensorBase::CC_PowerOn);
+                psensorbase->Configure(SensorBase::CC_PowerOn);
                 // Paint the rays in the OpenRAVE viewer
-                plasersensorbase->Configure(SensorBase::CC_RenderDataOn);
+                psensorbase->Configure(SensorBase::CC_RenderDataOn);
+                // Get some camera parameter info
+                boost::shared_ptr<SensorBase::LaserGeomData> plasergeomdata = boost::dynamic_pointer_cast<SensorBase::LaserGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Laser));
+                // printf("Laser width: %d, height: %d.\n",plasergeomdata->width,plasergeomdata->height);
+                //laserWidth.push_back(plasergeomdata->width);
+                //laserHeight.push_back(plasergeomdata->height);
                 // Get a pointer to access the laser data stream
-                plasersensordata = boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(plasersensorbase->CreateSensorData(SensorBase::ST_Laser));
-                p_depth.open("/ravebot/depth:o");
-                laserFound = true;
-            } else printf("No supported sensor found on robot %d.\n", robotIter);
-        } else printf("No sensors found on robot %d (%s).\n",robotIter,robots.at(robotIter)->GetName().c_str());
-        robotIter++;
+                plasersensordata.push_back(boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Laser)));
+                plasersensorbase.push_back(psensorbase);  // "save"
+                BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >;
+                ConstString tmpName("/ravebot/depth_");
+                tmpName += ConstString::toString(plasersensorbase.size());
+                tmpName += "/depth:o";
+                tmpPort->open(tmpName);
+                p_depth.push_back(tmpPort);
+            } else printf("Sensor %d not supported.\n", robotIter);
+        }
     }
 
     pcontrol = RaveCreateController(penv,"idealcontroller");
@@ -273,13 +282,15 @@ bool RaveBot::close() {
     worldRpcServer.close();
     penv->StopSimulation();  // NEEDED??
     this->askToStop();
-    if(cameraFound) {
-        p_imagen.interrupt();
-        p_imagen.close();
+    for (unsigned int i=0;i<p_imagen.size();i++) {
+        p_imagen[i]->interrupt();
+        p_imagen[i]->close();
+        delete p_imagen[i];
     }
-    if(laserFound) {
-        p_depth.interrupt();
-        p_depth.close();
+    for (unsigned int i=0;i<p_depth.size();i++) {
+        p_depth[i]->interrupt();
+        p_depth[i]->close();
+        delete p_depth[i];
     }
     printf("RaveBot::close() Ports closed. Closing environment...\n");
     penv->Destroy(); // destroy

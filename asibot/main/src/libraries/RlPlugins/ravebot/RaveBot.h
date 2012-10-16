@@ -406,16 +406,19 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<KinBodyPtr> bodies;
     std::vector<KinBody::JointPtr> mismotores;
     boost::thread_group orThreads;
-    SensorBasePtr pcamerasensorbase;
-    SensorBasePtr plasersensorbase;
-    boost::shared_ptr<SensorBase::CameraSensorData> pcamerasensordata;
-    boost::shared_ptr<SensorBase::LaserSensorData> plasersensordata;
-    bool cameraFound;
-    int cameraWidth, cameraHeight;
-    bool laserFound;
+    //bool cameraFound;
+    //bool laserFound;
+    std::vector< SensorBasePtr > pcamerasensorbase;
+    std::vector< SensorBasePtr > plasersensorbase;
+    std::vector< boost::shared_ptr<SensorBase::CameraSensorData> > pcamerasensordata;
+    std::vector< boost::shared_ptr<SensorBase::LaserSensorData> >  plasersensordata;
+    std::vector<int> cameraWidth;
+    std::vector<int> cameraHeight;
+    std::vector<int> laserWidth;
+    std::vector<int> laserHeight;
     // YARP_sig (simulated camera image publishing)
-    BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > p_imagen;
-    BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> > p_depth;
+    std::vector< BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >* > p_imagen;
+    std::vector< BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >* > p_depth;
     // world rpc server
     RpcServer worldRpcServer;
     WorldRpcResponder worldRpcResponder;
