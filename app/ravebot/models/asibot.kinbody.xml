@@ -1,5 +1,5 @@
 
-<KinBody name="Asibot_kinbody">
+<KinBody name="asibotKinbody">
    <Body type="dynamic" name="link0">
 <!--  <Body type="static" name="link0"> -->
     <Geom type="trimesh">
