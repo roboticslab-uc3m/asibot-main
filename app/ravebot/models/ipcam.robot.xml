@@ -1,7 +1,7 @@
 
-<Robot name="Ipcam_robot">
+<Robot name="ip">
     <KinBody file="./ipcam.kinbody.xml"/>
-    <Manipulator name="Ipcam_manipulator">
+    <Manipulator name="ipcamManipulator">
         <base>linkI</base>
         <effector>linkI</effector>
     </Manipulator>
