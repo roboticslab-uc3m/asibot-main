@@ -215,8 +215,8 @@ bool RaveBot::open(Searchable& config) {
                 pcamerasensordata.push_back(boost::dynamic_pointer_cast<SensorBase::CameraSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Camera)));
                 pcamerasensorbase.push_back(psensorbase);  // "save"
                 BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >;
-                ConstString tmpName("/ravebot/camera_");
-                tmpName += ConstString::toString(pcamerasensorbase.size());
+                ConstString tmpName("/ravebot/");
+                tmpName += psensorbase->GetName().c_str();
                 tmpName += "/img:o";
                 tmpPort->open(tmpName);
                 p_imagen.push_back(tmpPort);
@@ -235,8 +235,8 @@ bool RaveBot::open(Searchable& config) {
                 plasersensordata.push_back(boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Laser)));
                 plasersensorbase.push_back(psensorbase);  // "save"
                 BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >;
-                ConstString tmpName("/ravebot/depth_");
-                tmpName += ConstString::toString(plasersensorbase.size());
+                ConstString tmpName("/ravebot/");
+                tmpName += psensorbase->GetName().c_str();
                 tmpName += "/depth:o";
                 tmpPort->open(tmpName);
                 p_depth.push_back(tmpPort);
