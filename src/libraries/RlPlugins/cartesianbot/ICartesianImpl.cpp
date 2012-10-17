@@ -419,3 +419,15 @@ bool CartesianBot::getReferenceMode(bool *f) {
 
 // -----------------------------------------------------------------------------
 
+bool CartesianBot::tweakSet(const yarp::os::Bottle &options) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool CartesianBot::tweakGet(yarp::os::Bottle &options) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
