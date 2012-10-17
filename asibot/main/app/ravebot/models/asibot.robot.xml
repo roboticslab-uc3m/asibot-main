@@ -1,3 +1,4 @@
+
 <Robot name="asibotRobot">
   <KinBody file="./asibot.kinbody.xml"/>
   <Manipulator name="asibotManipulator">
@@ -5,3 +6,4 @@
     <effector>link5</effector>
   </Manipulator>
 </Robot>
+
