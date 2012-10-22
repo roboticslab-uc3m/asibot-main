@@ -198,8 +198,7 @@ bool RaveBot::open(Searchable& config) {
             SensorBasePtr psensorbase = sensors.at(sensorIter)->GetSensor();
             std::string tipo = psensorbase->GetName();
             printf("Sensor %d name: %s\n",sensorIter,tipo.c_str());
-            // tipo = psensorbase->GetDescription();
-            // printf("Sensor %d description: %s\n",sensorIter,tipo.c_str());
+            // printf("Sensor %d description: %s\n",sensorIter,psensorbase->GetDescription().c_str());
             if (psensorbase->Supports(SensorBase::ST_Camera)) {
                 printf("Sensor %d supports ST_Camera.\n", sensorIter);
                 // Activate the camera
@@ -226,11 +225,11 @@ bool RaveBot::open(Searchable& config) {
                 psensorbase->Configure(SensorBase::CC_PowerOn);
                 // Paint the rays in the OpenRAVE viewer
                 psensorbase->Configure(SensorBase::CC_RenderDataOn);
-                // Get some camera parameter info
+                // Get some laser parameter info
                 boost::shared_ptr<SensorBase::LaserGeomData> plasergeomdata = boost::dynamic_pointer_cast<SensorBase::LaserGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Laser));
-                // printf("Laser width: %d, height: %d.\n",plasergeomdata->width,plasergeomdata->height);
-                //laserWidth.push_back(plasergeomdata->width);
-                //laserHeight.push_back(plasergeomdata->height);
+                // printf("Laser resolution: %f   %f.\n",plasergeomdata->resolution[0],plasergeomdata->resolution[1]);
+                // printf("Laser min_angle: %f   %f.\n",plasergeomdata->min_angle[0],plasergeomdata->min_angle[1]);
+                // printf("Laser max_angle: %f   %f.\n",plasergeomdata->max_angle[0],plasergeomdata->max_angle[1]);
                 // Get a pointer to access the laser data stream
                 plasersensordata.push_back(boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Laser)));
                 plasersensorbase.push_back(psensorbase);  // "save"
