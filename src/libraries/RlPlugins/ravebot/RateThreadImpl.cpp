@@ -65,12 +65,12 @@ void RaveBot::run() {
     
     for(unsigned int laserIter = 0; laserIter<plasersensorbase.size(); laserIter++ ) {
         plasersensorbase[laserIter]->GetSensorData(plasersensordata[laserIter]);
-        std::vector< RaveVector< dReal > > sensorPositions = plasersensordata[laserIter]->positions;
+        // std::vector< RaveVector< dReal > > sensorPositions = plasersensordata[laserIter]->positions;
         std::vector< RaveVector< dReal > > sensorRanges = plasersensordata[laserIter]->ranges;
-        std::vector< dReal > sensorIntensity = plasersensordata[laserIter]->intensity;
-        //printf("sensorPositions size: %d ",sensorPositions.size()); // = 1; xyz of the fixed 3d sensor position.
-        //printf("sensorRanges size: %d ",sensorRanges.size()); // 64 * 48 = 3072;
-        //printf("sensorIntensity size: %d\n",sensorIntensity.size()); // 64 * 48 = 3072;
+        // std::vector< dReal > sensorIntensity = plasersensordata[laserIter]->intensity;
+        // printf("[%d] sensorPositions size: %d ",laserIter,sensorPositions.size()); // = 1; xyz of the fixed 3d sensor position.
+        // printf("sensorRanges size: %d ",sensorRanges.size()); // 64 * 48 = 3072;
+        // printf("sensorIntensity size: %d\n",sensorIntensity.size()); // 64 * 48 = 3072;
         //for(unsigned int i=0;i<sensorRanges.size();i++) {
         //   printf("sensorRanges[%d].x: %f  sensorRanges[%d].y: %f  sensorRanges[%d].z: %f sensorIntensity[%d]: %.2f\n",i,sensorRanges[i].x,i,sensorRanges[i].y,i,sensorRanges[i].z,i,sensorIntensity[i]);  // intensity always 1.0 or 0.0 in 3d sensor
         //}*/
@@ -97,8 +97,10 @@ void RaveBot::run() {
                 p[3] = _data->intensity[i];
             }
         }*/
-        yarp::sig::ImageOf<yarp::sig::PixelFloat>& i_depth = p_depth[laserIter]->prepare(); 
-        i_depth.resize(48,64);  // Tamaño de la pantalla (64,48)
+        yarp::sig::ImageOf<yarp::sig::PixelFloat>& i_depth = p_depth[laserIter]->prepare();
+        if(sensorRanges.size()==3072) i_depth.resize(48,64);  // Tamaño de la pantalla (64,48)
+        else if(sensorRanges.size()==4) i_depth.resize(2,2);
+        else printf("[warning] unrecognized laser sensor data size.\n");
         for (int i_x = 0; i_x < i_depth.width(); ++i_x) {
             for (int i_y = 0; i_y < i_depth.height(); ++i_y) {
                 double p = sensorRanges[i_x+(i_y*i_depth.width())].z;
