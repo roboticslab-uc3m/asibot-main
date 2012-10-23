@@ -110,6 +110,23 @@ void RaveBot::run() {
         p_depth[laserIter]->write();
     }
 
+    for(unsigned int fIter = 0; fIter<pforce6dsensorbase.size(); fIter++ ) {
+        pforce6dsensorbase[fIter]->GetSensorData(pforce6dsensordata[fIter]);
+        Bottle& container = p_force6d[fIter]->prepare(); 
+        container.clear();
+        Bottle b_force;
+        b_force.addDouble(pforce6dsensordata[fIter]->force[0]); 
+        b_force.addDouble(pforce6dsensordata[fIter]->force[1]); 
+        b_force.addDouble(pforce6dsensordata[fIter]->force[2]); 
+        container.addList() = b_force;
+        Bottle b_torque;
+        b_torque.addDouble(pforce6dsensordata[fIter]->torque[0]);
+        b_torque.addDouble(pforce6dsensordata[fIter]->torque[1]);
+        b_torque.addDouble(pforce6dsensordata[fIter]->torque[2]);
+        container.addList() = b_torque;
+        p_force6d[fIter]->write();
+    }
+
 }
 
 // -----------------------------------------------------------------------------

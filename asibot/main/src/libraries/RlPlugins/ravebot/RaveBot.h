@@ -410,15 +410,16 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     //bool laserFound;
     std::vector< SensorBasePtr > pcamerasensorbase;
     std::vector< SensorBasePtr > plasersensorbase;
+    std::vector< SensorBasePtr > pforce6dsensorbase;
     std::vector< boost::shared_ptr<SensorBase::CameraSensorData> > pcamerasensordata;
     std::vector< boost::shared_ptr<SensorBase::LaserSensorData> >  plasersensordata;
+    std::vector< boost::shared_ptr<SensorBase::Force6DSensorData> >  pforce6dsensordata;
     std::vector<int> cameraWidth;
     std::vector<int> cameraHeight;
-    std::vector<int> laserWidth;
-    std::vector<int> laserHeight;
     // YARP_sig (simulated camera image publishing)
     std::vector< BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >* > p_imagen;
     std::vector< BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >* > p_depth;
+    std::vector< BufferedPort<yarp::os::Bottle>* > p_force6d;
     // world rpc server
     RpcServer worldRpcServer;
     WorldRpcResponder worldRpcResponder;
