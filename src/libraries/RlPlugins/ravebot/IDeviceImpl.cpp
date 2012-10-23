@@ -226,7 +226,7 @@ bool RaveBot::open(Searchable& config) {
                 // Paint the rays in the OpenRAVE viewer
                 psensorbase->Configure(SensorBase::CC_RenderDataOn);
                 // Get some laser parameter info
-                boost::shared_ptr<SensorBase::LaserGeomData> plasergeomdata = boost::dynamic_pointer_cast<SensorBase::LaserGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Laser));
+                // boost::shared_ptr<SensorBase::LaserGeomData> plasergeomdata = boost::dynamic_pointer_cast<SensorBase::LaserGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Laser));
                 // printf("Laser resolution: %f   %f.\n",plasergeomdata->resolution[0],plasergeomdata->resolution[1]);
                 // printf("Laser min_angle: %f   %f.\n",plasergeomdata->min_angle[0],plasergeomdata->min_angle[1]);
                 // printf("Laser max_angle: %f   %f.\n",plasergeomdata->max_angle[0],plasergeomdata->max_angle[1]);
@@ -239,6 +239,21 @@ bool RaveBot::open(Searchable& config) {
                 tmpName += "/depth:o";
                 tmpPort->open(tmpName);
                 p_depth.push_back(tmpPort);
+            } else if (psensorbase->Supports(SensorBase::ST_Force6D)) {
+                printf("Sensor %d supports ST_Force6D.\n", sensorIter);
+                // Activate the sensor
+                psensorbase->Configure(SensorBase::CC_PowerOn);
+                // Paint the rays in the OpenRAVE viewer
+                psensorbase->Configure(SensorBase::CC_RenderDataOn);
+                // Get a pointer to access the laser data stream
+                pforce6dsensordata.push_back(boost::dynamic_pointer_cast<SensorBase::Force6DSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Force6D)));
+                pforce6dsensorbase.push_back(psensorbase);  // "save"
+                BufferedPort<Bottle>* tmpPort = new BufferedPort<Bottle>;
+                ConstString tmpName("/ravebot/");
+                tmpName += psensorbase->GetName().c_str();
+                tmpName += "/force6d:o";
+                tmpPort->open(tmpName);
+                p_force6d.push_back(tmpPort);
             } else printf("Sensor %d not supported.\n", robotIter);
         }
     }
@@ -290,6 +305,11 @@ bool RaveBot::close() {
         p_depth[i]->interrupt();
         p_depth[i]->close();
         delete p_depth[i];
+    }
+   for (unsigned int i=0;i<p_force6d.size();i++) {
+        p_force6d[i]->interrupt();
+        p_force6d[i]->close();
+        delete p_force6d[i];
     }
     printf("RaveBot::close() Ports closed. Closing environment...\n");
     penv->Destroy(); // destroy
