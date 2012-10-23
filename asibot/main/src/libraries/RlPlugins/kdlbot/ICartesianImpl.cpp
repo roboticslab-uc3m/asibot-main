@@ -365,3 +365,15 @@ bool KdlBot::getReferenceMode(bool *f) {
 
 // -----------------------------------------------------------------------------
 
+bool KdlBot::tweakSet(const yarp::os::Bottle &options) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
+bool KdlBot::tweakGet(yarp::os::Bottle &options) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
