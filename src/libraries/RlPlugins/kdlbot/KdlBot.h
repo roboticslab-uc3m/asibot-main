@@ -603,6 +603,29 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     */
     virtual bool unregisterEvent(yarp::dev::CartesianEvent &event);
 
+    /**
+    * Tweak low-level controller's parameters. [wait for reply]
+    * @param options is a property-like bottle containing new values 
+    *                for the low-level controller's configuration.
+    * @return true/false on success/failure. 
+    *  
+    * @note This method is intended for accessing low-level 
+    *       controller's configuration.
+    */
+    virtual bool tweakSet(const yarp::os::Bottle &options);
+
+    /**
+    * Return low-level controller's parameters. [wait for reply]
+    * @param options is a property-like bottle containing the 
+    *                current values of the low-level controller's
+    *                configuration.
+    * @return true/false on success/failure. 
+    *  
+    * @note This method is intended for accessing low-level 
+    *       controller's configuration.
+    */
+    virtual bool tweakGet(yarp::os::Bottle &options);
+
 // -------- DeviceDriver declarations. Implementation in IDeviceImpl.cpp --------
 
     /**
