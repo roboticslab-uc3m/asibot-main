@@ -1,4 +1,4 @@
-<KinBody name="Docking">
+<KinBody name="dockingStation">
   <RotationAxis>1 0 0 90</RotationAxis>
   <Body type="static">
     <Geom type="trimesh">

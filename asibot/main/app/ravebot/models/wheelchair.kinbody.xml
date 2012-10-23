@@ -1,4 +1,4 @@
-<KinBody name="Silla">
+<KinBody name="wheelchair">
     <RotationAxis>1 0 0 0</RotationAxis>
     <Body type="static">
         <Geom type="trimesh">
