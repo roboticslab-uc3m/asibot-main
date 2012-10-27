@@ -16,8 +16,10 @@ add_subdirectory(skymegabot)
 #add_subdirectory(../../../../contrib/pendant/ikinbot ${CMAKE_CURRENT_BINARY_DIR}/ikinbot)
 end_plugin_library(RlPlugins)
 
+install(TARGETS RlPlugins DESTINATION lib)
+
 IF (ENABLE_testRlPlugins)
   add_plugin_library_executable(testRlPlugins RlPlugins)
-  INSTALL(TARGETS testRlPlugins DESTINATION bin)
+  install(TARGETS testRlPlugins DESTINATION bin)
 ENDIF (ENABLE_testRlPlugins)
 

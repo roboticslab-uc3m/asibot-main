@@ -23,6 +23,8 @@ ADD_LIBRARY(cartesianbot CartesianBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateT
 #TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
 TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES})
 
+install(TARGETS cartesianbot DESTINATION lib)
+
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} RlPlugins cartesianbot CACHE INTERNAL "appended libraries") 
 

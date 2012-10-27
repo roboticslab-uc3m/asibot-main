@@ -33,6 +33,8 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
+install(TARGETS ${KEYWORD} DESTINATION lib)
+
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") 
