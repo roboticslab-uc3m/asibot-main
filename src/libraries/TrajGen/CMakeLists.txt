@@ -4,9 +4,6 @@ cmake_minimum_required(VERSION 2.6)
 
 set(KEYWORD "TrajGen")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP.  Point the YARP_DIR environment variable at your build.
 find_package(YARP REQUIRED)
 

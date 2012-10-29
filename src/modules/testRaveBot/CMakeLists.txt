@@ -6,9 +6,6 @@ IF (ENABLE_testRaveBot)
 
 set(KEYWORD "testRaveBot")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP.
 find_package(YARP REQUIRED)
 
