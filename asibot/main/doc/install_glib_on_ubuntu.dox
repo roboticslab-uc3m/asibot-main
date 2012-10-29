@@ -1,0 +1,17 @@
+
+/**
+ * \page install_glib_on_ubuntu Installing glib on Ubuntu
+
+Installing glib on Ubuntu is quite straightforward.
+
+\verbatim
+sudo apt-get install libglib2.0-dev
+\endverbatim
+
+<hr>
+
+This page can be edited at $ASIBOT_ROOT/main/doc/install_glib_on_ubuntu.dox.
+
+*
+*/
+
