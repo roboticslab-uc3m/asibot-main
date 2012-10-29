@@ -6,9 +6,6 @@ IF (ENABLE_colorSegmentor)
 
 set(KEYWORD "colorSegmentor")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find OpenCV.
 find_package(OpenCV REQUIRED)
 # Find YARP.
@@ -30,6 +27,7 @@ endforeach(header_file ${folder_header})
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
   target_link_libraries(${KEYWORD} ${OpenCV_LIBS} ${YARP_LIBRARIES})
+  install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)

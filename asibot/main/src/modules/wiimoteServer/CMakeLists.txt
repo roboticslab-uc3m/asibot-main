@@ -6,9 +6,6 @@ IF (ENABLE_wiimoteServer)
 
 set(KEYWORD wiimoteServer)
 
-# Start a project.
-project(${KEYWORD})
-
 # Find GTK2.
 find_package(GTK2)
 # Find YARP.
@@ -35,6 +32,7 @@ set(CMAKE_CXX_FLAGS "-fpermissive") # gcc compiler complains but at least compil
 IF (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
   target_link_libraries (${KEYWORD} gtk-x11-2.0 cwiid bluetooth ${YARP_LIBRARIES})
+  install(TARGETS ${KEYWORD} DESTINATION bin)
 ELSE (folder_source)
   MESSAGE(FATAL_ERROR "No source code files found. Please add something")
 ENDIF (folder_source)

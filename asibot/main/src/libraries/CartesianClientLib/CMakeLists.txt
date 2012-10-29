@@ -4,9 +4,6 @@ cmake_minimum_required(VERSION 2.6)
 
 set(KEYWORD "CartesianClientLib")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP.  Point the YARP_DIR environment variable at your build.
 find_package(YARP REQUIRED)
 
@@ -29,6 +26,7 @@ include_directories(${YARP_INCLUDE_DIRS})
 if (folder_source)
   add_library(${KEYWORD} ${folder_source} ${folder_header})
   target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
+  install(TARGETS ${KEYWORD} DESTINATION lib)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
@@ -36,5 +34,4 @@ endif (folder_source)
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") 
-install(TARGETS ${KEYWORD} DESTINATION lib)
 
