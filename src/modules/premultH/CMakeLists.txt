@@ -6,9 +6,6 @@ IF (ENABLE_premultH)
 
 set(KEYWORD "premultH")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP.  Point the YARP_DIR environment variable at your build.
 find_package(YARP REQUIRED)
 
@@ -31,6 +28,7 @@ include_directories(${YARP_INCLUDE_DIRS})
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
   target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
+  install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)

@@ -6,9 +6,6 @@ IF (ENABLE_webInterface)
 
 set(KEYWORD "webInterface")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP.
 find_package(YARP REQUIRED)
 
@@ -31,6 +28,7 @@ if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
 #  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} RlPlugins ${ASIBOT_LIBRARIES})
   target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} RlPlugins CartesianClientLib)
+  install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)

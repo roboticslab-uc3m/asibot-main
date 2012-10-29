@@ -6,9 +6,6 @@ IF (ENABLE_pointAtObjectServer)
 
 set(KEYWORD "pointAtObjectServer")
 
-# Start a project.
-project(${KEYWORD})
-
 find_package(YARP REQUIRED)
 find_package(PCL 1.6 REQUIRED)
 
@@ -34,6 +31,7 @@ add_definitions(${PCL_DEFINITIONS})
 if (folder_source)
   add_executable(${KEYWORD} ${folder_source} ${folder_header})
   target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} ${PCL_LIBRARIES})
+  install(TARGETS ${KEYWORD} DESTINATION bin)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
