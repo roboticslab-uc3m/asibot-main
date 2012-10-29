@@ -6,7 +6,7 @@
  *
  * The \ref cartesianServer module creates an instance of CartesianServer to load a controller (default: "cartesianbot") and acts as the server part of a network wrapper for it.
  *
- * <b> Legal </b>
+ * @section legal Legal
  *
  * Copyright: 2012 (C) Universidad Carlos III de Madrid
  *
@@ -19,12 +19,12 @@
  *
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see license/LGPL.TXT
  *
- * <b>Installation</b>
+ * @section install Installation
  *
  * The module is compiled when ENABLE_cartesianServer is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
- * <b>Running</b> (assuming correct installation)
+ * @section running Running (assuming correct installation)
  *
  * First we must run a YARP name server if it is not running in our current namespace:
 \verbatim
@@ -35,19 +35,21 @@
 [on terminal 2] $ASIBOT_DIR/bin/cartesianServer
 \endverbatim
  *
- * <b>Interfacing with the cartesianServer module</b> (or try using the new \ref CartesianClient library)
+ * @section interfacing Interfacing with the cartesianServer module
  *
  * The \ref cartesianServer module acts as the server part of a network wrapper of the CartesianBot class
  * using the CartesianServer class.
  * The implementation maps certain YARP rpc's to CartesianBot function calls. Therefore, we can interface
- * with the class from the command-line by typing (change 'ravebot' for 'canbot' for the real robot):
+ * with the class from the command-line (or try using the new \ref CartesianClient library) by typing:
 \verbatim
 [on terminal 3] yarp rpc /ravebot/cartesianServer/rpc:i
 \endverbatim
  *
- * Note 1: The default configuration also loads a YARP controlboard device, so you can interact with it as in \ref testRaveBot too.
+ * Note 1: Change 'ravebot' for 'canbot' for the real robot!
  *
- * Note 2: Remember that the use of [brackets] means we are sending a VOCAB. The use of (parenthesis) means
+ * Note 2: The default configuration also loads a YARP controlboard device, so you can interact with it as in \ref testRaveBot too.
+ *
+ * Note 3: Remember that the use of [brackets] means we are sending a VOCAB. The use of (parenthesis) means
  * we are sending a list, which is a Bottle inside a Bottle.
  *
  * We send Cartesian positions/orientations as lists of five elements:

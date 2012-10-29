@@ -1,0 +1,23 @@
+
+/**
+ * \page install_eigen2_on_ubuntu Installing eigen2 on Ubuntu
+
+Installing Eigen2 on Ubuntu is quite straightforward.
+
+Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+
+\verbatim
+wget http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 
+tar xvf 2.0.15.tar.bz2
+cd eigen-eigen-2.0.15; mkdir build; cd build; cmake ..
+sudo make install  # Does the job.
+cd ../..
+\endverbatim
+
+<hr>
+
+This page can be edited at $ASIBOT_ROOT/main/doc/install_eigen2_on_ubuntu.dox.
+
+*
+*/
+

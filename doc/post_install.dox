@@ -1,0 +1,27 @@
+
+/**
+ * \page post_install Now what can I do?
+
+Now that you have installed the basic ASIBOT repository, you're probably wondering what to do.
+
+What we first recommend is launching a '''yarp server''':
+
+\verbatim
+[terminal 1] yarp server
+\endverbatim
+
+And then launching a '''cartesianServer''':
+
+\verbatim
+[terminal 2] cartesianServer
+\endverbatim
+
+We can interact with this module through port commands as described in <a href="group__cartesianServer.html#interfacing">cartesianServer</a>, or through the different language APIs as can be seen in the different <a href="group__asibot__examples.html">ASIBOT examples</a>.
+
+<hr>
+
+This page can be edited at $ASIBOT_ROOT/main/doc/post_install.dox.
+
+*
+*/
+
