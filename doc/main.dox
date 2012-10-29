@@ -6,8 +6,10 @@
 
 Welcome to the Open Source ASIBOT Software Repository documentation. The ASIBOT Software Repository is part of <a class="el" href="http://roboticslab.sourceforge.net" target="_blank">Robotics Lab @ SourceForge.net</a>.
 
-Internal links of interest:
  \li \ref install_on_ubuntu \endref
+ \li \ref post_install \endref
+
+Other internal links of interest:
  \li <a class="el" href="modules.html">List of ASIBOT Modules</a>
  \li \ref asibot_libraries \endref
  \li \ref asibot_applications \endref

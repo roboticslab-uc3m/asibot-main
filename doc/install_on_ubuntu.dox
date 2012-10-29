@@ -2,16 +2,13 @@
 /**
  * \page install_on_ubuntu The ASIBOT Software Installation Guide (Ubuntu)
 
+First install the depencencies:
   \li \ref install_cmake \endref
   \li \ref install_yarp \endref
-  \li \ref install_openrave \endref<!-- We do not use Eigen/KDL for now
-  \li \ref install_eigen2 \endref
-  \li \ref install_kdl \endref-->
-  \li \ref install_opencv \endref
-  \li \ref install_wiimote \endref
+  \li \ref install_openrave \endref
 
+Or directly jump to:
   \li \ref install_asibot \endref
-
 
  * @section install_cmake Install CMake
 
@@ -42,24 +39,26 @@ For additional options use ccmake instead of cmake.
 
 Do not forget to set the YARP_ROOT environment variable to ''yarp2'' and the YARP_DIR environment variable to ''yarp2/build''. There are two ways of doing this:
 
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
+ 1) Through ~/.profile (parsed on reboot). For this option, type:
  
 \verbatim
 echo "export YARP_ROOT=$PWD/yarp2" >> ~/.profile
 echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.profile
+source ~/.profile
 \endverbatim
 
- 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
+ 2) Through ~/.bashrc (parsed inside each terminal). For this other option, type:
  
 \verbatim
 echo "export YARP_ROOT=$PWD/yarp2" >> ~/.bashrc
 echo "export YARP_DIR=$PWD/yarp2/build" >> ~/.bashrc
+source ~/.bashrc
 \endverbatim
 
 
- * @section install_openrave Install OpenRAVE (optional, needed for the RaveBot simulator library)
+ * @section install_openrave Install OpenRAVE
 
-Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+Note that you will be prompted for your password upon using '''sudo'''. To install a precompiled version of OpenRAVE, type:
 
 \verbatim
 sudo add-apt-repository ppa:openrave/release
@@ -67,285 +66,66 @@ sudo apt-get update
 sudo apt-get install openrave
 \endverbatim
 
-If nothing happens, it might not be available on your specific Ubuntu version. You can always compile from source:
+If nothing happens, a precompiled version of OpenRAVE might not be available on your specific Ubuntu distribution. To compile from source, type:
 
 \verbatim
+sudo apt-get install git-core
 sudo apt-get install libboost-dev  libboost-date-time-dev libboost-thread-dev
 sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev
 sudo apt-get install libsoqt4-dev libcoin60-dev
 sudo apt-get install collada-dom  # Optional collada support.
-svn co https://openrave.svn.sourceforge.net/svnroot/openrave/tags/latest_stable openrave
-cd openrave; mkdir build; cd build; cmake ..; make -j3;  sudo make install; cd ../..
+git clone --branch latest_stable https://github.com/rdiankov/openrave.git
+cd openrave; mkdir build; cd build; cmake ..; make -j3; sudo make install; cd ../..
 \endverbatim
  
- For OpenRAVE to be found by CMake, it is useful to (change ''x.x'' for 2.6, 2.8, or your CMake version):
+If you compiled from source, run the following command to help CMake find OpenRAVE (change ''x.x'' for 2.6, 2.8, or your CMake version):
 
 \verbatim
 sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
 \endverbatim
 
-<!--
- * @section install_eigen2 Install Eigen2 (optional, needed for KDL)
+ * @section install_asibot Install The ASIBOT Software (Basic)
 
 Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-wget http://bitbucket.org/eigen/eigen/get/2.0.15.tar.bz2 
-tar xvf 2.0.15.tar.bz2
-cd eigen-eigen-2.0.15; mkdir build; cd build; cmake ..
-sudo make install  # Does the job.
-cd ../..
-\endverbatim
-
-
- * @section install_kdl Install KDL (optional, needed for the \ref CartesianBot kinematics library)
-
-\verbatim
-wget http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz
-tar xvf orocos-kdl-svn-src.tar.bz
-\endverbatim
-
-In "kdl/config" you'll find a file called "FindEigen2.cmake". Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path (something like /usr/share/cmake-2.x/Modules). This line would be something like (change the x to your cmake version): 
-
-\verbatim
-sudo cp FindEigen2.cmake /usr/share/cmake-2.x/Modules
-\endverbatim
-
-Then you can:
-
-\verbatim
-cd kdl; mkdir build; cd build
-cmake ..; make -j3; sudo make install
-cd ../..
-\endverbatim
-
-An '''export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib''' in the last line of your ~/.profile (requires reboot) or ~/.bashrc (parsed and only existing inside each shell session) can also be useful.
-
--->
- * @section install_wiimote Install Glib and Cwiid (optional, needed for the wiimoteServer module)
-Installing these \ref wiimoteServer dependencies is quite straightforward.
-
-\verbatim
-sudo apt-get install libglib2.0-dev libcwiid-dev
-\endverbatim
-
- * @section install_opencv Install OpenCV (optional, needed for vision modules such as the findRedCan module)
-
-We'll do this from source to assure the CMake file is created.
-
-\verbatim
-sudo apt-get install libavformat-dev libavcodec-dev libswscale-dev
-wget https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.2/OpenCV-2.4.2.tar.bz2  # superseeds: svn co https://code.ros.org/svn/opencv/trunk/opencv
-tar xvf OpenCV-2.4.2.tar.bz2
-cd opencv; mkdir build; cd build
-cmake ..  # Make sure you see Video I/O: -- FFMPEG: YES
-make -j3; sudo make install
-cd ../..
-\endverbatim
-
- * @section install_asibot Download, Configure, Compile and Install the ASIBOT software
-
- * @subsection download_asibot Download the ASIBOT software from the repository
-
-\verbatim
 svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
+cd asibot/main; mkdir build; cd build
+cmake .. -DENABLE_cartesianServer=ON -DENABLE_RlPlugins_cartesianbot=ON -DENABLE_RlPlugins_ravebot=ON
+make -j3; sudo make install; cd ../../..
 \endverbatim
 
- * @subsection configure_asibot Configure the ASIBOT software
+For additional ASIBOT options use ccmake instead of cmake.
 
-Set the ASIBOT_ROOT environment variable to ''asibot''. There are two ways of doing this:
+Do not forget to set the ASIBOT_ROOT environment variable to ''asibot'' and the ASIBOT_DIR environment variable to ''asibot/main/build''. There are two ways of doing this:
 
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
+ 1) Through ~/.profile (parsed on reboot). For this option, type:
  
 \verbatim
 echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.profile
+echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.profile
+source ~/.profile
 \endverbatim
 
- 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
+ 2) Through ~/.bashrc (parsed inside each terminal). For this other option, type:
  
 \verbatim
 echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.bashrc
+echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.bashrc
+source ~/.bashrc
 \endverbatim
 
-Now let's configure which modules we want to enable:
+Now install the applications:
 
 \verbatim
-cd asibot/main; mkdir build; cd build; ccmake ..
+make install_applications
 \endverbatim
 
-Press 'c' to refresh the cache. A set of options should be available, set the ENABLE options you need to ON. The following is a set of options which <b>if set to ON</b> will provide you with the ASIBOT simulator with motor control and direct/inverse kinematics.
-
-  \li <B>ENABLE_cartesianServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref cartesianServer module.
-  \li <B>ENABLE_RlPlugins_cartesianbot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref CartesianBot library (part of \ref RlPlugins).
-  \li <B>ENABLE_RlPlugins_ravebot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref RaveBot library (part of \ref RlPlugins).
-
-The following is a list of other options.
-
-  \li <B>ENABLE_findRedCan</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref findRedCan module.
-  \li <B>ENABLE_testRaveBot</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref testRaveBot module.
-  \li <B>ENABLE_testRlPlugins</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref testRlPlugins module.
-  \li <B>ENABLE_webInterface</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterface module.
-  \li <B>ENABLE_webInterfacePy</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref webInterfacePy module.
-  \li <B>ENABLE_wiimoteServer</B> (defaults to <B>OFF</B>): Enables the compilation of the \ref wiimoteServer module.
-
-Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project.
-
- * @subsection compile_asibot Compile and Install the ASIBOT modules and libraries
-
-Finally compile with:
-
-\verbatim
-make
-make install_applications  # In-project install: No super-user permissions are required.
-\endverbatim
-
-
-Set the ASIBOT_DIR environment variable to ''$ASIBOT_ROOT/main/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
- 
-\verbatim
-echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.profile
-\endverbatim
-
- 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export ASIBOT_DIR=$ASIBOT_ROOT/main/build" >> ~/.bashrc
-\endverbatim
-
- * @subsection install_asibot_apps Install the ASIBOT applications (collections of modules)
-
-For <b>gyarpmanager</b> to run the applications correctly, <b>yarprun</b> must find the modules in the system path. You can achieve this by adding '''$ASIBOT_DIR/bin''' to the PATH environment variable. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed at system init, persistent throughout entire session). For this option, type:
- 
-\verbatim
-echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.profile
-\endverbatim
-
- 2) Through ~/.baschrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export PATH=$PATH:$ASIBOT_DIR/bin" >> ~/.bashrc
-\endverbatim
-
-
-You may now proceed to install each individual application: \ref asibot_applications
-
-Or proceed to compile and run the ASIBOT C++ example modules: \ref asibot_examples_cpp
+Done! You may now move on to \ref post_install
 
 <hr>
 
- * @subsection asibot_organization Project Organization
-
-The project is organized in such a way that you will find:
-
- The ''executables'' in $ASIBOT_DIR/bin --> Will be empty upon basic installation
-
- The ''libraries'' in $ASIBOT_DIR/lib
-
- The ''shared files'' in $ASIBOT_ROOT/app --> Models, config files
-
-<hr>
-
- * @subsection language_support Multi-language Support (Optional)
-
-Certain language bindings require certain headers/libraries. For Python support, you can probably get away with:
-
-\verbatim
-sudo apt-get install python2.7-dev
-\endverbatim
-
-For Java/MATLAB support, you can probably get away with:
-\verbatim
-sudo apt-get install default-jdk
-\endverbatim
-
-Now you can compile the YARP bindings with SWIG:
-
-\verbatim
-sudo apt-get install swig
-cd $YARP_ROOT/bindings; mkdir build; cd build  # note: was at $YARP_ROOT/example/swig before 2012-09-05
-ccmake ..
-\endverbatim
-
-Press 'c' to refresh the cache. A set of options should be available, set the CREATE options you need to ON. Press 'c' to configure. If you chose CREATE_JAVA between your options, set PREPARE_CLASS_FILES to ON now. Press 'c' and 'g' now. Compile the project:
-
-\verbatim
-make -j3
-cp yarp/yarp.py .  # If you selected CREATE_PYTHON
-sudo make install
-\endverbatim
-
-If you selected CREATE_PYTHON, you can proceed to run the ASIBOT Python example modules: \ref asibot_examples_py
-
-If you selected CREATE_JAVA, it is possible to make MATLAB get the YARP Java bindings. It is a bit tricky. We need to add the current path to the MATLAB classpath.txt file and to the MATLAB librarypath.txt file. You can try:
-
-\verbatim
-sudo updatedb  # updates the data-base that 'locate' uses
-echo $PWD >> `locate classpath.txt`
-echo $PWD >> `locate librarypath.txt`
-\endverbatim
-
-Note: Sometimes an issue due to a conflicting version of libstdc++.so.6 can occur. This can usually be fixed by simply moving or renaming $MATLAB_ROOT/sys/os/glnx86/libstdc++.so.6.
-
-If you selected CREATE_JAVA, now compile the ASIBOT Java classes:
-\verbatim
-cd $ASIBOT_ROOT/example/java
-javac -source 1.3 -target 1.3 -classpath $YARP_ROOT/bindings/build *.java  # note: was at $YARP_ROOT/example/swig before 2012-09-05
-\endverbatim
-
-Then we need to add this current path to the MATLAB classpath.txt file. You can try:
-
-\verbatim
-echo $PWD >> `locate classpath.txt`
-\endverbatim
-
-Once this is done, you can proceed to run the ASIBOT MATLAB example modules: \ref asibot_examples_m
-
-<hr>
-
- * @subsection export_asibot Building the RaveBot and/or CartesianBot YARP devices into YARP (Completely Optional, read warning)
-
-<b>WARNING</b>: A YARP device can belong to either to the YARP project (yarpmod) <b>OR</b> to the ASIBOT project (RlPlugins).
-This is <b>mutually exclusive</b> and i.e. will make the current implementation of \ref testRaveBot and \ref cartesianServer not find the \ref RaveBot library.
-
-If you still want to export the ASIBOT libraries to the YARP yarpmod plugin library (perhaps for using the SWIG wrappers), you must:
-
-\verbatim
-cp $ASIBOT_ROOT/example/exportable/ExternalModules.cmake.template $YARP_ROOT/conf/ExternalModules.cmake
-\endverbatim
-
-Configure the ASIBOT libraries you want in the YARP yarpmod plugin library:
-
-\verbatim
-cd $YARP_DIR
-ccmake .. -DCREATE_DEVICE_LIBRARY_MODULES=ON
-\endverbatim
-
-Press 'c' to see the library options. Set the ENABLE options you want to ON (ENABLE_yarpmod_ravebot for RaveBot, ENABLE_yarpmod_cartesianbot for CartesianBot, etc). Once you have selected your options, press 'c' 'c' and 'g' to generate the compilation project. Compile and install with this new YARP configuration with:
-
-\verbatim
-make -j3
-sudo make install
-\endverbatim
-
-They should be shown (once installed) on issuing a:
-
-\verbatim
-yarpdev --list
-\endverbatim
-
-You can test RaveBot as a YARP yarpmod through:
-
-\verbatim
-yarpdev --device ravebot
-\endverbatim
-
-<hr>
-
-This page can be edited at $ASIBOT_ROOT/main/doc/install.dox.
+This page can be edited at $ASIBOT_ROOT/main/doc/install_on_ubuntu.dox.
 
 *
 */
