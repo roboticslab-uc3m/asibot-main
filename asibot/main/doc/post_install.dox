@@ -4,11 +4,16 @@
 
 Now that you have installed the basic ASIBOT repository, you're probably wondering what to do.
 
-What we first recommend is launching a '''yarp server''':
+@section init_comms Initializing the communication server
+
+Our current implementation uses <a href="http://eris.liralab.it/yarpdoc/what_is_yarp.html">YARP</a> for communication. Basic use of YARP requires the use of a centralized server. This server associates the low-level implementation of the communication ports with the names we give them. Before executing any ASIBOT module or application, please launch a yarp server:
 
 \verbatim
 [terminal 1] yarp server
 \endverbatim
+
+@section launch_simulator Launching the simulator
+
 
 And then launching a '''cartesianServer''':
 
