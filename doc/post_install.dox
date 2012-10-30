@@ -14,8 +14,8 @@ Our current implementation uses <a href="http://eris.liralab.it/yarpdoc/what_is_
 
 @section launch_simulator Launching the simulator
 
-
-And then launching a '''cartesianServer''':
+The simulator we use for ASIBOT is versatile and multi-layered. You'll learn how to change parameters and implementations of entire layers throughout these tutorials.
+\ref cartesianServer
 
 \verbatim
 [terminal 2] cartesianServer
