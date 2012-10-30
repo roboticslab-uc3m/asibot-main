@@ -118,6 +118,7 @@ source ~/.bashrc
 Now install the applications:
 
 \verbatim
+cd $ASIBOT_DIR
 make install_applications
 \endverbatim
 
