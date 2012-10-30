@@ -34,9 +34,27 @@ Let's say, for example, we have problems with our graphic card and prefer \ref c
 [terminal 2] cartesianServer --env asibot_kitchen_cameraless.env.xml
 \endverbatim
 
+We can actually see the default parameters, and the final selected ones, with the <b>--help</b> parameter:
+
+\verbatim
+[terminal 2] cartesianServer --env asibot_kitchen_cameraless.env.xml --help
+\endverbatim
+
+If we want to affect this parameter at a more persistent level, we can change the configuration file. For this specific case, the \ref cartesianServer configuration file is located at <i>$ASIBOT_ROOT/app/cartesianServer/conf/cartesianServer.ini</i>. In this file, we can see that most parameters are commented out (the <b>//</b> characters). This is a common convention to indicate these are the default parameters set in the headers (the first parsed, as explained previously). Here, we would search to subsitute the line:
+
+\verbatim
+// env asibot_kitchen.env.xml           /// env [xml] environment name in abs or rel
+\endverbatim
+
+With a new, uncommented line:
+
+\verbatim
+env asibot_kitchen_cameraless.env.xml           /// env [xml] environment name in abs or rel
+\endverbatim
+
 @section interaction Interacting
 
-We can interact with this module through port commands as described in <a href="group__cartesianServer.html#interfacing">cartesianServer</a>, or through the different language APIs as can be seen in the different <a href="group__asibot__examples.html">ASIBOT examples</a>.
+We can interact with this module through port commands as described in <a class="el" href="group__cartesianServer.html#interfacing">cartesianServer</a>, or through the different language APIs as can be seen in the different <a class="el" href="group__asibot__examples.html">ASIBOT examples</a>.
 
 <hr>
 
