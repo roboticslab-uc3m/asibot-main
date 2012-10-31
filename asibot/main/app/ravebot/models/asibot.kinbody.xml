@@ -1,7 +1,7 @@
 
 <KinBody name="asibotKinbody">
-   <Body type="dynamic" name="link0">
-<!--  <Body type="static" name="link0"> -->
+   <!--Body type="dynamic" name="link0"-->
+   <Body type="static" name="link0">
     <Geom type="trimesh">
       <rotationaxis>1 0 0 -90</rotationaxis>
       <rotationaxis>0 0 1 180</rotationaxis>

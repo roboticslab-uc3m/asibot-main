@@ -185,12 +185,6 @@ bool RaveBot::open(Searchable& config) {
     probot = robots.at(0);  // which is a RobotBasePtr
     printf("Robot 0 name: %s.\n", probot->GetName().c_str());
 
-    if(!UNSTABLE) {
-        std::vector<KinBody::LinkPtr> links = probot->GetLinks();
-        KinBody::LinkPtr plink = links.at(0);
-        plink->SetStatic(true);
-    }
-
     for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
         printf("Sensors found on robot %d (%s): %d.\n",robotIter,robots.at(robotIter)->GetName().c_str(),sensors.size());

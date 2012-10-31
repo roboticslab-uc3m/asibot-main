@@ -30,8 +30,6 @@
 #define DEFAULT_JMC_MS 20  // [ms]
 #define DEFAULT_PHYSICS "ode"
 
-#define UNSTABLE false
-
 using namespace std;
 
 using namespace yarp::os;
