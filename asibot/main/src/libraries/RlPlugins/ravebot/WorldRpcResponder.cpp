@@ -30,12 +30,17 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 std::vector<AABB> boxes(1);
                 boxes[0].extents = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
                 boxes[0].pos = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
-                boxKinBodyPtr->InitFromBoxes(boxes,true); 
+                boxKinBodyPtr->InitFromBoxes(boxes,true);
+                boxKinBodyPtr->GetLinks()[0]->SetMass(1);
+                Vector inertia(1,1,1);
+                boxKinBodyPtr->GetLinks()[0]->SetPrincipalMomentsOfInertia(inertia);
+                Transform pose(Vector(1,0,0,0),Vector(0,0,0));
+                boxKinBodyPtr->GetLinks()[0]->SetLocalMassFrame(pose);
                 //
                 pEnv->Add(boxKinBodyPtr,true);
                 boxKinBodyPtrs.push_back(boxKinBodyPtr);
                 }  // the environment is not locked anymore
-                printf("[warning] box behaviour static as in sbox.\n");
+                boxKinBodyPtrs[boxKinBodyPtrs.size()-1]->GetLinks()[0]->SetStatic(false);
                 out.addVocab(VOCAB_OK);
             } else if (in.get(2).asString() == "sbox") {
                 { // lock the environment!           
