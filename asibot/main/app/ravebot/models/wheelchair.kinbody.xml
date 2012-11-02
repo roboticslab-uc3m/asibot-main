@@ -1,9 +1,9 @@
 <KinBody name="wheelchair">
-    <RotationAxis>1 0 0 0</RotationAxis>
+    <RotationAxis>1 0 0 -90</RotationAxis>
     <Body type="static">
         <Geom type="trimesh">
-            <Data>./ivs/silla.iv</Data>
-            <Render>./ivs/silla.iv</Render>
+            <Data>./ivs/wheelchair.iv</Data>
+            <Render>./ivs/wheelchair.iv</Render>
         </Geom>      
     </Body>
 </KinBody>
