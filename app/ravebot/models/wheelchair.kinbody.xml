@@ -1,9 +1,14 @@
-<KinBody name="wheelchair">
+
+<KinBody name="wheelchairKinbody">
     <RotationAxis>1 0 0 -90</RotationAxis>
-    <Body type="static">
+    <Body type="dynamic" name="linker">
         <Geom type="trimesh">
             <Data>./ivs/wheelchair.iv</Data>
             <Render>./ivs/wheelchair.iv</Render>
-        </Geom>      
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
     </Body>
 </KinBody>

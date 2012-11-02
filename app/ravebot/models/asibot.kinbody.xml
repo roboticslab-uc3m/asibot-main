@@ -14,7 +14,7 @@
       <render>./ivs/ensam01sn.iv</render>
     </Geom>
     <mass type="sphere">
-      <total>1</total>
+      <total>.1</total>
       <radius>1</radius>
     </mass>
   </Body>
@@ -26,7 +26,7 @@
       <render>./ivs/ensam02sn.iv</render>
     </Geom>
     <mass type="sphere">
-      <total>1</total>
+      <total>.1</total>
       <radius>1</radius>
     </mass>
   </Body>
@@ -45,7 +45,7 @@
       <render>./ivs/ensam03sn.iv</render>
     </Geom>
     <mass type="sphere">
-      <total>1</total>
+      <total>.1</total>
       <radius>1</radius>
     </mass>
   </Body>
@@ -66,7 +66,7 @@
       <render>./ivs/ensam04sn.iv</render>
     </Geom>
     <mass type="sphere">
-      <total>1</total>
+      <total>.1</total>
       <radius>1</radius>
     </mass>
   </Body>
@@ -88,7 +88,7 @@
       <render>./ivs/ensam02sn.iv</render>
     </Geom>
     <mass type="sphere">
-      <total>1</total>
+      <total>.1</total>
       <radius>1</radius>
     </mass>
   </Body>
@@ -116,7 +116,7 @@
       <render>./ivs/elmacho.iv 1 </render>
     </Geom>
     <mass type="sphere">
-      <total>1</total>
+      <total>.1</total>
       <radius>1</radius>
     </mass>
   </Body>
