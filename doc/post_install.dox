@@ -28,7 +28,7 @@ Each layer of ASIBOT modules has parameters that can be modified three different
   \li Configuration files (*.ini or *.xml extension). These files are downloaded from $ASIBOT_ROOT/main/app and installed to $ASIBOT/app with the <i>make install_applications</i> command we issued. Within this folder, separate folders are maintained for modules and module layers.
   \li Command line (on program execution). Parameters may be modified executing a program using the following format: <i>./program --parameter new_value</i>.
 
-Let's say, for example, our graphic card supports offscreen rendering and want \ref cartesianServer to load an enviroment that has cameras in the simulated environment. We can execute the program touching the parameters at the command line level which, as we have said, is parsed last:
+Let's say, for example, our graphic card supports offscreen rendering and we want \ref cartesianServer to load an enviroment that has cameras in the simulated environment. We can execute the program touching the parameters at the command line level which, as we have said, is parsed last:
 
 \verbatim
 [terminal 2] cartesianServer --env asibot_kitchen_cameras.env.xml
