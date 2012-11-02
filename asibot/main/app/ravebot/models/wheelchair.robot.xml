@@ -1,0 +1,5 @@
+
+<Robot name="wheelchairRobot">
+  <KinBody file="./wheelchair.kinbody.xml"/>
+</Robot>
+
