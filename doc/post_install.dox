@@ -28,16 +28,16 @@ Each layer of ASIBOT modules has parameters that can be modified three different
   \li Configuration files (*.ini or *.xml extension). These files are downloaded from $ASIBOT_ROOT/main/app and installed to $ASIBOT/app with the <i>make install_applications</i> command we issued. Within this folder, separate folders are maintained for modules and module layers.
   \li Command line (on program execution). Parameters may be modified executing a program using the following format: <i>./program --parameter new_value</i>.
 
-Let's say, for example, we have problems with our graphic card and prefer \ref cartesianServer to load an enviroment that does not have cameras in the simulated environment. We can execute the program touching the parameters at the command line level which, as we have said, is parsed last:
+Let's say, for example, our graphic card supports offscreen rendering and want \ref cartesianServer to load an enviroment that has cameras in the simulated environment. We can execute the program touching the parameters at the command line level which, as we have said, is parsed last:
 
 \verbatim
-[terminal 2] cartesianServer --env asibot_kitchen_cameraless.env.xml
+[terminal 2] cartesianServer --env asibot_kitchen_cameras.env.xml
 \endverbatim
 
 We can actually see the default parameters, and the final selected ones, with the <b>--help</b> parameter:
 
 \verbatim
-[terminal 2] cartesianServer --env asibot_kitchen_cameraless.env.xml --help
+[terminal 2] cartesianServer --env asibot_kitchen_cameras.env.xml --help
 \endverbatim
 
 If we want to affect this parameter at a more persistent level, we can change the configuration file. For this specific case, the \ref cartesianServer configuration file is located at <i>$ASIBOT_ROOT/app/cartesianServer/conf/cartesianServer.ini</i>. In this file, we can see that most parameters are commented out (the <b>//</b> characters). This is a common convention to indicate these are the default parameters set in the headers (the first parsed, as explained previously). Here, we would search to subsitute the line:
@@ -49,7 +49,7 @@ If we want to affect this parameter at a more persistent level, we can change th
 With a new, uncommented line:
 
 \verbatim
-env asibot_kitchen_cameraless.env.xml           /// env [xml] environment name in abs or rel
+env asibot_kitchen_cameras.env.xml           /// env [xml] environment name in abs or rel
 \endverbatim
 
 @section interaction Interacting
