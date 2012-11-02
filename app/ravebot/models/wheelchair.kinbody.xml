@@ -1,7 +1,8 @@
+<!-- wheelchair.kinbody.xml -->
 
 <KinBody name="wheelchairKinbody">
-    <RotationAxis>1 0 0 -90</RotationAxis>
-    <Body type="dynamic" name="linker">
+    <Body type="dynamic" name="chair">
+        <RotationAxis>1 0 0 -90</RotationAxis>
         <Geom type="trimesh">
             <Data>./ivs/wheelchair.iv</Data>
             <Render>./ivs/wheelchair.iv</Render>
@@ -11,4 +12,22 @@
             <radius>1</radius>
         </mass>
     </Body>
+    <Body type="dynamic" name="chairDocking">
+        <translation>-0.3 -0.05 -0.054</translation>
+        <RotationAxis>1 0 0 -90</RotationAxis>
+        <Geom type="trimesh">
+            <Data>./ivs/dstation.iv</Data>
+            <Render>./ivs/dstation.iv</Render>
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
+    </Body>
+    <Joint name="fake" type="hinge" enable="false">
+        <body>chair</body>
+        <body>chairDocking</body>
+        <limits>0 0</limits>
+    </Joint>
 </KinBody>
+

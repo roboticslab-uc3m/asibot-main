@@ -3,8 +3,8 @@
 <Robot name="wheelchairRobot">
     <KinBody file="./wheelchair.kinbody.xml"/>
     <Manipulator name="wheelchairManipulator">
-        <base>linker</base>
-        <effector>linker</effector>
+        <base>chair</base>
+        <effector>chairDocking</effector>
     </Manipulator>
 </Robot>
 
