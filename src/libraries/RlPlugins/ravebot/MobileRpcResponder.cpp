@@ -68,3 +68,9 @@ void MobileRpcResponder::setMobile(RobotBasePtr _pMobile) {
 
 /************************************************************************/
 
+void MobileRpcResponder::setModule(ModuleBasePtr _pModule) {
+    pModule = _pModule;
+}
+
+/************************************************************************/
+
