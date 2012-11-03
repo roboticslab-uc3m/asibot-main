@@ -183,10 +183,11 @@ bool RaveBot::open(Searchable& config) {
     penv->GetRobots(robots);
     //-- Robot 0
     probot = robots.at(0);  // which is a RobotBasePtr
-    printf("Robot 0 name: %s.\n", probot->GetName().c_str());
+    printf("RaveBot using robot 0 (%s) as main robot.\n", probot->GetName().c_str());
     //-- Robot 1
     if(robots.size()>1) {
         pmobile = robots.at(1);  // which is a RobotBasePtr
+        printf("RaveBot using robot 1 (%s) as mobile robot.\n", pmobile->GetName().c_str());
     } else pmobile = RobotBasePtr();
 
     for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
@@ -282,7 +283,7 @@ bool RaveBot::open(Searchable& config) {
     //-- mobile rpc server
     if(!!pmobile) {
         mobileRpcResponder.setEnvironment(penv);
-        mobileRpcResponder.setRobot(probot);
+        mobileRpcResponder.setMobile(pmobile);
         mobileRpcServer.open("/ravebot/mobile/rpc:i");
         mobileRpcServer.setReader(mobileRpcResponder);
     }
