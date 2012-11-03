@@ -184,6 +184,10 @@ bool RaveBot::open(Searchable& config) {
     //-- Robot 0
     probot = robots.at(0);  // which is a RobotBasePtr
     printf("Robot 0 name: %s.\n", probot->GetName().c_str());
+    //-- Robot 1
+    if(robots.size()>1) {
+        pmobile = robots.at(1);  // which is a RobotBasePtr
+    } else pmobile = RobotBasePtr();
 
     for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
@@ -275,6 +279,14 @@ bool RaveBot::open(Searchable& config) {
     worldRpcServer.open("/ravebot/world");
     worldRpcServer.setReader(worldRpcResponder);
 
+    //-- mobile rpc server
+    if(!!pmobile) {
+        mobileRpcResponder.setEnvironment(penv);
+        mobileRpcResponder.setRobot(probot);
+        mobileRpcServer.open("/ravebot/mobile/rpc:i");
+        mobileRpcServer.setReader(mobileRpcResponder);
+    }
+
     // Start the RateThread
     this->setRate(jmcMs);
     this->start();
@@ -288,6 +300,10 @@ bool RaveBot::close() {
     printf("RaveBot::close() Closing ports...\n");
     worldRpcServer.interrupt();
     worldRpcServer.close();
+    if(!!pmobile) {
+        mobileRpcServer.interrupt();
+        mobileRpcServer.close();
+    }
     penv->StopSimulation();  // NEEDED??
     this->askToStop();
     for (unsigned int i=0;i<p_imagen.size();i++) {
