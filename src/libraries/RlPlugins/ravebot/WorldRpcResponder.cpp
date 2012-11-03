@@ -184,17 +184,6 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
         } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
         return true;
-    } else if (choice=="robot") {
-        if (in.get(1).asString()=="base") {
-            double targetX = in.get(2).asDouble();
-            double targetY = in.get(3).asDouble();
-            printf("[success] moving robot base to %f %f...\n", targetX, targetY);
-
-            printf("[success] moved robot base to %f %f\n", targetX, targetY);
-            out.addVocab(VOCAB_OK);
-        } else out.addVocab(VOCAB_FAILED);
-        out.write(*returnToSender);
-        return true;
     }
     out.addVocab(VOCAB_FAILED);
     out.write(*returnToSender);
