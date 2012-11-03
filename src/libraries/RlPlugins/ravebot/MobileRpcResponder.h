@@ -30,6 +30,7 @@ protected:
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pMobile;  // set in setRobot
+    ModuleBasePtr pModule;  // set in setModule
 
 public:
 
@@ -42,6 +43,11 @@ public:
     * Register an OpenRAVE mobile robot.
     */
     void setMobile(RobotBasePtr _pMobile);
+
+    /**
+    * Register an OpenRAVE module.
+    */
+    void setModule(ModuleBasePtr _pModule);
 };
 
 #endif  // __MOBILE_RPC_RESPONDER__
