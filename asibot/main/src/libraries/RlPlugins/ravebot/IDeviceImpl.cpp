@@ -284,8 +284,11 @@ bool RaveBot::open(Searchable& config) {
     if(!!pmobile) {
         vector<int> vindices;  // send empty vector instead of joints
         pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
+        pbasemanip = RaveCreateModule(penv,"basemanipulation"); // create the module
+        penv->Add(pbasemanip,true,probot->GetName()); // load the module
         mobileRpcResponder.setEnvironment(penv);
         mobileRpcResponder.setMobile(pmobile);
+        mobileRpcResponder.setModule(pbasemanip);
         mobileRpcServer.open("/ravebot/mobile/rpc:i");
         mobileRpcServer.setReader(mobileRpcResponder);
     }

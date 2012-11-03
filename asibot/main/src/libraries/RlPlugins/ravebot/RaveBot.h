@@ -402,6 +402,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
     RobotBasePtr pmobile;
+    ModuleBasePtr pbasemanip;
     ControllerBasePtr pcontrol;
     std::vector<KinBodyPtr> bodies;
     std::vector<KinBody::JointPtr> mismotores;
