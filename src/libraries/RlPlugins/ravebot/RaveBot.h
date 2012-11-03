@@ -17,6 +17,7 @@
 #include <sstream>
 
 #include "WorldRpcResponder.h"
+#include "MobileRpcResponder.h"
 
 #define DEFAULT_NUM_MOTORS 5
 
@@ -400,6 +401,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     EnvironmentBasePtr penv;
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
+    RobotBasePtr pmobile;
     ControllerBasePtr pcontrol;
     std::vector<KinBodyPtr> bodies;
     std::vector<KinBody::JointPtr> mismotores;
@@ -421,6 +423,9 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     // world rpc server
     RpcServer worldRpcServer;
     WorldRpcResponder worldRpcResponder;
+    // mobile rpc server
+    RpcServer mobileRpcServer;
+    MobileRpcResponder mobileRpcResponder;
 };
 
 #endif
