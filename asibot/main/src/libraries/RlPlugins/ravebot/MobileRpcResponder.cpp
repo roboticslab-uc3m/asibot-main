@@ -29,6 +29,25 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
+    } else if (choice=="set") {
+        Bottle* localtarget = in.get(2).asList();
+        Transform T = pMobile->GetTransform();
+        std::vector<dReal> v(2);
+        if (in.get(1).asString()=="poss") {
+            v[0] = localtarget->get(0).asDouble();
+            v[1] = localtarget->get(1).asDouble();
+        } else if (in.get(1).asString()=="rels") {
+            v[0] = T.trans.x + localtarget->get(0).asDouble();
+            v[1] = T.trans.y + localtarget->get(1).asDouble();
+        } else {
+            out.addVocab(VOCAB_FAILED);
+            out.write(*returnToSender);
+            return true;
+        }
+        printf("Mobile robot at %f %f, attempt to move to %f %f.\n",T.trans.x,T.trans.y,v[0],v[1]);
+        out.addVocab(VOCAB_OK);
+        out.write(*returnToSender);
+        return true;
     }
     out.addVocab(VOCAB_FAILED);
     out.write(*returnToSender);
