@@ -36,8 +36,8 @@ void MobileRpcResponder::setEnvironment(EnvironmentBasePtr _pEnv) {
 
 /************************************************************************/
 
-void MobileRpcResponder::setRobot(RobotBasePtr _pRobot) {
-    pRobot = _pRobot;
+void MobileRpcResponder::setMobile(RobotBasePtr _pMobile) {
+    pMobile = _pMobile;
 }
 
 /************************************************************************/

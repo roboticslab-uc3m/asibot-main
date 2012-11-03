@@ -27,16 +27,8 @@ protected:
     */
     virtual bool read(ConnectionReader& connection);
 
-    // box/sbox/cyl/scyl/sph/ssph
-    std::vector<KinBodyPtr> boxKinBodyPtrs;
-    std::vector<KinBodyPtr> sboxKinBodyPtrs;
-    std::vector<KinBodyPtr> cylKinBodyPtrs;
-    std::vector<KinBodyPtr> scylKinBodyPtrs;
-    std::vector<KinBodyPtr> sphKinBodyPtrs;
-    std::vector<KinBodyPtr> ssphKinBodyPtrs;
-
     EnvironmentBasePtr pEnv;  // set in setEnvironment
-    RobotBasePtr pRobot;  // set in setRobot
+    RobotBasePtr pMobile;  // set in setRobot
 
 public:
 
@@ -46,9 +38,9 @@ public:
     void setEnvironment(EnvironmentBasePtr _pEnv);
 
     /**
-    * Register an OpenRAVE robot.
+    * Register an OpenRAVE mobile robot.
     */
-    void setRobot(RobotBasePtr _pRobot);
+    void setMobile(RobotBasePtr _pMobile);
 };
 
 #endif  // __MOBILE_RPC_RESPONDER__
