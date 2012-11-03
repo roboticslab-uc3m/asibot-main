@@ -11,6 +11,7 @@
 
 #define VOCAB_FAILED VOCAB4('f','a','i','l')
 #define VOCAB_OK VOCAB2('o','k')
+#define VOCAB_IS VOCAB2('i','s')
 
 using namespace yarp::os;
 using namespace OpenRAVE;

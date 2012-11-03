@@ -282,6 +282,8 @@ bool RaveBot::open(Searchable& config) {
 
     //-- mobile rpc server
     if(!!pmobile) {
+        vector<int> vindices;  // send empty vector instead of joints
+        pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
         mobileRpcResponder.setEnvironment(penv);
         mobileRpcResponder.setMobile(pmobile);
         mobileRpcServer.open("/ravebot/mobile/rpc:i");
