@@ -282,10 +282,18 @@ bool RaveBot::open(Searchable& config) {
 
     //-- mobile rpc server
     if(!!pmobile) {
+        // This will only be activated with >1 robot and a robot called "asibot", so we
+        // should not lose generallity for starters.
+        KinBodyPtr objPtr = penv->GetKinBody("asibot");
+        if(objPtr) {
+            if(pmobile->Grab(objPtr)) printf("[success] object asibot exists and grabbed.\n");
+            else printf("[warning] object asibot exists but not grabbed.\n");
+        } else printf("[fail] object asibot does not exist.\n");
+        //
         vector<int> vindices;  // send empty vector instead of joints
         pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
         pbasemanip = RaveCreateModule(penv,"basemanipulation"); // create the module
-        penv->Add(pbasemanip,true,probot->GetName()); // load the module
+        penv->Add(pbasemanip,true,pmobile->GetName()); // load the module
         mobileRpcResponder.setEnvironment(penv);
         mobileRpcResponder.setMobile(pmobile);
         mobileRpcResponder.setModule(pbasemanip);

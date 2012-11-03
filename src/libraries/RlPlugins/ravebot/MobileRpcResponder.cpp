@@ -45,6 +45,36 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
             return true;
         }
         printf("Mobile robot at %f %f, attempt to move to %f %f.\n",T.trans.x,T.trans.y,v[0],v[1]);
+        {
+            EnvironmentMutex::scoped_lock lock(pEnv->GetMutex()); // lock environment
+            // find a set of free joint values for the robot
+            {
+                RobotBase::RobotStateSaver saver(pMobile); // save the state
+                while(1) {
+                    pMobile->SetActiveDOFValues(v);
+                    if( !pEnv->CheckCollision(pMobile) && !pMobile->CheckSelfCollision() ) {
+                        break;
+                    }
+                }
+                // robot state is restored
+            }
+            std::stringstream cmdin,cmdout;
+            cmdin << "MoveActiveJoints goal ";
+            for(size_t i = 0; i < v.size(); ++i) {
+                cmdin << v[i] << " ";
+            }
+            // start the planner and run the robot
+            RAVELOG_INFO("%s\n",cmdin.str().c_str());
+            if( !pModule->SendCommand(cmdout,cmdin) ) {
+                out.addVocab(VOCAB_FAILED);
+                out.write(*returnToSender);
+                return true;
+                //continue;
+            }
+        }  // unlock the environment and wait for the robot to finish
+        while(!pMobile->GetController()->IsDone()) {
+            boost::this_thread::sleep(boost::posix_time::milliseconds(1));
+        }
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
