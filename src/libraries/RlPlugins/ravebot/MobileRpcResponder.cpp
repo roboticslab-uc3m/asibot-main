@@ -18,7 +18,14 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
         out.write(*returnToSender);
         return true;
     } else if (choice=="get") {
-        printf("yay\n");
+        Transform T = pMobile->GetTransform();
+        printf("Mobile robot at %f %f.\n",T.trans.x,T.trans.y);
+        out.addVocab(VOCAB_IS);
+        out.addString("encs");
+        Bottle pose;
+        pose.addDouble(T.trans.x);
+        pose.addDouble(T.trans.y);
+        out.addList() = pose;
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
