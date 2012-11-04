@@ -11,13 +11,13 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
     out.clear();
     ConnectionWriter *returnToSender = connection.getWriter();
     if (returnToSender==NULL) return false;
-    ConstString choice = in.get(0).asString();
-    if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
-    if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, get encs, set pos XX XX.");
+    //ConstString choice = in.get(0).asString();
+    //if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
+    if (in.get(0).asString()=="help") {  ///////////////////////////////// help /////////////////////////////////
+        out.addString("Available commands: [help], [get] [encs], [set] [poss] (XX XX).");
         out.write(*returnToSender);
         return true;
-    } else if (choice=="get") {
+    } else if ((in.get(0).asString()=="get")||(in.get(0).asVocab()==VOCAB_GET)) {
         Transform T = pMobile->GetTransform();
         printf("Mobile robot at %f %f.\n",T.trans.x,T.trans.y);
         out.addVocab(VOCAB_IS);
@@ -29,14 +29,14 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
-    } else if (choice=="set") {
+    } else if ((in.get(0).asString()=="set")||(in.get(0).asVocab()==VOCAB_SET)) {
         Bottle* localtarget = in.get(2).asList();
         Transform T = pMobile->GetTransform();
         std::vector<dReal> v(2);
-        if (in.get(1).asString()=="poss") {
+        if ((in.get(1).asString()=="poss")||(in.get(1).asVocab()==VOCAB_POSS)) {
             v[0] = localtarget->get(0).asDouble();
             v[1] = localtarget->get(1).asDouble();
-        } else if (in.get(1).asString()=="rels") {
+        } else if ((in.get(1).asString()=="rels")||(in.get(1).asVocab()==VOCAB_RELS)) {
             v[0] = T.trans.x + localtarget->get(0).asDouble();
             v[1] = T.trans.y + localtarget->get(1).asDouble();
         } else {
