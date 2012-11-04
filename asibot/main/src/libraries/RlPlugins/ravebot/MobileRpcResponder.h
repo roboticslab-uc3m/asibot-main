@@ -12,6 +12,10 @@
 #define VOCAB_FAILED VOCAB4('f','a','i','l')
 #define VOCAB_OK VOCAB2('o','k')
 #define VOCAB_IS VOCAB2('i','s')
+#define VOCAB_SET VOCAB3('s','e','t')
+#define VOCAB_GET VOCAB3('g','e','t')
+#define VOCAB_POSS VOCAB('p','o','s','s')
+#define VOCAB_RELS VOCAB('r','e','l','s')
 
 using namespace yarp::os;
 using namespace OpenRAVE;
