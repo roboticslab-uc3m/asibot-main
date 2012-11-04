@@ -10,7 +10,7 @@
             <Extents>0.35 0.685 0.525</Extents>
             <Translation>-0.03 0 0.015</Translation>
             <RotationMat>1 0 0 0 1 0 0 0 1</RotationMat>
-            <transparency>0.6</transparency>
+            <transparency>0.8</transparency>
             <diffuseColor>0 0 1</diffuseColor>
         </Geom>
     </Body>
