@@ -71,10 +71,13 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
                 return true;
                 //continue;
             }
-        }  // unlock the environment and wait for the robot to finish
+        }
+        
+        printf("Unlock the environment and wait for the mobile robot to finish...\n");
         while(!pMobile->GetController()->IsDone()) {
             boost::this_thread::sleep(boost::posix_time::milliseconds(1));
         }
+        printf("mobile robot finished.\n");
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
