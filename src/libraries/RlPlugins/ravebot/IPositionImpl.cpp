@@ -76,6 +76,10 @@ bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
         velRaw[motor] = ((refs[motor]-getEncExposed(motor))/max_time)*velRawExposed[motor];
         printf("velRaw[%d]: %f\n",motor,velRaw[motor]);
         jointStatus[motor]=1;
+        if (fabs(targetExposed[motor]-getEncExposed(motor))<jointTol[motor]) {
+            stop(motor);  // puts jointStatus[motor]=0;
+            printf("Joint q%d reached target.\n",motor+1);
+        }
     }
     printf("RaveBot::positionMove() f[end]\n");
     return true;
@@ -139,8 +143,9 @@ bool RaveBot::relativeMove(const double *deltas) {  // encExposed = deltas + enc
 
 bool RaveBot::checkMotionDone(int j, bool *flag) {
     if ((unsigned int)j>numMotors) return false;
-    if (jointStatus[j]<=0) *flag=true;
-    else *flag=false;
+    bool done = true;
+    if (jointStatus[j]>0) done=false;
+    *flag = done;
     return true;
 }
 
@@ -149,7 +154,7 @@ bool RaveBot::checkMotionDone(int j, bool *flag) {
 bool RaveBot::checkMotionDone(bool *flag) {
     bool done = true;
     for (unsigned int i=0; i<numMotors; i++) {
-        if (jointStatus[i]>=0) done = false;  // TODO: test, use "AND" if bad.
+        if (jointStatus[i]>0) done = false;
     }
     *flag = done;
     return true;
