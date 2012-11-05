@@ -29,7 +29,7 @@
 #define DEFAULT_GEN_REF_SPEED 7.5  // Exposed.
 #define DEFAULT_GEN_VEL_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_JMC_MS 20  // [ms]
-#define DEFAULT_PHYSICS "ode"
+#define DEFAULT_PHYSICS "none"
 
 using namespace std;
 
