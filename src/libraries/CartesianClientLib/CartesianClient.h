@@ -11,6 +11,7 @@
 #define VOCAB_MOVL VOCAB4('m','o','v','l')
 #define VOCAB_MOVJ VOCAB4('m','o','v','j')
 #define VOCAB_INV VOCAB3('i','n','v')
+#define VOCAB_WAIT VOCAB4('w','a','i','t')
 
 using namespace yarp::os;
 
@@ -93,6 +94,12 @@ public:
      * @return true/false on success/failure.
      */
     bool movl(const double *xd);
+
+    /**
+     * Just wait for a movj or movl to be done. TODO: timeinterval, maxwait.
+     * @return true/false on success/failure.
+     */
+    bool wait();
 
     /**
      * Stop.
