@@ -34,7 +34,7 @@ bool CartesianClient::stat(double *x) {
     miOutput.addVocab(VOCAB_STAT);
     rpcClient.write(miOutput, miInput);
 //    printf("Got %s\n",miInput.toString().c_str());
-    Bottle* data = miInput.get(0).asList();
+    Bottle* data = miInput.get(1).asList();
     for (int i=0; i<data->size(); i++)
         x[i] = data->get(i).asDouble();
     return true;
