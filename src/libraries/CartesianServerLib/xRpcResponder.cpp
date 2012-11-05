@@ -22,12 +22,26 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             if(ipos->stop()) {
                 if(ipos->setPositionMode()) {
                     out.addVocab(VOCAB_OK);
+                    *csStatus = 0;
                 } else out.addVocab(VOCAB_FAILED);
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
         return true;
     } else if (choice==VOCAB_STAT) { ///////////////////////////////// stat /////////////////////////////////
+        if (*csStatus==1) { // movj
+            bool done;
+            ipos->checkMotionDone(&done);
+            if(done) *csStatus = 0;
+        } else if (*csStatus==2) { // movl
+            bool done;
+            icart->checkMotionDone(&done);
+            if(done) *csStatus = 0;
+        }        
+        if (*csStatus==0) out.addVocab(VOCAB_MY_STOP);
+        else if (*csStatus==1) out.addVocab(VOCAB_MOVJ);
+        else if (*csStatus==2) out.addVocab(VOCAB_MOVL);
+        else out.addVocab(VOCAB_FAILED);
         Vector x,o;
         if(icart->getPose(x,o)) {
             Bottle& l1 = out.addList();
@@ -49,6 +63,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         for (int i = 3; i < lst->size(); i++)
             o.push_back(lst->get(i).asDouble());
         if(icart->goToPoseSync(x,o)){
+            *csStatus = 2;
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
@@ -74,6 +89,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             icart->stopControl(); // new!!!!
             ipos->setPositionMode();
             ipos->positionMove(qd);
+            *csStatus = 1;
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
@@ -112,6 +128,12 @@ void xRpcResponder::setCartesianInterface(yarp::dev::ICartesianControl* _icart) 
 
 void xRpcResponder::setPositionInterface(yarp::dev::IPositionControl* _ipos) {
     ipos = _ipos;
+}
+
+/************************************************************************/
+
+void xRpcResponder::setCsStatus(int* _csStatus) {
+    csStatus = _csStatus;
 }
 
 /************************************************************************/
