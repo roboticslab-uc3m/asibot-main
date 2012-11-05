@@ -172,8 +172,8 @@ bool RaveBot::open(Searchable& config) {
     }
     printf("[success] RaveBot loaded environment.\n");
 
-    // NEW: Attach a physics engine
-    if(physics!="none"){
+    // Attach a physics engine
+    if(physics=="ode"){
         penv->SetPhysicsEngine(RaveCreatePhysicsEngine(penv,"ode"));
         penv->GetPhysicsEngine()->SetGravity(OpenRAVE::Vector(0,0,-9.8));
     }
