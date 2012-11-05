@@ -13,15 +13,17 @@ bool CartesianClient::open(const ConstString& serverPrefix) {
     ConstString serverStr(serverPrefix);
     serverStr += "/cartesianServer/rpc:i";
     if (!rpcClient.addOutput(serverStr)) {
-        printf("[error] no cartesian connection possible\n");
+        fprintf(stderr,"[error] no cartesianServer connection possible\n");
         return false;
     }
+    printf("[success] Opened connection with cartesianServer.\n");
     return true;
 }
 
 /************************************************************************/
 bool CartesianClient::close() {
 //    valid = false;
+    printf("CartesianClient close...\n");
     rpcClient.interrupt();
     rpcClient.close();
     return true;
@@ -78,6 +80,15 @@ bool CartesianClient::movl(const double *xd) {
     for(int i=0;i<NUM_AXES;i++)
         dBottle.addDouble(xd[i]);
     miOutput.addList() = dBottle;
+    rpcClient.write(miOutput, miInput);
+    return true;
+}
+
+/************************************************************************/
+bool CartesianClient::wait() {
+    Bottle miOutput, miInput;
+    miOutput.clear();
+    miOutput.addVocab(VOCAB_WAIT);
     rpcClient.write(miOutput, miInput);
     return true;
 }
