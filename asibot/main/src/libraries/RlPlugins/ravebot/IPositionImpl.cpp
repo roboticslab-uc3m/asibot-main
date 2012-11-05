@@ -149,7 +149,7 @@ bool RaveBot::checkMotionDone(int j, bool *flag) {
 bool RaveBot::checkMotionDone(bool *flag) {
     bool done = true;
     for (unsigned int i=0; i<numMotors; i++) {
-        if (jointStatus[i]<=0) done = false;  // TODO: test, use "AND" if bad.
+        if (jointStatus[i]>=0) done = false;  // TODO: test, use "AND" if bad.
     }
     *flag = done;
     return true;
