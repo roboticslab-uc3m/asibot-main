@@ -47,6 +47,7 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
     yarp::dev::IPositionControl *ipos;
+    int *csStatus;
 
     RpcServer xRpcServer;
 	xRpcResponder xResponder;

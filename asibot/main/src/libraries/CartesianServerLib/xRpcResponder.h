@@ -18,6 +18,7 @@
 #define VOCAB_MOVL VOCAB4('m','o','v','l')
 #define VOCAB_MOVJ VOCAB4('m','o','v','j')
 #define VOCAB_INV VOCAB3('i','n','v')
+#define VOCAB_MOVE VOCAB4('m','o','v','e')
 
 using namespace yarp::os;
 using namespace yarp::dev;
@@ -37,6 +38,7 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
     yarp::dev::IPositionControl *ipos;
+    int *csStatus;
 public:
 
     /**
@@ -48,6 +50,11 @@ public:
     * Register a position interface for the PortReader.
     */
     void setPositionInterface(yarp::dev::IPositionControl* _ipos);
+
+    /**
+    * Register.
+    */
+    void setCsStatus(int* _csStatus);
 };
 
 #endif

@@ -11,6 +11,7 @@ void xCallbackPort::onRead(Bottle& b) {
         icart->stopControl();
         ipos->stop();
         ipos->setPositionMode();
+        csStatus = 0;
     } else if (choice==VOCAB_FWD) { ///////////////////////////////// fwd /////////////////////////////////
         Vector cmd;
         Bottle *lst = b.get(1).asList();
@@ -29,6 +30,7 @@ void xCallbackPort::onRead(Bottle& b) {
         od.push_back(cmd[1]); // rot(y')d
         od.push_back(0.0); // rot(z'')d
         printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
+        *csStatus = 3;
         icart->goToPose(xd,od,3.0);
     } else if (choice==VOCAB_BKWD) { ///////////////////////////////// bkwd /////////////////////////////////
         Vector cmd;
@@ -52,6 +54,7 @@ void xCallbackPort::onRead(Bottle& b) {
         od.push_back(cmd[1]); // rot(y')d
         od.push_back(0.0); // rot(z'')d
         printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
+        *csStatus = 4;
         icart->goToPose(xd,od,3.0);
     } else if (choice==VOCAB_ROT) { ///////////////////////////////// rot /////////////////////////////////
         Vector cmd;
@@ -71,6 +74,7 @@ void xCallbackPort::onRead(Bottle& b) {
         od.push_back(cmd[1]); // rot(y')d
         od.push_back(0.0); // rot(z'')d
         printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
+        *csStatus = 5;
         icart->goToPose(xd,od,3.0);
     } else if (choice==VOCAB_VMOS) { ///////////////////////////////// vmos /////////////////////////////////
         Vector cmd;
@@ -82,6 +86,7 @@ void xCallbackPort::onRead(Bottle& b) {
         for (int i = 3; i < lst->size(); i++)
             odotd.push_back(lst->get(i).asDouble());
         printf("xdotd: %s; odotd: %s\n",xdotd.toString().c_str(),odotd.toString().c_str());
+        *csStatus = 6;
         icart->setTaskVelocities(xdotd,odotd);
     }
 }
@@ -96,6 +101,12 @@ void xCallbackPort::setCartesianInterface(yarp::dev::ICartesianControl* _icart) 
 
 void xCallbackPort::setPositionInterface(yarp::dev::IPositionControl* _ipos) {
     ipos = _ipos;
+}
+
+/************************************************************************/
+
+void xCallbackPort::setCsStatus(int* _csStatus) {
+    csStatus = _csStatus;
 }
 
 /************************************************************************/
