@@ -46,6 +46,7 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
     yarp::dev::IPositionControl *ipos;
+    int *csStatus;
 public:
 
     xCallbackPort() {}
@@ -59,6 +60,11 @@ public:
     * Register a position interface for the PortReader.
     */
     void setPositionInterface(yarp::dev::IPositionControl* _ipos);
+
+        /**
+    * Register a position interface for the PortReader.
+    */
+    void setCsStatus(int* _csStatus);
 };
 
 #endif

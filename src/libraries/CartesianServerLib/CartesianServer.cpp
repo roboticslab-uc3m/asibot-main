@@ -12,6 +12,8 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     ConstString prefix = DEFAULT_PREFIX;
     ConstString movjLocal = DEFAULT_MOVJ_LOCAL;
     ConstString movjRemote = DEFAULT_MOVJ_REMOTE;
+    csStatus = new int;
+    *csStatus = 0;
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
@@ -67,12 +69,14 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     //---------------------CONFIGURE PORTs------------------------
     xResponder.setPositionInterface(ipos);
     xResponder.setCartesianInterface(icart);
+    xResponder.setCsStatus(csStatus);
     ConstString xRpcServerStr(prefix);
     xRpcServerStr += "/cartesianServer/rpc:i";
     xRpcServer.open(xRpcServerStr);
     xRpcServer.setReader(xResponder);
     xPort.setPositionInterface(ipos);
     xPort.setCartesianInterface(icart);
+    xPort.setCsStatus(csStatus);
     ConstString xPortStr(prefix);
     xPortStr += "/cartesianServer/command:i";
     xPort.open(xPortStr);
@@ -93,6 +97,8 @@ bool CartesianServer::interruptModule() {
     cartesianDevice.close();
     xRpcServer.close();
     xPort.close();
+    delete csStatus;
+    csStatus = 0;
     return true;
 }
 
