@@ -59,7 +59,7 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
                 // robot state is restored
             }
             std::stringstream cmdin,cmdout;
-            cmdin << "MoveActiveJoints goal ";
+            cmdin << "MoveActiveJoints maxiter 100 goal ";  // default maxiter:4000
             for(size_t i = 0; i < v.size(); ++i) {
                 cmdin << v[i] << " ";
             }
