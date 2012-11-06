@@ -291,7 +291,8 @@ bool RaveBot::open(Searchable& config) {
         } else printf("[fail] object asibot does not exist.\n");
         //
         vector<int> vindices;  // send empty vector instead of joints
-        pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
+        //pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
+        pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y|DOF_RotationAxis,Vector(0,0,1));  // and grab world pos
         pbasemanip = RaveCreateModule(penv,"basemanipulation"); // create the module
         penv->Add(pbasemanip,true,pmobile->GetName()); // load the module
         mobileRpcResponder.setEnvironment(penv);

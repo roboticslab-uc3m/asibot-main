@@ -32,13 +32,15 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
     } else if ((in.get(0).asString()=="set")||(in.get(0).asVocab()==VOCAB_SET)) {
         Bottle* localtarget = in.get(2).asList();
         Transform T = pMobile->GetTransform();
-        std::vector<dReal> v(2);
+        std::vector<dReal> v(3);
         if ((in.get(1).asString()=="poss")||(in.get(1).asVocab()==VOCAB_POSS)) {
             v[0] = localtarget->get(0).asDouble();
             v[1] = localtarget->get(1).asDouble();
+            v[2] = localtarget->get(2).asDouble();
         } else if ((in.get(1).asString()=="rels")||(in.get(1).asVocab()==VOCAB_RELS)) {
             v[0] = T.trans.x + localtarget->get(0).asDouble();
             v[1] = T.trans.y + localtarget->get(1).asDouble();
+            v[2] = localtarget->get(2).asDouble();
         } else {
             out.addVocab(VOCAB_FAILED);
             out.write(*returnToSender);
@@ -47,19 +49,8 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
         printf("Mobile robot at %f %f, attempt to move to %f %f.\n",T.trans.x,T.trans.y,v[0],v[1]);
         {
             EnvironmentMutex::scoped_lock lock(pEnv->GetMutex()); // lock environment
-            // find a set of free joint values for the robot
-            {
-                RobotBase::RobotStateSaver saver(pMobile); // save the state
-                while(1) {
-                    pMobile->SetActiveDOFValues(v);
-                    if( !pEnv->CheckCollision(pMobile) && !pMobile->CheckSelfCollision() ) {
-                        break;
-                    }
-                }
-                // robot state is restored
-            }
             std::stringstream cmdin,cmdout;
-            cmdin << "MoveActiveJoints maxiter 100 goal ";  // default maxiter:4000
+            cmdin << "MoveActiveJoints maxiter 20000 goal ";  // default maxiter:4000
             for(size_t i = 0; i < v.size(); ++i) {
                 cmdin << v[i] << " ";
             }
@@ -69,10 +60,8 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
                 out.addVocab(VOCAB_FAILED);
                 out.write(*returnToSender);
                 return true;
-                //continue;
             }
         }
-        
         printf("Unlock the environment and wait for the mobile robot to finish...\n");
         while(!pMobile->GetController()->IsDone()) {
             boost::this_thread::sleep(boost::posix_time::milliseconds(1));
