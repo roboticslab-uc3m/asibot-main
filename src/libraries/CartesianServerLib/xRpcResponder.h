@@ -5,6 +5,7 @@
 
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
+#include <yarp/os/Time.h>
 
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/dev/CartesianControl.h>
@@ -19,6 +20,7 @@
 #define VOCAB_MOVJ VOCAB4('m','o','v','j')
 #define VOCAB_INV VOCAB3('i','n','v')
 #define VOCAB_MOVE VOCAB4('m','o','v','e')
+#define VOCAB_WAIT VOCAB4('w','a','i','t')
 
 using namespace yarp::os;
 using namespace yarp::dev;
