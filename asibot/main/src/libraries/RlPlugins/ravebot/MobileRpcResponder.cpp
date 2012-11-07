@@ -50,7 +50,7 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
         {
             EnvironmentMutex::scoped_lock lock(pEnv->GetMutex()); // lock environment
             std::stringstream cmdin,cmdout;
-            cmdin << "MoveActiveJoints maxiter 20000 goal ";  // default maxiter:4000
+            cmdin << "MoveActiveJoints maxiter 8000 goal ";  // default maxiter:4000
             for(size_t i = 0; i < v.size(); ++i) {
                 cmdin << v[i] << " ";
             }
