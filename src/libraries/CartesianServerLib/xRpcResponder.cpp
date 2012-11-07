@@ -14,7 +14,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     int choice = in.get(0).asVocab();
     if (in.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
     if (choice==VOCAB_HELP) {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: [help] [inv] [movj] [movl] [stat] [stop] more info at [http://roboticslab.sourceforge.net/asibot/group__cartesianServer.html]");
+        out.addString("Available commands: [help] [inv] [movj] [movl] [stat] [stop] [wait] more info at [http://roboticslab.sourceforge.net/asibot/group__cartesianServer.html]");
         out.write(*returnToSender);
         return true;
     } else if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
@@ -26,6 +26,23 @@ bool xRpcResponder::read(ConnectionReader& connection) {
                 } else out.addVocab(VOCAB_FAILED);
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
+        out.write(*returnToSender);
+        return true;
+    } else if (choice==VOCAB_WAIT) {  ///////////////////////////////// wait /////////////////////////////////
+        while (*csStatus != 0) {
+            printf("Waiting for 1 second...\n");
+            if (*csStatus==1) { // movj
+                bool done;
+                ipos->checkMotionDone(&done);
+                if(done) *csStatus = 0;
+            } else if (*csStatus==2) { // movl
+                bool done;
+                icart->checkMotionDone(&done);
+                if(done) *csStatus = 0;
+            }
+            Time::delay(1);
+        }
+        out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
     } else if (choice==VOCAB_STAT) { ///////////////////////////////// stat /////////////////////////////////
