@@ -2,14 +2,16 @@
 
 <KinBody name="asibotLWKinbody">
     <Body type="static" name="link0">
-        <Geom type="trimesh">
+        <Geom type="box">
             <rotationaxis>1 0 0 -90</rotationaxis>
             <rotationaxis>0 0 1 180</rotationaxis>
             <translation>0 0 -0.07</translation>
             <render>./ivs/elmacho.iv 1 </render>
+            <Extents>0.01 0.01 0.01</Extents>
         </Geom>
-        <Geom type="trimesh">
+        <Geom type="box">
             <render>./ivs/ensam01sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
         </Geom>
         <mass type="sphere">
             <total>.1</total>
@@ -18,9 +20,10 @@
     </Body>
     <Body name="link1">
         <offsetfrom>link0</offsetfrom>
-        <Geom type="trimesh">
+        <Geom type="box">
             <translation>0 0 0.12</translation>
             <render>./ivs/ensam02sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
         </Geom>
         <mass type="sphere">
             <total>.1</total>
@@ -36,9 +39,10 @@
     </Joint>
     <Body name="link2">
         <offsetfrom>link0</offsetfrom>
-        <Geom type="trimesh">
+        <Geom type="box">
             <translation>0 0.0145 0.365</translation>
             <render>./ivs/ensam03sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
         </Geom>
         <mass type="sphere">
             <total>.1</total>
@@ -56,9 +60,10 @@
     </Joint>
     <Body name="link3">
         <offsetfrom>link0</offsetfrom>
-        <Geom type="trimesh">
+        <Geom type="box">
             <translation>0 0.0145 0.76</translation>
             <render>./ivs/ensam04sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
         </Geom>
         <mass type="sphere">
             <total>.1</total>
@@ -76,10 +81,11 @@
       </Joint>
     <Body name="link4">
         <offsetfrom>link0</offsetfrom>
-        <Geom type="trimesh">
+        <Geom type="box">
             <rotationaxis>1 0 0 180</rotationaxis>
             <translation>0 0.001 1.007</translation>
             <render>./ivs/ensam02sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
         </Geom>
         <mass type="sphere">
             <total>.1</total>
@@ -97,15 +103,17 @@
     </Joint>
     <Body name="link5">
         <offsetfrom>link0</offsetfrom>
-        <Geom type="trimesh">
+        <Geom type="box">
             <rotationaxis>1 0 0 180</rotationaxis>
             <translation>0 0 1.127</translation>
             <render>./ivs/ensam01sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>            
         </Geom>
-        <Geom type="trimesh">
+        <Geom type="box">
             <rotationaxis>1 0 0 90</rotationaxis>
             <translation>0 0 1.197</translation>
             <render>./ivs/elmacho.iv 1 </render>
+            <Extents>0.01 0.01 0.01</Extents>            
         </Geom>
         <mass type="sphere">
             <total>.1</total>
