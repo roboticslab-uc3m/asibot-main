@@ -2,34 +2,19 @@
 
 <KinBody name="wheelchairLWKinbody">
     <Body name="chair">
-        <RotationAxis>1 0 0 -90</RotationAxis>
-        <Geom type="trimesh">
+        <Geom type="box">
             <Render>./ivs/wheelchair.iv</Render>
-        </Geom>
-        <!--Geom type="box">
-            <Extents>0.35 0.685 0.525</Extents>
-            <Translation>-0.03 0 0.015</Translation>
-            <RotationMat>1 0 0 0 1 0 0 0 1</RotationMat>
-            <transparency>0.8</transparency>
+            <Extents>0.2 0.5 .7</Extents>
+            <Translation>0.2 0.5 0.1</Translation>
+            <transparency>0.5</transparency>
             <diffuseColor>0 0 1</diffuseColor>
-        </Geom-->
+        </Geom>
     </Body>
-    <Body type="static" name="chairDocking">
+    <Body name="chairDocking">
         <translation>-0.3 -0.05 -0.054</translation>
-        <RotationAxis>1 0 0 -90</RotationAxis>
-        <Geom type="trimesh">
-            <Render>./ivs/dstation.iv</Render>
-        </Geom>
-        <Geom type="cylinder">
-            <RotationAxis>0 0 1 90</RotationAxis>
-            <translation>0.065 0.09 0</translation>
-            <radius>0.011</radius>
-            <height>0.08</height>
-        </Geom>
-        <Geom type="cylinder">
-            <translation>0.03 0.07 0</translation>
-            <radius>0.011</radius>
-            <height>0.055</height>
+        <Geom type="box">
+            <!--Render>./ivs/dstation.iv</Render-->
+            <Extents>0.01 0.01 0.01</Extents>            
         </Geom>
     </Body>
     <Joint name="fake" type="hinge" enable="false">
