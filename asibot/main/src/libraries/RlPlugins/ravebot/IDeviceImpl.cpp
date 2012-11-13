@@ -38,8 +38,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
     }
 
-    char *asibot_root;
-    asibot_root = getenv("ASIBOT_ROOT");
+    const char *asibot_root = yarp::os::getenv("ASIBOT_ROOT");
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
@@ -116,7 +115,7 @@ bool RaveBot::open(Searchable& config) {
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
-        exit(1);
+        ::exit(1);
     }
 
     modePosVel = 0;  // 0 = Pos; 1 = Vel;
@@ -192,7 +191,7 @@ bool RaveBot::open(Searchable& config) {
 
     for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
-        printf("Sensors found on robot %d (%s): %d.\n",robotIter,robots.at(robotIter)->GetName().c_str(),sensors.size());
+        printf("Sensors found on robot %d (%s): %d.\n",robotIter,robots.at(robotIter)->GetName().c_str(),(int)sensors.size());
         for ( unsigned int sensorIter = 0; sensorIter<sensors.size(); sensorIter++ ) {
             SensorBasePtr psensorbase = sensors.at(sensorIter)->GetSensor();
             std::string tipo = psensorbase->GetName();
