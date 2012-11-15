@@ -63,6 +63,7 @@ bool TaskCatchTool::run(const ConstString a, const ConstString b, const ConstStr
     miOutput.addString("makeupTool");
     miOutput.addInt(1);
     worldRpcClient.write(miOutput, miInput);
+    yarp::os::Time::delay(0.5);
     //
     {
         double targets[5] = {0,-.7,.7,110,0};
