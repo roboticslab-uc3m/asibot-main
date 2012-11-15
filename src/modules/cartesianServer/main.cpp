@@ -6,7 +6,7 @@
  *
  * The \ref cartesianServer module creates an instance of CartesianServer to load a controller (default: "cartesianbot") and acts as the server part of a network wrapper for it.
  *
- * @section legal Legal
+ * @section cartesianServer_legal Legal
  *
  * Copyright: 2012 (C) Universidad Carlos III de Madrid
  *
@@ -19,12 +19,12 @@
  *
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see license/LGPL.TXT
  *
- * @section install Installation
+ * @section cartesianServer_install Installation
  *
  * The module is compiled when ENABLE_cartesianServer is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
- * @section running Running (assuming correct installation)
+ * @section cartesianServer_running Running (assuming correct installation)
  *
  * First we must run a YARP name server if it is not running in our current namespace:
 \verbatim
@@ -35,7 +35,12 @@
 [on terminal 2] $ASIBOT_DIR/bin/cartesianServer
 \endverbatim
  *
- * @section interfacing Interfacing with the cartesianServer module
+ * You should get a window similar to the one depicted on Figure 1.
+
+\image html ravebot-300px.png
+<center>Fig. 1 - An instance of the \ref cartesianServer module.</center>
+
+ * @section cartesianServer_interfacing Interfacing with the cartesianServer module
  *
  * The \ref cartesianServer module acts as the server part of a network wrapper of the CartesianBot class
  * using the CartesianServer class.
@@ -91,7 +96,7 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
  * <tr><td>[vmos] (0.0 1.0 0.0 0.0 0.0)</td><td>Direct velocity movement command, in the Cartesian space.</td></tr>
  * </table>
  *
- * <b>Modify</b>
+ * @section cartesianServer_modify Modify
  *
  * This file can be edited at 
  * src/modules/cartesianServer/main.cpp

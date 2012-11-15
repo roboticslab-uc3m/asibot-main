@@ -13,7 +13,7 @@ bool SkymegaBot::open(Searchable& config) {
     fd = serialport_init(serialport, baudrate);
     if(!fd) {
         printf("NULL fd, bye!\n");
-        exit(-1);
+        ::exit(-1);
     }
     printf("[success] Skymegabot open(), fd: %d\n",fd);
 
