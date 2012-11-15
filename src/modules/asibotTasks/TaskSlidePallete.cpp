@@ -39,7 +39,7 @@ bool TaskSlidePallete::close() {
 bool TaskSlidePallete::run(const ConstString a, const ConstString b, const ConstString c, const ConstString d, const ConstString e, const ConstString f) {
     printf("[success] TaskSlidePallete::run(): begin.\n");
     pos->setPositionMode();
-    pos->positionMove(4,160);
+    pos->positionMove(4,150);
     bool done = false;
     while(!done) {
         pos->checkMotionDone(&done);
