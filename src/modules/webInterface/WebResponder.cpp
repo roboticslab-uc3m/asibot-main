@@ -593,8 +593,8 @@ bool WebResponder::read(ConnectionReader& in) {
         }
         return response.write(*out);
     } else if (code=="video") {
-        ConstString camHost = Network::queryName("/ravebot/img:o").getHost();
-        int camPort = Network::queryName("/ravebot/img:o").getPort();
+        ConstString camHost = Network::queryName("/ravebot/asibot_tip/img:o").getHost();
+        int camPort = Network::queryName("/ravebot/asibot_tip/img:o").getPort();
         ConstString camSocket = "http://";
         camSocket += camHost + ":" + ConstString::toString(camPort) + "/?action";
         printf("\nCam running at: %s\n\n", camSocket.c_str());
