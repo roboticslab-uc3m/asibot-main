@@ -4,7 +4,7 @@
     <Body name="chair">
         <Geom type="box">
             <Render>./wrls/wheelchairElder.wrl .02</Render>
-            <Extents>0.4 0.6 .5</Extents>
+            <Extents>0.4 0.55 .5</Extents>
             <Translation>0.2 0 0.58</Translation>
             <diffuseColor>0 0 1</diffuseColor>
             <transparency>0.5</transparency>

@@ -64,8 +64,8 @@ bool TaskNavigate::run(const ConstString a, const ConstString b, const ConstStri
     contents.clear();
     miOutput.addVocab(VOCAB_SET);
     miOutput.addVocab(VOCAB_POSS);
-    contents.addDouble(2.1);
-    contents.addDouble(0);
+    contents.addDouble(2.2);
+    contents.addDouble(-0.1);
     contents.addDouble(0);
     miOutput.addList() = contents;
     printf("Send %s...\n",miOutput.toString().c_str());
