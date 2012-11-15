@@ -31,7 +31,7 @@
 \endverbatim
  * And then launch the actual module:
 \verbatim
-[on terminal 2] $ASIBOT_DIR/bin/testRaveBot
+[on terminal 2] testRaveBot
 \endverbatim
  *
  * @section testRaveBot_interfacing Interfacing with the testRaveBot module
