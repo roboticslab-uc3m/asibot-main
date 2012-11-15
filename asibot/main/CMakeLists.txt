@@ -16,6 +16,7 @@ endif(COMMAND cmake_policy)
 project(asibot)
 
 ##### options
+option(ENABLE_asibotTasks "Choose if you want to compile asibotTasks" FALSE)
 option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FALSE)
 option(ENABLE_colorSegmentor "Choose if you want to compile colorSegmentor" FALSE)
 option(ENABLE_pointAtObjectServer "Choose if you want to compile pointAtObjectServer" FALSE)
