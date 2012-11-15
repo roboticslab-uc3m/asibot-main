@@ -9,6 +9,11 @@
                 <name>webInterface</name>
                 <node>localhost</node>
         </module>
+        <module>
+                <name>firefox</name>
+                <parameters>localhost:8080/index</parameters>
+                <node>localhost</node>
+        </module>
 
 </application>
 
