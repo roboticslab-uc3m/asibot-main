@@ -23,6 +23,7 @@ The simulator we use for ASIBOT is versatile and multi-layered. You'll learn how
 You should get a window similar to the one depicted on Figure 1.
 
 \image html ravebot-300px.png
+<center>Fig. 1 - An instance of the \ref cartesianServer module.</center>
 
 @section changing_parameters Changing parameters
 
@@ -38,11 +39,9 @@ Let's say, for example, our graphic card supports offscreen rendering and we wan
 [terminal 2] cartesianServer --env asibot_kitchen_cameras.env.xml
 \endverbatim
 
-This specific environment contains simulated cameras that Figure 2.
+This specific environment contains simulated cameras that Figure 2. You can learn how to make the connections in the  <a class="el" href="group__testRaveBot.html#testRaveBot_interfacing">testRaveBot</a> documentation.
 
 \image html ravebotCompare.png
-
-You can learn how to make the connections in the \ref testRaveBot documentation.
 
 We can actually see the default parameters, and the final selected ones, with the <b>--help</b> parameter:
 
@@ -64,7 +63,7 @@ env asibot_kitchen_cameras.env.xml           /// env [xml] environment name in a
 
 @section interaction Interacting
 
-We can interact with this module through port commands as described in <a class="el" href="group__cartesianServer.html#interfacing">cartesianServer</a>, or through the different language APIs as can be seen in the different <a class="el" href="group__asibot__examples.html">ASIBOT examples</a>.
+We can interact with this module through port commands as described in <a class="el" href="group__cartesianServer.html#cartesianServer_interfacing">cartesianServer</a>, or through the different language APIs as can be seen in the different <a class="el" href="group__asibot__examples.html">ASIBOT examples</a>.
 
 <hr>
 

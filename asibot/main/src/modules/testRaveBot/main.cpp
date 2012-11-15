@@ -7,7 +7,7 @@
  * Creates an instance of RaveBot wrapped in a YARP controlboard. This means that it may be used
  * through a YARP remote_controlboard or directly through low-level YARP controlboard RPC commands.
  *
- * <b> Legal </b>
+ * @section testRaveBot_legal Legal
  *
  * Copyright: 2012 (C) Universidad Carlos III de Madrid
  *
@@ -18,12 +18,12 @@
  *
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see license/LGPL.TXT
  *
- * <b>Installation</b>
+ * @section testRaveBot_install Installation
  *
  * The module is compiled when ENABLE_testRaveBot is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
- * <b>Running</b> (assuming correct installation)
+ * @section testRaveBot_running Running (assuming correct installation)
  *
  * First we must run a YARP name server if it is not running in our current namespace:
 \verbatim
@@ -34,7 +34,7 @@
 [on terminal 2] $ASIBOT_DIR/bin/testRaveBot
 \endverbatim
  *
- * <b>Interfacing with the testRaveBot</b>
+ * @section testRaveBot_interfacing Interfacing with the testRaveBot module
  *
  * The \ref testRaveBot module acts as the server part of a network wrapper of the RaveBot class.
  * The implementation maps certain YARP rpc's to RaveBot function calls. Therefore, we can interface
@@ -124,7 +124,7 @@ Response: [ok]
 \endverbatim
  * 
  *
- * <b>Modify</b>
+ * @section testRaveBot_modify Modify
  * 
  * This file can be edited at 
  * $ASIBOT_DIR/main/src/modules/testRaveBot/main.cpp

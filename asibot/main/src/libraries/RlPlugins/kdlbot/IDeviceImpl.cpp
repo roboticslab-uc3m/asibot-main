@@ -128,7 +128,7 @@ bool KdlBot::open(Searchable& config) {
 
     if( (strRobotDevice=="remote_controlboard") && (config.check("help")) ) {
         printf("--------------------------------------------------------------\n");
-        exit(1);
+        ::exit(1);
     }
 
     cmc_status = 0;
