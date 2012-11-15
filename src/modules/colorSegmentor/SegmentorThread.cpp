@@ -119,7 +119,7 @@ void SegmentorThread::run() {
             PixelRgb blue(0,0,255);
             addCircle(*img,blue,myx,myy,10);
             CvRect bb = bigBlob.GetBoundingBox();
-            addRectangleOutline(*img,blue,bb.x,bb.y,bb.width,bb.height);
+//            addRectangleOutline(*img,blue,bb.x,bb.y,bb.width,bb.height);  // hide for now
             
             // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
             // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
