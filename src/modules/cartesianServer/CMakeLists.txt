@@ -6,9 +6,6 @@ IF (ENABLE_cartesianServer)
 
 set(KEYWORD "cartesianServer")
 
-# Start a project.
-project(${KEYWORD})
-
 # Find YARP.
 find_package(YARP REQUIRED)
 

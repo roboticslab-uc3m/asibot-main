@@ -2,6 +2,8 @@
 
 cmake_minimum_required(VERSION 2.6)
 
+IF (ENABLE_cartesianServer)  # else makes no sense
+
 set(KEYWORD "CartesianServerLib")
 
 # Find YARP.  Point the YARP_DIR environment variable at your build.
@@ -34,4 +36,6 @@ endif (folder_source)
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") 
+
+ENDIF (ENABLE_cartesianServer)
 
