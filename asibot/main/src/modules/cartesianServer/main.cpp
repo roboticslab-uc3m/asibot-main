@@ -32,7 +32,7 @@
 \endverbatim
  * And then launch the actual module:
 \verbatim
-[on terminal 2] $ASIBOT_DIR/bin/cartesianServer
+[on terminal 2] cartesianServer
 \endverbatim
  *
  * You should get a window similar to the one depicted on Figure 1.
