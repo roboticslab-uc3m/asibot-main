@@ -1,6 +1,6 @@
 /**
 @ingroup  asibot_applications
-\defgroup asibot_wimoteServer wiimoteServer App
+\defgroup asibot_wiimoteServer wiimoteServer App
 
 An application that launches a \ref cartesianServer module and a \ref wiimoteServer module,
 and establishes a connection between them.
