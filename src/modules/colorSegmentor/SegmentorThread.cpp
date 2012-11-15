@@ -41,7 +41,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
-        exit(1);
+        ::exit(1);
     }
 
     int period = rf.check("rate",20,"ms ratethread").asInt();

@@ -43,7 +43,7 @@ bool WebInterface::configure(ResourceFinder &rf) {
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
-        exit(1);
+        ::exit(1);
     }
 
     responder.init();
