@@ -43,9 +43,11 @@ bool TaskSlidePallete::run(const ConstString a, const ConstString b, const Const
     bool done = false;
     while(!done) {
         pos->checkMotionDone(&done);
-        printf("Waiting 1 second...\n");
-        Time::delay(1);
+        printf(".");
+        fflush(stdout);
+        Time::delay(0.5);
     }
+    printf("\n");
     printf("[success] TaskSlidePallete::run(): end.\n");
     return true;
 }
