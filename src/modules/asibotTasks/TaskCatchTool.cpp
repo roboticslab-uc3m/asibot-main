@@ -48,7 +48,7 @@ bool TaskCatchTool::run(const ConstString a, const ConstString b, const ConstStr
     printf("Wait...\n");
     cartesianClient.wait();
     {
-        double targets[5] = {-.05,-.72,0.33,170,0};
+        double targets[5] = {0,-.72,0.33,170,0};
         printf("Movj to targets: {-.05,-.72,0.33,170,0}...\n");
         cartesianClient.movj(targets);
     }
