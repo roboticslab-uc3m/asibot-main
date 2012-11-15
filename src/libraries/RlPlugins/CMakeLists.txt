@@ -14,6 +14,7 @@ add_subdirectory(cartesianbot)
 add_subdirectory(kdlbot)
 add_subdirectory(skymegabot)
 #add_subdirectory(../../../../contrib/pendant/ikinbot ${CMAKE_CURRENT_BINARY_DIR}/ikinbot)
+add_subdirectory(../../../../contrib/pendant/ravepart ${CMAKE_CURRENT_BINARY_DIR}/ravepart)
 end_plugin_library(RlPlugins)
 
 install(TARGETS RlPlugins DESTINATION lib)
