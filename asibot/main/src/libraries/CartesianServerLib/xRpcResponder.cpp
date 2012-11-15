@@ -30,7 +30,8 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         return true;
     } else if (choice==VOCAB_WAIT) {  ///////////////////////////////// wait /////////////////////////////////
         while (*csStatus != 0) {
-            printf("Waiting for 1 second...\n");
+            printf(".");
+            fflush(stdout);
             if (*csStatus==1) { // movj
                 bool done;
                 ipos->checkMotionDone(&done);
@@ -40,8 +41,9 @@ bool xRpcResponder::read(ConnectionReader& connection) {
                 icart->checkMotionDone(&done);
                 if(done) *csStatus = 0;
             }
-            Time::delay(1);
+            Time::delay(0.5);
         }
+        fprintf("\n");
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
