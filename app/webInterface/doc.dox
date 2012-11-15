@@ -2,7 +2,7 @@
 @ingroup  asibot_applications
 \defgroup asibot_webInterface webInterface App
 
-An application that launches a \ref cartesianServer module and a \ref webInterface module.
+@brief An application that launches a \ref cartesianServer module and a \ref webInterface module.
 
 \section Legal
 
