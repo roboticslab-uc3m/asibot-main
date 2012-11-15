@@ -20,6 +20,10 @@ The simulator we use for ASIBOT is versatile and multi-layered. You'll learn how
 [terminal 2] cartesianServer
 \endverbatim
 
+You should get a window similar to the one depicted on Figure 1.
+
+\image html ravebot-300px.png
+
 @section changing_parameters Changing parameters
 
 Each layer of ASIBOT modules has parameters that can be modified three different ways. They are parsed in the following order (the second parsing overwrites the first, and the third one overwrites both):
@@ -33,6 +37,12 @@ Let's say, for example, our graphic card supports offscreen rendering and we wan
 \verbatim
 [terminal 2] cartesianServer --env asibot_kitchen_cameras.env.xml
 \endverbatim
+
+This specific environment contains simulated cameras that Figure 2.
+
+\image html ravebotCompare.png
+
+You can learn how to make the connections in the \ref testRaveBot documentation.
 
 We can actually see the default parameters, and the final selected ones, with the <b>--help</b> parameter:
 
