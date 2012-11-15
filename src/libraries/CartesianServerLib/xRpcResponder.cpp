@@ -43,7 +43,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             }
             Time::delay(0.5);
         }
-        fprintf("\n");
+        printf("\n");
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
