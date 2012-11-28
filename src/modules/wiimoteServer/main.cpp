@@ -319,7 +319,7 @@ int main (int argc, char *argv[]) {
 			return -1;
 		}
 	}
-	else if ((str_addr = yarp::os::getenv(WIIMOTE_BDADDR)) != NULL) {
+	else if ((str_addr = ::getenv(WIIMOTE_BDADDR)) != NULL) {
 		if (str2ba(str_addr, &bdaddr)) {
 			printf("invalid address in %s\n", WIIMOTE_BDADDR);
 			bdaddr = *BDADDR_ANY;
