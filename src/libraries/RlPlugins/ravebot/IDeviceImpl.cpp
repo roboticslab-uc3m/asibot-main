@@ -38,7 +38,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
     }
 
-    const char *asibot_root = yarp::os::getenv("ASIBOT_ROOT");
+    const char *asibot_root = ::getenv("ASIBOT_ROOT");
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
