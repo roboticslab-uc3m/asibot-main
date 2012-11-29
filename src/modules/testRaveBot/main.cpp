@@ -100,7 +100,8 @@ Response: [ok]
 [on terminal 4] world del all
 \endverbatim
  *
- * <b>New!</b> You can even grab pre-existent objects of the environment. For example, in the ASIBOT kitchen environment:
+ * <b>New!</b> You can even grab pre-existent objects of the environment. For
+ * example, in the ASIBOT kitchen environment:
 \verbatim
 [on terminal 4] world grab obj redCan 1
 \endverbatim
@@ -109,18 +110,15 @@ Response: [ok]
 [on terminal 4] world grab obj redCan 0
 \endverbatim
  *
- * The RaveBot class additionally streams the data of the last camera sensor sensor it finds. We can
- * view this data from the command-line by typing:
+ * The RaveBot class additionally streams the data of every camera and depth
+ * sensor it finds. Let's say you invoked \ref testRaveBot or \ref
+ * cartesianServer with the <b>--env asibot_kitchen_cameras.env.xml</b> as
+ * described in \ref post_install_changing_parameters. We can view the ip camera
+ * image stream with the standard yarp viewer (make sure CREATE_GUIS was enabled
+ * when compiling YARP to have <i>yarpview</i>):
 \verbatim
 [on terminal 5] yarpview /yarpview/img:i &
-[on terminal 5] yarp connect /ravebot/img:o /yarpview/img:i 
-\endverbatim
- * 
- * The RaveBot class also streams the data of the last depth sensor sensor it finds. We can
- * view this data from the command-line by typing:
-\verbatim
-[on terminal 6] yarpview /yarpview/depth:i &
-[on terminal 6] yarp connect /ravebot/depth:o /yarpview/depth:i 
+[on terminal 5] yarp connect /ravebot/ip_camera/img:o /yarpview/img:i 
 \endverbatim
  * 
  *
