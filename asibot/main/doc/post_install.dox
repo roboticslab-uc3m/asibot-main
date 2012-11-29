@@ -63,7 +63,11 @@ env asibot_kitchen_cameras.env.xml           /// env [xml] environment name in a
 
 @section post_install_interfacing Interfacing
 
-We can interact with this module through port commands as described in <a class="el" href="group__cartesianServer.html#cartesianServer_interfacing">cartesianServer</a>, or through the different language APIs as can be seen in the different <a class="el" href="group__asibot__examples.html">ASIBOT examples</a>.
+We can interact with this module through port commands as described in
+<a class="el" href="group__testRaveBot.html#testRaveBot_interfacing">testRaveBot</a>
+and <a class="el" href="group__cartesianServer.html#cartesianServer_interfacing">cartesianServer</a>,
+or through the different language APIs as can be seen in the different
+<a class="el" href="group__asibot__examples.html">ASIBOT examples</a>.
 
 @section post_install_even_more Even more!
 
