@@ -56,11 +56,6 @@ bool PanTiltRpcResponder::read(ConnectionReader& connection) {
             }
             // start the planner and run the robot
             RAVELOG_INFO("%s\n",cmdin.str().c_str());
-            if( !pModule->SendCommand(cmdout,cmdin) ) {
-                out.addVocab(VOCAB_FAILED);
-                out.write(*returnToSender);
-                return true;
-            }
         }
         printf("Unlock the environment and wait for the mobile robot to finish...\n");
         while(!pPanTilt->GetController()->IsDone()) {
@@ -86,12 +81,6 @@ void PanTiltRpcResponder::setEnvironment(EnvironmentBasePtr _pEnv) {
 
 void PanTiltRpcResponder::setPanTilt(RobotBasePtr _pPanTilt) {
     pPanTilt = _pPanTilt;
-}
-
-/************************************************************************/
-
-void PanTiltRpcResponder::setModule(ModuleBasePtr _pModule) {
-    pModule = _pModule;
 }
 
 /************************************************************************/
