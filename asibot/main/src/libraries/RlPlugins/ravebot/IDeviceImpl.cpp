@@ -190,7 +190,10 @@ bool RaveBot::open(Searchable& config) {
     if(extraRobot=="mobile") {
         pmobile = robots.at(1);  // which is a RobotBasePtr
         printf("RaveBot using robot 1 (%s) as mobile robot.\n", pmobile->GetName().c_str());
-    } else pmobile = RobotBasePtr();
+    } else if (extraRobot=="panTilt") {
+        ppanTilt = robots.at(1);  // which is a RobotBasePtr
+        printf("RaveBot using robot 1 (%s) as panTilt robot.\n", ppanTilt->GetName().c_str());
+    } else pmobile = RobotBasePtr();  // null boost pointer
 
     for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
@@ -300,6 +303,18 @@ bool RaveBot::open(Searchable& config) {
         mobileRpcResponder.setModule(pbasemanip);
         mobileRpcServer.open("/ravebot/mobile/rpc:i");
         mobileRpcServer.setReader(mobileRpcResponder);
+    }
+
+    //-- panTilt rpc server
+    if(extraRobot=="panTilt") {
+        vector<int> vindices;  // send empty vector instead of joints
+        //pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
+        ppanTilt->SetActiveDOFs(vindices,DOF_X|DOF_Y|DOF_RotationAxis,Vector(0,0,1));  // and grab world pos
+        /*panTiltResponder.setEnvironment(penv);
+        panTiltResponder.setMobile(pmobile);
+        panTiltResponder.setModule(pbasemanip);*/
+        panTiltRpcServer.open("/ravebot/panTilt/rpc:i");
+        panTiltRpcServer.setReader(panTiltRpcResponder);
     }
 
     // Start the RateThread
