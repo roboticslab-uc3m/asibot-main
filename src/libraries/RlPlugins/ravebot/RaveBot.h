@@ -403,13 +403,13 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
     RobotBasePtr pmobile;
+    RobotBasePtr ppanTilt;
     ModuleBasePtr pbasemanip;
     ControllerBasePtr pcontrol;
     std::vector<KinBodyPtr> bodies;
     std::vector<KinBody::JointPtr> mismotores;
     boost::thread_group orThreads;
-    //bool cameraFound;
-    //bool laserFound;
+    //
     std::vector< SensorBasePtr > pcamerasensorbase;
     std::vector< SensorBasePtr > plasersensorbase;
     std::vector< SensorBasePtr > pforce6dsensorbase;
@@ -428,6 +428,9 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     // mobile rpc server
     RpcServer mobileRpcServer;
     MobileRpcResponder mobileRpcResponder;
+    // panTilt rpc server
+    RpcServer panTiltRpcServer;
+    MobileRpcResponder panTiltRpcResponder;
 };
 
 #endif
