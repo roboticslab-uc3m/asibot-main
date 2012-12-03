@@ -22,6 +22,7 @@
 #define DEFAULT_NUM_MOTORS 5
 
 #define DEFAULT_ENV "asibot_kitchen.env.xml"
+#define DEFAULT_EXTRA_ROBOT "none"
 #define DEFAULT_GEN_ENC_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_GEN_JOINT_TOL 0.25  // Exposed.
 #define DEFAULT_GEN_MAX_LIMIT 360.0  // Exposed.

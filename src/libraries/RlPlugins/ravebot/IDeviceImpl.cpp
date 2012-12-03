@@ -13,6 +13,7 @@ bool RaveBot::open(Searchable& config) {
     jmcMs = DEFAULT_JMC_MS;
 
     ConstString env = DEFAULT_ENV;
+    ConstString extraRobot = DEFAULT_EXTRA_ROBOT;
     double genJointTol = DEFAULT_GEN_JOINT_TOL;
     double genMaxLimit = DEFAULT_GEN_MAX_LIMIT;
     double genMinLimit = DEFAULT_GEN_MIN_LIMIT;
@@ -28,6 +29,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--numMotors [int] (number of motors to control, default: \"%d\")\n",numMotors);
 
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
+        printf("\t--extraRobot (type of extra robot, default: \"%s\")\n",extraRobot.c_str());
         printf("\t--genJointTol [units] (default: \"%f\")\n",genJointTol);
         printf("\t--genMaxLimit [units] (default: \"%f\")\n",genMaxLimit);
         printf("\t--genMinLimit [units] (default: \"%f\")\n",genMinLimit);
@@ -43,7 +45,8 @@ bool RaveBot::open(Searchable& config) {
 
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
     if (config.check("env")) env = config.find("env").asString();
-    printf("RaveBot using numMotors: %d, env: %s.\n",numMotors,env.c_str());
+    if (config.check("extraRobot")) extraRobot = config.find("extraRobot").asString();
+    printf("RaveBot using numMotors: %d, env: %s, extraRobot: %s.\n",numMotors,env.c_str(),extraRobot.c_str());
 
     if (config.check("genJointTol")) genJointTol = config.find("genJointTol").asDouble();
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
