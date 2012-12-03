@@ -112,19 +112,27 @@ void SegmentorThread::run() {
             blobs.GetNthBlob( CBlobGetArea(), i, bigBlob );
 
             CBlobGetXCenter getXCenter;
-            CBlobGetYCenter getYCenter;
-
             int myx = getXCenter( bigBlob );
-            int myy = getYCenter( bigBlob );
+            int myy;
+            if (locate == "bottom") {
+                CBlobGetMaxY getYMax;
+                myy = getYMax( bigBlob );
+            } else {  // locate == "centroid"
+                CBlobGetYCenter getYCenter;
+                myy = getYCenter( bigBlob );
+            }
 
-            // add a blue circle
+
             // cvSub( rgb, r, rgb);
             // yarpReturnImage.wrapIplImage(rgb);
+            // add a blue centroid/bottom circle
             PixelRgb blue(0,0,255);
             addCircle(*img,blue,myx,myy,2);
+
+            PixelRgb green(0,255,0);
             CvRect bb = bigBlob.GetBoundingBox();
-            addRectangleOutline(*img,blue,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width,bb.height);  // hide for now
-            
+            addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width,bb.height);  // hide for now
+
             // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
             // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
 
