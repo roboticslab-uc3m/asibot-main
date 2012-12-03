@@ -314,7 +314,8 @@ bool RaveBot::open(Searchable& config) {
     if(extraRobot=="panTilt") {
         vector<int> vindices;  // send empty vector instead of joints
         //pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
-        ppanTilt->SetActiveDOFs(vindices,DOF_X|DOF_Y|DOF_RotationAxis,Vector(0,0,1));  // and grab world pos
+        //ppanTilt->SetActiveDOFs(vindices,DOF_X|DOF_Y|DOF_RotationAxis,Vector(0,0,1));  // and grab world pos
+        ppanTilt->SetActiveDOFs(vindices,DOF_RotationAxis,Vector(0,1,1));  // and grab world pos
         panTiltRpcResponder.setEnvironment(penv);
         panTiltRpcResponder.setPanTilt(ppanTilt);
         panTiltRpcServer.open("/ravebot/panTilt/rpc:i");
