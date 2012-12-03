@@ -7,7 +7,7 @@
 
 bool KdlBot::threadInit() {
     printf("[success] cartesianbot threadInit() started %f ms ratethread\n",getRate());
-    double dRealUnits[cmcNumMotors];
+    double dRealUnits[100];
     if(!enc->getEncoders(dRealUnits)) {
         printf("[warning] KdlBot::threadInit() failed to getEncoders()\n");
         return false;  // bad practice??
@@ -23,7 +23,7 @@ bool KdlBot::threadInit() {
 
 void KdlBot::run() {
     if (cmc_status>0) {  // If it is movement
-        double dRealUnits[cmcNumMotors];
+        double dRealUnits[100];
         if(!enc->getEncoders(dRealUnits)) {
             printf("[warning] KdlBot::run() failed to getEncoders()\n");
             return;  // bad practice??
@@ -37,7 +37,7 @@ void KdlBot::run() {
         currentF.p.data[1]=x[1];
         currentF.p.data[2]=x[2];
         if (angleRepr == "eulerYZ") {  // ASIBOT
-            currentF.M = Rotation::EulerZYZ(atan2(x[1],x[0]),toRad(o[0]), toRad(o[1]));
+            currentF.M = Rotation::EulerZYZ(::atan2(x[1],x[0]),toRad(o[0]), toRad(o[1]));
         } else if (angleRepr == "eulerZYZ") {
             currentF.M = Rotation::EulerZYZ(toRad(o[0]), toRad(o[1]), toRad(o[2]));
         } else {  // axisAngle, etc.
@@ -103,7 +103,7 @@ void KdlBot::run() {
             ChainIkSolverVel_pinv iksolverv(theChain);
             int ret = iksolverv.CartToJnt(currentRads,currentT,kdlqdot);
 
-            double qdot[cmcNumMotors];
+            double qdot[100];
             for (int motor=0; motor<cmcNumMotors; motor++) {
                 if(isPrismatic[motor]) qdot[motor]=kdlqdot(motor);
                 else qdot[motor]=toDeg(kdlqdot(motor));
