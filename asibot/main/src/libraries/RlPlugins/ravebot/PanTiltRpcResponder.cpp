@@ -1,13 +1,13 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include "MobileRpcResponder.h"
+#include "PanTiltRpcResponder.h"
 
 /************************************************************************/
 
-bool MobileRpcResponder::read(ConnectionReader& connection) {
+bool PanTiltRpcResponder::read(ConnectionReader& connection) {
     Bottle in, out;
     in.read(connection);
-    printf("[MobileRpcResponder] Got %s\n", in.toString().c_str());
+    printf("[PanTiltRpcResponder] Got %s\n", in.toString().c_str());
     out.clear();
     ConnectionWriter *returnToSender = connection.getWriter();
     if (returnToSender==NULL) return false;
@@ -18,8 +18,8 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
         out.write(*returnToSender);
         return true;
     } else if ((in.get(0).asString()=="get")||(in.get(0).asVocab()==VOCAB_GET)) {
-        Transform T = pMobile->GetTransform();
-        printf("Mobile robot at %f %f.\n",T.trans.x,T.trans.y);
+        Transform T = pPanTilt->GetTransform();
+        printf("PanTilt robot at %f %f.\n",T.trans.x,T.trans.y);
         out.addVocab(VOCAB_IS);
         out.addString("encs");
         Bottle pose;
@@ -31,7 +31,7 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
         return true;
     } else if ((in.get(0).asString()=="set")||(in.get(0).asVocab()==VOCAB_SET)) {
         Bottle* localtarget = in.get(2).asList();
-        Transform T = pMobile->GetTransform();
+        Transform T = pPanTilt->GetTransform();
         std::vector<dReal> v(3);
         if ((in.get(1).asString()=="poss")||(in.get(1).asVocab()==VOCAB_POSS)) {
             v[0] = localtarget->get(0).asDouble();
@@ -46,7 +46,7 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
             out.write(*returnToSender);
             return true;
         }
-        printf("Mobile robot at %f %f, attempt to move to %f %f.\n",T.trans.x,T.trans.y,v[0],v[1]);
+        printf("PanTilt robot at %f %f, attempt to move to %f %f.\n",T.trans.x,T.trans.y,v[0],v[1]);
         {
             EnvironmentMutex::scoped_lock lock(pEnv->GetMutex()); // lock environment
             std::stringstream cmdin,cmdout;
@@ -63,7 +63,7 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
             }
         }
         printf("Unlock the environment and wait for the mobile robot to finish...\n");
-        while(!pMobile->GetController()->IsDone()) {
+        while(!pPanTilt->GetController()->IsDone()) {
             boost::this_thread::sleep(boost::posix_time::milliseconds(1));
         }
         printf("mobile robot finished.\n");
@@ -78,19 +78,19 @@ bool MobileRpcResponder::read(ConnectionReader& connection) {
 
 /************************************************************************/
 
-void MobileRpcResponder::setEnvironment(EnvironmentBasePtr _pEnv) {
+void PanTiltRpcResponder::setEnvironment(EnvironmentBasePtr _pEnv) {
     pEnv = _pEnv;
 }
 
 /************************************************************************/
 
-void MobileRpcResponder::setMobile(RobotBasePtr _pMobile) {
-    pMobile = _pMobile;
+void PanTiltRpcResponder::setPanTilt(RobotBasePtr _pPanTilt) {
+    pPanTilt = _pPanTilt;
 }
 
 /************************************************************************/
 
-void MobileRpcResponder::setModule(ModuleBasePtr _pModule) {
+void PanTiltRpcResponder::setModule(ModuleBasePtr _pModule) {
     pModule = _pModule;
 }
 
