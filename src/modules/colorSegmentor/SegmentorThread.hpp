@@ -22,6 +22,7 @@
 #define DEFAULT_ALGORITHM "redMinusGreen"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
+#define DEFAULT_SEE_BOUNDING 0
 #define DEFAULT_THRESHOLD 50
 
 using namespace yarp::os;
@@ -37,6 +38,7 @@ private:
     ConstString algorithm;
     ConstString locate;
     int maxNumBlobs;
+    bool seeBounding;
     int threshold;
 
 public:
