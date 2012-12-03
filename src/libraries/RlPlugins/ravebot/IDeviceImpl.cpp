@@ -187,7 +187,7 @@ bool RaveBot::open(Searchable& config) {
     probot = robots.at(0);  // which is a RobotBasePtr
     printf("RaveBot using robot 0 (%s) as main robot.\n", probot->GetName().c_str());
     //-- Robot 1
-    if(robots.size()>1) {
+    if(extraRobot=="mobile") {
         pmobile = robots.at(1);  // which is a RobotBasePtr
         printf("RaveBot using robot 1 (%s) as mobile robot.\n", pmobile->GetName().c_str());
     } else pmobile = RobotBasePtr();
@@ -283,9 +283,7 @@ bool RaveBot::open(Searchable& config) {
     worldRpcServer.setReader(worldRpcResponder);
 
     //-- mobile rpc server
-    if(!!pmobile) {
-        // This will only be activated with >1 robot and a robot called "asibot", so we
-        // should not lose generallity for starters.
+    if(extraRobot=="mobile") {
         KinBodyPtr objPtr = penv->GetKinBody("asibot");
         if(objPtr) {
             if(pmobile->Grab(objPtr)) printf("[success] object asibot exists and grabbed.\n");
