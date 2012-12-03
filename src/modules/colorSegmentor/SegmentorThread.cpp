@@ -121,9 +121,9 @@ void SegmentorThread::run() {
             // cvSub( rgb, r, rgb);
             // yarpReturnImage.wrapIplImage(rgb);
             PixelRgb blue(0,0,255);
-            addCircle(*img,blue,myx,myy,10);
+            addCircle(*img,blue,myx,myy,2);
             CvRect bb = bigBlob.GetBoundingBox();
-//            addRectangleOutline(*img,blue,bb.x,bb.y,bb.width,bb.height);  // hide for now
+            addRectangleOutline(*img,blue,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width,bb.height);  // hide for now
             
             // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
             // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
