@@ -21,11 +21,11 @@ using namespace yarp::os;
 using namespace OpenRAVE;
 
 /**
- * @ingroup MobileRpcResponder
+ * @ingroup PanTiltRpcResponder
  *
- * MobileRpcResponder class implements a worldRpcServer responder (callback on RPC).
+ * PanTiltRpcResponder class implements a worldRpcServer responder (callback on RPC).
  */
-class MobileRpcResponder : public PortReader {
+class PanTiltRpcResponder : public PortReader {
 protected:
     /**
     * Implement the actual responder (callback on RPC).
@@ -33,7 +33,7 @@ protected:
     virtual bool read(ConnectionReader& connection);
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
-    RobotBasePtr pMobile;  // set in setRobot
+    RobotBasePtr pPanTilt;  // set in setRobot
     ModuleBasePtr pModule;  // set in setModule
 
 public:
@@ -46,7 +46,7 @@ public:
     /**
     * Register an OpenRAVE mobile robot.
     */
-    void setMobile(RobotBasePtr _pMobile);
+    void setPanTilt(RobotBasePtr _pPanTilt);
 
     /**
     * Register an OpenRAVE module.
