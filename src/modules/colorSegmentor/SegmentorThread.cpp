@@ -23,6 +23,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     algorithm = DEFAULT_ALGORITHM;
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
+    seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
 
     printf("--------------------------------------------------------------\n");
@@ -32,6 +33,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
         printf("\t--locate (default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
+        printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
         printf("\t--threshold (default: \"%d\")\n",threshold);
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
@@ -42,6 +44,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
     printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, threshold: %d.\n",
         algorithm.c_str(),locate.c_str(),maxNumBlobs,threshold);
+
+    if (rf.check("seeBounding")) seeBounding = rf.find("seeBounding").asInt();
+    printf("SegmentorThread using seeBounding: %d.\n", seeBounding);
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
@@ -122,9 +127,11 @@ void SegmentorThread::run() {
                 myy = getYCenter( bigBlob );
             }
 
-            PixelRgb green(0,255,0);
-            CvRect bb = bigBlob.GetBoundingBox();
-            addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
+            if(seeBounding>0){
+                PixelRgb green(0,255,0);
+                CvRect bb = bigBlob.GetBoundingBox();
+                addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
+            }
 
             // cvSub( rgb, r, rgb);
             // yarpReturnImage.wrapIplImage(rgb);
