@@ -20,6 +20,7 @@
 #define DEFAULT_MS_FINDER 20  // In ms, unmeaningful as ALWAYS gets overwritten by RF
 
 #define DEFAULT_ALGORITHM "redMinusGreen"
+#define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
 #define DEFAULT_THRESHOLD 50
 
@@ -34,6 +35,7 @@ private:
     Port *pOutPort;
     //
     ConstString algorithm;
+    ConstString locate;
     int maxNumBlobs;
     int threshold;
 
