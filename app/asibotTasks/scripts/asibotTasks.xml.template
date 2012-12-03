@@ -2,7 +2,7 @@
 <name>asibotTasks App</name>
         <module>
                 <name>cartesianServer</name>
-                <parameters>--env asibot_kitchen_planning.env.xml</parameters>
+                <parameters>--env asibot_kitchen_planning.env.xml --extraRobot mobile</parameters>
                 <node>localhost</node>
         </module>
         <module>
