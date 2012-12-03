@@ -190,10 +190,15 @@ bool RaveBot::open(Searchable& config) {
     if(extraRobot=="mobile") {
         pmobile = robots.at(1);  // which is a RobotBasePtr
         printf("RaveBot using robot 1 (%s) as mobile robot.\n", pmobile->GetName().c_str());
+        ppanTilt = RobotBasePtr();  // null boost pointer
     } else if (extraRobot=="panTilt") {
         ppanTilt = robots.at(1);  // which is a RobotBasePtr
         printf("RaveBot using robot 1 (%s) as panTilt robot.\n", ppanTilt->GetName().c_str());
-    } else pmobile = RobotBasePtr();  // null boost pointer
+        pmobile = RobotBasePtr();  // null boost pointer
+    } else {
+        pmobile = RobotBasePtr();  // null boost pointer
+        ppanTilt = RobotBasePtr();  // null boost pointer
+    }
 
     for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
         std::vector<RobotBase::AttachedSensorPtr> sensors = robots.at(robotIter)->GetAttachedSensors();
