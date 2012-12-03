@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __MOBILE_RPC_RESPONDER__
-#define __MOBILE_RPC_RESPONDER__
+#ifndef __PAN_TILT_RPC_RESPONDER__
+#define __PAN_TILT_RPC_RESPONDER__
 
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
@@ -34,7 +34,6 @@ protected:
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pPanTilt;  // set in setRobot
-    ModuleBasePtr pModule;  // set in setModule
 
 public:
 
@@ -44,15 +43,11 @@ public:
     void setEnvironment(EnvironmentBasePtr _pEnv);
 
     /**
-    * Register an OpenRAVE mobile robot.
+    * Register an OpenRAVE panTilt robot.
     */
     void setPanTilt(RobotBasePtr _pPanTilt);
 
-    /**
-    * Register an OpenRAVE module.
-    */
-    void setModule(ModuleBasePtr _pModule);
 };
 
-#endif  // __MOBILE_RPC_RESPONDER__
+#endif  // __PAN_TILT_RPC_RESPONDER__
 
