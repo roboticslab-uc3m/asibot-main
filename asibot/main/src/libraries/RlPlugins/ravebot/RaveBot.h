@@ -18,6 +18,7 @@
 
 #include "WorldRpcResponder.h"
 #include "MobileRpcResponder.h"
+#include "PanTiltRpcResponder.h"
 
 #define DEFAULT_NUM_MOTORS 5
 
@@ -430,7 +431,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     MobileRpcResponder mobileRpcResponder;
     // panTilt rpc server
     RpcServer panTiltRpcServer;
-    MobileRpcResponder panTiltRpcResponder;
+    PanTiltRpcResponder panTiltRpcResponder;
 };
 
 #endif
