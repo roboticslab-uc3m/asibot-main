@@ -5,6 +5,7 @@
 
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
+#include <yarp/os/Semaphore.h>
 
 #include <openrave-core.h>
 #include <openrave/kinbody.h>
@@ -23,7 +24,7 @@ using namespace OpenRAVE;
 /**
  * @ingroup PanTiltRpcResponder
  *
- * PanTiltRpcResponder class implements a worldRpcServer responder (callback on RPC).
+ * PanTiltRpcResponder class implements a panTiltRpcServer responder (callback on RPC).
  */
 class PanTiltRpcResponder : public PortReader {
 protected:
@@ -34,6 +35,9 @@ protected:
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pPanTilt;  // set in setRobot
+
+    Semaphore encRawMutex;  // SharedArea
+    OpenRAVE::Vector encQuat;
 
 public:
 
@@ -46,6 +50,10 @@ public:
     * Register an OpenRAVE panTilt robot.
     */
     void setPanTilt(RobotBasePtr _pPanTilt);
+
+    void setEncRaw(const int Index, const double Position);
+    double getEncRaw(const int Index);
+    double getEncExposed(const int Index);
 
 };
 

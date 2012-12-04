@@ -47,21 +47,6 @@ bool PanTiltRpcResponder::read(ConnectionReader& connection) {
             return true;
         }
         printf("PanTilt robot at %f %f, attempt to move to %f %f.\n",T.trans.x,T.trans.y,v[0],v[1]);
-        {
-            EnvironmentMutex::scoped_lock lock(pEnv->GetMutex()); // lock environment
-            std::stringstream cmdin,cmdout;
-            cmdin << "MoveActiveJoints maxiter 8000 goal ";  // default maxiter:4000
-            for(size_t i = 0; i < v.size(); ++i) {
-                cmdin << v[i] << " ";
-            }
-            // start the planner and run the robot
-            RAVELOG_INFO("%s\n",cmdin.str().c_str());
-        }
-        printf("Unlock the environment and wait for the mobile robot to finish...\n");
-        while(!pPanTilt->GetController()->IsDone()) {
-            boost::this_thread::sleep(boost::posix_time::milliseconds(1));
-        }
-        printf("mobile robot finished.\n");
         out.addVocab(VOCAB_OK);
         out.write(*returnToSender);
         return true;
@@ -81,6 +66,38 @@ void PanTiltRpcResponder::setEnvironment(EnvironmentBasePtr _pEnv) {
 
 void PanTiltRpcResponder::setPanTilt(RobotBasePtr _pPanTilt) {
     pPanTilt = _pPanTilt;
+}
+
+/************************************************************************/
+
+void PanTiltRpcResponder::setEncRaw(const int Index, const double Position) {
+    // printf("[SharedArea] setEncRaw.\n");
+    encRawMutex.wait();
+//    encRaw[Index] = Position;
+    encRawMutex.post();
+}
+
+/************************************************************************/
+
+double PanTiltRpcResponder::getEncRaw(const int Index) {
+    // printf("[SharedArea] getEncRaw.\n");
+    double Position;
+    encRawMutex.wait();
+//    Position = encRaw[Index];
+    encRawMutex.post();
+    return Position;
+}
+
+/************************************************************************/
+
+double PanTiltRpcResponder::getEncExposed(const int Index) {
+    double RawPosition;
+    encRawMutex.wait();
+//    RawPosition = encRaw[Index];
+    encRawMutex.post();
+    // printf("[SharedArea] get.\n");
+//    return RawPosition / encRawExposed[Index];
+    return 2;
 }
 
 /************************************************************************/
