@@ -1,3 +1,4 @@
+<!-- kinect.robot.xml -->
 
 <Robot name="kinectRobot">
     <KinBody file="./kinect.kinbody.xml"/>
@@ -6,3 +7,4 @@
         <effector>linkK</effector>
     </Manipulator>
 </Robot>
+
