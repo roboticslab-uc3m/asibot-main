@@ -1,9 +1,9 @@
+<!-- kinect.robot.xml -->
 
 <KinBody name="kinectKinbody">
     <!--Body type="dynamic" name="linkK"-->
     <Body type="static" name="linkK">
-        <Geom type="trimesh">
-            <!--Data>./wrls/kinect.wrl</Data-->
+        <Geom type="box">
             <Render>./wrls/kinect.wrl</Render>
         </Geom>
     </Body>
