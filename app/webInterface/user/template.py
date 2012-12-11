@@ -8,7 +8,7 @@ simCart.open('/ravebot')
 #######################################
 print 'hello, robot!'
 simCart.movl(home)  # defaults to 20 s
-Time.delay(20)
+simCart.wait()      # wait for movement
 
 
 #######################################
