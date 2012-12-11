@@ -14,6 +14,7 @@ bool RaveBot::open(Searchable& config) {
 
     ConstString env = DEFAULT_ENV;
     ConstString extraRobot = DEFAULT_EXTRA_ROBOT;
+    double genInitPos = DEFAULT_GEN_INIT_POS;
     double genJointTol = DEFAULT_GEN_JOINT_TOL;
     double genMaxLimit = DEFAULT_GEN_MAX_LIMIT;
     double genMinLimit = DEFAULT_GEN_MIN_LIMIT;
@@ -30,6 +31,7 @@ bool RaveBot::open(Searchable& config) {
 
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
         printf("\t--extraRobot (type of extra robot, default: \"%s\")\n",extraRobot.c_str());
+        printf("\t--genInitPos [units] (default: \"%f\")\n",genInitPos);
         printf("\t--genJointTol [units] (default: \"%f\")\n",genJointTol);
         printf("\t--genMaxLimit [units] (default: \"%f\")\n",genMaxLimit);
         printf("\t--genMinLimit [units] (default: \"%f\")\n",genMinLimit);
@@ -48,6 +50,7 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("extraRobot")) extraRobot = config.find("extraRobot").asString();
     printf("RaveBot using numMotors: %d, env: %s, extraRobot: %s.\n",numMotors,env.c_str(),extraRobot.c_str());
 
+    if (config.check("genInitPos")) genInitPos = config.find("genInitPos").asDouble();
     if (config.check("genJointTol")) genJointTol = config.find("genJointTol").asDouble();
     if (config.check("genMaxLimit")) genMaxLimit = config.find("genMaxLimit").asDouble();
     if (config.check("genMinLimit")) genMinLimit = config.find("genMinLimit").asDouble();
@@ -106,6 +109,15 @@ bool RaveBot::open(Searchable& config) {
         encRawExposeds = 0;
         printf("RaveBot not using individual encRawExposeds, defaulting to genEncRawExposed.\n");
     }
+    Bottle* initPoss;
+    if (config.check("initPoss")) {
+        encRawExposeds = config.find("initPoss").asList();
+        printf("RaveBot using individual initPoss: %s\n",initPoss->toString().c_str());
+        if(initPoss->size() != int(numMotors)) printf("[warning] initPoss->size() != numMotors\n");
+    } else {
+        initPoss = 0;
+        printf("RaveBot not using individual initPoss, defaulting to genInitPos.\n");
+    }
     Bottle* velRawExposeds;
     if (config.check("velRawExposeds")) {
         velRawExposeds = config.find("velRawExposeds").asList();
@@ -125,6 +137,7 @@ bool RaveBot::open(Searchable& config) {
 
     encRawExposed.resize(numMotors);
     jointStatus.resize(numMotors);
+    initPos.resize(numMotors);
     jointTol.resize(numMotors);
     maxLimit.resize(numMotors);
     minLimit.resize(numMotors);
@@ -138,6 +151,8 @@ bool RaveBot::open(Searchable& config) {
         else minLimit[i]=minLimits->get(i).asDouble();
         if(!maxLimits) maxLimit[i]=genMaxLimit;
         else maxLimit[i]=maxLimits->get(i).asDouble(); 
+        if(!initPoss) initPos[i]=genInitPos;
+        else initPos[i]=initPoss->get(i).asDouble(); 
         if(!jointTols) jointTol[i]=genJointTol;
         else jointTol[i]=jointTols->get(i).asDouble(); 
         if(!encRawExposeds) encRawExposed[i]=genEncRawExposed;

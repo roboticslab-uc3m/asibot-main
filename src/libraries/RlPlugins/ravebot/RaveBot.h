@@ -25,6 +25,7 @@
 #define DEFAULT_ENV "asibot_kitchen.env.xml"
 #define DEFAULT_EXTRA_ROBOT "none"
 #define DEFAULT_GEN_ENC_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
+#define DEFAULT_GEN_INIT_POS 0  // Exposed.
 #define DEFAULT_GEN_JOINT_TOL 0.25  // Exposed.
 #define DEFAULT_GEN_MAX_LIMIT 360.0  // Exposed.
 #define DEFAULT_GEN_MIN_LIMIT -360.0  // Exposed.
@@ -390,6 +391,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<double> encRaw;
     std::vector<double> encRawExposed;  // For conversion.
     std::vector<int> jointStatus;
+    std::vector<double> initPos;  // Exposed.
     std::vector<double> jointTol;  // Exposed.
     std::vector<double> maxLimit;  // Exposed.
     std::vector<double> minLimit;  // Exposed.
