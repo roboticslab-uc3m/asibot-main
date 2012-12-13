@@ -3,9 +3,6 @@
 #ifndef __EXTRA_CALLBACK_PORT__
 #define __EXTRA_CALLBACK_PORT__
 
-#include <yarp/os/RFModule.h>
-#include <yarp/os/Module.h>
-#include <yarp/os/Network.h>
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/Semaphore.h>
@@ -36,7 +33,7 @@ public:
 
     void setEncExposed(const int Index, const double Position) {
         encRawMutex.wait();
-        dEncRaw[Index] = Position;
+        dEncRaw[Index] = Position * 3.1416 / 180.0;
         encRawMutex.post();
     }
 
