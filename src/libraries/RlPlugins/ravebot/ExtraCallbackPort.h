@@ -8,6 +8,7 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
+#include <yarp/os/Semaphore.h>
 
 using namespace yarp::os;
 
@@ -23,9 +24,28 @@ protected:
     */
     void onRead(Bottle& b);
 
+    double dEncRaw[3];
+
+    Semaphore encRawMutex;  // SharedArea
+
 public:
 
+    int dof;
+
     ExtraCallbackPort() {}
+
+    void setEncExposed(const int Index, const double Position) {
+        encRawMutex.wait();
+        dEncRaw[Index] = Position;
+        encRawMutex.post();
+    }
+
+    double getEncRaw(const int Index) {
+        encRawMutex.wait();
+        double tmp = dEncRaw[Index];
+        encRawMutex.post();
+        return tmp;
+    }
 
 };
 
