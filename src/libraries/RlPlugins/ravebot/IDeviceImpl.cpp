@@ -59,9 +59,10 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genVelRawExposed")) genVelRawExposed = config.find("genVelRawExposed").asDouble();    
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
     if (config.check("physics")) physics = config.find("physics").asString();
-    printf("RaveBot using genInitPos: %f, genJointTol: %f, genMaxLimit: %f, genMinLimit: %f, genRefSpeed: %f.\n",
-        genInitPos, genJointTol,genMaxLimit,genMinLimit,genRefSpeed);
-    printf("RaveBot using genEncRawExposed: %f, genVelRawExposed: %f.\n", genEncRawExposed, genVelRawExposed);
+    printf("RaveBot using genInitPos: %f, genJointTol: %f, genMaxLimit: %f, genMinLimit: %f.\n",
+        genInitPos, genJointTol,genMaxLimit,genMinLimit);
+    printf("RaveBot using genRefSpeed: %f, genEncRawExposed: %f, genVelRawExposed: %f.\n",
+        genRefSpeed,genEncRawExposed, genVelRawExposed);
     printf("RaveBot using jmcMs: %f, physics: %s.\n",jmcMs,physics.c_str());
 
     Bottle* initPoss;
@@ -80,7 +81,7 @@ bool RaveBot::open(Searchable& config) {
         if(jointTols->size() != int(numMotors)) printf("[warning] jointTols->size() != numMotors\n");
     } else {
         jointTols = 0;
-        printf("RaveBot not using individual jointTols, defaulting to genJointTols.\n");
+        printf("RaveBot not using individual jointTols, defaulting to genJointTol.\n");
     }
     Bottle* maxLimits;
     if (config.check("maxLimits")) {
