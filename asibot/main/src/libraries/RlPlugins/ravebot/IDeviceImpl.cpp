@@ -210,7 +210,7 @@ bool RaveBot::open(Searchable& config) {
     } else if ((extraRobot=="1dof")||(extraRobot=="2dof")||(extraRobot=="3dof")) {
         pndof = robots.at(1);  // which is a RobotBasePtr
         printf("RaveBot using robot 1 (%s) as ndof robot.\n", pndof->GetName().c_str());
-        pndof = RobotBasePtr();  // null boost pointer
+        pmobile = RobotBasePtr();  // null boost pointer
         if(extraRobot=="1dof") extraCallbackPort.dof = 1;
         else if(extraRobot=="2dof") extraCallbackPort.dof = 2;
         else if(extraRobot=="3dof") extraCallbackPort.dof = 3;
