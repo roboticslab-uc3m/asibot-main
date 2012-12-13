@@ -18,6 +18,7 @@
 
 #include "WorldRpcResponder.h"
 #include "MobileRpcResponder.h"
+#include "ExtraCallbackPort.h"
 
 #define DEFAULT_NUM_MOTORS 5
 
@@ -405,7 +406,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
     RobotBasePtr pmobile;
-    RobotBasePtr ppanTilt;
+    RobotBasePtr pndof;
     ModuleBasePtr pbasemanip;
     ControllerBasePtr pcontrol;
     std::vector<KinBodyPtr> bodies;
@@ -430,9 +431,8 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     // mobile rpc server
     RpcServer mobileRpcServer;
     MobileRpcResponder mobileRpcResponder;
-    // panTilt rpc server
-    RpcServer panTiltRpcServer;
-    PanTiltRpcResponder panTiltRpcResponder;
+    //
+    ExtraCallbackPort extraCallbackPort;
 };
 
 #endif
