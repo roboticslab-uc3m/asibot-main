@@ -350,6 +350,7 @@ bool RaveBot::close() {
         mobileRpcServer.close();
     }
     if(!!pndof) {
+        extraCallbackPort.disableCallback();
         extraCallbackPort.interrupt();
         extraCallbackPort.close();
     }
