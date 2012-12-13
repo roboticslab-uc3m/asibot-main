@@ -59,11 +59,20 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genVelRawExposed")) genVelRawExposed = config.find("genVelRawExposed").asDouble();    
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
     if (config.check("physics")) physics = config.find("physics").asString();
-    printf("RaveBot using genJointTol: %f, genMaxLimit: %f, genMinLimit: %f, genRefSpeed: %f.\n",
-        genJointTol,genMaxLimit,genMinLimit,genRefSpeed);
+    printf("RaveBot using genInitPos: %f, genJointTol: %f, genMaxLimit: %f, genMinLimit: %f, genRefSpeed: %f.\n",
+        genInitPos, genJointTol,genMaxLimit,genMinLimit,genRefSpeed);
     printf("RaveBot using genEncRawExposed: %f, genVelRawExposed: %f.\n", genEncRawExposed, genVelRawExposed);
     printf("RaveBot using jmcMs: %f, physics: %s.\n",jmcMs,physics.c_str());
 
+    Bottle* initPoss;
+    if (config.check("initPoss")) {
+        initPoss = config.find("initPoss").asList();
+        printf("RaveBot using individual initPoss: %s\n",initPoss->toString().c_str());
+        if(initPoss->size() != int(numMotors)) printf("[warning] initPoss->size() != numMotors\n");
+    } else {
+        initPoss = 0;
+        printf("RaveBot not using individual initPoss, defaulting to genInitPos.\n");
+    }
     Bottle* jointTols;
     if (config.check("jointTols")) {
         jointTols = config.find("jointTols").asList();
@@ -108,15 +117,6 @@ bool RaveBot::open(Searchable& config) {
     } else {
         encRawExposeds = 0;
         printf("RaveBot not using individual encRawExposeds, defaulting to genEncRawExposed.\n");
-    }
-    Bottle* initPoss;
-    if (config.check("initPoss")) {
-        encRawExposeds = config.find("initPoss").asList();
-        printf("RaveBot using individual initPoss: %s\n",initPoss->toString().c_str());
-        if(initPoss->size() != int(numMotors)) printf("[warning] initPoss->size() != numMotors\n");
-    } else {
-        initPoss = 0;
-        printf("RaveBot not using individual initPoss, defaulting to genInitPos.\n");
     }
     Bottle* velRawExposeds;
     if (config.check("velRawExposeds")) {
@@ -205,14 +205,14 @@ bool RaveBot::open(Searchable& config) {
     if(extraRobot=="mobile") {
         pmobile = robots.at(1);  // which is a RobotBasePtr
         printf("RaveBot using robot 1 (%s) as mobile robot.\n", pmobile->GetName().c_str());
-        ppanTilt = RobotBasePtr();  // null boost pointer
-    } else if (extraRobot=="panTilt") {
-        ppanTilt = robots.at(1);  // which is a RobotBasePtr
-        printf("RaveBot using robot 1 (%s) as panTilt robot.\n", ppanTilt->GetName().c_str());
-        pmobile = RobotBasePtr();  // null boost pointer
+        pndof = RobotBasePtr();  // null boost pointer
+    } else if ((extraRobot=="1dof")||(extraRobot=="2dof")||(extraRobot=="3dof")) {
+        pndof = robots.at(1);  // which is a RobotBasePtr
+        printf("RaveBot using robot 1 (%s) as ndof robot.\n", pndof->GetName().c_str());
+        pndof = RobotBasePtr();  // null boost pointer
     } else {
         pmobile = RobotBasePtr();  // null boost pointer
-        ppanTilt = RobotBasePtr();  // null boost pointer
+        pndof = RobotBasePtr();  // null boost pointer
     }
 
     for ( unsigned int robotIter = 0; robotIter<robots.size(); robotIter++ ) {
@@ -325,18 +325,6 @@ bool RaveBot::open(Searchable& config) {
         mobileRpcServer.setReader(mobileRpcResponder);
     }
 
-    //-- panTilt rpc server
-    if(extraRobot=="panTilt") {
-        vector<int> vindices;  // send empty vector instead of joints
-        //pmobile->SetActiveDOFs(vindices,DOF_X|DOF_Y,Vector(0,0,1));  // and grab world pos
-        //ppanTilt->SetActiveDOFs(vindices,DOF_X|DOF_Y|DOF_RotationAxis,Vector(0,0,1));  // and grab world pos
-        ppanTilt->SetActiveDOFs(vindices,DOF_RotationAxis,Vector(1,1,1));  // and grab world pos
-        panTiltRpcResponder.setEnvironment(penv);
-        panTiltRpcResponder.setPanTilt(ppanTilt);
-        panTiltRpcServer.open("/ravebot/panTilt/rpc:i");
-        panTiltRpcServer.setReader(panTiltRpcResponder);
-    }
-
     // Start the RateThread
     this->setRate(jmcMs);
     this->start();
@@ -354,9 +342,9 @@ bool RaveBot::close() {
         mobileRpcServer.interrupt();
         mobileRpcServer.close();
     }
-    if(!!ppanTilt) {
-        panTiltRpcServer.interrupt();
-        panTiltRpcServer.close();
+    if(!!pndof) {
+        extraCallbackPort.interrupt();
+        extraCallbackPort.close();
     }
     penv->StopSimulation();  // NEEDED??
     this->askToStop();
