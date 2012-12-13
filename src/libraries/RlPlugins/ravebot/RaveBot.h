@@ -18,7 +18,6 @@
 
 #include "WorldRpcResponder.h"
 #include "MobileRpcResponder.h"
-#include "PanTiltRpcResponder.h"
 
 #define DEFAULT_NUM_MOTORS 5
 
