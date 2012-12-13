@@ -42,8 +42,15 @@ void RaveBot::run() {
 
     // pcontroller->SetDesired(dEncRaw); // This function "resets" physics
     probot->SetJointValues(dEncRaw);  // More compatible with physics??
-    penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
 
+    if(!!pndof) {
+        std::vector<dReal> extraEncRaw;
+        for(int it=0;it<extraCallbackPort.dof;it++)
+            extraEncRaw.push_back(extraCallbackPort.getEncRaw(it));
+        pndof->SetJointValues(extraEncRaw);  // More compatible with physics??
+    }
+
+    penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
 
     for(unsigned int camIter = 0; camIter<pcamerasensorbase.size(); camIter++ ) {
         pcamerasensorbase[camIter]->GetSensorData(pcamerasensordata[camIter]);

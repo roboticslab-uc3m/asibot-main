@@ -405,10 +405,13 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     EnvironmentBasePtr penv;
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
+    //
     RobotBasePtr pmobile;
-    RobotBasePtr pndof;
     ModuleBasePtr pbasemanip;
     ControllerBasePtr pcontrol;
+    //
+    RobotBasePtr pndof;
+    //
     std::vector<KinBodyPtr> bodies;
     std::vector<KinBody::JointPtr> mismotores;
     boost::thread_group orThreads;
@@ -431,7 +434,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     // mobile rpc server
     RpcServer mobileRpcServer;
     MobileRpcResponder mobileRpcResponder;
-    //
+    // pndof
     ExtraCallbackPort extraCallbackPort;
 };
 
