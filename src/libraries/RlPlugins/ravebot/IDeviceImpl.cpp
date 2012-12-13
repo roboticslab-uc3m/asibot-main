@@ -324,6 +324,12 @@ bool RaveBot::open(Searchable& config) {
         mobileRpcResponder.setModule(pbasemanip);
         mobileRpcServer.open("/ravebot/mobile/rpc:i");
         mobileRpcServer.setReader(mobileRpcResponder);
+    } else if((extraRobot=="1dof")||(extraRobot=="2dof")||(extraRobot=="3dof")) {
+        ConstString ndofPortStr("/ravebot/");
+        ndofPortStr += extraRobot;
+        ndofPortStr += "/command:i";
+        extraCallbackPort.open(ndofPortStr);
+        extraCallbackPort.useCallback();
     }
 
     // Start the RateThread
