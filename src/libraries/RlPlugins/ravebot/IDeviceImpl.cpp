@@ -166,6 +166,10 @@ bool RaveBot::open(Searchable& config) {
     targetExposed.resize(numMotors, 0.0);
     velRaw.resize(numMotors, 0.0);
 
+    for (unsigned int i=0; i<numMotors; i++) {
+        setEncoder(i,initPos[i]);
+    }
+
     // Initialize OpenRAVE-core
     RaveInitialize(true);  // Start openrave core
     penv = RaveCreateEnvironment();  // Create the main OpenRAVE environment, set the EnvironmentBasePtr
