@@ -19,16 +19,19 @@ include_directories(${YARP_INCLUDE_DIRS} ${ASIBOT_INCLUDE_DIRS})
 link_directories(${ASIBOT_LINK_DIRS})
 
 add_executable(testTaskCatchTool testTaskCatchTool.cpp TaskCatchTool.cpp)
-target_link_libraries(testTaskCatchTool ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
+target_link_libraries(testTaskCatchTool ${YARP_LIBRARIES} CartesianClientLib)
 
 add_executable(testTaskNavigate testTaskNavigate.cpp TaskNavigate.cpp)
 target_link_libraries(testTaskNavigate ${YARP_LIBRARIES})
 
 add_executable(testTaskSlidePallete testTaskSlidePallete.cpp TaskSlidePallete.cpp)
-target_link_libraries(testTaskSlidePallete ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
+target_link_libraries(testTaskSlidePallete ${YARP_LIBRARIES})
 
 add_executable(testTaskMakeUp testTaskMakeUp.cpp TaskMakeUp.cpp)
-target_link_libraries(testTaskMakeUp ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
+target_link_libraries(testTaskMakeUp ${YARP_LIBRARIES} CartesianClientLib)
+
+add_executable(p0easySolution p0easySolution.cpp TaskCatchTool.cpp TaskNavigate.cpp TaskSlidePallete.cpp TaskMakeUp.cpp)
+target_link_libraries(p0easySolution ${YARP_LIBRARIES} CartesianClientLib)
 
 ENDIF (ENABLE_asibotTasks)
 
