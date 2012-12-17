@@ -1,4 +1,4 @@
-<!-- kinect.robot.xml -->
+<!-- kinect.kinbody.xml -->
 
 <KinBody name="kinectKinbody">
     <Body type="static" name="kinectBase">
