@@ -111,7 +111,7 @@ void RaveBot::run() {
         for (int i_x = 0; i_x < i_depth.width(); ++i_x) {
             for (int i_y = 0; i_y < i_depth.height(); ++i_y) {
                 double p = sensorRanges[i_x+(i_y*i_depth.width())].z;
-                i_depth.safePixel(i_x,i_y) = p*50;  // Should adjust this value depending on max/min dist
+                i_depth.safePixel(i_depth.width()-i_x-1,i_y) = p*50;  // Should adjust this value depending on max/min dist
             }
         }
         p_depth[laserIter]->write();
