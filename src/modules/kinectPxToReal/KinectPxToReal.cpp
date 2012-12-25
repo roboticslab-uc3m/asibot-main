@@ -27,13 +27,13 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
     fprintf(stdout,"KinectPxToReal using watchdog [s]: %f.\n",watchdog);
 
     // yarp::sig::Matrix ymH(4,4);
-    H.resize(4,4);
+/*    H.resize(4,4);
     ConstString ycsH("H");
     if(!getMatrixFromProperties(rf,ycsH,H)){
         H.eye();
         fprintf(stdout,"KinectPxToReal using default H: H = I\n");
     }
-    else fprintf(stdout,"KinectPxToReal using custom H:\n%s\n",H.toString().c_str());
+    else fprintf(stdout,"KinectPxToReal using custom H:\n%s\n",H.toString().c_str());*/
 
     fprintf(stdout,"--------------------------------------------------------------\n");
     if(rf.check("help")) {
@@ -41,25 +41,25 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
     }
 
     outPort.open("/out");
-    premultPorts.setOutPort(&outPort);
+/*    premultPorts.setOutPort(&outPort);
     premultPorts.setH(&H);
     premultPorts.open("/in");
-    premultPorts.useCallback();
+    premultPorts.useCallback();*/
     return true;
 }
 
 /************************************************************************/
 
 bool KinectPxToReal::interruptModule() {
-    premultPorts.disableCallback();
-    premultPorts.close();
+//    premultPorts.disableCallback();
+//    premultPorts.close();
     outPort.close();
     return true;
 }
 
 /************************************************************************/
 
-bool KinectPxToReal::getMatrixFromProperties(Searchable &options, ConstString &tag, yarp::sig::Matrix &H) {
+/*bool KinectPxToReal::getMatrixFromProperties(Searchable &options, ConstString &tag, yarp::sig::Matrix &H) {
 
     Bottle *bH=options.find(tag).asList();
     if (!bH) return false;
@@ -75,7 +75,7 @@ bool KinectPxToReal::getMatrixFromProperties(Searchable &options, ConstString &t
         }
     }
     return true;
-}
+}*/
 
 /************************************************************************/
 
