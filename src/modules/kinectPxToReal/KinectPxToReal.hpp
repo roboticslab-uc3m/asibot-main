@@ -20,7 +20,7 @@
 
 using namespace yarp::os;
 
-class PremultH : public RFModule {
+class KinectPxToReal : public RFModule {
     protected:
         bool updateModule();
         bool interruptModule();
@@ -28,13 +28,13 @@ class PremultH : public RFModule {
         double watchdog; // [s]
 
         Port outPort;
-        PremultPorts premultPorts;
+        //PremultPorts premultPorts;
 
         /**
         * [thanks Ugo Pattacini!]
         */
-        bool getMatrixFromProperties(Searchable &options, ConstString &tag, yarp::sig::Matrix &H);
-        yarp::sig::Matrix H;
+        //bool getMatrixFromProperties(Searchable &options, ConstString &tag, yarp::sig::Matrix &H);
+        //yarp::sig::Matrix H;
 
     public:
         bool configure(ResourceFinder &rf);
