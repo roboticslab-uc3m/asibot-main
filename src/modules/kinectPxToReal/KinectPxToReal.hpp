@@ -15,10 +15,12 @@
 #include <yarp/os/BufferedPort.h>
 
 #include <yarp/sig/Matrix.h>
+#include <yarp/sig/all.h>
 
 #define DEFAULT_WATCHDOG    5       // [s]
 
 using namespace yarp::os;
+using namespace yarp::sig;
 
 class KinectPxToReal : public RFModule {
     protected:
@@ -27,14 +29,9 @@ class KinectPxToReal : public RFModule {
         double getPeriod();
         double watchdog; // [s]
 
+        BufferedPort<ImageOf<PixelFloat> > inDepth;
+        Port inPort;
         Port outPort;
-        //PremultPorts premultPorts;
-
-        /**
-        * [thanks Ugo Pattacini!]
-        */
-        //bool getMatrixFromProperties(Searchable &options, ConstString &tag, yarp::sig::Matrix &H);
-        //yarp::sig::Matrix H;
 
     public:
         bool configure(ResourceFinder &rf);
