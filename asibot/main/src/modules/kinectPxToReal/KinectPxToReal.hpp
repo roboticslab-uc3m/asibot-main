@@ -17,6 +17,9 @@
 #include <yarp/sig/Matrix.h>
 #include <yarp/sig/all.h>
 
+#include "SharedArea.hpp"
+#include "OutThread.hpp"
+
 #define DEFAULT_WATCHDOG    5       // [s]
 
 using namespace yarp::os;
@@ -28,6 +31,9 @@ class KinectPxToReal : public RFModule {
         bool interruptModule();
         double getPeriod();
         double watchdog; // [s]
+
+        SharedArea *pMem;
+        OutThread outThread;
 
         BufferedPort<ImageOf<PixelFloat> > inDepth;
         Port inPort;
