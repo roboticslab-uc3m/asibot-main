@@ -4,7 +4,7 @@
 #define __SHARED_AREA_HPP__
 
 #include <yarp/os/Semaphore.h>
-#include <yarp/sig/Vector.h>
+#include <yarp/sig/all.h>
 
 using namespace yarp::os;
 using namespace yarp::sig;
