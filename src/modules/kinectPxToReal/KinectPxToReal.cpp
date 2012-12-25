@@ -32,8 +32,8 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
        return false;
     }
 
-    inDepth.setSharedArea(&mem);
-    inPort.SharedArea(&mem);
+    //inDepth.setSharedArea(&mem);
+    //inPort.SharedArea(&mem);
     outThread.setOutputPort(&outPort);
 
     //-----------------OPEN LOCAL PORTS------------//

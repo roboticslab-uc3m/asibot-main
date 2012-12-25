@@ -16,14 +16,14 @@ using namespace yarp::sig;
 
 class OutThread : public RateThread {
 private:
-    BufferedPort<Vector> *pfcPort;  // to output the corrected output
+    Port *outPort;
     SharedArea *pMem;
 
 public:
     OutThread() : RateThread(THREAD_RATE_INIT) {}  // In ms
 
     void setSharedArea(SharedArea* _pMem);
-    void setOutputPort(BufferedPort<Vector> *_pfcPort);
+    void setOutputPort(Port* _outPort);
     void init(ResourceFinder &rf);
     void run();  // The periodical function
 };

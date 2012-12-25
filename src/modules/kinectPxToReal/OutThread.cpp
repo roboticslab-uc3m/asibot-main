@@ -8,8 +8,8 @@ void OutThread::setSharedArea(SharedArea* _pMem) {
 }
 
 /************************************************************************/
-void OutThread::setOutputPort(BufferedPort<Vector> *_pfcPort) {
-    pfcPort = _pfcPort;
+void OutThread::setOutputPort(Port* _outPort) {
+    outPort = _outPort;
 }
 
 /************************************************************************/
