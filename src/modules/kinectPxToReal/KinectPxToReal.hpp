@@ -32,7 +32,7 @@ class KinectPxToReal : public RFModule {
         double getPeriod();
         double watchdog; // [s]
 
-        SharedArea *pMem;
+        SharedArea mem;
         OutThread outThread;
 
         BufferedPort<ImageOf<PixelFloat> > inDepth;
