@@ -4,6 +4,7 @@
 add_subdirectory(asibotTasks)
 add_subdirectory(cartesianServer)
 add_subdirectory(colorSegmentor)
+add_subdirectory(kinectPxToReal)
 add_subdirectory(pointAtObjectServer)
 add_subdirectory(premultH)
 add_subdirectory(testRaveBot)
