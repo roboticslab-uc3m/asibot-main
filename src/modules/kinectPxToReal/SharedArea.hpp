@@ -11,15 +11,15 @@ using namespace yarp::sig;
 
 class SharedArea {
 private:
-    Vector q;
-    Vector f;
-    Semaphore qMutex;
-    Semaphore fMutex;
+    ImageOf<PixelFloat> depth;
+    Bottle pixels;
+    Semaphore depthMutex;
+    Semaphore pixelsMutex;
 public:
-    void setF(const Vector& v);
-    void setQ(const Vector& v);
-    Vector getF();
-    Vector getQ();
+    void setDepth(const ImageOf<PixelFloat>& _depth);
+    void setPixels(const Bottle& _pixels);
+    ImageOf<PixelFloat> getDepth();
+    Bottle getPixels();
 };
 
 #endif  // __SHARED_AREA_HPP__

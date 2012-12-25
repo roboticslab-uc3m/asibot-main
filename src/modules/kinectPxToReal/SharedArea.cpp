@@ -3,33 +3,33 @@
 #include "SharedArea.hpp"
 
 /************************************************************************/
-void SharedArea::setF(const Vector& _f) {
-    fMutex.wait();
-    f = _f;
-    fMutex.post();
+void SharedArea::setDepth(const ImageOf<PixelFloat>& _depth);
+    depthMutex.wait();
+    depth = _depth;
+    depthMutex.post();
 }
 
 /************************************************************************/
-void SharedArea::setQ(const Vector& _q) {
-    qMutex.wait();
-    q = _q;
-    qMutex.post();
+void SharedArea::setPixels(const Bottle& _pixels) {
+    pixelsMutex.wait();
+    pixels = _pixels;
+    pixelsMutex.post();
 }
 
 /************************************************************************/
-Vector SharedArea::getQ() {
-    qMutex.wait();
-    Vector _q=q;
-    qMutex.post();
-    return _q;
+ImageOf<PixelFloat> SharedArea::getDepth() {
+    depthMutex.wait();
+    ImageOf<PixelFloat> _depth=depth;
+    depthMutex.post();
+    return _depth;
 }
 
 /************************************************************************/
-Vector SharedArea::getF() {
-    fMutex.wait();
-    Vector _f=f;
-    fMutex.post();
-    return _f;
+Vector SharedArea::getPixels() {
+    pixelsMutex.wait();
+    Bottle _pixels=pixels;
+    pixelsMutex.post();
+    return _pixels;
 }
 
 /************************************************************************/
