@@ -41,6 +41,7 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
     callbackPort.open("/kinectPxToReal/state:i");
     outPort.open("/kinectPxToReal/state:o");
 
+    depthPort.useCallback();
     callbackPort.useCallback();
 
     return true;
