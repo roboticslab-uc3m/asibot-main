@@ -35,9 +35,9 @@ void OutThread::run() {
     /*Vector predictFerr = pMachine.predict(pMem->getQ());
     printf("predictFerr: %s\n",predictFerr.toString().c_str());
     Vector currentF = pMem->getF();*/
-    Vector& correctF = pfcPort->prepare();
+//    Vector& correctF = pfcPort->prepare();
 //    correctF = currentF - predictFerr;
-    pfcPort->write();
+//    pfcPort->write();
 }
 
 /************************************************************************/
