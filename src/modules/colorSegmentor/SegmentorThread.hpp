@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __FINDER_THREAD_HPP__
-#define __FINDER_THREAD_HPP__
+#ifndef __SEGMENTOR_THREAD_HPP__
+#define __SEGMENTOR_THREAD_HPP__
 
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Module.h>
@@ -17,11 +17,10 @@
 #include "highgui.h" // to show windows
 #include "BlobResult.h"  // Main blob library include
 
-#define DEFAULT_MS_FINDER 20  // In ms, unmeaningful as ALWAYS gets overwritten by RF
-
 #define DEFAULT_ALGORITHM "redMinusGreen"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
+#define DEFAULT_RATE_MS 20
 #define DEFAULT_SEE_BOUNDING 0
 #define DEFAULT_THRESHOLD 50
 
@@ -42,7 +41,7 @@ private:
     int threshold;
 
 public:
-    SegmentorThread() : RateThread(DEFAULT_MS_FINDER) {}  // In ms
+    SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}
 
     void setInImg(BufferedPort<ImageOf<PixelRgb> > * _pInImg);
     void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
@@ -51,5 +50,5 @@ public:
     void run();  // The periodical function
 };
 
-#endif
+#endif  // __SEGMENTOR_THREAD_HPP__
 

@@ -23,6 +23,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     algorithm = DEFAULT_ALGORITHM;
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
+    int rateMs = DEFAULT_RATE_MS;
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
 
@@ -33,6 +34,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
+        printf("\t--rateMs (default: \"%d\")\n",rateMs);
         printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
         printf("\t--threshold (default: \"%d\")\n",threshold);
         // Do not exit: let last layer exit so we get help from the complete chain.
@@ -41,20 +43,21 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
-    if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
-    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, threshold: %d.\n",
-        algorithm.c_str(),locate.c_str(),maxNumBlobs,threshold);
+    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d.\n",
+        algorithm.c_str(),locate.c_str(),maxNumBlobs);
 
+    if (rf.check("rateMs")) rateMs = rf.find("rateMs").asInt();
+    if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
     if (rf.check("seeBounding")) seeBounding = rf.find("seeBounding").asInt();
-    printf("SegmentorThread using seeBounding: %d.\n", seeBounding);
+    printf("SegmentorThread using rateMs: %d, threshold: %d, seeBounding: %d.\n",
+        rateMs, seeBounding, threshold);
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
         ::exit(1);
     }
 
-    int period = rf.check("rate",20,"ms ratethread").asInt();
-    this->setRate(period);
+    this->setRate(rateMs);
     this->start();
 
 }
