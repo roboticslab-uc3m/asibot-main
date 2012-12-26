@@ -15,8 +15,7 @@ void CallbackPort::setOutPort(Port* _outPort) {
 /************************************************************************/
 
 void CallbackPort::onRead(Bottle& b) {
-    // process data in b
-    printf("Got %s\n", b.toString().c_str());
+    printf("[CallbackPort] Got %s\n", b.toString().c_str());
 }
 
 /************************************************************************/
