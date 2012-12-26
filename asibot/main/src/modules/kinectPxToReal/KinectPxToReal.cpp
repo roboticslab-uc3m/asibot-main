@@ -49,6 +49,7 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
 /************************************************************************/
 
 bool KinectPxToReal::interruptModule() {
+    callbackPort.disableCallback();
     depthPort.interrupt();
     callbackPort.interrupt();
     outPort.interrupt();
