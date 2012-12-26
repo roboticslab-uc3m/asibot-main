@@ -1,8 +1,8 @@
 <application>
-<name>colorSegmentor App</name>
+<name>kinectPxToReal App</name>
         <module>
-                <name>yarpdev</name>
-                <parameters>--device KinectDeviceLocal --portPrefix /kinect --noMirror</parameters>
+                <name>cartesianServer</name>
+                <parameters>--env asibot_kitchen_kinect.env.xml</parameters>
                 <node>localhost</node>
         </module>
         <module>
@@ -16,7 +16,7 @@
         </module>
 
         <connection>
-                <from>/ravebot/ip_camera/img:o</from>
+                <from>/ravebot/kinect_rgb/img:o</from>
                 <to>/colorSegmentor/img:i</to>
         </connection>
         <connection>
