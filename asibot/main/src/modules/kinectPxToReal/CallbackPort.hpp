@@ -14,12 +14,12 @@ using namespace yarp::sig;
 
 class CallbackPort : public BufferedPort<Bottle> {
     private:
-        SharedArea *pMem;
+        SharedArea* pMem;
+        Port* outPort;
 
     public:
         void setSharedArea(SharedArea* _pMem);
-        // void init(ResourceFinder &rf);
-        // void run();  // The periodical function
+        void setOutPort(Port* _outPort);
 };
 
 #endif  // __CALLBACK_PORT_HPP__

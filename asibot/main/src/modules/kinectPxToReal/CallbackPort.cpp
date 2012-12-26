@@ -8,6 +8,11 @@ void CallbackPort::setSharedArea(SharedArea* _pMem) {
 }
 
 /************************************************************************/
+void CallbackPort::setOutPort(Port* _outPort) {
+    outPort = _outPort;
+}
+
+/************************************************************************/
 //void CallbackPort::init(ResourceFinder &rf) {
 
 /*    while (pMem->getQ().size() == 0) {

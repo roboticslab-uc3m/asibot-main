@@ -36,6 +36,7 @@ class KinectPxToReal : public RFModule {
         SharedArea mem;
         DepthPort depthPort;
         CallbackPort callbackPort;
+        Port outPort;
 
     public:
         bool configure(ResourceFinder &rf);
