@@ -14,6 +14,10 @@
                 <parameters>--name /yarpview/img:i</parameters>
                 <node>localhost</node>
         </module>
+        <module>
+                <name>kinectPxToReal</name>
+                <node>localhost</node>
+        </module>
 
         <connection>
                 <from>/ravebot/kinect_rgb/img:o</from>
@@ -22,6 +26,14 @@
         <connection>
                 <from>/colorSegmentor/img:o</from>
                 <to>/yarpview/img:i</to>
+        </connection>
+        <connection>
+                <from>/ravebot/kinect_depth/depth:o</from>
+                <to>/kinectPxToReal/depth:i</to>
+        </connection>
+        <connection>
+                <from>/colorSegmentor/state:o</from>
+                <to>/kinectPxToReal/state:i</to>
         </connection>
 
 </application>
