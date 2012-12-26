@@ -1,14 +1,14 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#include "OutPort.hpp"
+#include "CallbackPort.hpp"
 
 /************************************************************************/
-void OutPort::setSharedArea(SharedArea* _pMem) {
+void CallbackPort::setSharedArea(SharedArea* _pMem) {
     pMem = _pMem;
 }
 
 /************************************************************************/
-void OutPort::init(ResourceFinder &rf) {
+void CallbackPort::init(ResourceFinder &rf) {
 
 /*    while (pMem->getQ().size() == 0) {
         Time::delay(0.5);
@@ -26,7 +26,7 @@ void OutPort::init(ResourceFinder &rf) {
 }
 
 /************************************************************************/
-void OutPort::run() {
+void CallbackPort::run() {
     /*Vector predictFerr = pMachine.predict(pMem->getQ());
     printf("predictFerr: %s\n",predictFerr.toString().c_str());
     Vector currentF = pMem->getF();*/
