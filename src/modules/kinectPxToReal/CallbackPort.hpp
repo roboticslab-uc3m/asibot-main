@@ -16,6 +16,7 @@ class CallbackPort : public BufferedPort<Bottle> {
     private:
         SharedArea* pMem;
         Port* outPort;
+        virtual void onRead(Bottle& b);
 
     public:
         void setSharedArea(SharedArea* _pMem);
