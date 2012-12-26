@@ -31,7 +31,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
-        printf("\t--locate (default: \"%s\")\n",locate.c_str());
+        printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
         printf("\t--threshold (default: \"%d\")\n",threshold);
