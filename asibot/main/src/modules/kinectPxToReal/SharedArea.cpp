@@ -10,26 +10,11 @@ void SharedArea::setDepth(const ImageOf<PixelFloat>& _depth);
 }
 
 /************************************************************************/
-void SharedArea::setPixels(const Bottle& _pixels) {
-    pixelsMutex.wait();
-    pixels = _pixels;
-    pixelsMutex.post();
-}
-
-/************************************************************************/
 ImageOf<PixelFloat> SharedArea::getDepth() {
     depthMutex.wait();
     ImageOf<PixelFloat> _depth=depth;
     depthMutex.post();
     return _depth;
-}
-
-/************************************************************************/
-Vector SharedArea::getPixels() {
-    pixelsMutex.wait();
-    Bottle _pixels=pixels;
-    pixelsMutex.post();
-    return _pixels;
 }
 
 /************************************************************************/
