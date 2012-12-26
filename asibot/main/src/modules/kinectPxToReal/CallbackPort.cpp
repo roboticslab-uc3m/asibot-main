@@ -8,7 +8,7 @@ void CallbackPort::setSharedArea(SharedArea* _pMem) {
 }
 
 /************************************************************************/
-void CallbackPort::init(ResourceFinder &rf) {
+//void CallbackPort::init(ResourceFinder &rf) {
 
 /*    while (pMem->getQ().size() == 0) {
         Time::delay(0.5);
@@ -23,17 +23,17 @@ void CallbackPort::init(ResourceFinder &rf) {
     int period = rf.check("rate",20,"ms ratethread").asInt();
     this->setRate(period);
     this->start();*/
-}
+//}
 
 /************************************************************************/
-void CallbackPort::run() {
+//void CallbackPort::run() {
     /*Vector predictFerr = pMachine.predict(pMem->getQ());
     printf("predictFerr: %s\n",predictFerr.toString().c_str());
     Vector currentF = pMem->getF();*/
 //    Vector& correctF = pfcPort->prepare();
 //    correctF = currentF - predictFerr;
 //    pfcPort->write();
-}
+//}
 
 /************************************************************************/
 
