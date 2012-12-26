@@ -33,13 +33,13 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
     }
 
     //inPort.SharedArea(&mem);
-    //outThread.setOutputPort(&outPort);
-    outPort.setSharedArea(&mem);
+    //outThread.setOutputPort(&callbackPort);
+    callbackPort.setSharedArea(&mem);
 
     //-----------------OPEN LOCAL PORTS------------//
     depthPort.open("/kinectPxToReal/depth:i");
     //inPort.open("/kinectPxToReal/state:i");
-    outPort.open("/kinectPxToReal/state:o");
+    callbackPort.open("/kinectPxToReal/state:o");
     return true;
 }
 
@@ -48,10 +48,10 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
 bool KinectPxToReal::interruptModule() {
     /*inDepth.interrupt();
     inPort.interrupt();
-    outPort.interrupt();
+    callbackPort.interrupt();
     inDepth.close();
     inPort.close();
-    outPort.close();*/
+    callbackPort.close();*/
     return true;
 }
 

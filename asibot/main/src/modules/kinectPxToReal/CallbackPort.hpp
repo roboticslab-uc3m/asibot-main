@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __OUT_PORT_HPP__
-#define __OUT_PORT_HPP__
+#ifndef __CALLBACK_PORT_HPP__
+#define __CALLBACK_PORT_HPP__
 
 #include <yarp/os/all.h>
 //#include <yarp/sig/Vector.h>
@@ -12,7 +12,7 @@
 using namespace yarp::os;
 using namespace yarp::sig;
 
-class OutPort : public BufferedPort<Bottle> {
+class CallbackPort : public BufferedPort<Bottle> {
     private:
         SharedArea *pMem;
 
@@ -22,5 +22,5 @@ class OutPort : public BufferedPort<Bottle> {
         // void run();  // The periodical function
 };
 
-#endif  // __OUT_PORT_HPP__
+#endif  // __CALLBACK_PORT_HPP__
 
