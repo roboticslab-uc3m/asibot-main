@@ -12,14 +12,10 @@ using namespace yarp::sig;
 class SharedArea {
 private:
     ImageOf<PixelFloat> depth;
-    Bottle pixels;
     Semaphore depthMutex;
-    Semaphore pixelsMutex;
 public:
     void setDepth(const ImageOf<PixelFloat>& _depth);
-    void setPixels(const Bottle& _pixels);
     ImageOf<PixelFloat> getDepth();
-    Bottle getPixels();
 };
 
 #endif  // __SHARED_AREA_HPP__
