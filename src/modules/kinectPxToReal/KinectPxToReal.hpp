@@ -18,7 +18,8 @@
 #include <yarp/sig/all.h>
 
 #include "SharedArea.hpp"
-#include "OutThread.hpp"
+#include "DepthPort.hpp"
+#include "CallbackPort.hpp"
 
 #define DEFAULT_WATCHDOG    5       // [s]
 
@@ -33,11 +34,8 @@ class KinectPxToReal : public RFModule {
         double watchdog; // [s]
 
         SharedArea mem;
-        OutThread outThread;
-
-        BufferedPort<ImageOf<PixelFloat> > inDepth;
-        Port inPort;
-        Port outPort;
+        DepthPort depthPort;
+        CallbackPort callbackPort;
 
     public:
         bool configure(ResourceFinder &rf);
