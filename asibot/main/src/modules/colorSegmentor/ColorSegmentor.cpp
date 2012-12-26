@@ -13,11 +13,11 @@ bool ColorSegmentor::configure(ResourceFinder &rf) {
     }
     printf("ColorSegmentor using no additional special options.\n");
 
-    finderThread.setInImg(&inImg);
-    finderThread.setOutImg(&outImg);
-    finderThread.setOutPort(&outPort);
+    segmentorThread.setInImg(&inImg);
+    segmentorThread.setOutImg(&outImg);
+    segmentorThread.setOutPort(&outPort);
 
-    finderThread.init(rf);
+    segmentorThread.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
     inImg.open("/colorSegmentor/img:i");

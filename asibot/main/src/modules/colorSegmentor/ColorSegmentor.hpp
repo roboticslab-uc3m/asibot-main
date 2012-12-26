@@ -10,7 +10,7 @@ using namespace yarp::sig;
 
 class ColorSegmentor : public RFModule {
   private:
-    SegmentorThread finderThread;
+    SegmentorThread segmentorThread;
     //
     BufferedPort<ImageOf<PixelRgb> > inImg;
     BufferedPort<ImageOf<PixelRgb> > outImg;
