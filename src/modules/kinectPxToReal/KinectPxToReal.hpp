@@ -14,10 +14,8 @@
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
 
-#include <yarp/sig/Matrix.h>
 #include <yarp/sig/all.h>
 
-#include "SharedArea.hpp"
 #include "CallbackPort.hpp"
 
 #define DEFAULT_FX          640     //
@@ -36,7 +34,7 @@ class KinectPxToReal : public RFModule {
         double getPeriod();
         double watchdog; // [s]
 
-        BufferedPort<ImageOf<Float> > depthPort;
+        BufferedPort<ImageOf<PixelFloat> > depthPort;
         CallbackPort callbackPort;
         Port outPort;
 
