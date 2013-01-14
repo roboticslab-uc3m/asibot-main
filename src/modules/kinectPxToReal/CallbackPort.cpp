@@ -32,8 +32,10 @@ void CallbackPort::onRead(Bottle& b) {
         ImageOf<PixelFloat> depth = pMem->getDepth();
         double mmZ = depth(pxX,pxY);
         Bottle mmOut;
-        mmOut.addInt(pxX);  //TODO: pass to mm
-        mmOut.addInt(pxY);  //TODO: pass to mm
+        double mmX = 1000.0 * (pxX - (cx * mmZ/1000.0)) / fx;
+        double mmY = 1000.0 * (pxY - (cy * mmZ/1000.0)) / fy;
+        mmOut.addDouble(mmX);
+        mmOut.addDouble(mmY);
         mmOut.addDouble(mmZ);
         outLists.addList() = mmOut;
     }
