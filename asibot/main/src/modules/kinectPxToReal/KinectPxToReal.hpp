@@ -21,6 +21,10 @@
 #include "DepthPort.hpp"
 #include "CallbackPort.hpp"
 
+#define DEFAULT_FX          640     //
+#define DEFAULT_FY          640     //
+#define DEFAULT_CX          320     //
+#define DEFAULT_CY          240     //
 #define DEFAULT_WATCHDOG    5       // [s]
 
 using namespace yarp::os;
