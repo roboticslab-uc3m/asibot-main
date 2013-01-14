@@ -20,7 +20,7 @@
         </module>
 
         <connection>
-                <from>/ravebot/kinect_rgb/img:o</from>
+                <from>/kinect/imageMap:o</from>
                 <to>/colorSegmentor/img:i</to>
         </connection>
         <connection>
@@ -28,7 +28,7 @@
                 <to>/yarpview/img:i</to>
         </connection>
         <connection>
-                <from>/ravebot/kinect_depth/depth:o</from>
+                <from>/kinect/depthMap:o</from>
                 <to>/kinectPxToReal/depth:i</to>
         </connection>
         <connection>
