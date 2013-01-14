@@ -3,11 +3,6 @@
 #include "CallbackPort.hpp"
 
 /************************************************************************/
-void CallbackPort::setSharedArea(SharedArea* _pMem) {
-    pMem = _pMem;
-}
-
-/************************************************************************/
 void CallbackPort::setParams(double _fx, double _fy, double _cx, double _cy) {
     fx = _fx;
     fy = _fy;
@@ -21,6 +16,11 @@ void CallbackPort::setOutPort(Port* _outPort) {
 }
 
 /************************************************************************/
+void CallbackPort::setDepthPort(BufferedPort<ImageOf<PixelFloat> >* _depthPort) {
+    depthPort = _depthPort;
+}
+
+/************************************************************************/
 
 void CallbackPort::onRead(Bottle& b) {
     //fprintf(stdout,"[CallbackPort] Got %s\n", b.toString().c_str());
@@ -29,8 +29,12 @@ void CallbackPort::onRead(Bottle& b) {
         Bottle* pxCoords = b.get(i).asList();
         int pxX = pxCoords->get(0).asDouble();
         int pxY = pxCoords->get(1).asDouble();
-        ImageOf<PixelFloat> depth = pMem->getDepth();
-        float mmZ = depth(pxX,pxY);  // maybe better do a mean around area?
+        ImageOf<PixelFloat>* depth = depthPort->read();
+        if (depth==NULL) {
+            printf("[CallbackPort] No depth image yet.\n");
+            continue;
+        }
+        double mmZ = depth->pixel(pxX,pxY);  // maybe better do a mean around area?
         fprintf(stdout,"[CallbackPort] depth at (%d,%d) is %f.\n",pxX,pxY,mmZ);
         Bottle mmOut;
         double mmX = 1000.0 * (pxX - (cx * mmZ/1000.0)) / fx;
