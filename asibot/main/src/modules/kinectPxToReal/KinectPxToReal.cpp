@@ -43,18 +43,16 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
        return false;
     }
 
-    depthPort.setSharedArea(&mem);
     callbackPort.setParams(fx,fy,cx,cy);
-    callbackPort.setSharedArea(&mem);
+    callbackPort.setDepthPort(&depthPort);
     callbackPort.setOutPort(&outPort);
     
     //-----------------OPEN LOCAL PORTS------------//
     depthPort.open("/kinectPxToReal/depth:i");
-    callbackPort.open("/kinectPxToReal/state:i");
     outPort.open("/kinectPxToReal/state:o");
+    callbackPort.open("/kinectPxToReal/state:i");
 
     callbackPort.useCallback();
-    depthPort.useCallback();
 
     return true;
 }
@@ -63,7 +61,6 @@ bool KinectPxToReal::configure(ResourceFinder &rf) {
 
 bool KinectPxToReal::interruptModule() {
     callbackPort.disableCallback();
-    depthPort.disableCallback();
     callbackPort.interrupt();
     depthPort.interrupt();
     outPort.interrupt();
