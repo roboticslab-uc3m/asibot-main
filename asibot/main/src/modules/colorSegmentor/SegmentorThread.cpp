@@ -49,7 +49,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("rateMs")) rateMs = rf.find("rateMs").asInt();
     if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
     if (rf.check("seeBounding")) seeBounding = rf.find("seeBounding").asInt();
-    printf("SegmentorThread using rateMs: %d, threshold: %d, seeBounding: %d.\n",
+    printf("SegmentorThread using rateMs: %d, seeBounding: %d, threshold: %d.\n",
         rateMs, seeBounding, threshold);
 
     printf("--------------------------------------------------------------\n");
