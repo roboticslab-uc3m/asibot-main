@@ -1,5 +1,5 @@
 <application>
-<name>kinectPxToReal App</name>
+<name>simKinectPxToReal App</name>
         <module>
                 <name>cartesianServer</name>
                 <parameters>--env asibot_kitchen_kinect.env.xml</parameters>
@@ -16,6 +16,7 @@
         </module>
         <module>
                 <name>kinectPxToReal</name>
+                <parameters>--from simKinectPxToReal.ini</parameters>
                 <node>localhost</node>
         </module>
 
