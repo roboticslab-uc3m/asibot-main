@@ -1,8 +1,8 @@
 <application>
 <name>kinectPxToReal App</name>
         <module>
-                <name>cartesianServer</name>
-                <parameters>--env asibot_kitchen_kinect.env.xml</parameters>
+                <name>yarpdev</name>
+                <parameters>--device KinectDeviceLocal --portPrefix /kinect --noMirror</parameters>
                 <node>localhost</node>
         </module>
         <module>
