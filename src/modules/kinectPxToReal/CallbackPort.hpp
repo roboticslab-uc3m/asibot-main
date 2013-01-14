@@ -5,23 +5,18 @@
 
 #include <yarp/os/all.h>
 //#include <yarp/sig/Vector.h>
-//#include <yarp/math/Math.h>
-
-#include "SharedArea.hpp"
 
 using namespace yarp::os;
-using namespace yarp::sig;
+//using namespace yarp::sig;
 
 class CallbackPort : public BufferedPort<Bottle> {
     private:
-        SharedArea* pMem;
         Port* outPort;
         virtual void onRead(Bottle& b);
         double fx, fy, cx, cy;
 
     public:
         void setParams(double _fx, double _fy, double _cx, double _cy);
-        void setSharedArea(SharedArea* _pMem);
         void setOutPort(Port* _outPort);
 };
 

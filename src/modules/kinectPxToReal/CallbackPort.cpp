@@ -27,10 +27,11 @@ void CallbackPort::onRead(Bottle& b) {
     Bottle outLists;
     for (int i=0; i<b.size(); i++) {
         Bottle* pxCoords = b.get(i).asList();
-        double pxX = pxCoords->get(0).asDouble();
-        double pxY = pxCoords->get(1).asDouble();
+        int pxX = pxCoords->get(0).asDouble();
+        int pxY = pxCoords->get(1).asDouble();
         ImageOf<PixelFloat> depth = pMem->getDepth();
-        double mmZ = depth((int)pxX,(int)pxY);  // maybe better do a mean around area?
+        float mmZ = depth(pxX,pxY);  // maybe better do a mean around area?
+        fprintf(stdout,"[CallbackPort] depth at (%d,%d) is %f.\n",pxX,pxY,mmZ);
         Bottle mmOut;
         double mmX = 1000.0 * (pxX - (cx * mmZ/1000.0)) / fx;
         double mmY = 1000.0 * (pxY - (cy * mmZ/1000.0)) / fy;
