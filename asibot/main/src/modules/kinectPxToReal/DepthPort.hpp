@@ -14,7 +14,7 @@ class DepthPort : public BufferedPort< ImageOf<PixelFloat> > {
         SharedArea *pMem;
         virtual void onRead(ImageOf<PixelFloat>& depth) {
             pMem->setDepth(depth);
-            printf("[DepthPort] Data arrived and stored, height: %d, width: %d.\n",depth.height(),depth.width());
+            //printf("[DepthPort] Data arrived and stored, height: %d, width: %d.\n",depth.height(),depth.width());
         }
     public:
         void setSharedArea(SharedArea* _pMem) {
