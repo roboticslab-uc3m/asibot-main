@@ -18,7 +18,6 @@
 #include <yarp/sig/all.h>
 
 #include "SharedArea.hpp"
-#include "DepthPort.hpp"
 #include "CallbackPort.hpp"
 
 #define DEFAULT_FX          640     //
@@ -37,8 +36,7 @@ class KinectPxToReal : public RFModule {
         double getPeriod();
         double watchdog; // [s]
 
-        SharedArea mem;
-        DepthPort depthPort;
+        BufferedPort<ImageOf<Float> > depthPort;
         CallbackPort callbackPort;
         Port outPort;
 
