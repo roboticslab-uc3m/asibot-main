@@ -120,8 +120,8 @@ void SegmentorThread::run() {
             blobs.GetNthBlob( CBlobGetArea(), i, bigBlob );
 
             CBlobGetXCenter getXCenter;
-            int myx = getXCenter( bigBlob );
-            int myy;
+            double myx = getXCenter( bigBlob );
+            double myy;
             if (locate == "bottom") {
                 CBlobGetMaxY getYMax;
                 myy = getYMax( bigBlob );

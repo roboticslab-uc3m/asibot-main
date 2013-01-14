@@ -27,8 +27,8 @@ void CallbackPort::onRead(Bottle& b) {
     Bottle outLists;
     for (int i=0; i<b.size(); i++) {
         Bottle* pxCoords = b.get(i).asList();
-        int pxX = pxCoords->get(0).asInt();
-        int pxY = pxCoords->get(1).asInt();
+        double pxX = pxCoords->get(0).asDouble();
+        double pxY = pxCoords->get(1).asDouble();
         ImageOf<PixelFloat> depth = pMem->getDepth();
         double mmZ = depth(pxX,pxY);
         Bottle mmOut;
@@ -37,7 +37,7 @@ void CallbackPort::onRead(Bottle& b) {
         mmOut.addDouble(mmX);
         mmOut.addDouble(mmY);
         mmOut.addDouble(mmZ);
-        outLists.addList() = mmOut;
+        if(mmZ != 0) outLists.addList() = mmOut;
     }
     outPort->write(outLists);
 }
