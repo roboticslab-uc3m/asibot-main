@@ -74,6 +74,7 @@ void RaveBot::run() {
         plasersensorbase[laserIter]->GetSensorData(plasersensordata[laserIter]);
         // std::vector< RaveVector< dReal > > sensorPositions = plasersensordata[laserIter]->positions;
         std::vector< RaveVector< dReal > > sensorRanges = plasersensordata[laserIter]->ranges;
+        Transform tinv = plasersensordata[laserIter]->__trans.inverse();
         // std::vector< dReal > sensorIntensity = plasersensordata[laserIter]->intensity;
         // printf("[%d] sensorPositions size: %d ",laserIter,sensorPositions.size()); // = 1; xyz of the fixed 3d sensor position.
         // printf("sensorRanges size: %d ",sensorRanges.size()); // 64 * 48 = 3072;
@@ -110,7 +111,10 @@ void RaveBot::run() {
         else printf("[warning] unrecognized laser sensor data size.\n");
         for (int i_y = 0; i_y < i_depth.height(); ++i_y) {  // was y in x before
             for (int i_x = 0; i_x < i_depth.width(); ++i_x) {
-                double p = sensorRanges[i_y+(i_x*i_depth.height())].z;
+                //double p = sensorRanges[i_y+(i_x*i_depth.height())].z;
+//                Vector v = tinv*(sensorRanges[i_y+(i_x*i_depth.height())] + _data->positions[0]);
+                Vector v = tinv*(sensorRanges[i_y+(i_x*i_depth.height())]);
+                double p = (float)v.z;
                 i_depth(i_x,i_y) = p*1000.0;  // give mm
             }
         }
