@@ -107,6 +107,9 @@ void RaveBot::run() {
         }*/
         yarp::sig::ImageOf<yarp::sig::PixelFloat>& i_depth = p_depth[laserIter]->prepare();
         if(sensorRanges.size()==3072) i_depth.resize(64,48);  // Tamaño de la pantalla (64,48)
+        else if(sensorRanges.size()==12288) i_depth.resize(128,96);
+        else if(sensorRanges.size()==49152) i_depth.resize(256,192);
+        else if(sensorRanges.size()==307200) i_depth.resize(640,480);
         else if(sensorRanges.size()==4) i_depth.resize(2,2);
         else printf("[warning] unrecognized laser sensor data size.\n");
         for (int i_y = 0; i_y < i_depth.height(); ++i_y) {  // was y in x before
@@ -115,7 +118,6 @@ void RaveBot::run() {
                 double p;
                 if( sensorPositions.size() > 0 ) {
                     Vector v = tinv*(sensorRanges[i_y+(i_x*i_depth.height())] + sensorPositions[0]);
-//                    Vector v = tinv*(sensorRanges[i_y+(i_x*i_depth.height())]);
                     p = (float)v.z;
                 } else {
                     Vector v = tinv*(sensorRanges[i_y+(i_x*i_depth.height())]);
