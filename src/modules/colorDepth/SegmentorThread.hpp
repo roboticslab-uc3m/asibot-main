@@ -30,6 +30,7 @@ using namespace yarp::sig::draw;
 
 class SegmentorThread : public RateThread {
 private:
+    BufferedPort<ImageOf<PixelFloat> > *pInDepth;
     BufferedPort<ImageOf<PixelRgb> > *pInImg;
     BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
     Port *pOutPort;
@@ -43,6 +44,7 @@ private:
 public:
     SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}
 
+    void setInDepth(BufferedPort<ImageOf<PixelFloat> > * _pInDepth);
     void setInImg(BufferedPort<ImageOf<PixelRgb> > * _pInImg);
     void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
     void setOutPort(Port *_pOutPort);

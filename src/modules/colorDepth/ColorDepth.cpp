@@ -28,9 +28,9 @@ bool ColorDepth::configure(ResourceFinder &rf) {
     if(rf.check("cy")) cy = rf.find("cy").asDouble();
     if(rf.check("watchdog")) watchdog = rf.find("watchdog").asDouble();
     fprintf(stdout,"ColorDepth using fx: %f, fy: %f, cx: %f, cy: %f.\n",fx,fy,cx,cy);
-    fprintf(stdout,"ColorDepth using watchdog [s]: %f.\n",watchdog);
-    fprintf(stdout,"--------------------------------------------------------------\n");
+    fprintf(stdout,"ColorDepth using watchdog: %f.\n",watchdog);
 
+    segmentorThread.setInDepth(&inDepth);
     segmentorThread.setInImg(&inImg);
     segmentorThread.setOutImg(&outImg);
     segmentorThread.setOutPort(&outPort);
@@ -38,7 +38,7 @@ bool ColorDepth::configure(ResourceFinder &rf) {
     segmentorThread.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
-    depthPort.open("/colorDepth/depth:i");
+    inDepth.open("/colorDepth/depth:i");
     inImg.open("/colorDepth/img:i");
     outImg.open("/colorDepth/img:o");
     outPort.open("/colorDepth/state:o");
@@ -64,8 +64,10 @@ bool ColorDepth::interruptModule() {
     printf("ColorDepth closing...\n");
     outPort.interrupt();
     inImg.interrupt();
+    inDepth.interrupt();
     outPort.close();
     inImg.close();
+    inDepth.close();
     return true;
 }
 
