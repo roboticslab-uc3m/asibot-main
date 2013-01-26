@@ -97,7 +97,7 @@ void SegmentorThread::run() {
         return;
     };
 
-    printf("Got img!\n");
+    printf("Got img & depth!\n");
 
     // int code = img->getPixelCode();
     // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
@@ -170,10 +170,21 @@ void SegmentorThread::run() {
             // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
             // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
 
-            Bottle b_xy;
-            b_xy.addDouble(myx);
-            b_xy.addDouble(myy);
-            container.addList() = b_xy;
+            //Bottle b_xy;
+            //b_xy.addDouble(myx);
+            //b_xy.addDouble(myy);
+            //container.addList() = b_xy;
+
+            double mmZ = depth->pixel(int(myx),int(myy));  // maybe better do a mean around area?
+            //fprintf(stdout,"[CallbackPort] depth at (%d,%d) is %f.\n",int(myx),int(myy),mmZ);
+            Bottle mmOut;
+            double mmX = 1000.0 * (myx - (cx * mmZ/1000.0)) / fx;
+            double mmY = 1000.0 * (myy - (cy * mmZ/1000.0)) / fy;
+            mmOut.addDouble(mmX);
+            mmOut.addDouble(mmY);
+            mmOut.addDouble(mmZ);
+            if(mmZ != 0) container.addList() = mmOut;
+
         }
 
         cvReleaseImage( &rMg ); //release the memory for the image
