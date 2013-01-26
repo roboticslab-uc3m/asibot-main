@@ -18,7 +18,7 @@ class ColorDepth : public RFModule {
   private:
     SegmentorThread segmentorThread;
     //
-    BufferedPort<ImageOf<PixelFloat> > depthPort;
+    BufferedPort<ImageOf<PixelFloat> > inDepth;
     BufferedPort<ImageOf<PixelRgb> > inImg;
     BufferedPort<ImageOf<PixelRgb> > outImg;
     Port outPort;
