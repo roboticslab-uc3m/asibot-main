@@ -17,6 +17,10 @@
 #include "highgui.h" // to show windows
 #include "BlobResult.h"  // Main blob library include
 
+#define DEFAULT_FX          640     //
+#define DEFAULT_FY          640     //
+#define DEFAULT_CX          320     //
+#define DEFAULT_CY          240     //
 #define DEFAULT_ALGORITHM "redMinusGreen"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
@@ -40,6 +44,8 @@ private:
     int maxNumBlobs;
     bool seeBounding;
     int threshold;
+    //
+    double fx,fy,cx,cy;
 
 public:
     SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}

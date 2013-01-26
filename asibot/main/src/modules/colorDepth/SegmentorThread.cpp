@@ -26,6 +26,10 @@ void SegmentorThread::setOutPort(Port * _pOutPort) {
 /************************************************************************/
 void SegmentorThread::init(ResourceFinder &rf) {
 
+    fx = DEFAULT_FX;
+    fy = DEFAULT_FY;
+    cx = DEFAULT_CX;
+    cy = DEFAULT_CY;
     algorithm = DEFAULT_ALGORITHM;
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
@@ -37,6 +41,10 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("help")) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--fx (default: \"%f\")\n",fx);
+        printf("\t--fy (default: \"%f\")\n",fy);
+        printf("\t--cx (default: \"%f\")\n",cx);
+        printf("\t--cy (default: \"%f\")\n",cy);
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
@@ -46,9 +54,15 @@ void SegmentorThread::init(ResourceFinder &rf) {
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
+    if (rf.check("fx")) fx = rf.find("fx").asDouble();
+    if (rf.check("fy")) fy = rf.find("fy").asDouble();
+    if (rf.check("cx")) cx = rf.find("cx").asDouble();
+    if (rf.check("cy")) cy = rf.find("cy").asDouble();
     if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
+    printf("SegmentorThread using fx: %f, fy: %f, cx: %f, cy: %f.\n",
+        fx,fy,cx,cy);
     printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d.\n",
         algorithm.c_str(),locate.c_str(),maxNumBlobs);
 
