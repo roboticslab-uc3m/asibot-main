@@ -3,6 +3,12 @@
 #include "SegmentorThread.hpp"
 
 /************************************************************************/
+void
+SegmentorThread::setInDepth(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> > * _pInDepth) {
+    pInDepth = _pInDepth;
+}
+
+/************************************************************************/
 void SegmentorThread::setInImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg) {
     pInImg = _pInImg;
 }
