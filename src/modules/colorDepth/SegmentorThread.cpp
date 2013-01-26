@@ -87,12 +87,17 @@ void SegmentorThread::run() {
     // printf("[SegmentorThread] run()\n");
 
     ImageOf<PixelRgb> *img = pInImg->read(false);
+    ImageOf<PixelFloat> *depth = pInDepth->read(false);
     if (img==NULL) {
-        // printf("No img yet...\n");
+        printf("No img yet...\n");
+        return;
+    };
+    if (depth==NULL) {
+        printf("No depth yet...\n");
         return;
     };
 
-    // printf("Got img!\n");
+    printf("Got img!\n");
 
     // int code = img->getPixelCode();
     // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
