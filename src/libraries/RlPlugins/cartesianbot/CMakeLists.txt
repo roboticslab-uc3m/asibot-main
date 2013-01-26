@@ -4,7 +4,7 @@
 # Contrib: Paul Fitzpatrick (YARP device examples and tutorials)
 # CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
 
-PREPARE_DEVICE(cartesianbot TYPE CartesianBot INCLUDE CartesianBot.h)
+YARP_PREPARE_DEVICE(cartesianbot TYPE CartesianBot INCLUDE CartesianBot.h)
 
 IF (NOT SKIP_cartesianbot)
 
@@ -19,7 +19,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${ASIBOT_INCLUDE_DIRS})  # kdl n
 
 #LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
 
-ADD_LIBRARY(cartesianbot CartesianBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
+YARP_ADD_PLUGIN(cartesianbot CartesianBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
 #TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
 TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES})
 
