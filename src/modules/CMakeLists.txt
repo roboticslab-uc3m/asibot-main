@@ -5,6 +5,7 @@
 
 add_subdirectory(asibotTasks)
 add_subdirectory(cartesianServer)
+add_subdirectory(colorDepth)
 add_subdirectory(colorSegmentor)
 add_subdirectory(kinectPxToReal)
 add_subdirectory(pointAtObjectServer)
