@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-PREPARE_DEVICE(skymegabot TYPE SkymegaBot INCLUDE SkymegaBot.h WRAPPER controlboard)
+YARP_PREPARE_DEVICE(skymegabot TYPE SkymegaBot INCLUDE SkymegaBot.h WRAPPER controlboard)
 
 IF (NOT SKIP_skymegabot)
 
@@ -13,7 +13,7 @@ find_package(YARP REQUIRED)
 # Include any directories needed for YARP
 include_directories(${YARP_INCLUDE_DIRS})
 
-ADD_LIBRARY(skymegabot SkymegaBot.h SkymegaBot.cpp HelperFuncs.cpp)
+YARP_ADD_PLUGIN(skymegabot SkymegaBot.h SkymegaBot.cpp HelperFuncs.cpp)
 TARGET_LINK_LIBRARIES(skymegabot ${YARP_LIBRARIES})
 install(TARGETS skymegabot DESTINATION lib)
 
