@@ -49,12 +49,14 @@ bool ColorDepth::updateModule() {
 
 bool ColorDepth::interruptModule() {
     printf("ColorDepth closing...\n");
-    outPort.interrupt();
-    inImg.interrupt();
     inDepth.interrupt();
-    outPort.close();
-    inImg.close();
+    inImg.interrupt();
+    outImg.interrupt();
+    outPort.interrupt();
     inDepth.close();
+    inImg.close();
+    outImg.close();
+    outPort.close();
     return true;
 }
 

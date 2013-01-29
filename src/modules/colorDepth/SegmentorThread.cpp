@@ -89,15 +89,15 @@ void SegmentorThread::run() {
     ImageOf<PixelRgb> *img = pInImg->read(false);
     ImageOf<PixelFloat> *depth = pInDepth->read(false);
     if (img==NULL) {
-        printf("No img yet...\n");
+        //printf("No img yet...\n");
         return;
     };
     if (depth==NULL) {
-        printf("No depth yet...\n");
+        //printf("No depth yet...\n");
         return;
     };
 
-    printf("Got img & depth!\n");
+    //printf("Got img & depth!\n");
 
     // int code = img->getPixelCode();
     // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
@@ -112,11 +112,11 @@ void SegmentorThread::run() {
     
     IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
     IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-    IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+    //IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
 
     cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
     cvSplit( rgb, NULL, g, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
-    cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
+    //cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
 
     Bottle container;
     //ImageOf<PixelBgr> yarpReturnImage;
@@ -199,7 +199,7 @@ void SegmentorThread::run() {
     cvReleaseImage( &rgb ); //release the memory for the image
     cvReleaseImage( &r ); //release the memory for the image
     cvReleaseImage( &g ); //release the memory for the image
-    cvReleaseImage( &b ); //release the memory for the image
+    //cvReleaseImage( &b ); //release the memory for the image
 
 }
 
