@@ -3,7 +3,7 @@
 
 #include "RaveBot.h"
 
-void SetViewer(EnvironmentBasePtr penv, const std::string& viewername);
+void SetViewer(EnvironmentBasePtr penv, const std::string& viewername, int _viewer);
 
 // ------------------- DeviceDriver Related ------------------------------------
 
@@ -22,6 +22,7 @@ bool RaveBot::open(Searchable& config) {
     double genEncRawExposed = DEFAULT_GEN_ENC_RAW_EXPOSED;
     double genVelRawExposed = DEFAULT_GEN_VEL_RAW_EXPOSED;
     ConstString physics = DEFAULT_PHYSICS;
+    viewer = DEFAULT_VIEWER;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {
@@ -45,6 +46,7 @@ bool RaveBot::open(Searchable& config) {
     const char *asibot_root = ::getenv("ASIBOT_ROOT");
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
+    if (config.check("viewer")) viewer = config.find("viewer").asInt();
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
     if (config.check("env")) env = config.find("env").asString();
     if (config.check("extraRobot")) extraRobot = config.find("extraRobot").asString();
@@ -175,7 +177,7 @@ bool RaveBot::open(Searchable& config) {
     penv = RaveCreateEnvironment();  // Create the main OpenRAVE environment, set the EnvironmentBasePtr
     penv->SetDebugLevel(Level_Debug);  // Relatively new function
     penv->StopSimulation();  // NEEDED??
-    boost::thread thviewer(boost::bind(SetViewer,penv,"qtcoin"));
+    boost::thread thviewer(boost::bind(SetViewer,penv,"qtcoin",viewer));
     orThreads.add_thread(&thviewer);
     Time::delay(0.4); // wait for the viewer to init, in [s]
 
@@ -389,7 +391,7 @@ bool RaveBot::close() {
 
 // -----------------------------------------------------------------------------
 
-void SetViewer(EnvironmentBasePtr penv, const std::string& viewername)
+void SetViewer(EnvironmentBasePtr penv, const std::string& viewername, int _viewer)
 {
     ViewerBasePtr viewer = RaveCreateViewer(penv,viewername);
     BOOST_ASSERT(!!viewer);
@@ -398,7 +400,8 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername)
     penv->AddViewer(viewer);  // penv->AttachViewer(viewer);
 
     // finally you call the viewer's infinite loop (this is why you need a separate thread):
-    bool showgui = true;
+    bool showgui = true; // change to false to disable scene view
+    if(!_viewer) showgui = false;
     viewer->main(showgui);
 }
 
