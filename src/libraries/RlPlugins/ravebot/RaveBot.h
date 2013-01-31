@@ -33,6 +33,7 @@
 #define DEFAULT_GEN_VEL_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_JMC_MS 20  // [ms]
 #define DEFAULT_PHYSICS "none"
+#define DEFAULT_VIEWER 1
 
 using namespace std;
 
@@ -382,6 +383,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
 
 // ------------------------------- Private -------------------------------------
   private:
+    int viewer;
     // General Joint Motion Controller parameters //
     unsigned int numMotors;
     //
