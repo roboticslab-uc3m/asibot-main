@@ -189,7 +189,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                     Vector tr = objPtr->GetTransform().trans;
                     printf("[success] object %s at %f, %f, %f.\n", in.get(3).asString().c_str(), tr.x,tr.y,tr.z);
                     Bottle trans;
-                    trans.addDouble(tr.y);
+                    trans.addDouble(tr.x);
                     trans.addDouble(tr.y);
                     trans.addDouble(tr.z);
                     out.addList() = trans;
@@ -198,6 +198,16 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                     printf("[warning] object %s does not exist.\n", in.get(3).asString().c_str());
                     out.addVocab(VOCAB_FAILED);
                 }
+            } else if (in.get(2).asString()=="ee") {
+                // Check http://openrave.programmingvision.com/wiki/index.php/BaseManipulation
+                Vector tr = pRobotManip->GetEndEffector()->GetTransform().trans;
+                printf("[success] end effector 0 at %f, %f, %f.\n", tr.x,tr.y,tr.z+1.2);
+                Bottle trans;
+                trans.addDouble(tr.x);
+                trans.addDouble(tr.y);
+                trans.addDouble(tr.z+1.2);
+                out.addList() = trans;
+                out.addVocab(VOCAB_OK);
             } else {
                 printf("where is what?\n");
                 out.addVocab(VOCAB_FAILED);
@@ -221,6 +231,12 @@ void WorldRpcResponder::setEnvironment(EnvironmentBasePtr _pEnv) {
 
 void WorldRpcResponder::setRobot(RobotBasePtr _pRobot) {
     pRobot = _pRobot;
+}
+
+/************************************************************************/
+
+void WorldRpcResponder::setRobotManip(RobotBase::ManipulatorPtr _pRobotManip) {
+    pRobotManip = _pRobotManip;
 }
 
 /************************************************************************/
