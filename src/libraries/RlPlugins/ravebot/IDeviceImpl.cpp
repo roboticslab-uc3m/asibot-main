@@ -208,6 +208,11 @@ bool RaveBot::open(Searchable& config) {
     //-- Robot 0
     probot = robots.at(0);  // which is a RobotBasePtr
     printf("RaveBot using robot 0 (%s) as main robot.\n", probot->GetName().c_str());
+    //std::vector<RobotBase::ManipulatorPtr>::const_iterator myIt = probot->GetManipulators().begin();
+    probotManip = probot->GetManipulators()[0];
+//	    myIt != pRobot->GetManipulators().end(); myIt++) {
+//      printf("Manip: %s\n",(*myIt)->GetName().c_str());  // get "asibotManipulator"
+
     //-- Robot 1
     if(extraRobot=="mobile") {
         pmobile = robots.at(1);  // which is a RobotBasePtr
@@ -312,6 +317,7 @@ bool RaveBot::open(Searchable& config) {
     //-- world rpc server
     worldRpcResponder.setEnvironment(penv);
     worldRpcResponder.setRobot(probot);
+    worldRpcResponder.setRobotManip(probotManip);
     worldRpcServer.open("/ravebot/world");
     worldRpcServer.setReader(worldRpcResponder);
 
