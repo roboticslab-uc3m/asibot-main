@@ -199,13 +199,18 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                     out.addVocab(VOCAB_FAILED);
                 }
             } else if (in.get(2).asString()=="ee") {
-                // Check http://openrave.programmingvision.com/wiki/index.php/BaseManipulation
-                Vector tr = pRobotManip->GetEndEffector()->GetTransform().trans;
-                printf("[success] end effector 0 at %f, %f, %f.\n", tr.x,tr.y,tr.z+1.2);
+                Transform trt = pRobotManip->GetEndEffector()->GetTransform();
+                Transform tool;
+                tool.trans = Vector(0.0,0.0,1.3);
+                //tool.rot = quatFromAxisAngle(Vector(0,0,0));
+                tool.rot = trt.rot;
+                Transform finalT = trt * tool;
+                Vector final = finalT.trans;
+                printf("[success] end effector 0 at %f, %f, %f.\n", final.x, final.y, final.z);
                 Bottle trans;
-                trans.addDouble(tr.x);
-                trans.addDouble(tr.y);
-                trans.addDouble(tr.z+1.2);
+                trans.addDouble(final.x);
+                trans.addDouble(final.y);
+                trans.addDouble(final.z);
                 out.addList() = trans;
                 out.addVocab(VOCAB_OK);
             } else {
