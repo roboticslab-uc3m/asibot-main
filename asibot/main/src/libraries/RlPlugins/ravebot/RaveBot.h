@@ -407,6 +407,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     EnvironmentBasePtr penv;
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
+    RobotBase::ManipulatorPtr probotManip;
     //
     RobotBasePtr pmobile;
     ModuleBasePtr pbasemanip;

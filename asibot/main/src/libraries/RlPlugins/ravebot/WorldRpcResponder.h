@@ -37,6 +37,7 @@ protected:
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pRobot;  // set in setRobot
+    RobotBase::ManipulatorPtr pRobotManip;  // set in setRobot
 
 public:
 
@@ -49,6 +50,11 @@ public:
     * Register an OpenRAVE robot.
     */
     void setRobot(RobotBasePtr _pRobot);
+
+    /**
+    * Register an OpenRAVE manipulator.
+    */
+    void setRobotManip(RobotBase::ManipulatorPtr _pRobotManip);
 };
 
 #endif  // __WORLD_RPC_RESPONDER__
