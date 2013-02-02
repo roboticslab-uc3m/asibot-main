@@ -14,7 +14,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1.");
+        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name).");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -181,6 +181,27 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                     out.addVocab(VOCAB_FAILED);
                 }
             } else out.addVocab(VOCAB_FAILED);
+        } else if (in.get(1).asString()=="whereis") {
+            if (in.get(2).asString()=="obj") {
+                KinBodyPtr objPtr = pEnv->GetKinBody(in.get(3).asString().c_str());
+                if(objPtr) {
+                    //Transform t = objPtr->GetTransform();
+                    Vector tr = objPtr->GetTransform().trans;
+                    printf("[success] object %s at %f, %f, %f.\n", in.get(3).asString().c_str(), tr.x,tr.y,tr.z);
+                    Bottle trans;
+                    trans.addDouble(tr.y);
+                    trans.addDouble(tr.y);
+                    trans.addDouble(tr.z);
+                    out.addList() = trans;
+                    out.addVocab(VOCAB_OK);
+                } else {  // null pointer
+                    printf("[warning] object %s does not exist.\n", in.get(3).asString().c_str());
+                    out.addVocab(VOCAB_FAILED);
+                }
+            } else {
+                printf("where is what?\n");
+                out.addVocab(VOCAB_FAILED);
+            }
         } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
         return true;
