@@ -14,7 +14,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name).");
+        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name), world whereis tcp.");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -198,7 +198,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                     printf("[warning] object %s does not exist.\n", in.get(3).asString().c_str());
                     out.addVocab(VOCAB_FAILED);
                 }
-            } else if (in.get(2).asString()=="ee") {
+            } else if (in.get(2).asString()=="tcp") {
                 Transform trt = pRobotManip->GetEndEffector()->GetTransform();
                 Transform tool;
                 tool.trans = Vector(0.0,0.0,1.3);
@@ -206,7 +206,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 tool.rot = trt.rot;
                 Transform finalT = trt * tool;
                 Vector final = finalT.trans;
-                printf("[success] end effector 0 at %f, %f, %f.\n", final.x, final.y, final.z);
+                printf("[success] TCP at %f, %f, %f.\n", final.x, final.y, final.z);
                 Bottle trans;
                 trans.addDouble(final.x);
                 trans.addDouble(final.y);
