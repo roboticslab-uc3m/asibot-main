@@ -14,7 +14,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name), world whereis tcp.");
+        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name), world whereis tcp, world draw 0/1 (r g b).");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -215,6 +215,14 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
             } else {
                 printf("where is what?\n");
                 out.addVocab(VOCAB_FAILED);
+            }
+        } else if (in.get(1).asString()=="draw") {
+            if (in.get(2).asInt()==1) {
+                printf("Turning draw ON.\n");
+                out.addVocab(VOCAB_OK);
+            } else {
+                printf("Turning draw OFF.\n");
+                out.addVocab(VOCAB_OK);
             }
         } else out.addVocab(VOCAB_FAILED);
         out.write(*returnToSender);
