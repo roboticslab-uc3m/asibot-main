@@ -43,6 +43,32 @@ void RaveBot::run() {
     // pcontroller->SetDesired(dEncRaw); // This function "resets" physics
     probot->SetJointValues(dEncRaw);  // More compatible with physics??
 
+    drawCounter++;
+    if(robotDraw && (drawCounter>30)) {
+        drawCounter = 0;
+        Transform ee = probotManip->GetEndEffector()->GetTransform();
+        Transform tool;
+        tool.trans = Vector(0.0,0.0,1.3);
+        //tool.rot = quatFromAxisAngle(Vector(0,0,0));
+        tool.rot = ee.rot;
+        Transform tcp = ee * tool;
+        { // lock the environment!           
+        OpenRAVE::EnvironmentMutex::scoped_lock lock(penv->GetMutex());
+        KinBodyPtr dboxKinBodyPtr = RaveCreateKinBody(penv,"");
+        ConstString dboxName("dbox_");
+        dboxName += ConstString::toString(drawnElems++);
+        dboxKinBodyPtr->SetName(dboxName.c_str());
+        //
+        std::vector<AABB> boxes(1);
+        boxes[0].extents = Vector(.01,.01,.01);
+        boxes[0].pos = Vector(tcp.trans.x, tcp.trans.y, tcp.trans.z);
+        dboxKinBodyPtr->InitFromBoxes(boxes,true); 
+        //
+        penv->Add(dboxKinBodyPtr,true);
+        //sboxKinBodyPtrs.push_back(sboxKinBodyPtr);
+        }  // the environment is not locked anymore
+    }
+                
     if(!!pndof) {
         std::vector<dReal> extraEncRaw;
         for(int it=0;it<extraCallbackPort.dof;it++)

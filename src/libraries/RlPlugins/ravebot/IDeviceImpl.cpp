@@ -210,6 +210,9 @@ bool RaveBot::open(Searchable& config) {
     printf("RaveBot using robot 0 (%s) as main robot.\n", probot->GetName().c_str());
     //std::vector<RobotBase::ManipulatorPtr>::const_iterator myIt = probot->GetManipulators().begin();
     probotManip = probot->GetManipulators()[0];
+    robotDraw = 1;
+    drawCounter = 0;
+    drawnElems = 0;
 //	    myIt != pRobot->GetManipulators().end(); myIt++) {
 //      printf("Manip: %s\n",(*myIt)->GetName().c_str());  // get "asibotManipulator"
 
