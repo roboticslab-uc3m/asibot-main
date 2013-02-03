@@ -199,18 +199,17 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                     out.addVocab(VOCAB_FAILED);
                 }
             } else if (in.get(2).asString()=="tcp") {
-                Transform trt = pRobotManip->GetEndEffector()->GetTransform();
+                Transform ee = pRobotManip->GetEndEffector()->GetTransform();
                 Transform tool;
                 tool.trans = Vector(0.0,0.0,1.3);
                 //tool.rot = quatFromAxisAngle(Vector(0,0,0));
-                tool.rot = trt.rot;
-                Transform finalT = trt * tool;
-                Vector final = finalT.trans;
-                printf("[success] TCP at %f, %f, %f.\n", final.x, final.y, final.z);
+                tool.rot = ee.rot;
+                Transform tcp = ee * tool;
+                printf("[success] TCP at %f, %f, %f.\n", tcp.trans.x, tcp.trans.y, tcp.trans.z);
                 Bottle trans;
-                trans.addDouble(final.x);
-                trans.addDouble(final.y);
-                trans.addDouble(final.z);
+                trans.addDouble(tcp.trans.x);
+                trans.addDouble(tcp.trans.y);
+                trans.addDouble(tcp.trans.z);
                 out.addList() = trans;
                 out.addVocab(VOCAB_OK);
             } else {
