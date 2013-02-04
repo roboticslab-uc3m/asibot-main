@@ -60,7 +60,7 @@ void RaveBot::run() {
         dsphKinBodyPtr->SetName(dsphName.c_str());
         //
         std::vector<Vector> spheres(1);
-        spheres.push_back(Vector(tcp.trans.x, tcp.trans.y, tcp.trans.z, 0.01));
+        spheres.push_back(Vector(tcp.trans.x, tcp.trans.y, tcp.trans.z, worldRpcResponder.drawRadius));
         dsphKinBodyPtr->InitFromSpheres(spheres,true); 
         //
         penv->Add(dsphKinBodyPtr,true);
