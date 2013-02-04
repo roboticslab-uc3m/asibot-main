@@ -212,6 +212,9 @@ bool RaveBot::open(Searchable& config) {
     probotManip = probot->GetManipulators()[0];
     worldRpcResponder.robotDraw = 0;
     worldRpcResponder.drawRadius = 0.005;
+    worldRpcResponder.drawR = 1;
+    worldRpcResponder.drawG = 1;
+    worldRpcResponder.drawB = 1;
     drawCounter = 0;
     drawnElems = 0;
 //	    myIt != pRobot->GetManipulators().end(); myIt++) {
