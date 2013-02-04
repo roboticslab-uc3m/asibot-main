@@ -224,6 +224,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
             } else {
                 printf("Turning draw ON.\n");
                 robotDraw = in.get(2).asInt();
+                if (in.get(3).asDouble() != 0) drawRadius = in.get(3).asDouble();
                 out.addVocab(VOCAB_OK);
             }
         } else out.addVocab(VOCAB_FAILED);
