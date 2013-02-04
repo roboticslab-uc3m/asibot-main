@@ -41,6 +41,8 @@ protected:
 
 public:
 
+    int robotDraw;
+
     /**
     * Register an OpenRAVE environment.
     */

@@ -408,7 +408,6 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     PhysicsEngineBasePtr pe;
     RobotBasePtr probot;
     RobotBase::ManipulatorPtr probotManip;
-    int robotDraw;
     int drawCounter;
     int drawnElems;
     //
