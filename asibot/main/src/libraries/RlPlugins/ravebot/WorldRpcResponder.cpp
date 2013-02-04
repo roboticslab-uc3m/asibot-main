@@ -217,11 +217,13 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 out.addVocab(VOCAB_FAILED);
             }
         } else if (in.get(1).asString()=="draw") {
-            if (in.get(2).asInt()==1) {
-                printf("Turning draw ON.\n");
+            if (!in.get(2).asInt()) {
+                printf("Turning draw OFF.\n");
+                robotDraw = 0;
                 out.addVocab(VOCAB_OK);
             } else {
-                printf("Turning draw OFF.\n");
+                printf("Turning draw ON.\n");
+                robotDraw = in.get(2).asInt();
                 out.addVocab(VOCAB_OK);
             }
         } else out.addVocab(VOCAB_FAILED);

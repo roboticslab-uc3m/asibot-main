@@ -44,7 +44,7 @@ void RaveBot::run() {
     probot->SetJointValues(dEncRaw);  // More compatible with physics??
 
     drawCounter++;
-    if(robotDraw && (drawCounter>30)) {
+    if((worldRpcResponder.robotDraw) && (drawCounter>30)) {
         drawCounter = 0;
         Transform ee = probotManip->GetEndEffector()->GetTransform();
         Transform tool;
