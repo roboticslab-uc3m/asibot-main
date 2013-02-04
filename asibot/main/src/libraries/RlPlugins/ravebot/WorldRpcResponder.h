@@ -42,7 +42,7 @@ protected:
 public:
 
     int robotDraw;
-    double drawRadius;
+    double drawRadius, drawR, drawG, drawB;
 
     /**
     * Register an OpenRAVE environment.

@@ -54,17 +54,21 @@ void RaveBot::run() {
         Transform tcp = ee * tool;
         { // lock the environment!           
         OpenRAVE::EnvironmentMutex::scoped_lock lock(penv->GetMutex());
-        KinBodyPtr dsphKinBodyPtr = RaveCreateKinBody(penv,"");
-        ConstString dsphName("dsph_");
-        dsphName += ConstString::toString(drawnElems++);
-        dsphKinBodyPtr->SetName(dsphName.c_str());
-        //
-        std::vector<Vector> spheres(1);
-        spheres.push_back(Vector(tcp.trans.x, tcp.trans.y, tcp.trans.z, worldRpcResponder.drawRadius));
-        dsphKinBodyPtr->InitFromSpheres(spheres,true); 
-        //
-        penv->Add(dsphKinBodyPtr,true);
-        //ssphKinBodyPtrs.push_back(ssphKinBodyPtr);
+        KinBodyPtr drawnKinBodyPtr = RaveCreateKinBody(penv,"");
+        std::list<KinBody::Link::GeometryInfo> drawnInfoList;
+        KinBody::Link::GeometryInfo drawnInfo;
+        drawnInfo._type = KinBody::Link::GeomSphere;
+        drawnInfo._t = Transform(Vector(1,0,0,0),Vector(tcp.trans.x, tcp.trans.y, tcp.trans.z));
+        drawnInfo._vGeomData = Vector(worldRpcResponder.drawRadius,0,0);
+        drawnInfo._bVisible = true;
+        drawnInfo._fTransparency = 0;
+        drawnInfo._vDiffuseColor = Vector(worldRpcResponder.drawR,worldRpcResponder.drawG,worldRpcResponder.drawB);
+        drawnInfoList.push_back(drawnInfo);
+        drawnKinBodyPtr->InitFromGeometries(drawnInfoList);
+        ConstString drawnName("drawn_");
+        drawnName += ConstString::toString(drawnElems++);
+        drawnKinBodyPtr->SetName(drawnName.c_str());
+        penv->Add(drawnKinBodyPtr,true);
         }  // the environment is not locked anymore
     }
                 
