@@ -211,6 +211,7 @@ bool RaveBot::open(Searchable& config) {
     //std::vector<RobotBase::ManipulatorPtr>::const_iterator myIt = probot->GetManipulators().begin();
     probotManip = probot->GetManipulators()[0];
     worldRpcResponder.robotDraw = 0;
+    worldRpcResponder.drawRadius = 0.005;
     drawCounter = 0;
     drawnElems = 0;
 //	    myIt != pRobot->GetManipulators().end(); myIt++) {
