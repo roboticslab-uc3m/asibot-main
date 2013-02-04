@@ -48,24 +48,23 @@ void RaveBot::run() {
         drawCounter = 0;
         Transform ee = probotManip->GetEndEffector()->GetTransform();
         Transform tool;
-        tool.trans = Vector(0.0,0.0,1.3);
+        tool.trans = Vector(0.0,0.0,1.27);
         //tool.rot = quatFromAxisAngle(Vector(0,0,0));
         tool.rot = ee.rot;
         Transform tcp = ee * tool;
         { // lock the environment!           
         OpenRAVE::EnvironmentMutex::scoped_lock lock(penv->GetMutex());
-        KinBodyPtr dboxKinBodyPtr = RaveCreateKinBody(penv,"");
-        ConstString dboxName("dbox_");
-        dboxName += ConstString::toString(drawnElems++);
-        dboxKinBodyPtr->SetName(dboxName.c_str());
+        KinBodyPtr dsphKinBodyPtr = RaveCreateKinBody(penv,"");
+        ConstString dsphName("dsph_");
+        dsphName += ConstString::toString(drawnElems++);
+        dsphKinBodyPtr->SetName(dsphName.c_str());
         //
-        std::vector<AABB> boxes(1);
-        boxes[0].extents = Vector(.01,.01,.01);
-        boxes[0].pos = Vector(tcp.trans.x, tcp.trans.y, tcp.trans.z);
-        dboxKinBodyPtr->InitFromBoxes(boxes,true); 
+        std::vector<Vector> spheres(1);
+        spheres.push_back(Vector(tcp.trans.x, tcp.trans.y, tcp.trans.z, 0.01));
+        dsphKinBodyPtr->InitFromSpheres(spheres,true); 
         //
-        penv->Add(dboxKinBodyPtr,true);
-        //sboxKinBodyPtrs.push_back(sboxKinBodyPtr);
+        penv->Add(dsphKinBodyPtr,true);
+        //ssphKinBodyPtrs.push_back(ssphKinBodyPtr);
         }  // the environment is not locked anymore
     }
                 
