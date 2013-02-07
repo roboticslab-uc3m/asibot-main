@@ -30,7 +30,7 @@
 #include "CartesianClient.h"
 
 #define DEFAULT_ROBOT "/ravebot"
-#define DEFAULT_HEIGHT 0.5;
+#define DEFAULT_HEIGHT 0.4;
 
 
 using namespace yarp::os;
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     Time::delay(.1);
     cartesianClient.wait();
 
-    double targets[5] = {0, -0.4, height, 180.0, 0.0};
+    double targets[5] = {0, -0.45, height, 180.0, 0.0};
 
     while (1) {
         printf("[success] %s on BLOCKING WAIT for draw request,\n", pointsRpcServerName.c_str());
