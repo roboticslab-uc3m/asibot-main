@@ -69,9 +69,9 @@ int main(int argc, char *argv[]) {
     }
 
     CartesianClient cartesianClient;
-    if(!cartesianClient.open(robotName)) {
-        printf("bye!\n");
-        return -1;
+    while(!cartesianClient.open(robotName)) {
+        printf("Waiting for cartesianServer...\n");
+        Time::delay(1);
     }
 
     RpcClient worldRpcClient;
