@@ -3,7 +3,7 @@
 
     <module>
         <name>cartesianServer</name>
-        <parameters>--from cartesianServerKdl.ini</parameters>
+        <parameters>--from cartesianServerKdl.ini --env asibot_kitchen_robotDraw.env.xml</parameters>
         <node>localhost</node>
     </module>
 
