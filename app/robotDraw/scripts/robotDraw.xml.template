@@ -1,0 +1,20 @@
+<application>
+    <name>robotDraw App</name>
+
+    <module>
+        <name>cartesianServer</name>
+        <parameters>--from cartesianServerKdl.ini</parameters>
+        <node>localhost</node>
+    </module>
+
+    <module>
+        <name>robotDraw</name>
+        <node>localhost</node>
+    </module>
+    <!--connection>
+        <from>/segRec/robotDraw/rpc:o</from>
+        <to>/robotDraw/rpc:i</to>
+    </connection-->
+
+</application>
+
