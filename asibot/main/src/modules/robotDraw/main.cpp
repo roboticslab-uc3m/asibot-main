@@ -103,8 +103,8 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         printf("[success] %s on BLOCKING WAIT for draw request,\n", pointsRpcServerName.c_str());
-        printf("usage: draw p0x p0y p1x p1y ... pNx pNy\n");
-        printf("example: draw 0 0 .1 0 .1 .1 0 .1 0 0\n");
+        printf("usage: draw r g b p0x p0y p1x p1y ... pNx pNy\n");
+        printf("example: draw 1 1 1 0 0 .1 0 .1 .1 0 .1 0 0\n");
 
         Bottle bIn, bOut;
         pointsRpcServer.read(bIn,true);
@@ -113,14 +113,14 @@ int main(int argc, char *argv[]) {
         bOut.addVocab(VOCAB_OK);
         pointsRpcServer.reply(bOut);  // send reply
 
-        double aprox0[5] = {targets[0]+bIn.get(1).asDouble(), targets[1]+bIn.get(2).asDouble(),
+        double aprox0[5] = {targets[0]+bIn.get(5).asDouble(), targets[1]+bIn.get(6).asDouble(),
             targets[2]+.1, targets[3], targets[4]};
         printf("[movj] To aprox0.\n");                
         cartesianClient.movj(aprox0);
         Time::delay(.1);
         cartesianClient.wait();
 
-        double p0[5] = {targets[0]+bIn.get(1).asDouble(), targets[1]+bIn.get(2).asDouble(),
+        double p0[5] = {targets[0]+bIn.get(5).asDouble(), targets[1]+bIn.get(6).asDouble(),
             targets[2], targets[3], targets[4]};
         printf("[movl] To p0.\n");          
         cartesianClient.movl(p0);
@@ -132,14 +132,15 @@ int main(int argc, char *argv[]) {
         miOutput.addString("world");
         miOutput.addString("draw");
         miOutput.addInt(1);  // ON
-        miOutput.addDouble(0.005);  // Radius
-        miOutput.addDouble(0);  // R
-        miOutput.addDouble(0);  // G
-        miOutput.addDouble(0);  // B
+        miOutput.addDouble(bIn.get(1).asDouble());  // Radius: 0.005
+        miOutput.addDouble(bIn.get(2).asDouble());  // R: 0.0980392
+        miOutput.addDouble(bIn.get(3).asDouble());  // G: 0.705882
+        miOutput.addDouble(bIn.get(4).asDouble());  // B: 0.686274
         worldRpcClient.write(miOutput, miInput);
         Time::delay(.1);
 
-        for (int i=3; i<(bIn.size());i=i+2) {
+//        for (int i=3; i<(bIn.size());i=i+2) {
+        for (int i=7; i<(bIn.size());i=i+2) {
             double tmpTargets[5];
             tmpTargets[0] = targets[0] + bIn.get(i).asDouble();
             tmpTargets[1] = targets[1] + bIn.get(i+1).asDouble();
