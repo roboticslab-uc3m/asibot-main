@@ -27,7 +27,6 @@ option(ENABLE_robotDraw "Choose if you want to compile robotDraw" FALSE)
 option(ENABLE_testRaveBot "Choose if you want to compile testRaveBot" FALSE)
 option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
 option(ENABLE_webInterface "Choose if you want to compile webInterface" FALSE)
-option(ENABLE_webInterfacePy "Choose if you want to compile webInterfacePy" FALSE)
 option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
 
 if(MSVC)
