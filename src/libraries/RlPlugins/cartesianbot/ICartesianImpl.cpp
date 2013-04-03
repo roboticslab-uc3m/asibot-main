@@ -335,8 +335,8 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
     Ja(4,4) = 1;
     yarp::sig::Matrix Ja_pinv(pinv(Ja,1.0e-2));
     yarp::sig::Vector xdotd(xdot);
-    xdotd.push_back(odot[0]);
-    xdotd.push_back(odot[1]);
+    xdotd.push_back(toRad(odot[0]));
+    xdotd.push_back(toRad(odot[1]));
     yarp::sig::Vector t;
     t.resize(5);
     t = Ja_pinv * xdotd;
