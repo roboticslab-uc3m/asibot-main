@@ -6,6 +6,9 @@
  *
  * Creates an instance of the WebInterface class. Calls are handled by the WebResponder class.
  *
+ * \image html webInterface.png 
+ * <center> <a href="http://youtu.be/9B0tVJsg-0I" target="_blank"> Watch video on Youtube</a> </center>
+ *
  * <b> Legal </b>
  *
  * Copyright: 2012 (C) Universidad Carlos III de Madrid
