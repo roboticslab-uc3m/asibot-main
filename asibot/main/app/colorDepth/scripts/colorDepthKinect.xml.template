@@ -16,8 +16,12 @@
         </module>
 
         <connection>
-                <from>/ravebot/ip_camera/img:o</from>
+                <from>/kinect/imagePort:o</from>
                 <to>/colorDepth/img:i</to>
+        </connection>
+        <connection>
+                <from>/kinect/depthPort:o</from>
+                <to>/colorDepth/depth:i</to>
         </connection>
         <connection>
                 <from>/colorDepth/img:o</from>
