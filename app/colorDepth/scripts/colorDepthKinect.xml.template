@@ -16,11 +16,11 @@
         </module>
 
         <connection>
-                <from>/kinect/imagePort:o</from>
+                <from>/kinect/imageMap:o</from>
                 <to>/colorDepth/img:i</to>
         </connection>
         <connection>
-                <from>/kinect/depthPort:o</from>
+                <from>/kinect/depthMap:o</from>
                 <to>/colorDepth/depth:i</to>
         </connection>
         <connection>
