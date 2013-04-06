@@ -626,6 +626,12 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     */
     virtual bool tweakGet(yarp::os::Bottle &options);
 
+    /** Delete a specified controller context. [wait for reply]
+    * @param id specify the context id to be removed.
+    * @return true/false on success/failure. 
+    */
+    virtual bool deleteContext(const int id);
+
 // -------- DeviceDriver declarations. Implementation in IDeviceImpl.cpp --------
 
     /**
