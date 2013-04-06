@@ -20,7 +20,7 @@ using yarp::os::ConstString;
 using yarp::os::RpcClient;
 
 /**
- * @ingroup xgnitive_libraries
+ * @ingroup asibot_libraries
  *
  * \defgroup ColorClientLib
  *
