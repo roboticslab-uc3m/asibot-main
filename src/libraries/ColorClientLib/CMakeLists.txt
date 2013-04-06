@@ -33,9 +33,9 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
-# Exporting dependencies for XGNITIVEConfig.cmake quite manually for now... 
-set(XGNITIVE_INCLUDE_DIRS ${XGNITIVE_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
-set(XGNITIVE_LIBRARIES ${XGNITIVE_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") 
+# Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
+set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") 
 
 ENDIF (ENABLE_ColorClientLib)
 
