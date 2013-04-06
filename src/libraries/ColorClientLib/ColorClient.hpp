@@ -38,12 +38,12 @@ using yarp::os::RpcClient;
  * @ingroup ColorClient
  *
  * The ColorClient class implements a client part that connects to a remote
- * \ref colorXxx module. Warning: Be careful with NUM_AXES, depends on angle representation!
+ * \ref colorSegmentor or \ref colorDepth module.
  * 
  */
 class ColorClient {
 protected:
-    RpcClient rpcClient;
+    BufferedPort<Bottle> stateClient;
     bool isQuiet;
 
 public:
@@ -55,7 +55,7 @@ public:
 
     /**
      * Configure the object and make it connect to a colorXxx module by port name.
-     * @param serverPrefix the colorXxx module port name prefix ('/ravebot' or '/canbot').
+     * @param serverPrefix the colorXxx module port name prefix ('/colorSegmentor' or '/colorDepth').
      * @param quiet suppress messages displayed upon success/failure.
      * @return true if the object and connection was created successfully.
      */
@@ -69,20 +69,18 @@ public:
 
     /**
      * Get values of a given feature for a given word.
-     * @param word
-     * @param feature
+     * @param index
      * @param values returned
      * @return true
      */
-    bool get(const char *word, const int &feature, std::vector<double> &values);
+    bool get(const int &index, std::vector<double> &values);
 
     /**
-     * Get number of features for a given word (does not include timestamp in count).
-     * @param word
+     * Get number for maximum index.
      * @param size return
      * @return true
      */
-    bool size(const char *word, int &value);
+    bool size(int &value);
 };
 
 #endif
