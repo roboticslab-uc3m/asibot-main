@@ -10,10 +10,10 @@ bool ColorClient::open(const char* serverPrefix, bool quiet) {
     isQuiet = quiet;
     ConstString clientStr(serverPrefix);
     clientStr += "/state:i";
-    rpcClient.open(clientStr);
+    stateClient.open(clientStr);
     ConstString serverStr(serverPrefix);
-    serverStr += "/state:i";
-    if (!rpcClient.addOutput(serverStr)) {
+    serverStr += "/state:o";
+    if (!Network::connect(serverStr,clientStr)) {
         if (!isQuiet) fprintf(stderr,"[fail] Could not connect to colorXxx, requires a running instance.\n");
         return false;
     }
@@ -24,16 +24,20 @@ bool ColorClient::open(const char* serverPrefix, bool quiet) {
 /************************************************************************/
 bool ColorClient::close() {
     if (!isQuiet) printf("[ColorClient] Close...\n");
-    rpcClient.interrupt();
-    rpcClient.close();
+    stateClient.interrupt();
+    stateClient.close();
     return true;
 }
 
 /************************************************************************/
 bool ColorClient::get(const int &index, std::vector<double> &values) {
-    if (!isQuiet) printf("[ColorClient] get(%d)\n",feature);
-    Bottle miInput;
-    colorClient.read(miInput);
+    if (!isQuiet) printf("[ColorClient] get(%d)\n",index);
+    Bottle* miInput;
+    stateClient.read(miInput);
+    if(!miInput) {
+        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent or out of range index.\n");
+        return false;
+    }
 /*    if ((miInput.get(0).getCode() == BOTTLE_TAG_VOCAB)&&(miInput.get(0).asVocab() == VOCAB_FAILED)) {
         if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent word or feature out of range.\n");
         return false;
@@ -46,17 +50,19 @@ bool ColorClient::get(const int &index, std::vector<double> &values) {
 }
 
 /************************************************************************/
-bool ColorClient::size(const char *word, int &value) {
-    if (!isQuiet) printf("[ColorClient] size(%s)\n",word);
-    Bottle miOutput, miInput;
-    miOutput.addString("size");
-    miOutput.addString(word);
-    rpcClient.write(miOutput, miInput);
-    if ((miInput.get(0).getCode() == BOTTLE_TAG_VOCAB)&&(miInput.get(0).asVocab() == VOCAB_FAILED)) {
+bool ColorClient::size(int &value) {
+    if (!isQuiet) printf("[ColorClient] size(%d)\n",value);
+    Bottle* miInput;
+    stateClient.read(miInput);
+    if(!miInput) {
+        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent or out of range index.\n");
+        return false;
+    }
+/*    if ((miInput.get(0).getCode() == BOTTLE_TAG_VOCAB)&&(miInput.get(0).asVocab() == VOCAB_FAILED)) {
         if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent word or feature out of range.\n");
         return false;
     }
-    value = miInput.get(0).asInt();
+    value = miInput.get(0).asInt();*/
     if (!isQuiet) printf("[ColorClient] Got: %d\n",value);
     return true;
 }
