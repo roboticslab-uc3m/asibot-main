@@ -96,6 +96,15 @@ void SegmentorThread::run() {
         cvReleaseImage( &r ); //release the memory for the image
         cvReleaseImage( &g ); //release the memory for the image
         cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
+    } else if (algorithm=="greenMinusRed") {
+        IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        cvSplit( rgb, NULL, g, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
+        cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
+        cvSub(g,r,rgbMod,NULL);  // subtract
+        cvReleaseImage( &g ); //release the memory for the image
+        cvReleaseImage( &r ); //release the memory for the image
+        cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
     } else fprintf(stderr,"[warning] Unrecognized algorithm.\n");
 
     // get blobs and filter them using its area
