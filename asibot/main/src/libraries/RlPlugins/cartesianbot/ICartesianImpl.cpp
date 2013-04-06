@@ -431,3 +431,9 @@ bool CartesianBot::tweakGet(yarp::os::Bottle &options) {
 
 // -----------------------------------------------------------------------------
 
+bool CartesianBot::deleteContext(const int id) {
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+
