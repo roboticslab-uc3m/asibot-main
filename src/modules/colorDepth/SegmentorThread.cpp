@@ -102,94 +102,88 @@ void SegmentorThread::run() {
     // int code = img->getPixelCode();
     // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
     
-    ///// Get the image biggest blob /////
     IplImage *rgb = cvCreateImage(cvSize(img->width(),  
                                              img->height()), 
                                              IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)img->getIplImage(), rgb, CV_RGB2BGR);
 
-    // --- ALGORITHM STARTS SOMEWHERE HERE ---
-    
-    IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-    IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-    //IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-
-    cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
-    cvSplit( rgb, NULL, g, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
-    //cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
-
     Bottle container;
     //ImageOf<PixelBgr> yarpReturnImage;
 
+    IplImage* rgbMod = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+
     if (algorithm=="redMinusGreen") {
+        IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
+        cvSplit( rgb, NULL, g, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
+        cvSub(r,g,rgbMod,NULL);  // subtract
+        cvReleaseImage( &r ); //release the memory for the image
+        cvReleaseImage( &g ); //release the memory for the image
+        cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
+    } else fprintf(stderr,"[warning] Unrecognized algorithm.\n");
 
-        IplImage* rMg = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-        cvSub(r,g,rMg,NULL);  // subtract
-        cvCmpS( rMg, threshold, rMg, CV_CMP_GE );  // binarize
+    // get blobs and filter them using its area
+    CBlobResult blobs;
 
-        // get blobs and filter them using its area
-        CBlobResult blobs;
+    // find blobs in image
+    blobs = CBlobResult( rgbMod, NULL, 0 ); // 255 for inverse (black blobs on white bg)
 
-        // find blobs in image
-        blobs = CBlobResult( rMg, NULL, 0 ); // 255 for inverse (black blobs on white bg)
+    // printf("Publish biggest out of %d blob(s)...\n",blobs.GetNumBlobs());
 
-        // printf("Publish biggest out of %d blob(s)...\n",blobs.GetNumBlobs());
+    int numBlobs = blobs.GetNumBlobs();
+    if (numBlobs > maxNumBlobs) numBlobs = maxNumBlobs;
 
-        int numBlobs = blobs.GetNumBlobs();
-        if (numBlobs > maxNumBlobs) numBlobs = maxNumBlobs;
+    for (int i=0;i<numBlobs;i++) {  // from biggest to smallest
+        // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
+        // Better than Filter:
+        CBlob bigBlob;
+        blobs.GetNthBlob( CBlobGetArea(), i, bigBlob );
 
-        for (int i=0;i<numBlobs;i++) {  // from biggest to smallest
-            // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
-            // Better than Filter:
-            CBlob bigBlob;
-            blobs.GetNthBlob( CBlobGetArea(), i, bigBlob );
-
-            CBlobGetXCenter getXCenter;
-            double myx = getXCenter( bigBlob );
-            double myy;
-            if (locate == "bottom") {
-                CBlobGetMaxY getYMax;
-                myy = getYMax( bigBlob );
-            } else {  // locate == "centroid"
-                CBlobGetYCenter getYCenter;
-                myy = getYCenter( bigBlob );
-            }
-
-            if(seeBounding>0){
-                PixelRgb green(0,255,0);
-                CvRect bb = bigBlob.GetBoundingBox();
-                addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
-            }
-
-            // cvSub( rgb, r, rgb);
-            // yarpReturnImage.wrapIplImage(rgb);
-            // add a blue centroid/bottom circle
-            PixelRgb blue(0,0,255);
-            addCircle(*img,blue,myx,myy,3);
-
-            // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
-            // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
-
-            //Bottle b_xy;
-            //b_xy.addDouble(myx);
-            //b_xy.addDouble(myy);
-            //container.addList() = b_xy;
-
-            double mmZ = depth->pixel(int(myx),int(myy));  // maybe better do a mean around area?
-            //fprintf(stdout,"[CallbackPort] depth at (%d,%d) is %f.\n",int(myx),int(myy),mmZ);
-            Bottle mmOut;
-            double mmX = 1000.0 * (myx - (cx * mmZ/1000.0)) / fx;
-            double mmY = 1000.0 * (myy - (cy * mmZ/1000.0)) / fy;
-            mmOut.addDouble(mmX);
-            mmOut.addDouble(mmY);
-            mmOut.addDouble(mmZ);
-            if(mmZ != 0) container.addList() = mmOut;
-
+        CBlobGetXCenter getXCenter;
+        double myx = getXCenter( bigBlob );
+        double myy;
+        if (locate == "bottom") {
+            CBlobGetMaxY getYMax;
+            myy = getYMax( bigBlob );
+        } else {  // locate == "centroid"
+            CBlobGetYCenter getYCenter;
+            myy = getYCenter( bigBlob );
         }
 
-        cvReleaseImage( &rMg ); //release the memory for the image
+        if(seeBounding>0){
+            PixelRgb green(0,255,0);
+            CvRect bb = bigBlob.GetBoundingBox();
+            addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
+        }
 
-    } else printf("[warning] Unrecognized algorithm.\n");
+        // cvSub( rgb, r, rgb);
+        // yarpReturnImage.wrapIplImage(rgb);
+        // add a blue centroid/bottom circle
+        PixelRgb blue(0,0,255);
+        addCircle(*img,blue,myx,myy,3);
+
+        // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
+        // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
+
+        //Bottle b_xy;
+        //b_xy.addDouble(myx);
+        //b_xy.addDouble(myy);
+        //container.addList() = b_xy;
+
+        double mmZ = depth->pixel(int(myx),int(myy));  // maybe better do a mean around area?
+        //fprintf(stdout,"[CallbackPort] depth at (%d,%d) is %f.\n",int(myx),int(myy),mmZ);
+        Bottle mmOut;
+        double mmX = 1000.0 * (myx - (cx * mmZ/1000.0)) / fx;
+        double mmY = 1000.0 * (myy - (cy * mmZ/1000.0)) / fy;
+        mmOut.addDouble(mmX);
+        mmOut.addDouble(mmY);
+        mmOut.addDouble(mmZ);
+        if(mmZ != 0) container.addList() = mmOut;
+
+    }
+
+    cvReleaseImage( &rgbMod ); //release the memory for the image
 
     pOutImg->prepare() = *img;
     pOutImg->write();
@@ -197,9 +191,6 @@ void SegmentorThread::run() {
     pOutPort->write(container);
 
     cvReleaseImage( &rgb ); //release the memory for the image
-    cvReleaseImage( &r ); //release the memory for the image
-    cvReleaseImage( &g ); //release the memory for the image
-    //cvReleaseImage( &b ); //release the memory for the image
 
 }
 
