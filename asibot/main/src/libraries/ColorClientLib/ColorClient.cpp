@@ -32,26 +32,27 @@ bool ColorClient::close() {
 /************************************************************************/
 bool ColorClient::get(const int &index, std::vector<double> &values) {
     if (!isQuiet) printf("[ColorClient] get(%d)\n",index);
-    Bottle *miInput = stateClient.read(false);
+    Bottle *miInput = stateClient.read();  // read(false) not reading...
     if(!miInput) {
         if (!isQuiet) fprintf(stderr,"[warning] Get failed, cannot read published state.\n");
         return false;
     }
-/*    if ((miInput.get(0).getCode() == BOTTLE_TAG_VOCAB)&&(miInput.get(0).asVocab() == VOCAB_FAILED)) {
-        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent word or feature out of range.\n");
+    if (!isQuiet) printf("[ColorClient] Got %d elems: %s\n",miInput->size(),miInput->toString().c_str());
+    if (index >= miInput->size()) {
+        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Index out of range.\n");
         return false;
     }
-    if (!isQuiet) printf("[ColorClient] Got %d elems: %s\n",miInput.size(),miInput.toString().c_str());
-    values.resize(miInput.size());  // more efficient than push_back for large blocks
-    for (int i=0; i<miInput.size(); i++)
-        values[i] = miInput.get(i).asDouble();*/
+    Bottle *contents = miInput->get(index).asList();
+    values.resize(contents->size());  // more efficient than push_back for large blocks
+    for (int i=0; i<contents->size(); i++)
+        values[i] = contents->get(i).asDouble();
     return true;
 }
 
 /************************************************************************/
 bool ColorClient::size(int &value) {
-    if (!isQuiet) printf("[ColorClient] size(%d)\n",value);
-    Bottle *miInput = stateClient.read(false);
+    if (!isQuiet) printf("[ColorClient] size()\n");
+    Bottle *miInput = stateClient.read();  // read(false) not reading...
     if(!miInput) {
         if (!isQuiet) fprintf(stderr,"[warning] Get failed, cannot read published state.\n");
         return false;
