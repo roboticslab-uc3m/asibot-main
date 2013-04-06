@@ -45,6 +45,7 @@ using yarp::os::Network;
  */
 class ColorClient {
 protected:
+    Network yarp;
     BufferedPort<Bottle> stateClient;
     bool isQuiet;
 
