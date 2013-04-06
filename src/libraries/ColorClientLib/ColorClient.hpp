@@ -9,15 +9,17 @@
 
 #include <yarp/os/Bottle.h>
 #include <yarp/os/ConstString.h>
-#include <yarp/os/RpcClient.h>
+#include <yarp/os/BufferedPort.h>
 #include <yarp/os/Vocab.h>
+#include <yarp/os/Network.h>
 #include <yarp/sig/Vector.h>
 
 #define VOCAB_FAILED VOCAB4('f','a','i','l')
 
 using yarp::os::Bottle;
+using yarp::os::BufferedPort;
 using yarp::os::ConstString;
-using yarp::os::RpcClient;
+using yarp::os::Network;
 
 /**
  * @ingroup asibot_libraries
