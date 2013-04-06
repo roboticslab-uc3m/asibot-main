@@ -3,11 +3,11 @@
 #ifndef __SEGMENTOR_THREAD_HPP__
 #define __SEGMENTOR_THREAD_HPP__
 
-#include <yarp/os/RFModule.h>
-#include <yarp/os/Module.h>
+#include <yarp/os/BufferedPort.h>
 #include <yarp/os/Network.h>
 #include <yarp/os/Port.h>
-#include <yarp/os/BufferedPort.h>
+#include <yarp/os/RFModule.h>
+#include <yarp/os/RateThread.h>
 
 #include <yarp/sig/all.h>
 
