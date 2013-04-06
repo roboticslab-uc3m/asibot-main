@@ -5,6 +5,7 @@
 
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
+#include <yarp/os/Vocab.h>
 
 #include <openrave-core.h>
 #include <openrave/kinbody.h>
