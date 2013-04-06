@@ -92,21 +92,48 @@ if (CREATE_RUBY)
 endif (CREATE_RUBY)
 
 if (CREATE_JAVA)
-  set(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/asibot")
-  set(CMAKE_SWIG_FLAGS "-package;asibot;-Wall;-module;asibot")
-  find_package(JNI REQUIRED)
-  include_directories(${JAVA_INCLUDE_PATH} ${JAVA_INCLUDE_PATH2})
-  swig_add_module(asibot java asibot.i)
-  #option (CREATE_JAVA_CLASS_FILES "Compile java code with javac" ON)
-  #if (CREATE_JAVA_CLASS_FILES)
-  #  ADD_CUSTOM_COMMAND(TARGET icub
-  #    POST_BUILD
-  #    COMMAND javac -source 1.3 -target 1.3 "asibot/*.java"
-  #    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-  #endif ()
-  if (APPLE)
-    set_target_properties(asibot PROPERTIES SUFFIX ".jnilib")
-  endif (APPLE)
+  OPTION(PREPARE_CLASS_FILES "Prepare class files" OFF)
+  SET(ASIBOT_HELPERS LoadAsibot.java)
+  MAKE_DIRECTORY("${CMAKE_CURRENT_BINARY_DIR}/asibot")
+  SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/asibot")
+  SET(TARGET_DIR src)
+  IF (NOT BINDINGS_SRC_DIR)
+    SET(BINDINGS_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  ENDIF ()
+  IF (NOT PREPARE_CLASS_FILES)
+    SET(CMAKE_SWIG_OUTDIR "${CMAKE_CURRENT_BINARY_DIR}/generated_src")
+    SET(TARGET_DIR generated_src)
+  ENDIF ()
+  MAKE_DIRECTORY("${CMAKE_CURRENT_BINARY_DIR}/${TARGET_DIR}")
+  FOREACH(src ${ASIBOT_HELPERS})
+    SET(target ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_DIR}/${src})
+    CONFIGURE_FILE(${BINDINGS_SRC_DIR}/${src}
+      ${target} IMMEDIATE)
+    MESSAGE(STATUS "copied ${target}")
+  ENDFOREACH(src)
+  SET(CMAKE_SWIG_FLAGS "-package;asibot;-Wall;-module;asibot")
+  FIND_PACKAGE(JNI REQUIRED)
+  INCLUDE_DIRECTORIES(${JAVA_INCLUDE_PATH} ${JAVA_INCLUDE_PATH2} )
+  SET(target_name jasibot)
+  SWIG_ADD_MODULE(${target_name} java asibot.i)
+  IF (PREPARE_CLASS_FILES)
+    ADD_CUSTOM_COMMAND(TARGET ${target_name}
+      POST_BUILD
+      COMMAND javac -source 1.3 -target 1.3 "src/*.java"
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+  ENDIF ()
+
+  # issue on MINGW where C++ name-mangling prevents java finding methods
+  IF (MINGW)
+    MESSAGE(STATUS "untested MINGW patch - see CMakeLists.txt")
+    SET_TARGET_PROPERTIES(${target_name} PROPERTIES 
+      LINK_FLAGS "--add-stdcall-alias")
+  ENDIF (MINGW)
+  ## the following is based on:
+  ## http://www.cmake.org/pipermail/cmake/2007-September/016343.html
+  IF(APPLE)
+    SET_TARGET_PROPERTIES(${target_name} PROPERTIES SUFFIX ".jnilib")
+  ENDIF(APPLE)
 endif (CREATE_JAVA)
 
 IF (CREATE_CSHARP)
