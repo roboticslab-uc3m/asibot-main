@@ -32,10 +32,9 @@ bool ColorClient::close() {
 /************************************************************************/
 bool ColorClient::get(const int &index, std::vector<double> &values) {
     if (!isQuiet) printf("[ColorClient] get(%d)\n",index);
-    Bottle* miInput;
-    stateClient.read(miInput);
+    Bottle *miInput = stateClient.read(false);
     if(!miInput) {
-        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent or out of range index.\n");
+        if (!isQuiet) fprintf(stderr,"[warning] Get failed, cannot read published state.\n");
         return false;
     }
 /*    if ((miInput.get(0).getCode() == BOTTLE_TAG_VOCAB)&&(miInput.get(0).asVocab() == VOCAB_FAILED)) {
@@ -52,17 +51,12 @@ bool ColorClient::get(const int &index, std::vector<double> &values) {
 /************************************************************************/
 bool ColorClient::size(int &value) {
     if (!isQuiet) printf("[ColorClient] size(%d)\n",value);
-    Bottle* miInput;
-    stateClient.read(miInput);
+    Bottle *miInput = stateClient.read(false);
     if(!miInput) {
-        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent or out of range index.\n");
+        if (!isQuiet) fprintf(stderr,"[warning] Get failed, cannot read published state.\n");
         return false;
     }
-/*    if ((miInput.get(0).getCode() == BOTTLE_TAG_VOCAB)&&(miInput.get(0).asVocab() == VOCAB_FAILED)) {
-        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Possibly non-existent word or feature out of range.\n");
-        return false;
-    }
-    value = miInput.get(0).asInt();*/
+    value = miInput->size();
     if (!isQuiet) printf("[ColorClient] Got: %d\n",value);
     return true;
 }
