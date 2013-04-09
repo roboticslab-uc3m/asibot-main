@@ -71,19 +71,20 @@ public:
     bool close();
 
     /**
-     * Get values of a given feature for a given word.
-     * @param index
-     * @param values returned
-     * @return true
-     */
-    bool get(const int &index, std::vector<double> &values);
-
-    /**
-     * Get number for maximum index.
+     * Get how many coordinates are given per point. Refer to documentation of \ref colorSegmentor,
+     * \ref colorDepth or similar for unit info.
      * @param size return
      * @return true
      */
     bool size(int &value);
+
+    /**
+     * Get values.
+     * @param values returned
+     * @return true
+     */
+    bool get(std::vector<double> &values);
+
 };
 
 #endif
