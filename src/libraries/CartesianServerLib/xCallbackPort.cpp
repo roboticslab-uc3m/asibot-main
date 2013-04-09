@@ -88,6 +88,18 @@ void xCallbackPort::onRead(Bottle& b) {
         printf("xdotd: %s; odotd: %s\n",xdotd.toString().c_str(),odotd.toString().c_str());
         *csStatus = 6;
         icart->setTaskVelocities(xdotd,odotd);
+    } else if (choice==VOCAB_POSE) { ///////////////////////////////// pose /////////////////////////////////
+        Vector cmd;
+        Bottle *lst = b.get(1).asList();
+        Vector xd,od;
+        xd.push_back(lst->get(0).asDouble());  // xd
+        xd.push_back(lst->get(1).asDouble());  // xd
+        xd.push_back(lst->get(2).asDouble());  // xd
+        od.push_back(lst->get(3).asDouble());  // rot(y')d
+        od.push_back(lst->get(4).asDouble());  // rot(z'')d
+        //printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
+        *csStatus = 7;
+        icart->goToPose(xd,od,3.0);
     }
 }
 
