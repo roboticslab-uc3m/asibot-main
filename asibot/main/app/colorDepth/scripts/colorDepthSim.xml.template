@@ -11,7 +11,7 @@
                 <node>localhost</node>
         </module>
         <connection>
-                <from>/ravebot/kinect_depth/img:o</from>
+                <from>/ravebot/kinect_depth/depth:o</from>
                 <to>/yarpview/depth:i</to>
         </connection>
 
