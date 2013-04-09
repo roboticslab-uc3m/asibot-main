@@ -33,18 +33,18 @@ bool ColorClient::close() {
 bool ColorClient::get(std::vector<double> &values) {
     values.clear();  // Wipe the contents.
     if (!isQuiet) printf("[ColorClient] get()\n");
-    Bottle *miInput = stateClient.read();  // read(false) not reading...
-    if(!miInput) {
+    Bottle *inB = stateClient.read();  // read(false) not reading...
+    if(!inB) {
         if (!isQuiet) fprintf(stderr,"[ColorClient] warning: Get failed, cannot read published state.\n");
         return false;
     }
-    if (!isQuiet) printf("[ColorClient] Got %d elems: %s\n",miInput->size(),miInput->toString().c_str());
-    if(miInput->size() == 0) {
+    if (!isQuiet) printf("[ColorClient] Got %d elems: %s\n",inB->size(),inB->toString().c_str());
+    if(inB->size() == 0) {
         if (!isQuiet) fprintf(stderr,"[ColorClient] warning: Got empty contents, returning false.\n");
         return false;
     }
-    for(int i=0;i<miInput->size();i++){
-        Bottle *contents = miInput->get(i).asList();
+    for(int i=0;i<inB->size();i++){
+        Bottle *contents = inB->get(i).asList();
         for (int j=0; j<contents->size(); j++)
             values.push_back(contents->get(j).asDouble());
     }
@@ -54,17 +54,17 @@ bool ColorClient::get(std::vector<double> &values) {
 /************************************************************************/
 bool ColorClient::size(int &value) {
     if (!isQuiet) printf("[ColorClient] size()\n");
-    Bottle *miInput = stateClient.read();  // read(false) not reading...
-    if(!miInput) {
+    Bottle *inB = stateClient.read();  // read(false) not reading...
+    if(!inB) {
         if (!isQuiet) fprintf(stderr,"[ColorClient] warning: Get failed, cannot read published state.\n");
         return false;
     }
-    if(miInput->size() == 0) {
+    if(inB->size() == 0) {
         if (!isQuiet) fprintf(stderr,"[ColorClient] warning: Got empty contents, returning false and size -1.\n");
         value = -1;
         return false;
     }
-    Bottle *contents = miInput->get(0).asList();
+    Bottle *contents = inB->get(0).asList();
     value = contents->size();
     if (!isQuiet) printf("[ColorClient] Got: %d\n",value);
     return true;
