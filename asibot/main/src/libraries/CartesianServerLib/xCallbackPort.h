@@ -25,6 +25,7 @@
 
 #define VOCAB_FWD VOCAB3('f','w','d')
 #define VOCAB_BKWD VOCAB4('b','k','w','d')
+#define VOCAB_POSE VOCAB4('p','o','s','e')
 #define VOCAB_ROT VOCAB3('r','o','t')
 #define VOCAB_VMOS VOCAB4('v','m','o','s')
 
