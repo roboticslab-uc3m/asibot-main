@@ -14,10 +14,10 @@ bool ColorClient::open(const char* serverPrefix, bool quiet) {
     ConstString serverStr(serverPrefix);
     serverStr += "/state:o";
     if (!Network::connect(serverStr,clientStr)) {
-        if (!isQuiet) fprintf(stderr,"[fail] Could not connect to colorXxx, requires a running instance.\n");
+        if (!isQuiet) fprintf(stderr,"[fail] Could not connect %s to %s.\n",serverStr.c_str(),clientStr.c_str());
         return false;
     }
-    if (!isQuiet) printf("[ColorClient] Opened connection with colorXxx.\n");
+    if (!isQuiet) printf("[ColorClient] %s reading from %s.\n",clientStr.c_str(),serverStr.c_str());
     return true;
 }
 
@@ -39,10 +39,14 @@ bool ColorClient::get(std::vector<double> &values) {
         return false;
     }
     if (!isQuiet) printf("[ColorClient] Got %d elems: %s\n",miInput->size(),miInput->toString().c_str());
-    for(int i;i<miInput->size();i++){
+    if(miInput->size() == 0) {
+        if (!isQuiet) fprintf(stderr,"[warning] Got empty contents, returning false.\n");
+        return false;
+    }
+    for(int i=0;i<miInput->size();i++){
         Bottle *contents = miInput->get(i).asList();
-        for (int j=0; j<contents->size(); i++)
-            values.push_back(contents->get(i).asDouble());
+        for (int j=0; j<contents->size(); j++)
+            values.push_back(contents->get(j).asDouble());
     }
     return true;
 }
