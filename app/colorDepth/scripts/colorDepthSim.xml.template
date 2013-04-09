@@ -6,19 +6,33 @@
                 <node>localhost</node>
         </module>
         <module>
+                <name>yarpview</name>
+                <parameters>--name /yarpview/depth:i</parameters>
+                <node>localhost</node>
+        </module>
+        <connection>
+                <from>/ravebot/kinect_depth/img:o</from>
+                <to>/yarpview/depth:i</to>
+        </connection>
+
+        <module>
                 <name>colorDepth</name>
                 <node>localhost</node>
         </module>
+        <connection>
+                <from>/ravebot/kinect_rgb/img:o</from>
+                <to>/colorDepth/img:i</to>
+        </connection>
+        <connection>
+                <from>/ravebot/kinect_depth/depth:o</from>
+                <to>/colorDepth/depth:i</to>
+        </connection>
+
         <module>
                 <name>yarpview</name>
                 <parameters>--name /yarpview/img:i</parameters>
                 <node>localhost</node>
         </module>
-
-        <connection>
-                <from>/ravebot/ip_camera/img:o</from>
-                <to>/colorDepth/img:i</to>
-        </connection>
         <connection>
                 <from>/colorDepth/img:o</from>
                 <to>/yarpview/img:i</to>
