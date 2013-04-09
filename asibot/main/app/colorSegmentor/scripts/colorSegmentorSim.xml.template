@@ -1,5 +1,5 @@
 <application>
-<name>colorSegmentor App</name>
+<name>colorSegmentorSim App</name>
         <module>
                 <name>cartesianServer</name>
                 <parameters>--env asibot_kitchen_cameras.env.xml</parameters>
