@@ -30,22 +30,20 @@ bool ColorClient::close() {
 }
 
 /************************************************************************/
-bool ColorClient::get(const int &index, std::vector<double> &values) {
-    if (!isQuiet) printf("[ColorClient] get(%d)\n",index);
+bool ColorClient::get(std::vector<double> &values) {
+    values.clear();  // Wipe the contents.
+    if (!isQuiet) printf("[ColorClient] get()\n");
     Bottle *miInput = stateClient.read();  // read(false) not reading...
     if(!miInput) {
         if (!isQuiet) fprintf(stderr,"[warning] Get failed, cannot read published state.\n");
         return false;
     }
     if (!isQuiet) printf("[ColorClient] Got %d elems: %s\n",miInput->size(),miInput->toString().c_str());
-    if (index >= miInput->size()) {
-        if (!isQuiet) fprintf(stderr,"[warning] Get failed. Index out of range.\n");
-        return false;
+    for(int i;i<miInput->size();i++){
+        Bottle *contents = miInput->get(i).asList();
+        for (int j=0; j<contents->size(); i++)
+            values.push_back(contents->get(i).asDouble());
     }
-    Bottle *contents = miInput->get(index).asList();
-    values.resize(contents->size());  // more efficient than push_back for large blocks
-    for (int i=0; i<contents->size(); i++)
-        values[i] = contents->get(i).asDouble();
     return true;
 }
 
@@ -57,7 +55,8 @@ bool ColorClient::size(int &value) {
         if (!isQuiet) fprintf(stderr,"[warning] Get failed, cannot read published state.\n");
         return false;
     }
-    value = miInput->size();
+    Bottle *contents = miInput->get(0).asList();
+    value = contents->size();
     if (!isQuiet) printf("[ColorClient] Got: %d\n",value);
     return true;
 }
