@@ -1,8 +1,8 @@
 <application>
-<name>colorDepth App</name>
+<name>colorDepthSim App</name>
         <module>
                 <name>cartesianServer</name>
-                <parameters>--env asibot_kitchen_cameras.env.xml</parameters>
+                <parameters>--env asibot_kitchen_kinect.env.xml --extraRobot 1dof</parameters>
                 <node>localhost</node>
         </module>
         <module>
