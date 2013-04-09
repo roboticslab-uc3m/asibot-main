@@ -94,6 +94,7 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
  * <tr><td>[fwd] (0.0 90.0)</td><td>[Track virtual point in front of end-effector] (dot(rot(z))[deg/s] rot(y')[deg]))</td></tr>
  * <tr><td>[rot] (0.0 90.0)</td><td>[Track virtual point orientation] (dot(rot(z))[deg/s] rot(y')[deg]))</td></tr>
  * <tr><td>[vmos] (0.0 1.0 0.0 0.0 0.0)</td><td>Direct velocity movement command, in the Cartesian space.</td></tr>
+ * <tr><td>[pose] (0.0 1.0 0.0 0.0 0.0)</td><td>Direct pose movement command, in the Cartesian space.</td></tr>
  * </table>
  *
  * @section cartesianServer_modify Modify
