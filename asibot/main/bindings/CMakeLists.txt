@@ -66,7 +66,7 @@ if (CREATE_PYTHON)
   EXECUTE_PROCESS(COMMAND ${PYTHON_EXECUTABLE} 
     -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))" 
     OUTPUT_VARIABLE PYTHON_INSTDIR OUTPUT_STRIP_TRAILING_WHITESPACE )
-  INSTALL(FILES ${CMAKE_BINARY_DIR}/lib/asibot.py ${CMAKE_BINARY_DIR}/lib/_asibot.so 
+  INSTALL(FILES ${CMAKE_BINARY_DIR}/asibot.py ${CMAKE_BINARY_DIR}/_asibot.so 
     DESTINATION ${PYTHON_INSTDIR} )
 
   IF (WIN32)
@@ -117,7 +117,7 @@ if (CREATE_JAVA)
   IF (PREPARE_CLASS_FILES)
     ADD_CUSTOM_COMMAND(TARGET ${target_name}
       POST_BUILD
-      COMMAND javac -source 1.3 -target 1.3 "src/*.java"
+      COMMAND javac -source 1.3 -target 1.3 "src/*.java" "asibot/*.java"
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
   ENDIF ()
 
