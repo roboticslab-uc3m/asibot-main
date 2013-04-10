@@ -14,6 +14,9 @@
 #include <yarp/dev/CartesianControl.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
 
+#include <yarp/sig/Matrix.h>
+#include <yarp/math/Math.h>
+
 #define VPOINT_DIST 0.05  // [m]
 
 #define VOCAB_MY_STOP VOCAB4('s','t','o','p')
@@ -32,6 +35,7 @@
 using namespace yarp::os;
 using namespace yarp::dev;
 using namespace yarp::sig;
+using namespace yarp::math;
 
 /**
  * @ingroup xCallbackPort
@@ -62,10 +66,16 @@ public:
     */
     void setPositionInterface(yarp::dev::IPositionControl* _ipos);
 
-        /**
+    /**
     * Register a position interface for the PortReader.
     */
     void setCsStatus(int* _csStatus);
+
+    /**
+    * Thanks: Ugo Pattacini, Serena Ivaldi, Francesco Nori ((iCub ctrllib/math.h))
+    */
+    Matrix axis2dcm(const Vector &v, unsigned int verbose);
+
 };
 
 #endif
