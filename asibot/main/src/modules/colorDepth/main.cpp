@@ -4,7 +4,7 @@
  * 
  * \defgroup colorDepth colorDepth
  *
- * \image html colorDepth.png
+ * \image html colorDepthSim-500px.png
  * 
  * The \ref colorDepth module tracks a red can and streams its location in the format "(x y z) ..." through a
  * <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1os_1_1Port.html">yarp::os::Port</a> output called
