@@ -81,20 +81,6 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
 // -- Helper Funcion declarations. Implementation in HelperFuncs.cpp--
 
     /**
-    * Simple function to pass from degrees to radians. 
-    * @param inDeg angle value in degrees.
-    * @return angle value in radians.
-    */
-    double toRad(const double _inDeg);
-
-    /**
-    * Simple function to pass from radians to degrees.
-    * @param _inRad angle value in radians.
-    * @return angle value in degrees.
-    */
-    double toDeg(const double _inRad);
-
-    /**
     * [thanks Ugo Pattacini!]
     */
     bool getMatrixFromProperties(Searchable &options, ConstString &tag, yarp::sig::Matrix &H);
