@@ -8,7 +8,6 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     Bottle in, out;
     in.read(connection);
     printf("[WorldRpcResponder] Got %s\n", in.toString().c_str());
-    out.clear();
     ConnectionWriter *returnToSender = connection.getWriter();
     if (returnToSender==NULL) return false;
     ConstString choice = in.get(0).asString();
