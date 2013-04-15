@@ -1,5 +1,4 @@
-
-// -----------------------------------------------------------------------------
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "RaveBot.h"
 
@@ -38,7 +37,7 @@ bool RaveBot::setEncoders(const double *vals) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoder(int j, double *v) {
-    *v=getEncExposed(j);
+    *v = getEncExposed(j);
     return true;
 }
 
@@ -54,13 +53,18 @@ bool RaveBot::getEncoders(double *encs) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoderSpeed(int j, double *sp) {
-    return false;
+    // Make it easy, give the current reference speed.
+    *sp = velRaw[j] / velRawExposed[j];  // begins to look like we should use semaphores.
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getEncoderSpeeds(double *spds) {
-    return false;
+    bool ok = true;
+    for(unsigned int i=0;i<numMotors;i++)
+        ok &= getEncoderSpeed(i,&encs[i]);
+    return ok;
 }
 
 // -----------------------------------------------------------------------------
