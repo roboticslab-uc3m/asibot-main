@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __GROUNDING_CLIENT__
-#define __GROUNDING_CLIENT__
+#ifndef __COLOR_CLIENT__
+#define __COLOR_CLIENT__
 
 #include <stdio.h>  // printf, fprintf
 
@@ -87,5 +87,5 @@ public:
 
 };
 
-#endif
+#endif  // __COLOR_CLIENT__
 
