@@ -19,9 +19,9 @@ project(asibot)
 option(ENABLE_CartesianClientLib "Choose if you want to compile CartesianClientLib" TRUE)
 option(ENABLE_CartesianServerLib "Choose if you want to compile CartesianServerLib" TRUE)
 option(ENABLE_ColorClientLib "Choose if you want to compile ColorClientLib" TRUE)
-option(ENABLE_ExtraMath "Choose if you want to compile ExtraMath" TRUE)
 option(ENABLE_RlPlugins "Choose if you want to compile RlPlugins" TRUE)
 option(ENABLE_TestRaveBotLib "Choose if you want to compile RlPlugins" TRUE)
+option(ENABLE_TinyMath "Choose if you want to compile TinyMath" TRUE)
 option(ENABLE_TrajGen "Choose if you want to compile TrajGen" TRUE)
 
 ### options: cpp modules

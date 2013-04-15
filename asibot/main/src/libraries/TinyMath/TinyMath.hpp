@@ -3,7 +3,7 @@
 #ifndef __TINY_MATH__
 #define __TINY_MATH__
 
-//#include "math.h"
+#include "math.h"
 
 /**
 * Simple function to pass from radians to degrees.
