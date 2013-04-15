@@ -1,5 +1,8 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
+#ifndef __INLINE_MATH__
+#define __INLINE_MATH__
+
 //#include "math.h"
 
 // ----------------------------------------------------------------------------
@@ -15,4 +18,6 @@ double toRad(const double inDeg) {
 }
 
 // ----------------------------------------------------------------------------
+
+#ifndef __INLINE_MATH__
 
