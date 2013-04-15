@@ -19,5 +19,5 @@ double toRad(const double inDeg) {
 
 // ----------------------------------------------------------------------------
 
-#ifndef __INLINE_MATH__
+#endif  // __INLINE_MATH__
 
