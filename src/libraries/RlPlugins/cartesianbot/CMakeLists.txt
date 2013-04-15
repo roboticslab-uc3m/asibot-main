@@ -21,7 +21,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${ASIBOT_INCLUDE_DIRS})  # kdl n
 
 YARP_ADD_PLUGIN(cartesianbot CartesianBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
 #TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
-TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES})
+TARGET_LINK_LIBRARIES(cartesianbot ${YARP_LIBRARIES} TinyMath)
 
 install(TARGETS cartesianbot DESTINATION lib)
 
