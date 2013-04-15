@@ -2,7 +2,7 @@
 @ingroup  asibot_applications
 \defgroup asibot_colorSegmentorSim colorSegmentorSim App
 
-@brief An application that launches a \ref cartesianServer module providing a simulated ASIBOT and Kinect
+@brief An application that launches a \ref cartesianServer module providing a simulated ASIBOT and camera
 environment, a \ref colorSegmentor module which provides basic segmentation, and a viewer.
 
 \section Legal
