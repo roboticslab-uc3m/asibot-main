@@ -13,6 +13,7 @@
 #include <yarp/math/SVD.h>
 
 #include "TrajGen.h"
+#include "InlineMath.h"
 
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
@@ -73,24 +74,9 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
 // -- Helper Funcion declarations. Implementation in HelperFuncs.cpp--
 
     /**
-    * Simple function to pass from degrees to radians. 
-    * @param inDeg angle value in degrees.
-    * @return angle value in radians.
-    */
-    double toRad(const double inDeg);
-
-    /**
-    * Simple function to pass from radians to degrees.
-    * @param inRad angle value in radians.
-    * @return angle value in degrees.
-    */
-    double toDeg(const double inRad);
-
-    /**
     * Perform forward kinematics.
     */
     bool fwdKin(const double inDeg[NUM_MOTORS], yarp::sig::Vector &x, yarp::sig::Vector &o);
-
 
 // ------- ICartesianControl declarations. Implementation in ICartesianImpl.cpp -------
 
