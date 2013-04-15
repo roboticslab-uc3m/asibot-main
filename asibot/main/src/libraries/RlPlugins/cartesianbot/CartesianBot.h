@@ -13,7 +13,7 @@
 #include <yarp/math/SVD.h>
 
 #include "TrajGen.h"
-#include "InlineMath.h"
+#include "InlineMath.hpp"
 
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
