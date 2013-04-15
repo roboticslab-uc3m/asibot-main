@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_cartesianServer)  # else makes no sense
+IF (ENABLE_CartesianServerLib)
 
 set(KEYWORD "CartesianServerLib")
 
@@ -37,5 +37,5 @@ endif (folder_source)
 set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
 set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") 
 
-ENDIF (ENABLE_cartesianServer)
+ENDIF (ENABLE_CartesianServerLib)
 

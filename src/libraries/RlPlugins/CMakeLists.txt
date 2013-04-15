@@ -5,6 +5,9 @@
 # CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
 
 cmake_minimum_required(VERSION 2.6)
+
+IF (ENABLE_RlPlugins)
+
 find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
 include($ENV{YARP_ROOT}/conf/YarpPlugin.cmake)
@@ -18,6 +21,8 @@ add_subdirectory(skymegabot)
 yarp_end_plugin_library(RlPlugins)
 
 install(TARGETS RlPlugins DESTINATION lib)
+
+ENDIF (ENABLE_RlPlugins)
 
 IF (ENABLE_testRlPlugins)
   yarp_add_plugin_library_executable(testRlPlugins RlPlugins)
