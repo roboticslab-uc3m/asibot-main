@@ -14,7 +14,7 @@ FIND_PACKAGE(Eigen2 REQUIRED)
 
 include(${CMAKE_MODULE_PATH}/FindOrocos-KDL.cmake)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${ASIBOT_INCLUDE_DIRS} ${EIGEN2_INCLUDE_DIR} ${KDL_INCLUDE_DIR} ${Orocos-KDL_INCLUDE_DIRS})  # kdl name depends on version
 LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
 
 YARP_ADD_PLUGIN(kdlbot KdlBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
