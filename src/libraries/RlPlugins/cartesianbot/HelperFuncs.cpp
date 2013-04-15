@@ -1,5 +1,4 @@
-
-// -----------------------------------------------------------------------------
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "CartesianBot.h"
 
@@ -34,4 +33,6 @@ bool CartesianBot::fwdKin(const double inDeg[NUM_MOTORS], yarp::sig::Vector &x, 
     o[1] = inDeg[4];  // = ozPP
     return true;
 }
+
+// -----------------------------------------------------------------------------
 
