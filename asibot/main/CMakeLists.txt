@@ -15,12 +15,20 @@ endif(COMMAND cmake_policy)
 
 project(asibot)
 
-##### options
+### options: cpp libraries
+option(ENABLE_CartesianClientLib "Choose if you want to compile CartesianClientLib" TRUE)
+option(ENABLE_CartesianServerLib "Choose if you want to compile CartesianServerLib" TRUE)
+option(ENABLE_ColorClientLib "Choose if you want to compile ColorClientLib" TRUE)
+option(ENABLE_ExtraMath "Choose if you want to compile ExtraMath" TRUE)
+option(ENABLE_RlPlugins "Choose if you want to compile RlPlugins" TRUE)
+option(ENABLE_TestRaveBotLib "Choose if you want to compile RlPlugins" TRUE)
+option(ENABLE_TrajGen "Choose if you want to compile TrajGen" TRUE)
+
+### options: cpp modules
 option(ENABLE_asibotTasks "Choose if you want to compile asibotTasks" FALSE)
 option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FALSE)
 option(ENABLE_colorDepth "Choose if you want to compile colorDepth" FALSE)
 option(ENABLE_colorSegmentor "Choose if you want to compile colorSegmentor" FALSE)
-option(ENABLE_ColorClientLib "Choose if you want to compile ColorClientLib" FALSE)
 option(ENABLE_kinectPxToReal "Choose if you want to compile kinectPxToReal" FALSE)
 option(ENABLE_pointAtObjectServer "Choose if you want to compile pointAtObjectServer" FALSE)
 option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
