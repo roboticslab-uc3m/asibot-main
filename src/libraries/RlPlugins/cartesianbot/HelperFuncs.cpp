@@ -4,20 +4,6 @@
 
 // -----------------------------------------------------------------------------
 
-double CartesianBot::toDeg(const double inRad) {
-//    return (inRad * 180.0 / 3.14159265);
-    return (inRad * 180.0 / M_PI);
-}
-
-// -----------------------------------------------------------------------------
-
-double CartesianBot::toRad(const double inDeg) {
-//    return (inDeg * 3.14159265 / 180.0);
-    return (inDeg * M_PI / 180.0);
-}
-
-// -----------------------------------------------------------------------------
-
 bool CartesianBot::fwdKin(const double inDeg[NUM_MOTORS], yarp::sig::Vector &x, yarp::sig::Vector &o) {
     for (int i=0; i<NUM_MOTORS; i++)
         realRad[i]=toRad(inDeg[i]);
