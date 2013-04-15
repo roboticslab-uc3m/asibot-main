@@ -18,7 +18,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR} ${ASIBOT_INCLUDE_DIRS} ${EIGEN2_
 LINK_DIRECTORIES(${Orocos-KDL_LIBRARY_DIRS})
 
 YARP_ADD_PLUGIN(kdlbot KdlBot.h IDeviceImpl.cpp ICartesianImpl.cpp RateThreadImpl.cpp HelperFuncs.cpp)
-TARGET_LINK_LIBRARIES(kdlbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES})
+TARGET_LINK_LIBRARIES(kdlbot ${YARP_LIBRARIES} ${KDL_LIBRARIES} ${Orocos-KDL_LIBRARIES} TinyMath)
 install(TARGETS kdlbot DESTINATION lib)
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 

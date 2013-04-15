@@ -29,7 +29,7 @@
 #include <iostream> // only windows
 #include <stdlib.h> // for exit()
 
-#include "InlineMath.hpp"
+#include "TinyMath.hpp"
 
 #define GAIN 0  /// 75 good for unstabilized sim and common real. 25 ok with stable sim.
 
