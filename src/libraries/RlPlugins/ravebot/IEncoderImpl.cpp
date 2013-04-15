@@ -63,7 +63,7 @@ bool RaveBot::getEncoderSpeed(int j, double *sp) {
 bool RaveBot::getEncoderSpeeds(double *spds) {
     bool ok = true;
     for(unsigned int i=0;i<numMotors;i++)
-        ok &= getEncoderSpeed(i,&encs[i]);
+        ok &= getEncoderSpeed(i,&spds[i]);
     return ok;
 }
 
