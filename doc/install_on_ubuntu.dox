@@ -7,37 +7,9 @@ First install the depencencies:
   \li \ref install_yarp_on_ubuntu
   \li \ref install_openrave_on_ubuntu
 
- * @section install_openrave Install OpenRAVE
-
-We use the OpenRAVE core library for simulations. Note that you will be prompted for your password upon using '''sudo'''. To install a precompiled version of OpenRAVE, type:
-
-\verbatim
-sudo add-apt-repository ppa:openrave/release
-sudo apt-get update
-sudo apt-get install openrave
-\endverbatim
-
-If nothing happens, a precompiled version of OpenRAVE might not be available on your specific Ubuntu distribution. To compile from source, type:
-
-\verbatim
-sudo apt-get install git-core
-sudo apt-get install libboost-dev  libboost-date-time-dev libboost-thread-dev
-sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev
-sudo apt-get install libsoqt4-dev libcoin60-dev
-sudo apt-get install collada-dom  # Optional collada support.
-git clone --branch latest_stable https://github.com/rdiankov/openrave.git
-cd openrave; mkdir build; cd build; cmake ..; make -j3; sudo make install; cd ../..
-\endverbatim
- 
-If you compiled from source, run the following command to help CMake find OpenRAVE (change ''x.x'' for 2.6, 2.8, or your CMake version):
-
-\verbatim
-sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
-\endverbatim
-
  * @section install_asibot Install the Simulation and Basic Control Software
 
-Our software integrates the previous. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+Our software integrates the previous dependencies. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
 svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
