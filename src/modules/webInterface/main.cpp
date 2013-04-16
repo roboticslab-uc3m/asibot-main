@@ -4,10 +4,12 @@
  *
  * \defgroup webInterface webInterface
  *
- * Creates an instance of the WebInterface class. Calls are handled by the WebResponder class.
+ * @brief Creates an instance of the WebInterface class. Calls are handled by the WebResponder class.
+ * It is used by the \ref asibot_webInterface.
  *
  * \image html webInterface.png 
- * <center> <a href="http://youtu.be/9B0tVJsg-0I" target="_blank"> Watch video on Youtube</a> </center>
+ * <center>Fig. 1 - Web browser screenshot of contents provided by the \ref webInterface module (see 
+ * <a href="http://youtu.be/9B0tVJsg-0I" target="_blank">webInterface Video</a>).</center>
  *
  * <b> Legal </b>
  *
