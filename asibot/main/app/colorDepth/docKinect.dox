@@ -6,6 +6,7 @@
 a \ref colorDepth module which provides segmentation and depth information, and some viewers.
 
 \image html colorDepthKinect-500px.png
+<center>Fig. 1 - colorDepth module (see <a href="http://youtu.be/LVe4n1OTBUU" target="_blank">colorDepthKinect Video</a>).</center>
 
 \section Legal
 
