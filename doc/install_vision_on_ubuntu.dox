@@ -7,49 +7,38 @@ First install the depencencies:
   \li \ref install_yarp_on_ubuntu
   \li \ref install_opencv_on_ubuntu
 
- * @section install_asibot Install the Simulation and Basic Control Software
-
-Our software integrates the previous. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+For Kinect support, install OpenNI, and then type:
 
 \verbatim
-svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
-cd asibot/main; mkdir build; cd build
-cmake .. -DENABLE_cartesianServer=ON -DENABLE_RlPlugins_cartesianbot=ON -DENABLE_RlPlugins_ravebot=ON
+cd $YARP_DIR
+cmake .. -DDEVICE_LIBRARY_MODULES=ON -DENABLE_yarpmod_KinectDeviceLocal=ON
 make -j3; sudo make install; cd ../../..
 \endverbatim
 
-For additional ASIBOT options use ccmake instead of cmake.
+For Webcam support, you should also type:
 
-Do not forget to set the ASIBOT_ROOT environment variable to ''asibot'' and the ASIBOT_DIR environment variable to ''asibot/main/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed on reboot). For this option, type:
- 
 \verbatim
-echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.profile
-echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.profile
-source ~/.profile
+cd $YARP_DIR
+cmake .. -DDEVICE_LIBRARY_MODULES=ON -DENABLE_yarpmod_opencv_grabber=ON
+make -j3; sudo make install; cd ../../..
 \endverbatim
 
- 2) Through ~/.bashrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.bashrc
-echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.bashrc
-source ~/.bashrc
-\endverbatim
+ * @section install_vision_asibot Install the Basic 2D and 3D Vision Software
 
-Now install the applications:
+Assuming you have done the steps in \ref install_asibot, type:
 
 \verbatim
 cd $ASIBOT_DIR
-make install_applications
+cmake .. -DENABLE_colorSegmentor=ON -DENABLE_colorDepth=ON
+make -j3; sudo make install; cd ../../..
 \endverbatim
 
-@section install_on_ubuntu_even_more Even more!
+@section install_vision_on_ubuntu_even_more Even more!
 
 Done! You are now probably interested in one of the following links:
-  \li \ref post_install
-  \li For the KDL controller, you should look at the \ref KdlBot library.
+  \li \ref asibot_colorDepthKinect
+  \li \ref asibot_colorDepthSim
+  \li \ref asibot_colorSegmentorSim
 
 <hr>
 
