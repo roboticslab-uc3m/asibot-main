@@ -6,7 +6,7 @@
 This application uses a light-weight environment (see Figure 1), which as been developed specifically for running automated and path planning algorithms at low comutational cost.
 
 \image html ravebotPlanning-400px.png
-<center>Fig. 1 - ASIBOT automated and path planning environment for demonstrating the use of the ASIBOT Task libraries.</center>
+<center>Fig. 1 - ASIBOT automated and path planning environment for demonstrating the use of the ASIBOT Task libraries (see <a href="http://youtu.be/AYiqmof_IHQ" target="_blank">asibotTasks Video</a>).</center>
 
 The set os tasks is actually inspired on the solution to "p0easy" on "Asibot.pddl" [thanks smorante!]:
 
