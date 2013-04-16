@@ -1,18 +1,18 @@
 
 /**
- * \page install_on_ubuntu The ASIBOT Software Installation Guide (Ubuntu)
+ * \page install_on_ubuntu Simulation and Basic Control: Installation Guide (Ubuntu)
 
 First install the depencencies:
-  \li \ref install_cmake \endref
-  \li \ref install_yarp \endref
-  \li \ref install_openrave \endref
+  \li \ref install_cmake
+  \li \ref install_yarp
+  \li \ref install_openrave
 
 Or directly jump to:
-  \li \ref install_asibot \endref
+  \li \ref install_asibot
 
  * @section install_cmake Install CMake
 
-Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+We use CMake for project generating. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
 sudo apt-get install cmake
@@ -22,7 +22,7 @@ sudo apt-get install cmake-curses-gui  # Needed for ccmake.
 
  * @section install_yarp Install YARP
 
-Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+We use YARP for communications. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
 sudo apt-get install build-essential libace-dev subversion
@@ -58,7 +58,7 @@ source ~/.bashrc
 
  * @section install_openrave Install OpenRAVE
 
-Note that you will be prompted for your password upon using '''sudo'''. To install a precompiled version of OpenRAVE, type:
+We use the OpenRAVE core library for simulations. Note that you will be prompted for your password upon using '''sudo'''. To install a precompiled version of OpenRAVE, type:
 
 \verbatim
 sudo add-apt-repository ppa:openrave/release
@@ -84,9 +84,9 @@ If you compiled from source, run the following command to help CMake find OpenRA
 sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
 \endverbatim
 
- * @section install_asibot Install The ASIBOT Software (Basic)
+ * @section install_asibot Install the Simulation and Basic Control Software
 
-Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+Our software integrates the previous. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
 svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
@@ -122,7 +122,11 @@ cd $ASIBOT_DIR
 make install_applications
 \endverbatim
 
-Done! You may now move on to \ref post_install
+@section install_on_ubuntu_even_more Even more!
+
+Done! You are now probably interested in one of the following links:
+  \li \ref post_install
+  \li For the KDL controller, you should look at the \ref KdlBot library.
 
 <hr>
 
