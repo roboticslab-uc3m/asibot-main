@@ -1,11 +1,11 @@
 /**
 @ingroup  asibot_applications
-\defgroup asibot_colorDepthSim colorDepthSim App
+\defgroup asibot_colorDepthKinect colorDepthKinect App
 
-@brief An application that launches a \ref cartesianServer module providing a simulated ASIBOT and Kinect
-environment, a \ref colorDepth module which provides segmentation and depth information, and some viewers.
+@brief An application that launches a \ref yarpdev module providing a Kinect device,
+a \ref colorDepth module which provides segmentation and depth information, and some viewers.
 
-\image html colorDepthSim-500px.png
+\image html colorDepthKinect-500px.png
 
 \section Legal
 
@@ -22,10 +22,10 @@ The application is installed when you install the applications, which for Ubuntu
 make install_applications  # In-project install: No super-user permissions are required.
 \endverbatim
 
-Adapt $ASIBOT_ROOT/app/colorDepth/scripts/colorDepthSim.xml.template to your needs or just:
+Adapt $ASIBOT_ROOT/app/colorDepth/scripts/colorDepthKinect.xml.template to your needs or just:
 \verbatim
 cd $ASIBOT_ROOT/app/colorDepth/scripts
-cp colorDepthSim.xml.template colorDepthSim.xml
+cp colorDepthKinect.xml.template colorDepthKinect.xml
 \endverbatim
 
 You will also need the \ref cartesianServer module and \ref colorDepth module. For further installation
@@ -38,7 +38,7 @@ First we must run a YARP name server if it is not running in our current namespa
 [on terminal 1] yarp server
 \endverbatim
 
-Browse to $ASIBOT_ROOT/app and run the (g)yarmanager. The colorDepthSim App should be available.
+Browse to $ASIBOT_ROOT/app and run the (g)yarmanager. The colorDepthKinect App should be available.
 \verbatim
 [on terminal 2] cd $ASIBOT_ROOT/app
 [on terminal 2] gyarpmanager
