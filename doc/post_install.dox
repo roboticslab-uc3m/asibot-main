@@ -73,6 +73,7 @@ or through the different language APIs as can be seen in the different
 
 Done! You are now probably interested in one of the following links:
 
+  \li \ref install_vision_on_ubuntu
   \li You can now compile and install any of the <a class="el" href="modules.html">other modules</a>.
   \li These modules are actually packed up and ready to go in our \ref asibot_applications!
 

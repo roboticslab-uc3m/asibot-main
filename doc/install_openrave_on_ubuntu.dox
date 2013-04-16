@@ -30,7 +30,7 @@ sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Mod
 
 <br><hr>
 
-This page can be edited at $ASIBOT_ROOT/main/doc/install_cmake_on_ubuntu.dox.
+This page can be edited at $ASIBOT_ROOT/main/doc/install_openrave_on_ubuntu.dox.
 
 *
 */

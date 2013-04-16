@@ -1,6 +1,6 @@
 
 /**
- * \page install_opencv_on_ubuntu Installing OpenCV on Ubuntu
+ * \page install_opencv_on_ubuntu Install OpenCV (Ubuntu)
 
 We'll do this from source to assure the CMake file is created.
 
