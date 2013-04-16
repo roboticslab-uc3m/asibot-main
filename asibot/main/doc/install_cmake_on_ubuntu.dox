@@ -2,7 +2,7 @@
 /**
  * \page install_cmake_on_ubuntu Install CMake (Ubuntu)
 
-We use CMake for project generating. Installing CMake on Ubuntu is quite straightforward. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+We use CMake for project generating. Installing CMake on Ubuntu is quite straightforward. Note that you will be prompted for your password upon using '''sudo'''. Type:
 
 \verbatim
 sudo apt-get install cmake
