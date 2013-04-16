@@ -5,6 +5,8 @@
 @brief An application that launches a \ref cartesianServer module providing a simulated ASIBOT and Kinect
 environment, a \ref colorDepth module which provides segmentation and depth information, and some viewers.
 
+\image html colorDepthSim-500px.png
+
 \section Legal
 
 Copyright: 2012 (C) Universidad Carlos III de Madrid

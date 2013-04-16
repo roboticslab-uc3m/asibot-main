@@ -5,7 +5,8 @@
 @brief An application that launches a \ref cartesianServer module providing simulator capabilities, a \ref webInterface module which provides the actual web service, and a web browser directed to the served service. The contents rendered in the browser should be similar to that of Figure 1.
 
 \image html webInterface.png
-<center>Fig. 1 - Web browser screenshot of contents provided by \ref webInterface.</center>
+<center>Fig. 1 - Web browser screenshot of contents provided by the \ref webInterface module (see 
+<a href="http://youtu.be/9B0tVJsg-0I" target="_blank">webInterface Video</a>).</center>
 
 \section Legal
 
