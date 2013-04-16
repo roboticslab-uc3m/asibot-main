@@ -1,0 +1,18 @@
+
+/**
+ * \page install_cmake_on_ubuntu Install CMake (Ubuntu)
+
+We use CMake for project generating. Installing CMake on Ubuntu is quite straightforward. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+
+\verbatim
+sudo apt-get install cmake
+sudo apt-get install cmake-curses-gui  # Needed for ccmake.
+\endverbatim
+
+<br><hr>
+
+This page can be edited at $ASIBOT_ROOT/main/doc/install_cmake_on_ubuntu.dox.
+
+*
+*/
+
