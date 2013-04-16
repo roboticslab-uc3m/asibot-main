@@ -1,0 +1,92 @@
+
+/**
+ * \page install_vision_on_ubuntu Basic 2D and 3D Vision: Installation Guide (Ubuntu)
+
+First install the depencencies:
+  \li \ref install_cmake
+  \li \ref install_yarp
+  \li \ref install_opencv
+
+Or directly jump to:
+  \li \ref install_vision_asibot
+
+
+ * @section install_opencv Install OpenCV
+
+We use the OpenRAVE core library for simulations. Note that you will be prompted for your password upon using '''sudo'''. To install a precompiled version of OpenRAVE, type:
+
+\verbatim
+sudo add-apt-repository ppa:openrave/release
+sudo apt-get update
+sudo apt-get install openrave
+\endverbatim
+
+If nothing happens, a precompiled version of OpenRAVE might not be available on your specific Ubuntu distribution. To compile from source, type:
+
+\verbatim
+sudo apt-get install git-core
+sudo apt-get install libboost-dev  libboost-date-time-dev libboost-thread-dev
+sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev
+sudo apt-get install libsoqt4-dev libcoin60-dev
+sudo apt-get install collada-dom  # Optional collada support.
+git clone --branch latest_stable https://github.com/rdiankov/openrave.git
+cd openrave; mkdir build; cd build; cmake ..; make -j3; sudo make install; cd ../..
+\endverbatim
+ 
+If you compiled from source, run the following command to help CMake find OpenRAVE (change ''x.x'' for 2.6, 2.8, or your CMake version):
+
+\verbatim
+sudo cp openrave/src/cppexamples/FindOpenRAVE.cmake /usr/share/cmake-''x.x''/Modules
+\endverbatim
+
+ * @section install_asibot Install the Simulation and Basic Control Software
+
+Our software integrates the previous. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
+
+\verbatim
+svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
+cd asibot/main; mkdir build; cd build
+cmake .. -DENABLE_cartesianServer=ON -DENABLE_RlPlugins_cartesianbot=ON -DENABLE_RlPlugins_ravebot=ON
+make -j3; sudo make install; cd ../../..
+\endverbatim
+
+For additional ASIBOT options use ccmake instead of cmake.
+
+Do not forget to set the ASIBOT_ROOT environment variable to ''asibot'' and the ASIBOT_DIR environment variable to ''asibot/main/build''. There are two ways of doing this:
+
+ 1) Through ~/.profile (parsed on reboot). For this option, type:
+ 
+\verbatim
+echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.profile
+echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.profile
+source ~/.profile
+\endverbatim
+
+ 2) Through ~/.bashrc (parsed inside each terminal). For this other option, type:
+ 
+\verbatim
+echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.bashrc
+echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.bashrc
+source ~/.bashrc
+\endverbatim
+
+Now install the applications:
+
+\verbatim
+cd $ASIBOT_DIR
+make install_applications
+\endverbatim
+
+@section install_on_ubuntu_even_more Even more!
+
+Done! You are now probably interested in one of the following links:
+  \li \ref post_install
+  \li For the KDL controller, you should look at the \ref KdlBot library.
+
+<hr>
+
+This page can be edited at $ASIBOT_ROOT/main/doc/install_on_ubuntu.dox.
+
+*
+*/
+

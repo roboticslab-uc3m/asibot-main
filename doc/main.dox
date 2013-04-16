@@ -6,14 +6,17 @@
 
 Welcome to the Open Source ASIBOT Software Repository documentation. The ASIBOT Software Repository is part of <a class="el" href="http://roboticslab.sourceforge.net" target="_blank">Robotics Lab @ SourceForge.net</a>.
 
- \li \ref install_on_ubuntu \endref
- \li \ref post_install \endref
+For the most part, everything is platform independent (i.e. any operating system and computer architecture).
+
+ \li \ref install_on_ubuntu
+ \li \ref post_install
+ \li \ref install_vision_on_ubuntu
 
 Other internal links of interest:
  \li <a class="el" href="modules.html">List of ASIBOT Modules</a>
- \li \ref asibot_libraries \endref
- \li \ref asibot_applications \endref
- \li \ref asibot_examples \endref
+ \li \ref asibot_libraries
+ \li \ref asibot_applications
+ \li \ref asibot_examples
 
  \li <a class=el href="https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot">Browse the ASIBOT Software Repository</a>
  \li <a class="el" href="http://sourceforge.net/mailarchive/forum.php?forum_name=roboticslab-users">Mailing List Archives</a> / <a class="el" href="mailto:roboticslab-users@lists.sourceforge.net">Write to list</a>
