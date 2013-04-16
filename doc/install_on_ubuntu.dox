@@ -3,22 +3,12 @@
  * \page install_on_ubuntu Simulation and Basic Control: Installation Guide (Ubuntu)
 
 First install the depencencies:
-  \li \ref install_cmake
+  \li \ref install_cmake_on_ubuntu
   \li \ref install_yarp
   \li \ref install_openrave
 
 Or directly jump to:
   \li \ref install_asibot
-
- * @section install_cmake Install CMake
-
-We use CMake for project generating. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
-
-\verbatim
-sudo apt-get install cmake
-sudo apt-get install cmake-curses-gui  # Needed for ccmake.
-\endverbatim
-
 
  * @section install_yarp Install YARP
 
