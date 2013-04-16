@@ -7,7 +7,7 @@
         </module>
         <module>
                 <name>colorDepth</name>
-                <parameters>--seeBounding 1 --maxNumBlobs 1</parameters>
+                <parameters>--algorithm greenMinusRed --seeBounding 1 --maxNumBlobs 1</parameters>
                 <node>localhost</node>
         </module>
         <module>
