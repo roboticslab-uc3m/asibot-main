@@ -45,9 +45,9 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     }
     bool ok = cartesianDevice.view(icart);
     if (!ok) {
-        printf("[warning] CartesianServer problems acquiring cartesian interface\n");
+        fprintf(stderr, "[CartesianServer] warning: Problems acquiring cartesian interface.\n");
         return false;
-    } else printf("[success] CartesianServer acquired cartesian interface\n");
+    } else printf("[CartesianServer] success: Acquired cartesian interface.\n");
 
     //--------------------------------JOINT----------------------------------//
     Property robotOptions(rf.toString());  // Little hack to get rf stuff to the module
@@ -62,9 +62,9 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     }
     bool ok2 = robotDevice.view(ipos);
     if (!ok2) {
-        printf("[warning] Problems acquiring robot interfaces\n");
+        fprintf(stderr, "[CartesianServer] warning: Problems acquiring robot interfaces.\n");
         return false;
-    } else printf("[success] cartesianServer acquired robot interfaces\n");
+    } else printf("[CartesianServer] success: Acquired robot interfaces.\n");
 
     //---------------------CONFIGURE PORTs------------------------
     xResponder.setPositionInterface(ipos);
