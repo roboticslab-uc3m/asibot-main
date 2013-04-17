@@ -1,5 +1,4 @@
-
-// -----------------------------------------------------------------------------
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "CartesianBot.h"
 
@@ -35,6 +34,8 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os:
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
+    printf("[CartesianBot] using tool: %d",tool);
+    if (tool != 0) fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
     printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
     targetX[0]=xd[0];
     targetX[1]=xd[1];
@@ -90,6 +91,8 @@ bool CartesianBot::goToPosition(const yarp::sig::Vector &xd, const double t) {
 
 bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                               const double t) {
+    printf("[CartesianBot] using tool: %d",tool);
+    if (tool != 0) fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
     printf("[CartesianBot] goToPoseSync() Begin setting absolute base movement.\n");
     targetX[0]=xd[0];
     targetX[1]=xd[1];
