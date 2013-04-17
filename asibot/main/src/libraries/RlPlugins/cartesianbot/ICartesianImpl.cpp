@@ -90,7 +90,7 @@ bool CartesianBot::goToPosition(const yarp::sig::Vector &xd, const double t) {
 
 bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                               const double t) {
-    printf("[CartesianBot] Begin setting absolute base movement.\n");
+    printf("[CartesianBot] goToPoseSync() Begin setting absolute base movement.\n");
     targetX[0]=xd[0];
     targetX[1]=xd[1];
     targetX[2]=xd[2];
@@ -110,21 +110,21 @@ bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Ve
     trajOz->configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
     trajOzPP = new OrderThreeTraj;
     trajOzPP->configure(o[1],od[1],trajT);  // We set it in degrees
-    printf("[goToPose] begin: trajPrP dump(100 samples).\n");
+    printf("[CartesianBot] goToPoseSync trajPrP dump(100 samples) begin.\n");
     trajPrP->dump(100);
-    printf("[goToPose] end: trajPrP dump(100 samples).\n");
-    printf("[goToPose] begin: trajPhP dump(100 samples).\n");
+    printf("[CartesianBot] goToPoseSync trajPrP dump(100 samples) end.\n");
+    printf("[CartesianBot] goToPoseSync trajPhP dump(100 samples) begin.\n");
     trajPhP->dump(100);
-    printf("[goToPose] end: trajPhP dump(100 samples).\n");
-    printf("[goToPose] begin: trajOyP dump(100 samples).\n");
+    printf("[CartesianBot] goToPoseSync trajPhP dump(100 samples) end.\n");
+    printf("[CartesianBot] goToPoseSync trajOyP dump(100 samples) begin.\n");
     trajOyP->dump(100);
-    printf("[goToPose] end: trajOyP dump(100 samples).\n");
-    printf("[goToPose] begin: trajOz dump(100 samples).\n");
+    printf("[CartesianBot] goToPoseSync trajOyP dump(100 samples) end.\n");
+    printf("[CartesianBot] goToPoseSync trajOz dump(100 samples) begin.\n");
     trajOz->dump(100);
-    printf("[goToPose] end: trajOz dump(100 samples).\n");
-    printf("[goToPose] begin: trajOzPP dump(100 samples).\n");
+    printf("[CartesianBot] goToPoseSync trajOz dump(100 samples) end.\n");
+    printf("[CartesianBot] goToPoseSync trajOzPP dump(100 samples) begin.\n");
     trajOzPP->dump(100);
-    printf("[goToPose] end: trajOzPP dump(100 samples).\n");
+    printf("[CartesianBot] goToPoseSync trajOzPP dump(100 samples) end.\n");
     startTime = Time::now();
     withOri=true;
     vel->setVelocityMode();
