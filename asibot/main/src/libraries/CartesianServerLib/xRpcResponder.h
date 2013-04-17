@@ -21,6 +21,7 @@
 #define VOCAB_INV VOCAB3('i','n','v')
 #define VOCAB_MOVE VOCAB4('m','o','v','e')
 #define VOCAB_WAIT VOCAB4('w','a','i','t')
+#define VOCAB_TOOL VOCAB4('t','o','o','l')
 
 using namespace yarp::os;
 using namespace yarp::dev;
