@@ -26,7 +26,7 @@ bool CartesianBot::getPose(const int axis, yarp::sig::Vector &x, yarp::sig::Vect
 bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os::Stamp *stamp) {
     double realDeg[NUM_MOTORS];
     if(!enc->getEncoders(realDeg)) {
-        printf("[warning] CartesianBot::getPose() failed to getEncoders()\n");
+        fprintf(stderr,"[CartesianBot] warning: getPose() failed to getEncoders()\n");
         return false;
     }
     return fwdKin(realDeg,x,o);
@@ -35,7 +35,7 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os:
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
-    printf("CartesianBot::goToPose() Begin setting absolute base movement.\n");
+    printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
     targetX[0]=xd[0];
     targetX[1]=xd[1];
     targetX[2]=xd[2];
@@ -76,7 +76,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     withOri=true;
     vel->setVelocityMode();
     cmc_status=1;
-    printf("CartesianBot::goToPose() End setting absolute base movement.\n");
+    printf("[CartesianBot] goToPose() End setting absolute base movement.\n");
     return true;
 }
 
@@ -302,7 +302,7 @@ bool CartesianBot::getTaskVelocities(yarp::sig::Vector &xdot, yarp::sig::Vector 
 bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::sig::Vector &odot) {
     double realDeg[NUM_MOTORS];
     if(!enc->getEncoders(realDeg)) {
-        printf("[warning] CartesianBot::setTaskVelocities() failed to getEncoders()\n");
+        fprintf(stderr,"[CartesianBot] warning: setTaskVelocities() failed to getEncoders()\n");
         return false;  // bad practice??
     }
     yarp::sig::Matrix Ja(5,5);
@@ -348,7 +348,7 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
     qdot[4] = toDeg(t[4]);
     vel->setVelocityMode();
     if(!vel->velocityMove(qdot))
-        printf("GIGANTIC velocity WARNING\n");
+        fprintf(stderr,"[CartesianBot] warning: COULD NOT SEND VELOCITY MOVE!!!\n");
     return true;
 }
 
@@ -371,7 +371,7 @@ bool CartesianBot::waitMotionDone(const double period, const double timeout) {
 
 bool CartesianBot::stopControl() {
     cmc_status=-1;
-    printf("[end] CartesianBot::stopControl()\n");
+    printf("[CartesianBot] stopControl() End\n");
     return true;
 }
 
