@@ -13,7 +13,7 @@
             <Extents>0.005 0.010 0.020</Extents>
         </Geom>
     </Body>
-    <Joint name="C1" type="hinge">
+    <Joint name="C1" type="slider">
         <offsetfrom>link0</offsetfrom>
         <body>link0</body>
         <body>link1</body>
@@ -28,7 +28,7 @@
             <Extents>0.005 0.010 0.020</Extents>
         </Geom>
     </Body>
-    <Joint name="C2" type="hinge">
+    <Joint name="C2" type="slider">
         <offsetfrom>link0</offsetfrom>
         <body>link1</body>
         <body>link2</body>
