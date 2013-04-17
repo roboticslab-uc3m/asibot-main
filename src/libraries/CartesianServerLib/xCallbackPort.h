@@ -17,6 +17,8 @@
 #include <yarp/sig/Matrix.h>
 #include <yarp/math/Math.h>
 
+#include "TinyMath.hpp"
+
 #define VPOINT_DIST 0.05  // [m]
 
 #define VOCAB_MY_STOP VOCAB4('s','t','o','p')
@@ -52,6 +54,7 @@ protected:
     yarp::dev::ICartesianControl *icart;
     yarp::dev::IPositionControl *ipos;
     int *csStatus;
+
 public:
 
     xCallbackPort() {}
@@ -70,11 +73,6 @@ public:
     * Register a position interface for the PortReader.
     */
     void setCsStatus(int* _csStatus);
-
-    /**
-    * Thanks: Ugo Pattacini, Serena Ivaldi, Francesco Nori ((iCub ctrllib/math.h))
-    */
-    Matrix axis2dcm(const Vector &v, unsigned int verbose);
 
 };
 
