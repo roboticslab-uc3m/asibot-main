@@ -3,7 +3,15 @@
 #ifndef __TINY_MATH__
 #define __TINY_MATH__
 
-#include "math.h"
+#include <math.h>  // provides: M_PI ?
+
+#include <stdio.h>  // provides: fprintf, stderr
+
+#include <yarp/sig/Matrix.h>
+
+#include <yarp/math/Math.h>  // provides: eye, operators
+
+using namespace yarp::math;  // else matrix operators wreak havoc
 
 /**
 * Simple function to pass from radians to degrees.
@@ -18,6 +26,11 @@ double toDeg(const double inRad);
 * @return angle value in radians.
 */
 double toRad(const double inDeg);
+
+/**
+* Thanks [Ugo Pattacini, Serena Ivaldi, Francesco Nori ((iCub ctrllib/math.h))] for this one!
+*/
+yarp::sig::Matrix axis2dcm(const yarp::sig::Vector &v, unsigned int verbose);
 
 #endif  // __TINY_MATH__
 
