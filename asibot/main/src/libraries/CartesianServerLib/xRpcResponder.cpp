@@ -122,7 +122,8 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         return out.write(*returnToSender);
     } else if (choice==VOCAB_TOOL) { ///////////////////////////////// tool /////////////////////////////////
         int tool = in.get(1).asInt();
-        printf("[xRpcResponder] tool set to: %d\n", tool);
+        printf("[xRpcResponder] Tool set to: %d\n", tool);
+        icart->tweakSet(in);
         out.addVocab(VOCAB_OK);
         return out.write(*returnToSender);
     } else {

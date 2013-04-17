@@ -420,7 +420,8 @@ bool CartesianBot::getReferenceMode(bool *f) {
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::tweakSet(const yarp::os::Bottle &options) {
-    return false;
+    printf("[CartesianBot] tweakSet: %s\n", options.toString().c_str());
+    return true;
 }
 
 // -----------------------------------------------------------------------------

@@ -366,7 +366,8 @@ bool KdlBot::getReferenceMode(bool *f) {
 // -----------------------------------------------------------------------------
 
 bool KdlBot::tweakSet(const yarp::os::Bottle &options) {
-    return false;
+    printf("[KdlBot] tweakSet: %s\n", options.toString().c_str());
+    return true;
 }
 
 // -----------------------------------------------------------------------------
