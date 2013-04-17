@@ -83,7 +83,7 @@ bool CartesianBot::open(Searchable& config) {
     if (!robotDevice.isValid()) {
         //%printf("Robot device not available. Here are the known devices:\n");
         //printf("%s", Drivers::factory().toString().c_str());
-        fprintf(stderr,"Robot device not available.\n");
+        fprintf(stderr, "[CartesianBot] warning: Robot device not available.\n");
         return false;
     }
 
@@ -92,9 +92,9 @@ bool CartesianBot::open(Searchable& config) {
     ok = ok && robotDevice.view(vel);
     ok = ok && robotDevice.view(enc);
     if (!ok) {
-        printf("[error] CartesianBot problems acquiring robot interfaces\n");
+        fprintf(stderr, "[CartesianBot] error: Problems acquiring robot interfaces.\n");
         return false;
-    } else printf("[success] CartesianBot acquired robot interfaces\n");
+    } else printf("[CartesianBot] success: Acquired robot interfaces.\n");
 
     // Start the RateThread
     this->setRate(cmcMs);
