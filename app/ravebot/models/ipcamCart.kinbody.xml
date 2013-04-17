@@ -17,7 +17,7 @@
         <offsetfrom>link0</offsetfrom>
         <body>link0</body>
         <body>link1</body>
-        <axis>0 1 0</axis>
+        <axis>1 0 0</axis>
         <anchor>0 0 0</anchor>
         <limitsdeg>-135 135</limitsdeg>
         <maxvel>2</maxvel>
