@@ -41,6 +41,7 @@ protected:
     yarp::dev::ICartesianControl *icart;
     yarp::dev::IPositionControl *ipos;
     int *csStatus;
+
 public:
 
     /**
