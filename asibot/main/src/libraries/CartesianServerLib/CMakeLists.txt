@@ -21,13 +21,13 @@ foreach(header_file ${folder_header})
   include_directories(${p})
 endforeach(header_file ${folder_header})
 
-# Inclue any directories needed for YARP
-include_directories(${YARP_INCLUDE_DIRS})
+# Include any directories needed for YARP and ASIBOT
+include_directories(${YARP_INCLUDE_DIRS} ${ASIBOT_INCLUDE_DIRS})
 
 # Set up our library.
 if (folder_source)
   add_library(${KEYWORD} ${folder_source} ${folder_header})
-  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
+  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES} TinyMath)
   install(TARGETS ${KEYWORD} DESTINATION lib)
 else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
