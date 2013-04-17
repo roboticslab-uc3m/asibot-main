@@ -1,5 +1,4 @@
-
-// -----------------------------------------------------------------------------
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "CartesianBot.h"
 
@@ -26,6 +25,7 @@ bool CartesianBot::open(Searchable& config) {
     ConstString strRobotName = DEFAULT_ROBOT_NAME;
     ConstString strRobotLocal = DEFAULT_ROBOT_LOCAL;
     ConstString strRobotRemote = DEFAULT_ROBOT_REMOTE;
+    tool = DEFAULT_TOOL;
 
     printf("--------------------------------------------------------------\n");
     if(config.check("help")) {

@@ -6,7 +6,7 @@
 // ------------------- RateThread Related ------------------------------------
 
 bool CartesianBot::threadInit() {
-    printf("[success] cartesianbot threadInit() started %f ms ratethread\n",getRate());
+    printf("[CartesianBot] success: threadInit() started %f ms ratethread\n",getRate());
     return true;
 }
 
@@ -16,7 +16,7 @@ void CartesianBot::run() {
     if (cmc_status>0) {  // If it is movement
         double realDeg[NUM_MOTORS];
         if(!enc->getEncoders(realDeg)) {
-            printf("[warning] CartesianBot::getPose() failed to getEncoders()\n");
+            fprintf(stderr, "[CartesianBot] warning: getPose() failed to getEncoders()\n");
             return;  // bad practice??
         }
         yarp::sig::Vector x,o;
@@ -28,7 +28,7 @@ void CartesianBot::run() {
         if((withOri)&&(fabs(o[0]-targetO[0])>CARTORI_PRECISION)) done = false;
         if((withOri)&&(fabs(o[1]-targetO[1])>CARTORI_PRECISION)) done = false;
         if (done) {
-            printf("Target reached in %f.\n",Time::now()-startTime);
+            printf("[CartesianBot] success: Target reached in %f.\n",Time::now()-startTime);
             delete trajPrP;
             trajPrP = 0;
             delete trajPhP;
@@ -53,7 +53,7 @@ void CartesianBot::run() {
             //printf("oz: %f\nxP: %f\nzP: %f\n",toDeg(ozRad),xP[0],xP[1]);
             double sTime = Time::now()-startTime;
             if(sTime>trajPrP->getT()){
-                printf ("[warning] out of time at %f.\n",sTime);
+                printf ("[CartesianBot] warning: Out of time at %f.\n",sTime);
                 startTime = 0;
                 pos->setPositionMode();
                 cmc_status=0;
@@ -95,11 +95,11 @@ void CartesianBot::run() {
             double eOzPP = trajOzPP->get(sTime) - realDeg[4];
             qdot[4] = trajOzPP->getdot(sTime) + GAIN*(cmcMs/1000.0)*eOzPP;  // lawOzP
             if(!vel->velocityMove(qdot))
-                printf("GIGANTIC velocity WARNING\n");
+                fprintf(stderr, "[CartesianBot] warning: FAILED ON VELOCITY MOVE!!!\n");
         }
-    } else {  // If it is stopped or breaked, reamain unchanged
-        // printf("Inside control loop stopped.\n");
-    }
+    } /*else {  // If it is stopped or breaked, remain unchanged
+        printf("Inside control loop stopped.\n");
+    }*/
 }
 
 // -----------------------------------------------------------------------------

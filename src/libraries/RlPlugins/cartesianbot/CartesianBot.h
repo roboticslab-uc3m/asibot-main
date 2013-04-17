@@ -37,6 +37,7 @@
 #define DEFAULT_ROBOT_NAME "/ravebot"
 #define DEFAULT_ROBOT_LOCAL "N/A"
 #define DEFAULT_ROBOT_REMOTE "N/A"
+#define DEFAULT_TOOL 0
 
 //using namespace std;
 using namespace yarp::os;
