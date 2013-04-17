@@ -300,7 +300,7 @@ bool CartesianBot::getTaskVelocities(yarp::sig::Vector &xdot, yarp::sig::Vector 
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::sig::Vector &odot) {
-    double realDeg[NUM_MOTORS];
+    double realDeg[NUM_MOTORS];  // Fixed because CartesianBot is very ASIBOT-specific
     if(!enc->getEncoders(realDeg)) {
         fprintf(stderr,"[CartesianBot] warning: setTaskVelocities() failed to getEncoders()\n");
         return false;  // bad practice??
