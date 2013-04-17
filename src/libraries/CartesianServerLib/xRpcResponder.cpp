@@ -15,8 +15,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     if (in.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
     if (choice==VOCAB_HELP) {  ///////////////////////////////// help /////////////////////////////////
         out.addString("Available commands: [help] [inv] [movj] [movl] [stat] [stop] [wait] more info at [http://roboticslab.sourceforge.net/asibot/group__cartesianServer.html]");
-        out.write(*returnToSender);
-        return true;
+        return out.write(*returnToSender);
     } else if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
         if(icart->stopControl()) {
             if(ipos->stop()) {
@@ -26,8 +25,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
                 } else out.addVocab(VOCAB_FAILED);
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
-        out.write(*returnToSender);
-        return true;
+        return out.write(*returnToSender);
     } else if (choice==VOCAB_WAIT) {  ///////////////////////////////// wait /////////////////////////////////
         while (*csStatus != 0) {
             printf(".");
@@ -45,8 +43,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         }
         printf("\n");
         out.addVocab(VOCAB_OK);
-        out.write(*returnToSender);
-        return true;
+        return out.write(*returnToSender);
     } else if (choice==VOCAB_STAT) { ///////////////////////////////// stat /////////////////////////////////
         if (*csStatus==1) { // movj
             bool done;
@@ -71,8 +68,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
-        out.write(*returnToSender);
-        return true;
+        return out.write(*returnToSender);
     } else if (choice==VOCAB_MOVL) { ///////////////////////////////// movl /////////////////////////////////
         Vector x,o;
         Bottle *lst = in.get(1).asList();
@@ -86,8 +82,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
-        out.write(*returnToSender);
-        return true;
+        return out.write(*returnToSender);
     } else if (choice==VOCAB_MOVJ) { ///////////////////////////////// movj /////////////////////////////////
         Vector xd,od,xdhat,odhat,qdhat;
         Bottle *lst = in.get(1).asList();
@@ -96,10 +91,6 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         xd.push_back(lst->get(2).asDouble());
         for (int i = 3; i < lst->size(); i++)
             od.push_back(lst->get(i).asDouble());
-        if(in.size()>2) {
-            Bottle *toolLst = in.get(2).asList();
-            printf("[not implemented] tool is list of %d elements\n", toolLst->size());
-        }
         if(icart->askForPose(xd,od,xdhat,odhat,qdhat)){
             //double qd[qdhat.size()];
             double qd[MAX_NUM_MOTORS];  // should actually do a malloc depending on qdhat.size() 
@@ -112,8 +103,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
-        out.write(*returnToSender);
-        return true;
+        return out.write(*returnToSender);
     } else if (choice==VOCAB_INV) { ///////////////////////////////// inv /////////////////////////////////
         Vector xd,od,xdhat,odhat,qdhat;
         Bottle *lst = in.get(1).asList();
@@ -129,12 +119,17 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
-        out.write(*returnToSender);
-        return true;
-    } 
-    out.addVocab(VOCAB_FAILED);
-    out.write(*returnToSender);
-    return false;
+        return out.write(*returnToSender);
+    } else if (choice==VOCAB_TOOL) { ///////////////////////////////// tool /////////////////////////////////
+        int tool = in.get(1).asInt();
+        printf("[xRpcResponder] tool set to: %d\n", tool);
+        out.addVocab(VOCAB_OK);
+        return out.write(*returnToSender);
+    } else {
+        fprintf(stderr,"[xRpcResponder] fail: Unknown command (use 'help' if needed).\n");
+        out.addVocab(VOCAB_FAILED);
+        return out.write(*returnToSender);
+    }
 }
 
 /************************************************************************/
