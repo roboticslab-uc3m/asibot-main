@@ -12,7 +12,7 @@ First install the depencencies:
 Our software integrates the previous dependencies. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-svn co https://roboticslab.svn.sourceforge.net/svnroot/roboticslab/asibot asibot
+svn co https://svn.code.sf.net/p/roboticslab/code/asibot asibot
 cd asibot/main; mkdir build; cd build
 cmake .. -DENABLE_cartesianServer=ON -DENABLE_RlPlugins_cartesianbot=ON -DENABLE_RlPlugins_ravebot=ON
 make -j3; sudo make install; cd ../../..
