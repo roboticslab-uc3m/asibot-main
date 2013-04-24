@@ -1,0 +1,41 @@
+
+<KinBody name="IpcamCart_kinbody">
+    <!--Body type="dynamic" name="linkK"-->
+    <Body type="static" name="link0">
+        <Geom type="box">
+            <diffuseColor>0 0 0</diffuseColor>
+            <Extents>0.005 0.005 0.005</Extents>
+        </Geom>
+    </Body>
+    <Body name="link1">
+        <Geom type="box">
+            <diffuseColor>1 1 1</diffuseColor>
+            <Extents>0.005 0.005 0.005</Extents>
+        </Geom>
+    </Body>
+    <Joint name="C1" type="slider">
+        <offsetfrom>link0</offsetfrom>
+        <body>link0</body>
+        <body>link1</body>
+        <axis>1 0 0</axis>
+        <anchor>0 0 0</anchor>
+        <limitsdeg>-5 5</limitsdeg>
+        <maxvel>2</maxvel>
+    </Joint>
+    <Body name="link2">
+        <Geom type="box">
+            <diffuseColor>1 1 1</diffuseColor>
+            <Extents>0.005 0.005 0.005</Extents>
+        </Geom>
+    </Body>
+    <Joint name="C2" type="slider">
+        <offsetfrom>link0</offsetfrom>
+        <body>link1</body>
+        <body>link2</body>
+        <axis>0 1 0</axis>
+        <anchor>0 0 0</anchor>
+        <limitsdeg>-5 5</limitsdeg>
+        <maxvel>2</maxvel>
+    </Joint>
+</KinBody>
+
