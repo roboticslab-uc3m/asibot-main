@@ -43,7 +43,7 @@
             <Extents>0.005 0.005 0.005</Extents>
         </Geom>
     </Body>
-    <Joint name="C2" type="slider">
+    <Joint name="C3" type="slider">
         <offsetfrom>link0</offsetfrom>
         <body>link2</body>
         <body>link3</body>
