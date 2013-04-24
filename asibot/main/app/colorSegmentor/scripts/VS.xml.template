@@ -17,7 +17,7 @@
         </module>
 
         <connection>
-                <from>/ravebot/asibot_tip/img:o</from>
+                <from>/ravebot/ip_camera/img:o</from>
                 <to>/colorSegmentor/img:i</to>
         </connection>
         <connection>
