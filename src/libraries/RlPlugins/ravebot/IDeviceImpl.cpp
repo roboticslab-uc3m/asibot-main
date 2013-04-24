@@ -136,7 +136,7 @@ bool RaveBot::open(Searchable& config) {
         ::exit(1);
     }
 
-    modePosVel = 1;  // 0 = Pos; 1 = Vel;
+    modePosVel = 0;  // 0 = Pos; 1 = Vel;
 
     encRawExposed.resize(numMotors);
     jointStatus.resize(numMotors);
