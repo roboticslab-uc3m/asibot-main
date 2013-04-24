@@ -2,7 +2,7 @@
 <name>colorSegmentorVS App</name>
         <module>
                 <name>optirun</name>
-                <parameters>cartesianServer --env VS.env.xml --numMotors 2</parameters>
+                <parameters>cartesianServer --env VS2.env.xml --numMotors 3</parameters>
                 <node>localhost</node>
         </module>
         <module>
