@@ -1,5 +1,5 @@
 <application>
-<name>colorSegmentorVS App</name>
+<name>VS App</name>
         <module>
                 <name>optirun</name>
                 <parameters>cartesianServer --env VS.env.xml --numMotors 2</parameters>
