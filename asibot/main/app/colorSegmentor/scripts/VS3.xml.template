@@ -1,8 +1,8 @@
 <application>
-<name>VS2 App</name>
+<name>VS3 App</name>
         <module>
                 <name>optirun</name>
-                <parameters>cartesianServer --env VS2.env.xml --numMotors 3</parameters>
+                <parameters>cartesianServer --env VS3.env.xml --numMotors 6</parameters>
                 <node>localhost</node>
         </module>
         <module>
