@@ -1,5 +1,4 @@
-
-// -----------------------------------------------------------------------------
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "RaveBot.h"
 
@@ -7,17 +6,18 @@
 
 bool RaveBot::getAxes(int *ax) {
     *ax = numMotors;
-    printf("RaveBot reporting %d axes are present\n", *ax);
+    printf("[RaveBot] getAxes reporting %d axes are present\n", *ax);
     return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setPositionMode() {
+    printf("[RaveBot] setPositionMode()\n");
     if (modePosVel==0) return true;  // Simply return true if we were already in pos mode.
     // Do anything additional before setting flag to pos...
     if(!stop()) {
-        printf("RaveBot::setPositionMode() return false; failed to stop\n");
+        fprintf(stderr,"[RaveBot] warning: setPositionMode() return false; failed to stop\n");
         return false;
     }
     modePosVel = 0;
@@ -29,15 +29,15 @@ bool RaveBot::setPositionMode() {
 bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
     if ((unsigned int)j>numMotors) return false;
     if(modePosVel!=0) {  // Check if we are in position mode.
-        printf("[fail] RaveBot will not positionMove as not in positionMode\n");
+        fprintf(stderr,"[RaveBot] warning: will not positionMove as not in positionMode\n");
         return false;
     }
-    printf("RaveBot::positionMove(%d,%f) f[begin]\n",j,ref);
+    printf("[RaveBot] positionMove(%d,%f) f[begin]\n",j,ref);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     targetExposed[j] = ref;
     if (fabs(targetExposed[j]-getEncExposed(j))<jointTol[j]) {
         stop(j);  // puts jointStatus[j]=0;
-        printf("Joint q%d reached target.\n",j+1);
+        printf("[RaveBot] Joint q%d reached target.\n",j+1);
         return true;
     } else if ( ref > getEncExposed(j) ) {
         //if(!velocityMove(j, refSpeed[j])) return false;
@@ -47,7 +47,7 @@ bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
         velRaw[j] = -(refSpeed[j] * velRawExposed[j]);
     }
     jointStatus[j] = 1;
-    printf("RaveBot::positionMove(%d,%f) f[end]\n",j,ref);
+    printf("[RaveBot] positionMove(%d,%f) f[end]\n",j,ref);
     return true;
 }
 
@@ -55,34 +55,34 @@ bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
 
 bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
     if(modePosVel!=0) {  // Check if we are in position mode.
-        printf("[fail] RaveBot will not positionMove as not in positionMode\n");
+        fprintf(stderr,"[RaveBot] error: Will not positionMove as not in positionMode\n");
         return false;
     }
-    printf("RaveBot::positionMove() f[begin]\n");
+    printf("[RaveBot] positionMove() f[begin]\n");
     // Find out the maximum time to move
     double max_time = 0;
     for(unsigned int motor=0;motor<numMotors;motor++) {
-        printf("dist[%d]: %f\n",motor,fabs(refs[motor]-getEncExposed(motor)));
-        printf("refSpeed[%d]: %f\n",motor,refSpeed[motor]);
+        printf("[RaveBot] dist[%d]: %f\n",motor,fabs(refs[motor]-getEncExposed(motor)));
+        printf("[RaveBot] refSpeed[%d]: %f\n",motor,refSpeed[motor]);
         if (fabs((refs[motor]-getEncExposed(motor))/refSpeed[motor])>max_time) {
             max_time = fabs((refs[motor]-getEncExposed(motor))/refSpeed[motor]);
-            printf("-->candidate: %f\n",max_time);
+            printf("[RaveBot] -->candidate: %f\n",max_time);
         }
     }
-    printf("max_time[final]: %f\n",max_time);
+    printf("[RaveBot] max_time[final]: %f\n",max_time);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     for(unsigned int motor=0;motor<numMotors;motor++) {
         targetExposed[motor]=refs[motor];
         velRaw[motor] = ((refs[motor]-getEncExposed(motor))/max_time)*velRawExposed[motor];
         //if(velRaw[motor] != velRaw[motor]) velRaw[motor] = 0;  // protect against NaN
-        printf("velRaw[%d]: %f\n",motor,velRaw[motor]);
+        printf("[RaveBot] velRaw[%d]: %f\n",motor,velRaw[motor]);
         jointStatus[motor]=1;
         if (fabs(targetExposed[motor]-getEncExposed(motor))<jointTol[motor]) {
             stop(motor);  // puts jointStatus[motor]=0;
-            printf("Joint q%d reached target.\n",motor+1);
+            printf("[RaveBot] Joint q%d reached target.\n",motor+1);
         }
     }
-    printf("RaveBot::positionMove() f[end]\n");
+    printf("[RaveBot] positionMove() f[end]\n");
     return true;
 }
 
@@ -94,12 +94,12 @@ bool RaveBot::relativeMove(int j, double delta) {
         printf("[fail] RaveBot will not relativeMove as not in positionMode\n");
         return false;
     }
-    printf("RaveBot::relativeMove(%d,%f) f[begin]\n",j,delta);
+    printf("[RaveBot] relativeMove(%d,%f) f[begin]\n",j,delta);
     // Set all the private parameters of the Rave class that correspond to this kind of movement!
     targetExposed[j]=getEncExposed(j)+delta;
     if (fabs(targetExposed[j]-getEncExposed(j))<jointTol[j]) {
         stop(j);  // puts jointStatus[j]=0;
-        printf("Joint q%d reached target.\n",j+1);
+        printf("[RaveBot] Joint q%d already at target.\n",j+1);
         return true;
     } else if ( targetExposed[j] > getEncExposed(j) ) {
         // if(!velocityMove(j, refSpeed[j])) return false;
@@ -109,7 +109,7 @@ bool RaveBot::relativeMove(int j, double delta) {
         velRaw[j] = -(refSpeed[j] * velRawExposed[j]);
     }
     jointStatus[j]=2;
-    printf("RaveBot::relativeMove(%d,%f) f[end]\n",j,delta);
+    printf("[RaveBot] relativeMove(%d,%f) f[end]\n",j,delta);
     return true;
 }
 
@@ -117,10 +117,10 @@ bool RaveBot::relativeMove(int j, double delta) {
 
 bool RaveBot::relativeMove(const double *deltas) {  // encExposed = deltas + encExposed
     if(modePosVel!=0) {  // Check if we are in position mode.
-        printf("[fail] RaveBot will not relativeMove as not in positionMode\n");
+        fprintf(stderr,"[RaveBot] warning: will not relativeMove as not in positionMode\n");
         return false;
     }
-    printf("RaveBot::relativeMove() f[begin]\n");
+    printf("[RaveBot] relativeMove() f[begin]\n");
     // Find out the maximum angle to move
     double max_dist = 0;
     double time_max_dist = 0;
@@ -136,7 +136,7 @@ bool RaveBot::relativeMove(const double *deltas) {  // encExposed = deltas + enc
       printf("velRaw[%d]: %f\n",motor,velRaw[motor]);
       jointStatus[motor]=2;
     }
-    printf("RaveBot::relativeMove() f[end]\n");
+    printf("[RaveBot] relativeMove() f[end]\n");
     return true;
 }
 
