@@ -7,6 +7,7 @@
 
 #include <stdio.h>  // provides: fprintf, stderr
 
+#include <yarp/sig/Vector.h>
 #include <yarp/sig/Matrix.h>
 
 #include <yarp/math/Math.h>  // provides: eye, operators
@@ -31,6 +32,8 @@ double toRad(const double inDeg);
 * Thanks [Ugo Pattacini, Serena Ivaldi, Francesco Nori ((iCub ctrllib/math.h))] for this one!
 */
 yarp::sig::Matrix axis2dcm(const yarp::sig::Vector &v, unsigned int verbose);
+
+yarp::sig::Matrix asibot2h(const yarp::sig::Vector &x, const yarp::sig::Vector &o, unsigned int verbose);
 
 #endif  // __TINY_MATH__
 
