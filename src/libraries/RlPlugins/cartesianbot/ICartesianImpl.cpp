@@ -46,7 +46,9 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
         targetO[1]=od[1];
     } else if (tool == 1) {
         printf("[CartesianBot] Using robot tip coordinates.\n");
-//        baseXd = xd * ;
+        yarp::sig::Matrix H_0_N = asibot2h(x,o);
+        yarp::sig::Matrix H_N_target = asibot2h(xd,od);
+        yarp::sig::Matrix H_0_target = H_0_N * H_N_target;
     } else fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
     printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
 //    printf("CartesianBot::goToPose() Problem statement:\n");
@@ -186,10 +188,11 @@ bool CartesianBot::askForPose(const yarp::sig::Vector &xd, const yarp::sig::Vect
     qdhat[3] = oyPd - qdhat[1] - qdhat[2];
     qdhat[4] = od[1];  // ozPP
 // Do the fwd kin for this and then:
-    xdhat.resize(3);
+    //xdhat.resize(3);
 //    xdhat[0] = ;
-    odhat.resize(2);
+    //odhat.resize(2);
 //    odhat[0] = ;
+    //fwdKin(qdhat,xdhat,odhat);  // 
     return true;
 }
 
