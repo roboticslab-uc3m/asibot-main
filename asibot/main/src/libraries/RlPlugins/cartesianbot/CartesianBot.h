@@ -49,9 +49,9 @@ using namespace yarp::math;
  * @ingroup RlPlugins
  * \defgroup CartesianBot
  *
- * The \ref CartesianBot library is composed by a single class, CartesianBot.
+ * @brief The \ref CartesianBot library is composed by a single class, CartesianBot.
  *
- * <b>Installation</b>
+ * @section cartesianbot_install Installation
  *
  * The plugin is compiled when ENABLE_RlPlugins_cartesianbot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
@@ -60,6 +60,8 @@ using namespace yarp::math;
 
 /**
  * @ingroup CartesianBot
+ * @brief Implements the Cartesian space solver based on the geometrical solution of for the ASIBOT robot.
+ *
  * The CartesianBot class connects to a robot (the IPositionControl, IVelocityControl and
  * IEncoders interfaces) and exposes a YARP_dev cartesian interface (implements
  * <a href="http://eris.liralab.it/yarpdoc/classyarp_1_1dev_1_1ICartesianControl.html">ICartesianControl</a>).
@@ -134,8 +136,8 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * reply] 
     * @param x a 3-d vector which is filled with the actual 
     *         position x,y,z (meters).
-    * @param od a 4-d vector which is filled with the actual 
-    * orientation using axis-angle representation xa, ya, za, theta 
+    * @param od a 2-d vector which is filled with the actual 
+    * orientation using euler representation xa, ya, za, theta 
     * (meters and radians). 
     * @param stamp the stamp of the encoders employed to compute the
     *              pose.
@@ -151,7 +153,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     *            not). 
     * @param x a 3-d vector which is filled with the actual position
     *         x,y,z (meters) of the given link reference frame.
-    * @param od a 4-d vector which is filled with the actual 
+    * @param od a 2-d vector which is filled with the actual 
     * orientation of the given link reference frame using axis-angle
     * representation xa, ya, za, theta (meters and radians).
     * @param stamp the stamp of the encoders employed to compute the
@@ -166,7 +168,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * and orientation) in cartesian space. [do not wait for reply]
     * @param xd a 3-d vector which contains the desired position 
     *           x,y,z
-    * @param od a 4-d vector which contains the desired orientation
+    * @param od a 2-d vector which contains the desired orientation
     * using axis-angle representation (xa, ya, za, theta). 
     * @param t set the trajectory duration time (seconds). If t< 
     *         (as by default) the current execution time is kept.
@@ -195,7 +197,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * and orientation) in cartesian space. [wait for reply]
     * @param xd a 3-d vector which contains the desired position 
     *          x,y,z (meters).
-    * @param od a 4-d vector which contains the desired orientation
+    * @param od a 2-d vector which contains the desired orientation
     * using axis-angle representation (xa, ya, za, theta). 
     * @param t set the trajectory duration time (seconds). If t<=0 
     *         (as by default) the current execution time is kept.
@@ -221,7 +223,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * @param xdhat a 3-d vector which is filled with the actual 
     *          desired position x,y,z (meters); it may differ from
     *          the commanded xd.
-    * @param odhat a 4-d vector which is filled with the actual 
+    * @param odhat a 2-d vector which is filled with the actual 
     *          desired orientation using axis-angle representation
     *          xa, ya, za, theta (meters and radians); it may differ
     *          from the commanded od. 
@@ -237,13 +239,13 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * [wait for reply] 
     * @param xd a 3-d vector which contains the desired 
     *          position x,y,z (meters).
-    * @param od a 4-d vector which contains the desired 
+    * @param od a 2-d vector which contains the desired 
     *          orientation using axis-angle representation xa, ya,
     *          za, theta (meters and radians).
     * @param xdhat a 3-d vector which is filled with the final 
     *          position x,y,z (meters); it may differ from the
     *          commanded xd.
-    * @param odhat a 4-d vector which is filled with the final 
+    * @param odhat a 2-d vector which is filled with the final 
     *          orientation using axis-angle representation xa, ya,
     *          za, theta (meters and radians); it may differ from
     *          the commanded od.
@@ -263,13 +265,13 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     *           the chain.
     * @param xd a 3-d vector which contains the desired 
     *          position x,y,z (meters).
-    * @param od a 4-d vector which contains the desired 
+    * @param od a 2-d vector which contains the desired 
     *          orientation using axis-angle representation xa, ya,
     *          za, theta (meters and radians).
     * @param xdhat a 3-d vector which is filled with the final 
     *          position x,y,z (meters); it may differ from the
     *          commanded xd.
-    * @param odhat a 4-d vector which is filled with the final 
+    * @param odhat a 2-d vector which is filled with the final 
     *          orientation using axis-angle representation xa, ya,
     *          za, theta (meters and radians); it may differ from
     *          the commanded od.
@@ -290,7 +292,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * @param xdhat a 3-d vector which is filled with the final 
     *          position x,y,z (meters); it may differ from the
     *          commanded xd.
-    * @param odhat a 4-d vector which is filled with the final 
+    * @param odhat a 2-d vector which is filled with the final 
     *          orientation using axis-angle representation xa, ya,
     *          za, theta (meters and radians); it may differ from
     *          the commanded od.
@@ -313,7 +315,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * @param xdhat a 3-d vector which is filled with the final 
     *          position x,y,z (meters); it may differ from the
     *          commanded xd.
-    * @param odhat a 4-d vector which is filled with the final 
+    * @param odhat a 2-d vector which is filled with the final 
     *          orientation using axis-angle representation xa, ya,
     *          za, theta (meters and radians); it may differ from
     *          the commanded od.
@@ -486,7 +488,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     *             position [m/s] of the end-effector while moving in
     *             the task space as result of the commanded joints
     *             velocities.
-    * @param odot the 4-d vector containing the derivative of 
+    * @param odot the 2-d vector containing the derivative of 
     *             end-effector orientation [rad/s] while moving in
     *             the task space as result of the commanded joints
     *             velocities.
@@ -499,7 +501,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     * space.
     * @param xdot the 3-d vector containing the x,y,z reference 
     *             velocities [m/s] of the end-effector.
-    * @param odot the 4-d vector containing the orientation 
+    * @param odot the 2-d vector containing the orientation 
     *             reference velocity [rad/s] of the end-effector
     * @return true/false on success/failure.
     */

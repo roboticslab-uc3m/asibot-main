@@ -28,7 +28,7 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os:
         fprintf(stderr,"[CartesianBot] warning: getPose() failed to getEncoders()\n");
         return false;
     }
-    return fwdKin(realDeg,x,o);
+    return fwdKin(realDeg,x,o);  // Modifies x and o, returning success/fail value.
 }
 
 // -----------------------------------------------------------------------------
