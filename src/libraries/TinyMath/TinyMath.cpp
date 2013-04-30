@@ -59,8 +59,6 @@ yarp::sig::Matrix axis2dcm(const yarp::sig::Vector &v, unsigned int verbose) {
 
 yarp::sig::Matrix asibot2h(const yarp::sig::Vector &x, const yarp::sig::Vector &o, unsigned int verbose) {
 
-    yarp::sig::Matrix H = eye(4,4);
-
     // Form the axis-angle
     yarp::sig::Vector oAA;
     oAA.push_back(x[0]);
@@ -72,11 +70,12 @@ yarp::sig::Matrix asibot2h(const yarp::sig::Vector &x, const yarp::sig::Vector &
     oAA[1] /= length; // normalize
     oAA[2] /= length; // normalize
 
+    yarp::sig::Matrix H = axis2dcm(oAA);  // Returns a 3x3
+    H.resize(4,4);
     H(3,0) = x(0);
     H(3,1) = x(1);
     H(3,2) = x(2);
     H(3,3) = 1;
-
 
     return H;
 }
