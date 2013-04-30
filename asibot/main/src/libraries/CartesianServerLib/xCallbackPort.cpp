@@ -85,46 +85,11 @@ void xCallbackPort::onRead(Bottle& b) {
     } else if (choice==VOCAB_VMOS) { ///////////////////////////////// vmos /////////////////////////////////
         Bottle *lst = b.get(1).asList();
         Vector xdotd,odotd;
-        if (b.size()==2) {  // no tool param, just send in base ref
-            xdotd.push_back(lst->get(0).asDouble());
-            xdotd.push_back(lst->get(1).asDouble());
-            xdotd.push_back(lst->get(2).asDouble());
-            for (int i = 3; i < lst->size(); i++)
-                odotd.push_back(lst->get(i).asDouble());
-        } else if (b.size()==3) {
-            Vector x,o;
-            if(!icart->getPose(x,o)) {
-                fprintf(stderr,"[CartesianServerLib] warning: getPose failed!\n");
-                return;
-            }
-            Vector oAA;  // axis-angle
-            oAA.push_back(x[0]);
-            oAA.push_back(x[1]);
-            oAA.push_back(sqrt(x[0]*x[0]+x[1]*x[1])*cos(o[0]*M_PI/180.0));
-            oAA.push_back((o[1])*M_PI/180.0);
-            double length = sqrt(oAA[0]*oAA[0]+oAA[1]*oAA[1]+oAA[2]*oAA[2]);
-            oAA[0] /= length;
-            oAA[1] /= length;
-            oAA[2] /= length;
-            // Matrix axis2dcm(const Vector &v, unsigned int verbose);
-            Matrix H_base_ee = axis2dcm(oAA,0);
-            H_base_ee.resize(4,4);
-            H_base_ee(0,3) = x[0];
-            H_base_ee(1,3) = x[1];
-            H_base_ee(2,3) = x[2];
-            H_base_ee(3,3) = 1;
-            Vector xdotdP;
-            xdotdP.push_back(lst->get(0).asDouble());
-            xdotdP.push_back(lst->get(1).asDouble());
-            xdotdP.push_back(lst->get(2).asDouble());
-            xdotdP.push_back(1);
-            Vector xdotdPP = H_base_ee * xdotdP;
-            xdotd.push_back(xdotdPP[0]);
-            xdotd.push_back(xdotdPP[1]);
-            xdotd.push_back(xdotdPP[2]);
-            odotd.push_back(0);
-            odotd.push_back(0);
-        }
+        xdotd.push_back(lst->get(0).asDouble());
+        xdotd.push_back(lst->get(1).asDouble());
+        xdotd.push_back(lst->get(2).asDouble());
+        for (int i = 3; i < lst->size(); i++)
+            odotd.push_back(lst->get(i).asDouble());
         printf("[xCallbackPort] xdotd: %s; odotd: %s\n",xdotd.toString().c_str(),odotd.toString().c_str());
         *csStatus = 6;
         icart->setTaskVelocities(xdotd,odotd);

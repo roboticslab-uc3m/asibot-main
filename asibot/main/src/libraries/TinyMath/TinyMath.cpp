@@ -57,3 +57,29 @@ yarp::sig::Matrix axis2dcm(const yarp::sig::Vector &v, unsigned int verbose) {
 
 // ----------------------------------------------------------------------------
 
+yarp::sig::Matrix asibot2h(const yarp::sig::Vector &x, const yarp::sig::Vector &o, unsigned int verbose) {
+
+    yarp::sig::Matrix H = eye(4,4);
+
+    // Form the axis-angle
+    yarp::sig::Vector oAA;
+    oAA.push_back(x[0]);
+    oAA.push_back(x[1]);
+    oAA.push_back( sqrt(x[0]*x[0]+x[1]*x[1]) * cos(toRad(o[0])) );
+    oAA.push_back(toRad(o[1]));
+    double length = sqrt( oAA[0]*oAA[0] + oAA[1]*oAA[1] + oAA[2]*oAA[2] );
+    oAA[0] /= length; // normalize
+    oAA[1] /= length; // normalize
+    oAA[2] /= length; // normalize
+
+    H(3,0) = x(0);
+    H(3,1) = x(1);
+    H(3,2) = x(2);
+    H(3,3) = 1;
+
+
+    return H;
+}
+
+// ----------------------------------------------------------------------------
+

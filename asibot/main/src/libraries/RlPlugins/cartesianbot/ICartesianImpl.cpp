@@ -34,6 +34,8 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os:
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
+    yarp::sig::Vector x,o;
+    getPose(x,o);
     printf("[CartesianBot] using tool: %d",tool);
     if (tool == 0) {
         printf("[CartesianBot] Using base coordinates.\n");
@@ -49,8 +51,6 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
 //    printf("CartesianBot::goToPose() Problem statement:\n");
 //    printf("xd: %s\nod: %s\n",xd.toString().c_str(),od.toString().c_str());
-    yarp::sig::Vector x,o;
-    getPose(x,o);
     double trajT=duration;
     if (t>0) trajT = t;
     trajPrP = new OrderOneTraj;
