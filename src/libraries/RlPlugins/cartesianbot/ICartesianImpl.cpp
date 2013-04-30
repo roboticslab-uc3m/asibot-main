@@ -49,6 +49,11 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
         yarp::sig::Matrix H_0_N = asibot2h(x,o);
         yarp::sig::Matrix H_N_target = asibot2h(xd,od);
         yarp::sig::Matrix H_0_target = H_0_N * H_N_target;
+        targetX[0]=H_0_target(0,3);
+        targetX[1]=H_0_target(1,3);
+        targetX[2]=H_0_target(2,3);
+        targetO[0]=0; //!!!!
+        targetO[1]=0; //!!!!
     } else fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
     printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
 //    printf("CartesianBot::goToPose() Problem statement:\n");
