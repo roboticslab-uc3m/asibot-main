@@ -35,13 +35,18 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os:
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
     printf("[CartesianBot] using tool: %d",tool);
-    if (tool != 0) fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
+    if (tool == 0) {
+        printf("[CartesianBot] Using base coordinates.\n");
+        targetX[0]=xd[0];
+        targetX[1]=xd[1];
+        targetX[2]=xd[2];
+        targetO[0]=od[0];
+        targetO[1]=od[1];
+    } else if (tool == 1) {
+        printf("[CartesianBot] Using robot tip coordinates.\n");
+//        baseXd = xd * ;
+    } else fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
     printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
-    targetX[0]=xd[0];
-    targetX[1]=xd[1];
-    targetX[2]=xd[2];
-    targetO[0]=od[0];
-    targetO[1]=od[1];
 //    printf("CartesianBot::goToPose() Problem statement:\n");
 //    printf("xd: %s\nod: %s\n",xd.toString().c_str(),od.toString().c_str());
     yarp::sig::Vector x,o;
