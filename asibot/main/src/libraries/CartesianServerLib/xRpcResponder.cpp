@@ -11,12 +11,10 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     out.clear();
     ConnectionWriter *returnToSender = connection.getWriter();
     if (returnToSender==NULL) return false;
-    int choice = in.get(0).asVocab();
-    if (in.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
-    if (choice==VOCAB_HELP) {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: [help] [inv] [movj] [movl] [stat] [stop] [wait] more info at [http://roboticslab.sourceforge.net/asibot/group__cartesianServer.html]");
+    if ((in.get(0).asString() == "help")||(in.get(0).asVocab() == VOCAB_HELP)) {  // help //
+        out.addString("Available commands: [help] [inv] [movj] [movl] [stat] [stop] [wait] [tool] more info at [http://roboticslab.sourceforge.net/asibot/group__cartesianServer.html]");
         return out.write(*returnToSender);
-    } else if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
+    } else if ((in.get(0).asString() == "stop")||(in.get(0).asVocab() == VOCAB_STOP)) {  // stop //
         if(icart->stopControl()) {
             if(ipos->stop()) {
                 if(ipos->setPositionMode()) {
@@ -26,7 +24,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
         return out.write(*returnToSender);
-    } else if (choice==VOCAB_WAIT) {  ///////////////////////////////// wait /////////////////////////////////
+    } else if ((in.get(0).asString() == "wait")||(in.get(0).asVocab() == VOCAB_WAIT)) {  // wait //
         while (*csStatus != 0) {
             printf(".");
             fflush(stdout);
@@ -44,7 +42,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         printf("\n");
         out.addVocab(VOCAB_OK);
         return out.write(*returnToSender);
-    } else if (choice==VOCAB_STAT) { ///////////////////////////////// stat /////////////////////////////////
+    } else if ((in.get(0).asString() == "stat")||(in.get(0).asVocab() == VOCAB_STAT)) { // stat //
         if (*csStatus==1) { // movj
             bool done;
             ipos->checkMotionDone(&done);
@@ -69,7 +67,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         } else
             out.addVocab(VOCAB_FAILED);
         return out.write(*returnToSender);
-    } else if (choice==VOCAB_MOVL) { ///////////////////////////////// movl /////////////////////////////////
+    } else if ((in.get(0).asString() == "movl")||(in.get(0).asVocab() == VOCAB_MOVL)) { // movl //
         Vector x,o;
         Bottle *lst = in.get(1).asList();
         x.push_back(lst->get(0).asDouble());
@@ -83,7 +81,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         } else
             out.addVocab(VOCAB_FAILED);
         return out.write(*returnToSender);
-    } else if (choice==VOCAB_MOVJ) { ///////////////////////////////// movj /////////////////////////////////
+    } else if ((in.get(0).asString() == "movj")||(in.get(0).asVocab() == VOCAB_MOVJ)) { // movj //
         Vector xd,od,xdhat,odhat,qdhat;
         Bottle *lst = in.get(1).asList();
         xd.push_back(lst->get(0).asDouble());
@@ -104,7 +102,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         } else
             out.addVocab(VOCAB_FAILED);
         return out.write(*returnToSender);
-    } else if (choice==VOCAB_INV) { ///////////////////////////////// inv /////////////////////////////////
+    } else if ((in.get(0).asString() == "inv")||(in.get(0).asVocab() == VOCAB_INV)) { // inv //
         Vector xd,od,xdhat,odhat,qdhat;
         Bottle *lst = in.get(1).asList();
         xd.push_back(lst->get(0).asDouble());
@@ -120,7 +118,7 @@ bool xRpcResponder::read(ConnectionReader& connection) {
         } else
             out.addVocab(VOCAB_FAILED);
         return out.write(*returnToSender);
-    } else if (choice==VOCAB_TOOL) { ///////////////////////////////// tool /////////////////////////////////
+    } else if ((in.get(0).asString() == "tool")||(in.get(0).asVocab() == VOCAB_TOOL)) { // tool //
         int tool = in.get(1).asInt();
         printf("[xRpcResponder] Tool set to: %d\n", tool);
         Bottle tweek;
