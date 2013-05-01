@@ -44,13 +44,9 @@ double toRad(const double inDeg);
 */
 void xUpdateH(const yarp::sig::Vector &x, yarp::sig::Matrix &H);
 
-/**
-* Thanks [Ugo Pattacini, Serena Ivaldi, Francesco Nori ((iCub ctrllib/math.h))] for axis2dcm().
-* @param x 3-vector in meters.
-* @param o 4-vector in degrees.
-* @return Homogeneous matrix (4x4).
-*/
-yarp::sig::Matrix axisAngleToH(const yarp::sig::Vector &x, const yarp::sig::Vector &o);
+yarp::sig::Matrix rotX(const double &inDeg);
+yarp::sig::Matrix rotY(const double &inDeg);
+yarp::sig::Matrix rotZ(const double &inDeg);
 
 /**
 * @param x 3-vector in meters.
@@ -66,6 +62,15 @@ yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vecto
 * @return Homogeneous matrix (4x4).
 */
 yarp::sig::Matrix eulerYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o);
+
+/**
+* Thanks [Ugo Pattacini, Serena Ivaldi, Francesco Nori ((iCub ctrllib/math.h))] for axis2dcm().
+* @param x 3-vector in meters.
+* @param o 4-vector in degrees.
+* @return Homogeneous matrix (4x4).
+*/
+yarp::sig::Matrix axisAngleToH(const yarp::sig::Vector &x, const yarp::sig::Vector &o);
+
 
 #endif  // __TINY_MATH__
 
