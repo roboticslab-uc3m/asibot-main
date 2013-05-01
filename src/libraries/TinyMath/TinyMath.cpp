@@ -24,6 +24,56 @@ void xUpdateH(const yarp::sig::Vector &x, yarp::sig::Matrix &H) {
 
 // ----------------------------------------------------------------------------
 
+yarp::sig::Matrix rotX(const double &inDeg) {
+
+    yarp::sig::Matrix R = eye(3,3);
+
+    return R;  // yarp::sig::Matrix
+}
+
+// ----------------------------------------------------------------------------
+
+yarp::sig::Matrix rotY(const double &inDeg) {
+
+    yarp::sig::Matrix R = eye(3,3);
+
+    return R;  // yarp::sig::Matrix
+}
+
+// ----------------------------------------------------------------------------
+
+yarp::sig::Matrix rotZ(const double &inDeg) {
+
+    yarp::sig::Matrix R = eye(3,3);
+
+    return R;  // yarp::sig::Matrix
+}
+
+// ----------------------------------------------------------------------------
+
+yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
+
+    yarp::sig::Matrix H = eye(4,4);
+
+    xUpdateH(x,H);
+
+    return eye(4,4);  // yarp::sig::Matrix
+}
+
+// ----------------------------------------------------------------------------
+
+yarp::sig::Matrix eulerYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
+
+    yarp::sig::Vector oZYZ(3);
+    oZYZ[0] = atan2(x[1],x[0]);
+    oZYZ[1] = o[0];
+    oZYZ[2] = o[1];
+
+    return eulerZYZtoH(x,oZYZ);  // yarp::sig::Matrix
+}
+
+// ----------------------------------------------------------------------------
+
 yarp::sig::Matrix axisAngleToH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
 
     yarp::sig::Matrix H = eye(4,4);
@@ -57,29 +107,6 @@ yarp::sig::Matrix axisAngleToH(const yarp::sig::Vector &x, const yarp::sig::Vect
     xUpdateH(x,H);
 
     return H;
-}
-
-// ----------------------------------------------------------------------------
-
-yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
-
-    yarp::sig::Matrix H = eye(4,4);
-
-    xUpdateH(x,H);
-
-    return eye(4,4);  // yarp::sig::Matrix
-}
-
-// ----------------------------------------------------------------------------
-
-yarp::sig::Matrix eulerYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
-
-    yarp::sig::Vector oZYZ(3);
-    oZYZ[0] = atan2(x[1],x[0]);
-    oZYZ[1] = o[0];
-    oZYZ[2] = o[1];
-
-    return eulerZYZtoH(x,oZYZ);  // yarp::sig::Matrix
 }
 
 // ----------------------------------------------------------------------------
