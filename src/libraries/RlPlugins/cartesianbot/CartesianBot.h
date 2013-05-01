@@ -671,6 +671,7 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     double duration, maxVel, maxAcc;
     
     double cmcMs;
+    bool isQuiet;
 };
 
 #endif

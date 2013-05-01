@@ -34,20 +34,20 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os:
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
-    yarp::sig::Vector x,o;
-    getPose(x,o);
-    printf("[CartesianBot] using tool: %d",tool);
+    yarp::sig::Vector x,o;  // empty vectors
+    getPose(x,o);  // where we put the result of performing fwd kinematics of current position
+    if (!isQuiet) printf("[CartesianBot] using tool: %d",tool);
     if (tool == 0) {
-        printf("[CartesianBot] Using base coordinates.\n");
+        if (!isQuiet) printf("[CartesianBot] Using base coordinates.\n");
         targetX[0]=xd[0];
         targetX[1]=xd[1];
         targetX[2]=xd[2];
         targetO[0]=od[0];
         targetO[1]=od[1];
     } else if (tool == 1) {
-        printf("[CartesianBot] Using robot tip coordinates.\n");
-        yarp::sig::Matrix H_0_N = asibot2h(x,o);
-        yarp::sig::Matrix H_N_target = asibot2h(xd,od);
+        if (!isQuiet) printf("[CartesianBot] Using robot tip coordinates.\n");
+        yarp::sig::Matrix H_0_N = eulerYZtoH(x,o);
+        yarp::sig::Matrix H_N_target = eulerYZtoH(xd,od);
         yarp::sig::Matrix H_0_target = H_0_N * H_N_target;
         targetX[0]=H_0_target(0,3);
         targetX[1]=H_0_target(1,3);
@@ -55,9 +55,11 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
         targetO[0]=0; //!!!!
         targetO[1]=0; //!!!!
     } else fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
-    printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
-//    printf("CartesianBot::goToPose() Problem statement:\n");
-//    printf("xd: %s\nod: %s\n",xd.toString().c_str(),od.toString().c_str());
+    if (!isQuiet) printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
+    if (!isQuiet) printf("[CartesianBot] goToPose() \\begin{Problem statement}\n");
+    if (!isQuiet) printf("[CartesianBot] x: %s \t o: %s\n",x.toString().c_str(),o.toString().c_str());
+    if (!isQuiet) printf("[CartesianBot] xd: %s \t od: %s\n",xd.toString().c_str(),od.toString().c_str());
+    if (!isQuiet)printf("[CartesianBot] goToPose() \\end{Problem statement}\n");
     double trajT=duration;
     if (t>0) trajT = t;
     trajPrP = new OrderOneTraj;
@@ -89,7 +91,7 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     withOri=true;
     vel->setVelocityMode();
     cmc_status=1;
-    printf("[CartesianBot] goToPose() End setting absolute base movement.\n");
+    if (!isQuiet) printf("[CartesianBot] goToPose() End setting absolute base movement.\n");
     return true;
 }
 
