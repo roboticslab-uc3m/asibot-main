@@ -53,6 +53,13 @@ void xUpdateH(const yarp::sig::Vector &x, yarp::sig::Matrix &H);
 yarp::sig::Matrix axisAngleToH(const yarp::sig::Vector &x, const yarp::sig::Vector &o);
 
 /**
+* @param x 3-vector in meters.
+* @param o 3-vector in degrees.
+* @return Homogeneous matrix (4x4).
+*/
+yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o);
+
+/**
 * Uses x to compute rot(Z).
 * @param x 3-vector in meters.
 * @param o 2-vector in degrees.
