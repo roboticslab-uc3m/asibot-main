@@ -64,12 +64,10 @@ yarp::sig::Matrix rotZ(const double &inDeg) {
 // ----------------------------------------------------------------------------
 
 yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
-
-    yarp::sig::Matrix H = eye(4,4);
-
-    xUpdateH(x,H);
-
-    return eye(4,4);  // yarp::sig::Matrix
+    yarp::sig::Matrix result = rotZ(x[0]) * rotY(x[1]) * rotZ(x[2]);  // 3x3 
+    result.resize(4,4);
+    xUpdateH(x,result);
+    return result;
 }
 
 // ----------------------------------------------------------------------------
