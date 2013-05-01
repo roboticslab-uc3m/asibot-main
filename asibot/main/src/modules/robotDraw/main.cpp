@@ -3,8 +3,10 @@
 /**
  * \defgroup robotDraw robotDraw
  *
- * @brief robotDraw opens a YARP rpc port to recieve "draw p0x p0y p1x p1y ... pNx pNy"
- * (i.e. "draw 0 0 .1 0 .1 .1 0 .1 0 0") and draw the points on a plane. It connects to
+ * @brief robotDraw opens a YARP rpc port to recieve "draw p0x p0y p1x p1y ... pNx pNy" commands.
+ *
+ * robotDraw opens a YARP rpc port to recieve "draw p0x p0y p1x p1y ... pNx pNy" commands
+ * (i.e. "draw 0 0 .1 0 .1 .1 0 .1 0 0"), and draw the points on a plane. It connects to
  * a running \ref cartesianServer module using the C++ implementation of the \ref CartesianClientLib
  * library. Inherited from (original development of) the XGNITIVE repository.
  *

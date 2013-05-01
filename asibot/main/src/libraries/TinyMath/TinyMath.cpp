@@ -16,48 +16,61 @@ double toRad(const double inDeg) {
 
 // ----------------------------------------------------------------------------
 
-yarp::sig::Matrix axis2dcm(const yarp::sig::Vector &v, unsigned int verbose) {
+void xUpdateH(const yarp::sig::Vector &x, yarp::sig::Matrix &H) {
+    H(3,0) = x(0);
+    H(3,1) = x(1);
+    H(3,2) = x(2);
+}
 
-    if (v.length()<4) {
-        if (verbose) fprintf(stderr,"axis2dcm() failed\n");
-        return yarp::sig::Matrix(0,0);
-    }
+// ----------------------------------------------------------------------------
 
-    yarp::sig::Matrix R = eye(4,4);
+yarp::sig::Matrix axisAngleToH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
 
-    double theta=v[3];
-    if (theta==0.0) return R;
+    yarp::sig::Matrix H = eye(4,4);
+
+    double theta = o[3];
 
     double c=cos(theta);
     double s=sin(theta);
     double C=1.0-c;
 
-    double xs =v[0]*s;
-    double ys =v[1]*s;
-    double zs =v[2]*s;
-    double xC =v[0]*C;
-    double yC =v[1]*C;
-    double zC =v[2]*C;
-    double xyC=v[0]*yC;
-    double yzC=v[1]*zC;
-    double zxC=v[2]*xC;
+    double xs =o[0]*s;
+    double ys =o[1]*s;
+    double zs =o[2]*s;
+    double xC =o[0]*C;
+    double yC =o[1]*C;
+    double zC =o[2]*C;
+    double xyC=o[0]*yC;
+    double yzC=o[1]*zC;
+    double zxC=o[2]*xC;
     
-    R(0,0)=v[0]*xC+c;
-    R(0,1)=xyC-zs;
-    R(0,2)=zxC+ys;
-    R(1,0)=xyC+zs;
-    R(1,1)=v[1]*yC+c;
-    R(1,2)=yzC-xs;
-    R(2,0)=zxC-ys;
-    R(2,1)=yzC+xs;
-    R(2,2)=v[2]*zC+c;
+    H(0,0)=o[0]*xC+c;
+    H(0,1)=xyC-zs;
+    H(0,2)=zxC+ys;
+    H(1,0)=xyC+zs;
+    H(1,1)=o[1]*yC+c;
+    H(1,2)=yzC-xs;
+    H(2,0)=zxC-ys;
+    H(2,1)=yzC+xs;
+    H(2,2)=o[2]*zC+c;
+    
+    xUpdateH(x,H);
 
-    return R;
+    return H;
 }
 
 // ----------------------------------------------------------------------------
 
-yarp::sig::Matrix asibot2h(const yarp::sig::Vector &x, const yarp::sig::Vector &o, unsigned int verbose) {
+yarp::sig::Matrix eulerYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
+
+    double rotZ = atan2(x[1],x[0]);
+    return eye(4,4);  // yarp::sig::Matrix
+}
+
+// ----------------------------------------------------------------------------
+
+/* old impl
+ * yarp::sig::Matrix asibot2h(const yarp::sig::Vector &x, const yarp::sig::Vector &o, unsigned int verbose) {
 
     // Form the axis-angle
     yarp::sig::Vector oAA;
@@ -78,7 +91,7 @@ yarp::sig::Matrix asibot2h(const yarp::sig::Vector &x, const yarp::sig::Vector &
     H(3,3) = 1;
 
     return H;
-}
+}*/
 
 // ----------------------------------------------------------------------------
 

@@ -6,6 +6,8 @@
 
 bool CartesianBot::open(Searchable& config) {
 
+    isQuiet = false;
+
     cmc_status = 0;
     startTime = 0;
     realRad.resize(5);
