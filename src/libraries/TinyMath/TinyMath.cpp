@@ -25,27 +25,39 @@ void xUpdateH(const yarp::sig::Vector &x, yarp::sig::Matrix &H) {
 // ----------------------------------------------------------------------------
 
 yarp::sig::Matrix rotX(const double &inDeg) {
-
     yarp::sig::Matrix R = eye(3,3);
-
+    double c=cos(toRad(inDeg));
+    double s=sin(toRad(inDeg));
+    R(1,1)=c;
+    R(1,2)=s;
+    R(2,1)=-s;
+    R(2,2)=c;
     return R;  // yarp::sig::Matrix
 }
 
 // ----------------------------------------------------------------------------
 
 yarp::sig::Matrix rotY(const double &inDeg) {
-
     yarp::sig::Matrix R = eye(3,3);
-
+    double c=cos(toRad(inDeg));
+    double s=sin(toRad(inDeg));
+    R(0,0)=c;
+    R(0,2)=-s;
+    R(2,0)=s;
+    R(2,2)=c;
     return R;  // yarp::sig::Matrix
 }
 
 // ----------------------------------------------------------------------------
 
 yarp::sig::Matrix rotZ(const double &inDeg) {
-
     yarp::sig::Matrix R = eye(3,3);
-
+    double c=cos(toRad(inDeg));
+    double s=sin(toRad(inDeg));
+    R(0,0)=c;
+    R(0,1)=s;
+    R(1,0)=-s;
+    R(1,1)=c;
     return R;  // yarp::sig::Matrix
 }
 
