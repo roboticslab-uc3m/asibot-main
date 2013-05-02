@@ -17,9 +17,9 @@ double toRad(const double inDeg) {
 // ----------------------------------------------------------------------------
 
 void xUpdateH(const yarp::sig::Vector &x, yarp::sig::Matrix &H) {
-    H(3,0) = x(0);
-    H(3,1) = x(1);
-    H(3,2) = x(2);
+    H(0,3) = x(0);
+    H(1,3) = x(1);
+    H(2,3) = x(2);
 }
 
 // ----------------------------------------------------------------------------
@@ -65,8 +65,12 @@ yarp::sig::Matrix rotZ(const double &inDeg) {
 
 yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
     yarp::sig::Matrix result = rotZ(x[0]) * rotY(x[1]) * rotZ(x[2]);  // 3x3 
+printf("result1:\n%s\n\n",result.toString().c_str());
     result.resize(4,4);
+    result(3,3)=1;
+printf("result2:\n%s\n\n",result.toString().c_str());
     xUpdateH(x,result);
+printf("result3:\n%s\n\n",result.toString().c_str());
     return result;
 }
 
