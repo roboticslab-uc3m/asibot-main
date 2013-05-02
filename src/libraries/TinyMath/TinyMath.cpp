@@ -64,7 +64,7 @@ yarp::sig::Matrix rotZ(const double &inDeg) {
 // ----------------------------------------------------------------------------
 
 yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
-    yarp::sig::Matrix result = rotZ(x[0]) * rotY(x[1]) * rotZ(x[2]);  // 3x3 
+    yarp::sig::Matrix result = rotZ(o[0]) * rotY(o[1]) * rotZ(o[2]);  // 3x3 
 printf("result1:\n%s\n\n",result.toString().c_str());
     result.resize(4,4);
     result(3,3)=1;
