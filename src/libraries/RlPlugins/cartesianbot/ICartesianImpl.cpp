@@ -36,7 +36,7 @@ bool CartesianBot::getPose(yarp::sig::Vector &x, yarp::sig::Vector &o, yarp::os:
 bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector &od, const double t) {
     yarp::sig::Vector x,o;  // empty vectors
     getPose(x,o);  // where we put the result of performing fwd kinematics of current position
-    if (!isQuiet) printf("[CartesianBot] using tool: %d",tool);
+    if (!isQuiet) printf("[CartesianBot] Using tool: %d\n",tool);
     if (tool == 0) {
         if (!isQuiet) printf("[CartesianBot] Using base coordinates.\n");
         targetX[0]=xd[0];
@@ -52,26 +52,28 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
         targetX[0]=H_0_target(0,3);
         targetX[1]=H_0_target(1,3);
         targetX[2]=H_0_target(2,3);
-        targetO[0]=0; //!!!!
-        targetO[1]=0; //!!!!
-    } else fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
+        // https://truesculpt.googlecode.com/hg-history/38000e9dfece971460473d5788c235fbbe82f31b/Doc/rotation_matrix_to_euler.pdf
+        // "Computing Euler angles from a rotation matrix", Gregory G. Slabaugh
+        targetO[0]=-toDeg(asin(H_0_target(2,0)));  // Alternatively: pi + asin(...)
+        targetO[1]=o[1]+od[1]; //!!!!
+    } else fprintf(stderr, "[CartesianBot] warning: Tool %d not implemented.\n",tool);
     if (!isQuiet) printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
     if (!isQuiet) printf("[CartesianBot] goToPose() \\begin{Problem statement}\n");
     if (!isQuiet) printf("[CartesianBot] x: %s \t o: %s\n",x.toString().c_str(),o.toString().c_str());
-    if (!isQuiet) printf("[CartesianBot] xd: %s \t od: %s\n",xd.toString().c_str(),od.toString().c_str());
+    if (!isQuiet) printf("[CartesianBot] targetX: %s \t targetO: %s\n",targetX.toString().c_str(),targetO.toString().c_str());
     if (!isQuiet)printf("[CartesianBot] goToPose() \\end{Problem statement}\n");
     double trajT=duration;
     if (t>0) trajT = t;
     trajPrP = new OrderOneTraj;
-    trajPrP->configure(sqrt(x[0]*x[0]+x[1]*x[1]),sqrt(xd[0]*xd[0]+xd[1]*xd[1]),trajT);
+    trajPrP->configure(sqrt(x[0]*x[0]+x[1]*x[1]),sqrt(targetX[0]*targetX[0]+targetX[1]*targetX[1]),trajT);
     trajPhP = new OrderOneTraj;
-    trajPhP->configure(x[2]-A0,xd[2]-A0,trajT);
+    trajPhP->configure(x[2]-A0,targetX[2]-A0,trajT);
     trajOyP = new OrderOneTraj;
-    trajOyP->configure(o[0],od[0],trajT);  // We set it in degrees
+    trajOyP->configure(o[0],targetO[0],trajT);  // We set it in degrees
     trajOz = new OrderOneTraj;
-    trajOz->configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
+    trajOz->configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(targetX[1],targetX[0])),trajT);
     trajOzPP = new OrderOneTraj;
-    trajOzPP->configure(o[1],od[1],trajT);  // We set it in degrees
+    trajOzPP->configure(o[1],targetO[1],trajT);  // We set it in degrees
 /*    printf("[goToPose] begin: trajPrP dump(100 samples).\n");
     trajPrP->dump(100);
     printf("[goToPose] end: trajPrP dump(100 samples).\n");
@@ -105,29 +107,50 @@ bool CartesianBot::goToPosition(const yarp::sig::Vector &xd, const double t) {
 
 bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &od,
                               const double t) {
-    printf("[CartesianBot] using tool: %d",tool);
-    if (tool != 0) fprintf(stderr, "[CartesianBot] warning: tool %d not implemented",tool);
-    printf("[CartesianBot] goToPoseSync() Begin setting absolute base movement.\n");
-    targetX[0]=xd[0];
-    targetX[1]=xd[1];
-    targetX[2]=xd[2];
-    targetO[0]=od[0];
-    targetO[1]=od[1];
-    yarp::sig::Vector x,o;
-    getPose(x,o);
+    yarp::sig::Vector x,o;  // empty vectors
+    getPose(x,o);  // where we put the result of performing fwd kinematics of current position
+    if (!isQuiet) printf("[CartesianBot] Using tool: %d\n",tool);
+    if (tool == 0) {
+        if (!isQuiet) printf("[CartesianBot] Using base coordinates.\n");
+        targetX[0]=xd[0];
+        targetX[1]=xd[1];
+        targetX[2]=xd[2];
+        targetO[0]=od[0];
+        targetO[1]=od[1];
+    } else if (tool == 1) {
+        if (!isQuiet) printf("[CartesianBot] Using robot tip coordinates.\n");
+        yarp::sig::Matrix H_0_N = eulerYZtoH(x,o);
+        if (!isQuiet) printf("H_0_N:\n%s\n\n",H_0_N.toString().c_str());
+        yarp::sig::Matrix H_N_target = eulerYZtoH(xd,od);
+        if (!isQuiet) printf("H_N_target:\n%s\n\n",H_N_target.toString().c_str());
+        yarp::sig::Matrix H_0_target = H_0_N * H_N_target;
+        if (!isQuiet) printf("H_0_target:\n%s\n\n",H_0_target.toString().c_str());
+        targetX[0]=H_0_target(0,3);
+        targetX[1]=H_0_target(1,3);
+        targetX[2]=H_0_target(2,3);
+        // https://truesculpt.googlecode.com/hg-history/38000e9dfece971460473d5788c235fbbe82f31b/Doc/rotation_matrix_to_euler.pdf
+        // "Computing Euler angles from a rotation matrix", Gregory G. Slabaugh
+        targetO[0]=-toDeg(asin(H_0_target(2,0)));  // Alternatively: pi + asin(...)
+        targetO[1]=o[1]+od[1]; //!!!!
+    } else fprintf(stderr, "[CartesianBot] warning: Tool %d not implemented.\n",tool);
+    if (!isQuiet) printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
+    if (!isQuiet) printf("[CartesianBot] goToPose() \\begin{Problem statement}\n");
+    if (!isQuiet) printf("[CartesianBot] x: %s \t o: %s\n",x.toString().c_str(),o.toString().c_str());
+    if (!isQuiet) printf("[CartesianBot] targetX: %s \t targetO: %s\n",targetX.toString().c_str(),targetO.toString().c_str());
+    if (!isQuiet)printf("[CartesianBot] goToPose() \\end{Problem statement}\n");
     double trajT=duration;
     if (t>0) trajT = t;
     trajPrP = new OrderThreeTraj;
-    trajPrP->configure(sqrt(x[0]*x[0]+x[1]*x[1]),sqrt(xd[0]*xd[0]+xd[1]*xd[1]),trajT);
+    trajPrP->configure(sqrt(x[0]*x[0]+x[1]*x[1]),sqrt(targetX[0]*targetX[0]+targetX[1]*targetX[1]),trajT);
     trajPhP = new OrderThreeTraj;
-    trajPhP->configure(x[2]-A0,xd[2]-A0,trajT);
+    trajPhP->configure(x[2]-A0,targetX[2]-A0,trajT);
     trajOyP = new OrderThreeTraj;
-    trajOyP->configure(o[0],od[0],trajT);  // We set it in degrees
+    trajOyP->configure(o[0],targetO[0],trajT);  // We set it in degrees
     trajOz = new OrderThreeTraj;
-    trajOz->configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(xd[1],xd[0])),trajT);
+    trajOz->configure(toDeg(atan2(x[1],x[0])),toDeg(atan2(targetX[1],targetX[0])),trajT);
     trajOzPP = new OrderThreeTraj;
-    trajOzPP->configure(o[1],od[1],trajT);  // We set it in degrees
-    printf("[CartesianBot] goToPoseSync trajPrP dump(100 samples) begin.\n");
+    trajOzPP->configure(o[1],targetO[1],trajT);  // We set it in degrees
+/*    printf("[CartesianBot] goToPoseSync trajPrP dump(100 samples) begin.\n");
     trajPrP->dump(100);
     printf("[CartesianBot] goToPoseSync trajPrP dump(100 samples) end.\n");
     printf("[CartesianBot] goToPoseSync trajPhP dump(100 samples) begin.\n");
@@ -141,7 +164,7 @@ bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Ve
     printf("[CartesianBot] goToPoseSync trajOz dump(100 samples) end.\n");
     printf("[CartesianBot] goToPoseSync trajOzPP dump(100 samples) begin.\n");
     trajOzPP->dump(100);
-    printf("[CartesianBot] goToPoseSync trajOzPP dump(100 samples) end.\n");
+    printf("[CartesianBot] goToPoseSync trajOzPP dump(100 samples) end.\n");*/
     startTime = Time::now();
     withOri=true;
     vel->setVelocityMode();
@@ -438,7 +461,9 @@ bool CartesianBot::getReferenceMode(bool *f) {
 // -----------------------------------------------------------------------------
 
 bool CartesianBot::tweakSet(const yarp::os::Bottle &options) {
-    printf("[CartesianBot] tweakSet: %s\n", options.toString().c_str());
+    Bottle &opt=const_cast<Bottle&>(options);  // Ugo knows why... :-)
+    if (!isQuiet) printf("[CartesianBot] tweakSet: %s\n", opt.toString().c_str());
+    if (opt.check("tool")) tool = opt.find("tool").asInt();
     return true;
 }
 

@@ -28,10 +28,15 @@ yarp::sig::Matrix rotX(const double &inDeg) {
     yarp::sig::Matrix R = eye(3,3);
     double c=cos(toRad(inDeg));
     double s=sin(toRad(inDeg));
-    R(1,1)=c;
+/*    R(1,1)=c;
     R(1,2)=s;
     R(2,1)=-s;
+    R(2,2)=c;*/  // http://www.kwon3d.com/theory/transform/rot.html
+    R(1,1)=c;
+    R(1,2)=-s;
+    R(2,1)=s;
     R(2,2)=c;
+//printf("Rx:\n%s\n\n",R.toString().c_str());
     return R;  // yarp::sig::Matrix
 }
 
@@ -41,10 +46,15 @@ yarp::sig::Matrix rotY(const double &inDeg) {
     yarp::sig::Matrix R = eye(3,3);
     double c=cos(toRad(inDeg));
     double s=sin(toRad(inDeg));
-    R(0,0)=c;
+/*    R(0,0)=c;
     R(0,2)=-s;
     R(2,0)=s;
+    R(2,2)=c;*/
+    R(0,0)=c;
+    R(0,2)=s;
+    R(2,0)=-s;
     R(2,2)=c;
+//printf("Ry:\n%s\n\n",R.toString().c_str());
     return R;  // yarp::sig::Matrix
 }
 
@@ -54,10 +64,15 @@ yarp::sig::Matrix rotZ(const double &inDeg) {
     yarp::sig::Matrix R = eye(3,3);
     double c=cos(toRad(inDeg));
     double s=sin(toRad(inDeg));
-    R(0,0)=c;
+    /*R(0,0)=c;
     R(0,1)=s;
     R(1,0)=-s;
+    R(1,1)=c;*/
+    R(0,0)=c;
+    R(0,1)=-s;
+    R(1,0)=s;
     R(1,1)=c;
+//printf("Rz:\n%s\n\n",R.toString().c_str());
     return R;  // yarp::sig::Matrix
 }
 
@@ -65,12 +80,10 @@ yarp::sig::Matrix rotZ(const double &inDeg) {
 
 yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
     yarp::sig::Matrix result = rotZ(o[0]) * rotY(o[1]) * rotZ(o[2]);  // 3x3 
-printf("result1:\n%s\n\n",result.toString().c_str());
+printf("R:\n%s\n\n",result.toString().c_str());
     result.resize(4,4);
     result(3,3)=1;
-printf("result2:\n%s\n\n",result.toString().c_str());
     xUpdateH(x,result);
-printf("result3:\n%s\n\n",result.toString().c_str());
     return result;
 }
 
@@ -80,8 +93,8 @@ yarp::sig::Matrix eulerYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector
 
     yarp::sig::Vector oZYZ(3);
     oZYZ[0] = atan2(x[1],x[0]);
-    oZYZ[1] = o[0];
-    oZYZ[2] = o[1];
+    oZYZ[1] = o(0);
+    oZYZ[2] = o(1);
 
     return eulerZYZtoH(x,oZYZ);  // yarp::sig::Matrix
 }
