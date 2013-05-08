@@ -54,8 +54,9 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
         targetX[2]=H_0_target(2,3);
         // https://truesculpt.googlecode.com/hg-history/38000e9dfece971460473d5788c235fbbe82f31b/Doc/rotation_matrix_to_euler.pdf
         // "Computing Euler angles from a rotation matrix", Gregory G. Slabaugh
-        targetO[0]=-toDeg(asin(H_0_target(2,0)));  // Alternatively: pi + asin(...)
-        targetO[1]=o[1]+od[1]; //!!!!
+        //targetO[0]=-toDeg(asin(H_0_target(2,0)));  // Alternatively: pi + asin(...)
+        targetO[0]=o[0]+od[0];  // !!!! (but why not!?)
+        targetO[1]=o[1]+od[1];  // !!!! (but why not!?)
     } else fprintf(stderr, "[CartesianBot] warning: Tool %d not implemented.\n",tool);
     if (!isQuiet) printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
     if (!isQuiet) printf("[CartesianBot] goToPose() \\begin{Problem statement}\n");
@@ -130,8 +131,9 @@ bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Ve
         targetX[2]=H_0_target(2,3);
         // https://truesculpt.googlecode.com/hg-history/38000e9dfece971460473d5788c235fbbe82f31b/Doc/rotation_matrix_to_euler.pdf
         // "Computing Euler angles from a rotation matrix", Gregory G. Slabaugh
-        targetO[0]=-toDeg(asin(H_0_target(2,0)));  // Alternatively: pi + asin(...)
-        targetO[1]=o[1]+od[1]; //!!!!
+        //targetO[0]=-toDeg(asin(H_0_target(2,0)));  // Alternatively: pi + asin(...)
+        targetO[0]=o[0]+od[0];  // !!!! (but why not!?)
+        targetO[1]=o[1]+od[1];  // !!!! (but why not!?)
     } else fprintf(stderr, "[CartesianBot] warning: Tool %d not implemented.\n",tool);
     if (!isQuiet) printf("[CartesianBot] goToPose() Begin setting absolute base movement.\n");
     if (!isQuiet) printf("[CartesianBot] goToPose() \\begin{Problem statement}\n");
