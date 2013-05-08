@@ -377,9 +377,27 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
     Ja(4,3) = 0;
     Ja(4,4) = 1;
     yarp::sig::Matrix Ja_pinv(pinv(Ja,1.0e-2));
-    yarp::sig::Vector xdotd(xdot);
-    xdotd.push_back(toRad(odot[0]));
-    xdotd.push_back(toRad(odot[1]));
+    //yarp::sig::Vector xdotd(xdot);
+    yarp::sig::Vector xdotd;
+    if (tool == 0) {
+        xdotd.push_back(xdot[0]);
+        xdotd.push_back(xdot[1]);
+        xdotd.push_back(xdot[2]);
+        xdotd.push_back(toRad(odot[0]));
+        xdotd.push_back(toRad(odot[1]));
+    } else if (tool == 1) {
+        yarp::sig::Vector x,o;  // empty vectors
+        fwdKin(realDeg,x,o);  // Modifies x and o, returning success/fail value.
+        yarp::sig::Matrix H_0_N = eulerYZtoH(x,o);
+        yarp::sig::Matrix H_N_target = eulerYZtoH(xdot,odot);
+        yarp::sig::Matrix H_0_target = H_0_N * H_N_target;
+        xdotd.push_back( H_0_target(0,3) );
+        xdotd.push_back( H_0_target(1,3) );
+        xdotd.push_back( H_0_target(2,3) );
+        xdotd.push_back( 0 ); //o[0]+od[0];  // !!!! (but why not!?)
+        xdotd.push_back( 0 ); //o[1]+od[1];  // !!!! (but why not!?)
+    } else fprintf(stderr, "[CartesianBot] warning: Tool %d not implemented.\n",tool);
+    
     yarp::sig::Vector t;
     t.resize(5);
     t = Ja_pinv * xdotd;
