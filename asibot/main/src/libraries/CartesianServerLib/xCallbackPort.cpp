@@ -4,7 +4,7 @@
 /************************************************************************/
 
 void xCallbackPort::onRead(Bottle& b) {
-    printf("[xCallbackPort] Got %s\n", b.toString().c_str());
+    printf("[CartesianServerLib] xCallbackPort Got %s\n", b.toString().c_str());
     int choice = b.get(0).asVocab();
     if (b.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
     if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
@@ -22,14 +22,14 @@ void xCallbackPort::onRead(Bottle& b) {
         double ozDeg = (atan2(x[1],x[0]))*180.0/M_PI;
         double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
         double PrPd = PrP + VPOINT_DIST*sin((cmd[1])*M_PI/180.0);
-        printf("PrP: %f;PrPd: %f\n",PrP,PrPd);
+        //printf("[CartesianServerLib] PrP: %f;PrPd: %f\n",PrP,PrPd);
         double PhPd = x[2] + VPOINT_DIST*cos((cmd[1])*M_PI/180.0);
         xd.push_back(PrPd*cos((ozDeg-cmd[0])*M_PI/180.0));  // xd
         xd.push_back(PrPd*sin((ozDeg-cmd[0])*M_PI/180.0));  // yd
         xd.push_back(PhPd);  // zd
         od.push_back(cmd[1]); // rot(y')d
         od.push_back(0.0); // rot(z'')d
-        printf("xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
+        //printf("[CartesianServerLib] xd: %s; od: %s\n",xd.toString().c_str(),od.toString().c_str());
         *csStatus = 3;
         icart->goToPose(xd,od,3.0);
     } else if (choice==VOCAB_BKWD) { ///////////////////////////////// bkwd /////////////////////////////////
@@ -46,7 +46,7 @@ void xCallbackPort::onRead(Bottle& b) {
         double PrP = sqrt(x[0]*x[0]+x[1]*x[1]);
         double PrPd = PrP - VPOINT_DIST*sin((cmd[1])*M_PI/180.0); 
         if (PrPd<=0) {
-            printf("not reachable\n");
+            printf("[CartesianServerLib] bwd not reachable\n");
             return;
         }
         printf("PrP: %f;PrPd: %f\n",PrP,PrPd);
@@ -90,7 +90,7 @@ void xCallbackPort::onRead(Bottle& b) {
         xdotd.push_back(lst->get(2).asDouble());
         for (int i = 3; i < lst->size(); i++)
             odotd.push_back(lst->get(i).asDouble());
-        printf("[xCallbackPort] xdotd: %s; odotd: %s\n",xdotd.toString().c_str(),odotd.toString().c_str());
+        printf("[xCallbackPort] [vmos] xdotd: %s; odotd: %s\n",xdotd.toString().c_str(),odotd.toString().c_str());
         *csStatus = 6;
         icart->setTaskVelocities(xdotd,odotd);
     } else if (choice==VOCAB_POSE) { ///////////////////////////////// pose /////////////////////////////////
