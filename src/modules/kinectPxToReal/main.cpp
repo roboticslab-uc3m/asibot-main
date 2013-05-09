@@ -2,6 +2,7 @@
 
 /**
  * 
+ * @ingroup asibot_modules
  * \defgroup kinectPxToReal kinectPxToReal
  *
  * kinectPxToReal means Pixel to Homogeneous Transformation Matrix for Kinect
