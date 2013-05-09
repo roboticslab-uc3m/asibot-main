@@ -11,7 +11,7 @@ void xCallbackPort::onRead(Bottle& b) {
         icart->stopControl();
         ipos->stop();
         ipos->setPositionMode();
-        csStatus = 0;
+        *csStatus = 0;
     } else if (choice==VOCAB_FWD) { ///////////////////////////////// fwd /////////////////////////////////
         Vector cmd;
         Bottle *lst = b.get(1).asList();
