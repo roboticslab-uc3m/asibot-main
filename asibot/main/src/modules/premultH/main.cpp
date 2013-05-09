@@ -2,6 +2,7 @@
 
 /**
  * 
+ * @ingroup asibot_modules
  * \defgroup premultH premultH
  *
  * premultH means Premultiply Homogeneous Transformation Matrix

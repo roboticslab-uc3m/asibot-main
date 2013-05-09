@@ -2,6 +2,7 @@
 
 /**
  * 
+ * @ingroup asibot_modules
  * \defgroup testRaveBot testRaveBot
  *
  * Creates an instance of RaveBot wrapped in a YARP controlboard. This means that it may be used

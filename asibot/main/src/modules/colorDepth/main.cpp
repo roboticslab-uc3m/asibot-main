@@ -2,6 +2,7 @@
 
 /**
  * 
+ * @ingroup asibot_modules
  * \defgroup colorDepth colorDepth
  *
  * \image html colorDepthSim-500px.png

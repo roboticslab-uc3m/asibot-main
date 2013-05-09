@@ -2,6 +2,7 @@
 
 /**
  *
+ * @ingroup asibot_modules
  * \defgroup webInterface webInterface
  *
  * @brief Creates an instance of the WebInterface class. Calls are handled by the WebResponder class.
