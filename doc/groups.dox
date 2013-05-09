@@ -21,6 +21,17 @@
 */
 
 /**
+* \defgroup asibot_modules List of ASIBOT Modules
+*
+* Documentation for each module goes in each 
+* directory.
+*
+* <hr>
+*
+* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+*/
+
+/**
 * \defgroup asibot_libraries List of ASIBOT Libraries
 *
 * Documentation for each library goes in each 
@@ -77,6 +88,7 @@
 */
 
 /**
+* @ingroup asibot_modules
 * \defgroup testRlPlugins testRlPlugins
 *
 * The \ref testRlPlugins module works like

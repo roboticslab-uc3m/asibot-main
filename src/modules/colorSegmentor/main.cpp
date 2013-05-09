@@ -2,6 +2,7 @@
 
 /**
  * 
+ * @ingroup asibot_modules
  * \defgroup colorSegmentor colorSegmentor
  *
  * \image html colorSegmentor.png
