@@ -4,7 +4,7 @@
 \image html asibotmix.jpg
 <center> <a href="http://roboticslab.uc3m.es/roboticslab/robot.php?id_robot=3">ASIBOT Publications</a> / <a href="http://www.youtube.com/playlist?list=PL9C7CA77199E91668">ASIBOT Videos</a></center>
 
-Welcome to the Open Source ASIBOT Software Repository documentation. The ASIBOT Software Repository is part of <a class="el" href="http://roboticslab.sourceforge.net" target="_blank">Robotics Lab @ SourceForge.net</a>.
+Welcome to the Open Source ASIBOT Software Repository documentation. The ASIBOT Software Repository is part of <a class="el" href="http://sourceforge.net/projects/roboticslab">Robotics Lab @ SourceForge.net</a>.
 
 For the most part, everything is platform independent (i.e. any operating system and computer architecture).
 
