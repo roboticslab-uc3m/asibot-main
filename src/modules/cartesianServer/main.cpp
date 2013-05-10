@@ -14,7 +14,7 @@
  * Author: <a href="http://roboticslab.uc3m.es/roboticslab/persona_publ.php?id_pers=72">Juan G. Victores</a>
  *
  * Contrib: Paul Fitzpatrick (YARP sample code, email responses);
- *          Ugo Pattacini (author of <a href="http://eris.liralab.it/iCub/main/dox/html/icub_anyrobot_cartesian_interface.html">Customizing the Cartesian Interface for a Generic Robot</a>, email responses)
+ *          Ugo Pattacini (author of <a href="http://wiki.icub.org/iCub_documentation/icub_anyrobot_cartesian_interface.html">Customizing the Cartesian Interface for a Generic Robot</a>, email responses)
  *
 
  *
