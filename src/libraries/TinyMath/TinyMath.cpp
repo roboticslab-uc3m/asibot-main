@@ -92,7 +92,7 @@ yarp::sig::Matrix eulerZYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vecto
 yarp::sig::Matrix eulerYZtoH(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
 
     yarp::sig::Vector oZYZ(3);
-    oZYZ[0] = atan2(x[1],x[0]);
+    oZYZ[0] = toDeg(atan2(x[1],x[0]));
     oZYZ[1] = o(0);
     oZYZ[2] = o(1);
 
