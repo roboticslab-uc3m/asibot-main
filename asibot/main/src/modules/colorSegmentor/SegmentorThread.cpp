@@ -119,9 +119,9 @@ void SegmentorThread::run() {
     if (numBlobs > maxNumBlobs) numBlobs = maxNumBlobs;
 
     for (int i=0;i<numBlobs;i++) {  // from biggest to smallest
-        // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
-        // Better than Filter:
         CBlob bigBlob;
+        // Uncomment next line to filter beneath area threshold:
+        // blobs.Filter( blobs, B_EXCLUDE, CBlobGetArea(), B_LESS, 30 );
         blobs.GetNthBlob( CBlobGetArea(), i, bigBlob );
 
         CBlobGetXCenter getXCenter;
@@ -141,14 +141,8 @@ void SegmentorThread::run() {
             addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
         }
 
-        // cvSub( rgb, r, rgb);
-        // yarpReturnImage.wrapIplImage(rgb);
-        // add a blue centroid/bottom circle
         PixelRgb blue(0,0,255);
         addCircle(*img,blue,myx,myy,3);
-
-        // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
-        // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
 
         Bottle b_xy;
         b_xy.addDouble(myx);
