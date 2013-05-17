@@ -20,17 +20,36 @@ void SegmentorThread::setOutPort(Port * _pOutPort) {
 /************************************************************************/
 void SegmentorThread::init(ResourceFinder &rf) {
 
+    algorithm = DEFAULT_ALGORITHM;
+    locate = DEFAULT_LOCATE;
+    maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
     int rateMs = DEFAULT_RATE_MS;
+    seeBounding = DEFAULT_SEE_BOUNDING;
+    threshold = DEFAULT_THRESHOLD;
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
+        printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
+        printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
+        printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
+        printf("\t--threshold (default: \"%d\")\n",threshold);
     }
 
+    if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
+    if (rf.check("locate")) locate = rf.find("locate").asString();
+    if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
+    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d.\n",
+        algorithm.c_str(),locate.c_str(),maxNumBlobs);
+
     if (rf.check("rateMs")) rateMs = rf.find("rateMs").asInt();
-    printf("SegmentorThread using rateMs: %d\n", rateMs);
+    if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
+    if (rf.check("seeBounding")) seeBounding = rf.find("seeBounding").asInt();
+    printf("SegmentorThread using rateMs: %d, seeBounding: %d, threshold: %d.\n",
+        rateMs, seeBounding, threshold);
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
