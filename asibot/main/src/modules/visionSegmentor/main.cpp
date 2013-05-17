@@ -62,10 +62,10 @@
 int main(int argc, char** argv) {
 
     ResourceFinder rf;
-    //rf.setVerbose(true);
-    //rf.setDefaultContext("visionSegmentor/conf");
-    //rf.setDefaultConfigFile("visionSegmentor.ini");
-    //rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.setVerbose(true);
+    rf.setDefaultContext("visionSegmentor/conf");
+    rf.setDefaultConfigFile("visionSegmentor.ini");
+    rf.configure("ASIBOT_ROOT", argc, argv);
 
     VisionSegmentor mod;
     if(rf.check("help")) {
