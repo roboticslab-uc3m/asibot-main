@@ -65,20 +65,26 @@ void SegmentorThread::init(ResourceFinder &rf) {
 void SegmentorThread::run() {
     //printf("[SegmentorThread] run()\n");
 
-    ImageOf<PixelRgb> *img = pInImg->read(false);
-    if (img==NULL) {
+    ImageOf<PixelRgb> *inYarpImg = pInImg->read(false);
+    if (inYarpImg==NULL) {
         //printf("No img yet...\n");
         return;
     };
     
-    IplImage *rgb = cvCreateImage(cvSize(img->width(),  
-                                             img->height()), 
-                                             IPL_DEPTH_8U, 3 );
-    cvCvtColor((IplImage*)img->getIplImage(), rgb, CV_RGB2BGR);
+    IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg->width(), inYarpImg->height()),
+                                         IPL_DEPTH_8U, 3 );
+    cvCvtColor((IplImage*)inYarpImg->getIplImage(), inIplImage, CV_RGB2BGR);
 
     Travis travis;
+    travis.setIplImage(*inIplImage);
 
-//    Mat imageFile(rgb);
+    IplImage *outIplImage = travis.getIplImage();
+
+    ImageOf<PixelRgb> outYarpImg;
+    outYarpImg.wrapIplImage(outIplImage);
+    pOutImg->prepare() = outYarpImg;
+
+    pOutImg->write();
 
 /*
     Mat mask= Mat::zeros(imageFile.rows, imageFile.cols, CV_8UC1);
@@ -176,10 +182,6 @@ void SegmentorThread::run() {
 
     PixelRgb blue(0,0,255);
     addCircle(*img,blue,massCenterlocX,massCenterlocY,3);*/
-
-    pOutImg->prepare() = *img;
-    pOutImg->write();
-
 }
 
 /************************************************************************/
