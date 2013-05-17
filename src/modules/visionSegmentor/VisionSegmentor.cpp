@@ -20,9 +20,9 @@ bool VisionSegmentor::configure(ResourceFinder &rf) {
     segmentorThread.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
-    inImg.open("/colorSegmentor/img:i");
-    outImg.open("/colorSegmentor/img:o");
-    outPort.open("/colorSegmentor/features:o");
+    inImg.open("/visionSegmentor/img:i");
+    outImg.open("/visionSegmentor/img:o");
+    outPort.open("/visionSegmentor/features:o");
 
     return true;
 }
