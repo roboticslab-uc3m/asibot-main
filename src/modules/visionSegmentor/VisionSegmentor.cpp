@@ -11,7 +11,7 @@ bool VisionSegmentor::configure(ResourceFinder &rf) {
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
-    //printf("VisionSegmentor using no additional special options.\n");
+    printf("VisionSegmentor using no additional special options.\n");
 
     segmentorThread.setInImg(&inImg);
     segmentorThread.setOutImg(&outImg);
