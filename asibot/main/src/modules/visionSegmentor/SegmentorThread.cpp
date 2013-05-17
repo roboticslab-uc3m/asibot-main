@@ -74,15 +74,16 @@ void SegmentorThread::run() {
     IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg->width(), inYarpImg->height()),
                                          IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)inYarpImg->getIplImage(), inIplImage, CV_RGB2BGR);
+    Mat inCvMat(inIplImage);
 
     Travis travis;
-    travis.setIplImage(*inIplImage);
+    travis.setCvMat(inCvMat);
 
-    IplImage *outIplImage = travis.getIplImage();
+    Mat outIplImage = travis.getCvMat();
 
-    ImageOf<PixelRgb> outYarpImg;
+    /*ImageOf<PixelRgb> outYarpImg;
     outYarpImg.wrapIplImage(outIplImage);
-    pOutImg->prepare() = outYarpImg;
+    pOutImg->prepare() = outYarpImg;*/
 
     pOutImg->write();
 
