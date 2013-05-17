@@ -23,6 +23,7 @@ option(ENABLE_RlPlugins "Choose if you want to compile RlPlugins" TRUE)
 option(ENABLE_TestRaveBotLib "Choose if you want to compile RlPlugins" TRUE)
 option(ENABLE_TinyMath "Choose if you want to compile TinyMath" TRUE)
 option(ENABLE_TrajGen "Choose if you want to compile TrajGen" TRUE)
+option(ENABLE_TravisLib "Choose if you want to compile TravisLib" TRUE)
 
 ### options: cpp modules
 option(ENABLE_asibotTasks "Choose if you want to compile asibotTasks" FALSE)
@@ -35,6 +36,7 @@ option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_robotDraw "Choose if you want to compile robotDraw" FALSE)
 option(ENABLE_testRaveBot "Choose if you want to compile testRaveBot" FALSE)
 option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
+option(ENABLE_visionSegmentor "Choose if you want to compile visionSegmentor" FALSE)
 option(ENABLE_webInterface "Choose if you want to compile webInterface" FALSE)
 option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
 

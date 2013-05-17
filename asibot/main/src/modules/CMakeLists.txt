@@ -12,6 +12,7 @@ add_subdirectory(pointAtObjectServer)
 add_subdirectory(premultH)
 add_subdirectory(robotDraw)
 add_subdirectory(testRaveBot)
+add_subdirectory(visionSegmentor)
 add_subdirectory(webInterface)
 add_subdirectory(wiimoteServer)
 
