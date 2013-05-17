@@ -36,7 +36,6 @@ using namespace cv;
 
 class SegmentorThread : public RateThread {
 private:
-    Travis travis;
     BufferedPort<ImageOf<PixelRgb> > *pInImg;
     BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
     Port *pOutPort;

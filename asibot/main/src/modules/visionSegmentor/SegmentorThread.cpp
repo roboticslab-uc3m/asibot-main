@@ -67,21 +67,20 @@ void SegmentorThread::run() {
 
     ImageOf<PixelRgb> *img = pInImg->read(false);
     if (img==NULL) {
-        // printf("No img yet...\n");
+        //printf("No img yet...\n");
         return;
     };
-    // printf("Got img!\n");
-    // int code = img->getPixelCode();
-    // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
     
     IplImage *rgb = cvCreateImage(cvSize(img->width(),  
                                              img->height()), 
                                              IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)img->getIplImage(), rgb, CV_RGB2BGR);
 
-    // --- ALGORITHMS START SOMEWHERE HERE ---
-    //Mat imageFile = cv::imread("../app/images/pen4.jpg");
-    Mat imageFile(rgb);
+    Travis travis;
+
+//    Mat imageFile(rgb);
+
+/*
     Mat mask= Mat::zeros(imageFile.rows, imageFile.cols, CV_8UC1);
 
     //get biggest contour
@@ -117,15 +116,15 @@ void SegmentorThread::run() {
                       saturation_mean, saturation_stddev,
                       value_mean, value_stddev);
    
-    //*arc
+    //arc
     calcArcLength(arc,biggestCont);
 
-    //*radius
-    calcCircle(radius,biggestCont);
+    //radius
+    calcCircle(radius,biggestCont);*/
 
     // --- ALGORITHMS FINISH SOMEWHERE HERE ---
 
-    cvReleaseImage( &rgb ); //release the memory for the image
+//    cvReleaseImage( &rgb ); //release the memory for the image
 
 /*    printf("***** FEATURES *****\n");
     printf("Area: %f\n",area);
@@ -148,7 +147,7 @@ void SegmentorThread::run() {
     printf("Value StdDev: %f\n",value_stddev);
     printf("Contour Location (x,y): (%f, %f)\n",locX,locY);*/
 
-    Bottle b;
+/*    Bottle b;
     b.addDouble(massCenterlocX);  // 1
     b.addDouble(massCenterlocY);  // 2
     b.addDouble(aspectRatio);  // 3
@@ -160,7 +159,7 @@ void SegmentorThread::run() {
     b.addDouble(arc);  // 9
     b.addDouble(radius);  // 10
     b.addDouble(hue_peak);  // 11
-    b.addDouble(value_peak);  // 12
+    b.addDouble(value_peak); */ // 12
     /*b.addDouble(hue_mean);  // 13
     b.addDouble(hue_stddev);  // 14
     b.addDouble(saturation_peak);  // 15
@@ -173,10 +172,10 @@ void SegmentorThread::run() {
     b.addDouble(value_mode);  // 22
     b.addDouble(hue_mode);  // 23
 */
-    pOutPort->write(b);
+/*    pOutPort->write(b);
 
     PixelRgb blue(0,0,255);
-    addCircle(*img,blue,massCenterlocX,massCenterlocY,3);
+    addCircle(*img,blue,massCenterlocX,massCenterlocY,3);*/
 
     pOutImg->prepare() = *img;
     pOutImg->write();
