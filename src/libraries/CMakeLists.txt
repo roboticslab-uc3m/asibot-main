@@ -10,3 +10,7 @@ add_subdirectory(CartesianServerLib)
 add_subdirectory(ColorClientLib)
 add_subdirectory(RlPlugins)  # RlPlugins a plugin library which actually contains some YARP devices
 
+IF (ENABLE_TravisLib)
+    add_subdirectory(TravisLib)
+ENDIF (ENABLE_TravisLib)
+
