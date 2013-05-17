@@ -150,7 +150,6 @@ void SegmentorThread::run() {
         container.addList() = b_xy;
     }
 
-
     pOutImg->prepare() = *img;
     pOutImg->write();
 
