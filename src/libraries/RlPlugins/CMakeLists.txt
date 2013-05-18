@@ -10,15 +10,15 @@ IF (ENABLE_RlPlugins)
 
 find_package(YARP REQUIRED)
 include_directories(${YARP_INCLUDE_DIRS})
-include($ENV{YARP_ROOT}/conf/YarpPlugin.cmake)
-yarp_begin_plugin_library(RlPlugins)
+include(${YARP_MODULE_PATH}/YarpPlugin.cmake)
+YARP_BEGIN_PLUGIN_LIBRARY(RlPlugins)
 add_subdirectory(ravebot)
 add_subdirectory(cartesianbot)
 add_subdirectory(kdlbot)
 add_subdirectory(skymegabot)
 #add_subdirectory(../../../../contrib/pendant/ikinbot ${CMAKE_CURRENT_BINARY_DIR}/ikinbot)
 #add_subdirectory(../../../../contrib/pendant/ravepart ${CMAKE_CURRENT_BINARY_DIR}/ravepart)
-yarp_end_plugin_library(RlPlugins)
+YARP_END_PLUGIN_LIBRARY(RlPlugins)
 
 install(TARGETS RlPlugins DESTINATION lib)
 
