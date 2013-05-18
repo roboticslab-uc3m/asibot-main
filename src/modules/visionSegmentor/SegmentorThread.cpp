@@ -81,12 +81,12 @@ void SegmentorThread::run() {
     Travis travis(false);  // Travis::Travis(quiet=true)
     travis.setCvMat(inCvMat);
 
-    travis.binarize(algorithm, threshold);
+    //travis.binarize(algorithm, threshold);
 
     Mat outCvMat = travis.getCvMat();
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
-    IplImage outIplImage = inCvMat;
+    IplImage outIplImage = outCvMat;
     cvCvtColor(&outIplImage,&outIplImage, CV_BGR2RGB);
     char sequence[] = "RGB";
     strcpy (outIplImage.channelSeq,sequence);
