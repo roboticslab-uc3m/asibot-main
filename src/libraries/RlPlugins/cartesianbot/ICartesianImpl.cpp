@@ -389,8 +389,11 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
         yarp::sig::Vector x,o;  // empty vectors
         fwdKin(realDeg,x,o);  // Modifies x and o, returning success/fail value.
         yarp::sig::Matrix H_0_N = eulerYZtoH(x,o);
+        if (!isQuiet) printf("H_0_N:\n%s\n\n",H_0_N.toString().c_str());
         yarp::sig::Matrix H_N_target = eulerYZtoH(xdot,odot);
+        if (!isQuiet) printf("H_N_target:\n%s\n\n",H_N_target.toString().c_str());
         yarp::sig::Matrix H_0_target = H_0_N * H_N_target;
+        if (!isQuiet) printf("H_0_target:\n%s\n\n",H_0_target.toString().c_str());
         xdotd.push_back( H_0_target(0,3) );
         xdotd.push_back( H_0_target(1,3) );
         xdotd.push_back( H_0_target(2,3) );
