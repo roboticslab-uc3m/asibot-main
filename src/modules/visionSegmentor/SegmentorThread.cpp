@@ -79,11 +79,12 @@ void SegmentorThread::run() {
     Travis travis;
     travis.setCvMat(inCvMat);
 
-    Mat outIplImage = travis.getCvMat();
+    Mat outCvMat = travis.getCvMat();
 
-    /*ImageOf<PixelRgb> outYarpImg;
-    outYarpImg.wrapIplImage(outIplImage);
-    pOutImg->prepare() = outYarpImg;*/
+    IplImage outIplImage = outCvMat;
+    ImageOf<PixelRgb> outYarpImg;
+    outYarpImg.wrapIplImage(&outIplImage);
+    pOutImg->prepare() = outYarpImg;
 
     pOutImg->write();
 
