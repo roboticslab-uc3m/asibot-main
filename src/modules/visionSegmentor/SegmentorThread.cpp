@@ -77,9 +77,12 @@ void SegmentorThread::run() {
     cvCvtColor((IplImage*)inYarpImg->getIplImage(), inIplImage, CV_RGB2BGR);
     Mat inCvMat(inIplImage);
 
-    // Because Travis stuff goes with mat for now
+    // Because Travis stuff goes with [openCv Mat Bgr] for now
     Travis travis;
     travis.setCvMat(inCvMat);
+
+//    travis.binarize(algorithm, threshold);
+
     Mat outCvMat = travis.getCvMat();
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
@@ -90,7 +93,6 @@ void SegmentorThread::run() {
     ImageOf<PixelRgb> outYarpImg;
     outYarpImg.wrapIplImage(&outIplImage);
     pOutImg->prepare() = outYarpImg;
-
     pOutImg->write();
 
 /*
