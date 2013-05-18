@@ -81,7 +81,7 @@ void SegmentorThread::run() {
     Travis travis(false);  // Travis::Travis(quiet=true)
     travis.setCvMat(inCvMat);
 
-    //travis.binarize(algorithm, threshold);
+    travis.binarize(algorithm, threshold);
 
     Mat outCvMat = travis.getCvMat();
 
