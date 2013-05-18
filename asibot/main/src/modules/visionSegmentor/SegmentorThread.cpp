@@ -71,17 +71,22 @@ void SegmentorThread::run() {
         return;
     };
     
+    // {yarp ImageOf Rgb -> openCv Mat Bgr}
     IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg->width(), inYarpImg->height()),
                                          IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)inYarpImg->getIplImage(), inIplImage, CV_RGB2BGR);
     Mat inCvMat(inIplImage);
 
+    // Because Travis stuff goes with mat for now
     Travis travis;
     travis.setCvMat(inCvMat);
-
     Mat outCvMat = travis.getCvMat();
 
-    IplImage outIplImage = outCvMat;
+    // { openCv Mat Bgr -> yarp ImageOf Rgb}
+    IplImage outIplImage = inCvMat;
+    cvCvtColor(&outIplImage,&outIplImage, CV_BGR2RGB);
+    char sequence[] = "RGB";
+    strcpy (outIplImage.channelSeq,sequence);
     ImageOf<PixelRgb> outYarpImg;
     outYarpImg.wrapIplImage(&outIplImage);
     pOutImg->prepare() = outYarpImg;
