@@ -5,6 +5,17 @@
                 <parameters>--device opencv_grabber --name /grabber/img:o</parameters>
                 <node>localhost</node>
         </module>
+
+        <module>
+                <name>yarpview</name>
+                <parameters>--name /yarpview/grabber/img:i</parameters>
+                <node>localhost</node>
+        </module>
+        <connection>
+                <from>/grabber/img:o</from>
+                <to>/yarpview/grabber/img:i</to>
+        </connection>
+
         <module>
                 <name>visionSegmentor</name>
                 <node>localhost</node>
