@@ -106,12 +106,22 @@ void SegmentorThread::run() {
     configuration.addString("locY");
 
     // Take advantage we have the travis object and get features for text output
-/*    for (int elem = 0; elem < configuration.size() ; elem++) {
-        if ( configuration[elem] == "locX" ) {
-            for( int i = 0; i < maxNumBlobs; i++) {
-            }
-        }
-    }*/
+    
+    Bottle output;
+    for (int elem = 0; elem < configuration.size() ; elem++) {
+        if ( configuration.get(elem).asString() == "locX" ) {
+            Bottle locXs;
+            for (int i = 0; i < blobCentroids.size(); i++)
+                locXs.addDouble(blobCentroids[i].x);
+            output.addList() = locXs;
+        } else if ( configuration.get(elem).asString() == "locY" ) {
+            Bottle locYs;
+            for (int i = 0; i < blobCentroids.size(); i++)
+                locYs.addDouble(blobCentroids[i].y);
+            output.addList() = locYs;
+        } else fprintf(stderr,"[SegmentorThread] warning: bogus output configuration.\n");
+    }
+    pOutPort->write(output);
 
 /*
     Mat mask= Mat::zeros(imageFile.rows, imageFile.cols, CV_8UC1);
