@@ -78,11 +78,13 @@ void SegmentorThread::run() {
     Mat inCvMat(inIplImage);
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
-    Travis travis(false);  // Travis::Travis(quiet=true)
+    // Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
+    Travis travis;
     travis.setCvMat(inCvMat);
-
     travis.binarize(algorithm, threshold);
-
+    travis.blobize(maxNumBlobs, seeBounding);  // max # blobs, vizualize: 0=None, 1=Contour, 2=?
+    vector<cv::Point> blobCentroids;
+    travis.getBlobsXY(blobCentroids);
     Mat outCvMat = travis.getCvMat();
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
@@ -92,8 +94,24 @@ void SegmentorThread::run() {
     strcpy (outIplImage.channelSeq,sequence);
     ImageOf<PixelRgb> outYarpImg;
     outYarpImg.wrapIplImage(&outIplImage);
+    PixelRgb blue(0,0,255);
+    for( int i = 0; i < blobCentroids.size(); i++)
+       addCircle(outYarpImg,blue,blobCentroids[i].x,blobCentroids[i].y,3);
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
+
+
+    Bottle configuration;
+    configuration.addString("locX");
+    configuration.addString("locY");
+
+    // Take advantage we have the travis object and get features for text output
+/*    for (int elem = 0; elem < configuration.size() ; elem++) {
+        if ( configuration[elem] == "locX" ) {
+            for( int i = 0; i < maxNumBlobs; i++) {
+            }
+        }
+    }*/
 
 /*
     Mat mask= Mat::zeros(imageFile.rows, imageFile.cols, CV_8UC1);
@@ -187,10 +205,9 @@ void SegmentorThread::run() {
     b.addDouble(value_mode);  // 22
     b.addDouble(hue_mode);  // 23
 */
-/*    pOutPort->write(b);
+    
+    //pOutPort->write(b);
 
-    PixelRgb blue(0,0,255);
-    addCircle(*img,blue,massCenterlocX,massCenterlocY,3);*/
 }
 
 /************************************************************************/
