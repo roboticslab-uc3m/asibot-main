@@ -83,8 +83,10 @@ void SegmentorThread::run() {
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm, threshold);
     travis.blobize(maxNumBlobs, seeBounding);  // max # blobs, vizualize: 0=None, 1=Contour, 2=?
-    vector<cv::Point> blobCentroids;
-    travis.getBlobsXY(blobCentroids);
+    vector<cv::Point> blobsXY;
+    travis.getBlobsXY(blobsXY);
+    vector<double> blobsAngle;
+    travis.getBlobsEllipseAngle(blobsAngle,2);  // vizualize: 0=None, 2=minRotatedRect.
     Mat outCvMat = travis.getCvMat();
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
@@ -95,15 +97,15 @@ void SegmentorThread::run() {
     ImageOf<PixelRgb> outYarpImg;
     outYarpImg.wrapIplImage(&outIplImage);
     PixelRgb blue(0,0,255);
-    for( int i = 0; i < blobCentroids.size(); i++)
-       addCircle(outYarpImg,blue,blobCentroids[i].x,blobCentroids[i].y,3);
+    for( int i = 0; i < blobsXY.size(); i++)
+       addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
-
 
     Bottle configuration;
     configuration.addString("locX");
     configuration.addString("locY");
+    configuration.addString("angle");
 
     // Take advantage we have the travis object and get features for text output
     
@@ -111,14 +113,19 @@ void SegmentorThread::run() {
     for (int elem = 0; elem < configuration.size() ; elem++) {
         if ( configuration.get(elem).asString() == "locX" ) {
             Bottle locXs;
-            for (int i = 0; i < blobCentroids.size(); i++)
-                locXs.addDouble(blobCentroids[i].x);
+            for (int i = 0; i < blobsXY.size(); i++)
+                locXs.addDouble(blobsXY[i].x);
             output.addList() = locXs;
         } else if ( configuration.get(elem).asString() == "locY" ) {
             Bottle locYs;
-            for (int i = 0; i < blobCentroids.size(); i++)
-                locYs.addDouble(blobCentroids[i].y);
+            for (int i = 0; i < blobsXY.size(); i++)
+                locYs.addDouble(blobsXY[i].y);
             output.addList() = locYs;
+        } else if ( configuration.get(elem).asString() == "angle" ) {
+            Bottle angles;
+            for (int i = 0; i < blobsAngle.size(); i++)
+                angles.addDouble(blobsAngle[i]);
+            output.addList() = angles;
         } else fprintf(stderr,"[SegmentorThread] warning: bogus output configuration.\n");
     }
     pOutPort->write(output);
