@@ -43,7 +43,7 @@ private:
     ConstString algorithm;
     ConstString locate;
     int maxNumBlobs;
-    bool seeBounding;
+    int seeBounding;
     int threshold;
     //
     float area, hue_peak, hue_mode, hue_mean, hue_stddev,
