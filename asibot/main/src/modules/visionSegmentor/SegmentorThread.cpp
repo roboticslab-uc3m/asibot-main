@@ -86,8 +86,10 @@ void SegmentorThread::run() {
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
     vector<double> blobsAngle;
-    travis.getBlobsEllipseAngle(blobsAngle, seeBounding);  // vizualize: 0=None, 2=minRotatedRect.
-    //another option: travis.getBlobsBoxAngle(blobsAngle, seeBounding);  // vizualize: 0=None, 2=minRotatedRect.
+    // getBlobsEllipseAngle breaks more, but sometimes more precise.
+    //bool ok = travis.getBlobsEllipseAngle(blobsAngle, seeBounding);  // vizualize: 0=None, 2=minRotatedRect.
+    bool ok =  travis.getBlobsBoxAngle(blobsAngle, seeBounding);  // vizualize: 0=None, 2=minRotatedRect.
+    if (!ok) return;
     Mat outCvMat = travis.getCvMat();
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
