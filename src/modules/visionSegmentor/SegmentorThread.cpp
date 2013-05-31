@@ -81,11 +81,11 @@ void SegmentorThread::run() {
     Mat inCvMat(inIplImage);
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
-    // Travis travis(false, false);  // for quiet and overwrite just use: Travis travis;
-    Travis travis;
+    // Travis travis(false, false);  // verbose, copy (slower and more mem)
+    Travis travis;  // quiet, overwrite (faster)
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm, threshold);
-    travis.morphClosing( inYarpImg->width() * 0.04 ); // 4 for 100, very rule-of-thumb
+    travis.morphClosing( inYarpImg->width() * 0.05 ); // 4 for 100, very rule-of-thumb
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
@@ -93,6 +93,7 @@ void SegmentorThread::run() {
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
+    travis.release();
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
     IplImage outIplImage = outCvMat;
@@ -135,6 +136,8 @@ void SegmentorThread::run() {
     }
     pOutPort->write(output);
 
+    cvReleaseImage( &inIplImage ); //release the memory for the image
+    outCvMat.release(); //cvReleaseImage( &outIplImage ); //release the memory for the image
 /*
     Mat mask= Mat::zeros(imageFile.rows, imageFile.cols, CV_8UC1);
 
