@@ -24,6 +24,7 @@
 #define DEFAULT_ALGORITHM "redMinusGreen"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
+#define DEFAULT_OUT_IMAGE 0
 #define DEFAULT_RATE_MS 20
 #define DEFAULT_SEE_BOUNDING 0
 #define DEFAULT_THRESHOLD 50
@@ -43,6 +44,7 @@ private:
     ConstString algorithm;
     ConstString locate;
     int maxNumBlobs;
+    int outImage;
     int seeBounding;
     int threshold;
     //
