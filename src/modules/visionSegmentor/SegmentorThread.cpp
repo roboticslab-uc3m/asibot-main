@@ -82,15 +82,13 @@ void SegmentorThread::run() {
     Travis travis;
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm, threshold);
-    travis.blobize(maxNumBlobs, seeBounding);  // max # blobs, vizualize: 0=None, 1=Contour, 2=?
+    travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
     vector<double> blobsAngle;
-    // getBlobsEllipseAngle breaks more, but sometimes more precise.
-    //bool ok = travis.getBlobsEllipseAngle(blobsAngle, seeBounding);  // vizualize: 0=None, 2=minRotatedRect.
-    bool ok =  travis.getBlobsBoxAngle(blobsAngle, seeBounding);  // vizualize: 0=None, 2=minRotatedRect.
+    bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
-    Mat outCvMat = travis.getCvMat();
+    Mat outCvMat = travis.getCvMat(0,seeBounding);
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
     IplImage outIplImage = outCvMat;
