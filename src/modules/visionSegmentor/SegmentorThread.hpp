@@ -27,7 +27,7 @@
 #define DEFAULT_OUT_IMAGE 0
 #define DEFAULT_RATE_MS 20
 #define DEFAULT_SEE_BOUNDING 0
-#define DEFAULT_THRESHOLD 40
+#define DEFAULT_THRESHOLD 60
 
 using namespace yarp::os;
 using namespace yarp::sig;
