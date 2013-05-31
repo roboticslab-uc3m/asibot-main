@@ -21,13 +21,13 @@
 
 #include "TravisLib.hpp"
 
-#define DEFAULT_ALGORITHM "redMinusGreen"
+#define DEFAULT_ALGORITHM "blueMinusRed"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
 #define DEFAULT_OUT_IMAGE 0
 #define DEFAULT_RATE_MS 20
 #define DEFAULT_SEE_BOUNDING 0
-#define DEFAULT_THRESHOLD 50
+#define DEFAULT_THRESHOLD 40
 
 using namespace yarp::os;
 using namespace yarp::sig;
