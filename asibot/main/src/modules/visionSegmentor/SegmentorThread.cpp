@@ -91,7 +91,7 @@ void SegmentorThread::run() {
     vector<double> blobsAngle;
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
-    Mat outCvMat = travis.getCvMat(0,seeBounding);
+    Mat outCvMat = travis.getCvMat(outImage,seeBounding);
 
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
     IplImage outIplImage = outCvMat;
