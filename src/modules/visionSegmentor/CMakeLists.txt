@@ -27,6 +27,7 @@ endforeach(header_file ${folder_header})
 
 # Inclue any directories needed for YARP
 include_directories(${YARP_INCLUDE_DIRS} ${ASIBOT_INCLUDE_DIRS} ${TRAVIS_INCLUDE_DIRS})
+link_directories(${TRAVIS_LINK_DIRS})
 
 # Set up our main executable.
 if (folder_source)
