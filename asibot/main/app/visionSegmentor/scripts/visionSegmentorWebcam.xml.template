@@ -18,7 +18,7 @@
 
         <module>
                 <name>visionSegmentor</name>
-                <parameters>--seeBounding 3 --outImage 1</parameters>
+                <parameters>--outFeaturesFormat 1</parameters>
                 <node>localhost</node>
         </module>
         <module>
