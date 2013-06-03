@@ -24,35 +24,48 @@ void SegmentorThread::init(ResourceFinder &rf) {
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
     outImage = DEFAULT_OUT_IMAGE;
+    outFeatures.addString("locX");  // hardcode
+    outFeatures.addString("locY");  // the
+    outFeatures.addString("angle");  // default
+    outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
     int rateMs = DEFAULT_RATE_MS;
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
+
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
-        printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
-        printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
+        printf("\t--algorithm (redMinusBlue,greenMinusRed...;default: \"%s\")\n",algorithm.c_str());
+        printf("\t--locate (centroid,bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
-        printf("\t--outImage (default: \"%d\")\n",outImage);
+        printf("\t--outFeatures (default: \"(%s)\")\n",outFeatures.toString().c_str());
+        printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
+        printf("\t--outImage (0=rgb,1=bw; default: \"%d\")\n",outImage);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
-        printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
+        printf("\t--seeBounding (0=none,1=contour,2=box,3=both;default: \"%d\")\n",seeBounding);
         printf("\t--threshold (default: \"%d\")\n",threshold);
     }
 
     if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
-    if (rf.check("outImage")) outImage = rf.find("outImage").asInt();
-    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, outImage: %d.\n",
-        algorithm.c_str(),locate.c_str(),maxNumBlobs,outImage);
+    if (rf.check("outFeaturesFormat")) outFeaturesFormat = rf.find("outFeaturesFormat").asInt();
+    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, outFeaturesFormat: %d.\n",
+        algorithm.c_str(),locate.c_str(),maxNumBlobs,outFeaturesFormat);
 
+    if (rf.check("outFeatures")) {
+        outFeatures = *(rf.find("outFeatures").asList());  // simple overrride
+    }   
+    printf("SegmentorThread using outFeatures: (%s).\n", outFeatures.toString().c_str());
+
+    if (rf.check("outImage")) outImage = rf.find("outImage").asInt();
     if (rf.check("rateMs")) rateMs = rf.find("rateMs").asInt();
     if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
     if (rf.check("seeBounding")) seeBounding = rf.find("seeBounding").asInt();
-    printf("SegmentorThread using rateMs: %d, seeBounding: %d, threshold: %d.\n",
-        rateMs, seeBounding, threshold);
+    printf("SegmentorThread using outImage: %d, rateMs: %d, seeBounding: %d, threshold: %d.\n",
+        outImage, rateMs, seeBounding, threshold);
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
@@ -108,38 +121,44 @@ void SegmentorThread::run() {
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
 
-    Bottle configuration;
-    configuration.addString("locX");
-    configuration.addString("locY");
-    configuration.addString("angle");
-
     // Take advantage we have the travis object and get features for text output
-    
     Bottle output;
-    for (int elem = 0; elem < configuration.size() ; elem++) {
-        if ( configuration.get(elem).asString() == "locX" ) {
-            Bottle locXs;
-            for (int i = 0; i < blobsXY.size(); i++)
-                locXs.addDouble(blobsXY[i].x);
-            output.addList() = locXs;
-        } else if ( configuration.get(elem).asString() == "locY" ) {
-            Bottle locYs;
-            for (int i = 0; i < blobsXY.size(); i++)
-                locYs.addDouble(blobsXY[i].y);
-            output.addList() = locYs;
-        } else if ( configuration.get(elem).asString() == "angle" ) {
-            Bottle angles;
-            for (int i = 0; i < blobsAngle.size(); i++)
-                angles.addDouble(blobsAngle[i]);
-            output.addList() = angles;
-        } else fprintf(stderr,"[SegmentorThread] warning: bogus output configuration.\n");
+    for (int elem = 0; elem < outFeatures.size() ; elem++) {
+        if ( outFeatures.get(elem).asString() == "locX" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].x);
+            } else {
+                Bottle locXs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locXs.addDouble(blobsXY[i].x);
+                output.addList() = locXs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "locY" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].y);
+            } else {
+                Bottle locYs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locYs.addDouble(blobsXY[i].y);
+                output.addList() = locYs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "angle" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAngle[0]);
+            } else {
+                Bottle angles;
+                for (int i = 0; i < blobsAngle.size(); i++)
+                    angles.addDouble(blobsAngle[i]);
+                output.addList() = angles;
+            }
+        } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
     pOutPort->write(output);
 
-    cvReleaseImage( &inIplImage ); //release the memory for the image
-    outCvMat.release(); //cvReleaseImage( &outIplImage ); //release the memory for the image
-/*
-    Mat mask= Mat::zeros(imageFile.rows, imageFile.cols, CV_8UC1);
+    cvReleaseImage( &inIplImage );  // release the memory for the image
+    outCvMat.release();  // cvReleaseImage( &outIplImage );  // release the memory for the image
+
+/*  Mat mask= Mat::zeros(imageFile.rows, imageFile.cols, CV_8UC1);
 
     //get biggest contour
     vector <Point> biggestCont = getBiggestContour(imageFile);
