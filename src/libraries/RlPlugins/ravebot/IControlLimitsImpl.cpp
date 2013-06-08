@@ -1,5 +1,4 @@
-
-// -----------------------------------------------------------------------------
+// -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
 #include "RaveBot.h"
 
@@ -22,4 +21,6 @@ bool RaveBot::getLimits(int axis, double *min, double *max) {
     printf("[RaveBot] Range of axis %d read: %f to %f.\n",axis,*min,*max);
     return true;
 }
+
+// -----------------------------------------------------------------------------
 
