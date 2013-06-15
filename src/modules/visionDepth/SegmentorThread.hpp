@@ -33,7 +33,7 @@
 #define DEFAULT_OUT_FEATURES_FORMAT 0
 #define DEFAULT_OUT_IMAGE 1
 #define DEFAULT_RATE_MS 20
-#define DEFAULT_SEE_BOUNDING 0
+#define DEFAULT_SEE_BOUNDING 3
 #define DEFAULT_THRESHOLD 55
 
 using namespace yarp::os;
