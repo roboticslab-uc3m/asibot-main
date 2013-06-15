@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __SEGEX_HPP__
-#define __SEGEX_HPP__
+#ifndef __VISION_SEGMENTOR_HPP__
+#define __VISION_SEGMENTOR_HPP__
 
 #include "SegmentorThread.hpp"
 
@@ -24,5 +24,5 @@ class VisionSegmentor : public RFModule {
     bool configure(ResourceFinder &rf);
 };
 
-#endif  // __SEGEX_HPP__
+#endif  // __VISION_SEGMENTOR_HPP__
 
