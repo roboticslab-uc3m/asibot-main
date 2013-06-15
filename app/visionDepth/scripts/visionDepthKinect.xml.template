@@ -1,12 +1,12 @@
 <application>
-<name>colorDepthKinect App</name>
+<name>visionDepthKinect App</name>
         <module>
                 <name>yarpdev</name>
                 <parameters>--device KinectDeviceLocal --portPrefix /kinect --noMirror</parameters>
                 <node>localhost</node>
         </module>
         <module>
-                <name>colorDepth</name>
+                <name>visionDepth</name>
                 <parameters>--algorithm greenMinusRed --seeBounding 1 --maxNumBlobs 1</parameters>
                 <node>localhost</node>
         </module>
@@ -18,14 +18,14 @@
 
         <connection>
                 <from>/kinect/imageMap:o</from>
-                <to>/colorDepth/img:i</to>
+                <to>/visionDepth/img:i</to>
         </connection>
         <connection>
                 <from>/kinect/depthMap:o</from>
-                <to>/colorDepth/depth:i</to>
+                <to>/visionDepth/depth:i</to>
         </connection>
         <connection>
-                <from>/colorDepth/img:o</from>
+                <from>/visionDepth/img:o</from>
                 <to>/yarpview/img:i</to>
         </connection>
 

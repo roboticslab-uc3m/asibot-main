@@ -1,5 +1,5 @@
 <application>
-<name>colorDepthSim App</name>
+<name>visionDepthSim App</name>
         <module>
                 <name>cartesianServer</name>
                 <parameters>--env asibot_kitchen_kinect.env.xml --extraRobot 1dof</parameters>
@@ -16,16 +16,16 @@
         </connection>
 
         <module>
-                <name>colorDepth</name>
+                <name>visionDepth</name>
                 <node>localhost</node>
         </module>
         <connection>
                 <from>/ravebot/kinect_rgb/img:o</from>
-                <to>/colorDepth/img:i</to>
+                <to>/visionDepth/img:i</to>
         </connection>
         <connection>
                 <from>/ravebot/kinect_depth/depth:o</from>
-                <to>/colorDepth/depth:i</to>
+                <to>/visionDepth/depth:i</to>
         </connection>
 
         <module>
@@ -34,7 +34,7 @@
                 <node>localhost</node>
         </module>
         <connection>
-                <from>/colorDepth/img:o</from>
+                <from>/visionDepth/img:o</from>
                 <to>/yarpview/img:i</to>
         </connection>
 
