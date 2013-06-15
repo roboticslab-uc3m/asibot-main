@@ -15,8 +15,13 @@
 #include <yarp/math/Math.h>
 
 #include "cv.h"
-#include "highgui.h" // to show windows
-#include "BlobResult.h"  // Main blob library include
+//#include "highgui.h" // to show windows
+
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+
+#include "TravisLib.hpp"
 
 #define DEFAULT_FX          640     //
 #define DEFAULT_FY          640     //
