@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
     rf.setDefaultConfigFile("visionDepth.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
-    ColorDepth mod;
+    VisionDepth mod;
     if(rf.check("help")) {
         return mod.runModule(rf);
     }
