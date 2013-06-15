@@ -33,6 +33,11 @@ void SegmentorThread::init(ResourceFinder &rf) {
     algorithm = DEFAULT_ALGORITHM;
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
+    outImage = DEFAULT_OUT_IMAGE;
+    outFeatures.addString("locX");  // hardcode
+    outFeatures.addString("locY");  // the
+    outFeatures.addString("angle");  // default
+    outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
     int rateMs = DEFAULT_RATE_MS;
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
@@ -48,6 +53,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
+        printf("\t--outFeatures (default: \"(%s)\")\n",outFeatures.toString().c_str());
+        printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
+        printf("\t--outImage (0=rgb,1=bw; default: \"%d\")\n",outImage);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
         printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
         printf("\t--threshold (default: \"%d\")\n",threshold);
@@ -61,16 +69,24 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
+    if (rf.check("outFeaturesFormat")) outFeaturesFormat = rf.find("outFeaturesFormat").asInt();
+
     printf("SegmentorThread using fx: %f, fy: %f, cx: %f, cy: %f.\n",
         fx,fy,cx,cy);
-    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d.\n",
-        algorithm.c_str(),locate.c_str(),maxNumBlobs);
+    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, outFeaturesFormat: %d.\n",
+        algorithm.c_str(),locate.c_str(),maxNumBlobs,outFeaturesFormat);
 
+    if (rf.check("outFeatures")) {
+        outFeatures = *(rf.find("outFeatures").asList());  // simple overrride
+    }   
+    printf("SegmentorThread using outFeatures: (%s).\n", outFeatures.toString().c_str());
+
+    if (rf.check("outImage")) outImage = rf.find("outImage").asInt();
     if (rf.check("rateMs")) rateMs = rf.find("rateMs").asInt();
     if (rf.check("threshold")) threshold = rf.find("threshold").asInt();
     if (rf.check("seeBounding")) seeBounding = rf.find("seeBounding").asInt();
-    printf("SegmentorThread using rateMs: %d, seeBounding: %d, threshold: %d.\n",
-        rateMs, seeBounding, threshold);
+    printf("SegmentorThread using outImage: %d, rateMs: %d, seeBounding: %d, threshold: %d.\n",
+        outImage, rateMs, seeBounding, threshold);
 
     printf("--------------------------------------------------------------\n");
     if(rf.check("help")) {
@@ -86,9 +102,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
 void SegmentorThread::run() {
     // printf("[SegmentorThread] run()\n");
 
-    ImageOf<PixelRgb> *img = pInImg->read(false);
+    ImageOf<PixelRgb> *inYarpImg = pInImg->read(false);
     ImageOf<PixelFloat> *depth = pInDepth->read(false);
-    if (img==NULL) {
+    if (inYarpImg==NULL) {
         //printf("No img yet...\n");
         return;
     };
@@ -97,15 +113,86 @@ void SegmentorThread::run() {
         return;
     };
 
+    // {yarp ImageOf Rgb -> openCv Mat Bgr}
+    IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg->width(), inYarpImg->height()),
+                                         IPL_DEPTH_8U, 3 );
+    cvCvtColor((IplImage*)inYarpImg->getIplImage(), inIplImage, CV_RGB2BGR);
+    Mat inCvMat(inIplImage);
+
+    // Because Travis stuff goes with [openCv Mat Bgr] for now
+    // Travis travis(false, false);  // verbose, copy (slower and more mem)
+    Travis travis;  // quiet, overwrite (faster)
+    travis.setCvMat(inCvMat);
+    travis.binarize(algorithm, threshold);
+    travis.morphClosing( inYarpImg->width() * 0.1 ); // 4 for 100, very rule-of-thumb
+    travis.blobize(maxNumBlobs);
+    vector<cv::Point> blobsXY;
+    travis.getBlobsXY(blobsXY);
+    vector<double> blobsAngle;
+    bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
+    if (!ok) return;
+    Mat outCvMat = travis.getCvMat(outImage,seeBounding);
+    travis.release();
+
+    // { openCv Mat Bgr -> yarp ImageOf Rgb}
+    IplImage outIplImage = outCvMat;
+    cvCvtColor(&outIplImage,&outIplImage, CV_BGR2RGB);
+    char sequence[] = "RGB";
+    strcpy (outIplImage.channelSeq,sequence);
+    ImageOf<PixelRgb> outYarpImg;
+    outYarpImg.wrapIplImage(&outIplImage);
+    PixelRgb blue(0,0,255);
+    for( int i = 0; i < blobsXY.size(); i++)
+       addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
+    pOutImg->prepare() = outYarpImg;
+    pOutImg->write();
+
+    // Take advantage we have the travis object and get features for text output
+    Bottle output;
+    for (int elem = 0; elem < outFeatures.size() ; elem++) {
+        if ( outFeatures.get(elem).asString() == "locX" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].x);
+            } else {
+                Bottle locXs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locXs.addDouble(blobsXY[i].x);
+                output.addList() = locXs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "locY" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].y);
+            } else {
+                Bottle locYs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locYs.addDouble(blobsXY[i].y);
+                output.addList() = locYs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "angle" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAngle[0]);
+            } else {
+                Bottle angles;
+                for (int i = 0; i < blobsAngle.size(); i++)
+                    angles.addDouble(blobsAngle[i]);
+                output.addList() = angles;
+            }
+        } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
+    }
+    pOutPort->write(output);
+
+    cvReleaseImage( &inIplImage );  // release the memory for the image
+    outCvMat.release();  // cvReleaseImage( &outIplImage );  // release the memory for the image
+
     //printf("Got img & depth!\n");
 
-    // int code = img->getPixelCode();
-    // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
+    // int code = inYarpImg->getPixelCode();
+    // printf("[SegmentorThread] inYarpImg->getPixelCode() gets pixel code: %d\n", code);
     
-/*    IplImage *rgb = cvCreateImage(cvSize(img->width(),  
-                                             img->height()), 
+/*    IplImage *rgb = cvCreateImage(cvSize(inYarpImg->width(),  
+                                             inYarpImg->height()), 
                                              IPL_DEPTH_8U, 3 );
-    cvCvtColor((IplImage*)img->getIplImage(), rgb, CV_RGB2BGR);
+    cvCvtColor((IplImage*)inYarpImg->getIplImage(), rgb, CV_RGB2BGR);
 
     Bottle container;
     //ImageOf<PixelBgr> yarpReturnImage;
@@ -163,14 +250,14 @@ void SegmentorThread::run() {
         if(seeBounding>0){
             PixelRgb green(0,255,0);
             CvRect bb = bigBlob.GetBoundingBox();
-            addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
+            addRectangleOutline(*inYarpImg,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
         }
 
         // cvSub( rgb, r, rgb);
         // yarpReturnImage.wrapIplImage(rgb);
         // add a blue centroid/bottom circle
         PixelRgb blue(0,0,255);
-        addCircle(*img,blue,myx,myy,3);
+        addCircle(*inYarpImg,blue,myx,myy,3);
 
         // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
         // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
@@ -194,8 +281,8 @@ void SegmentorThread::run() {
 
     cvReleaseImage( &rgbMod ); //release the memory for the image
 
-    pOutImg->prepare() = *img;
-    pOutImg->write();
+    pOutinYarpImg->prepare() = *img;
+    pOutinYarpImg->write();
 
     pOutPort->write(container);
 
