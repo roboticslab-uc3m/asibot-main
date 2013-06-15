@@ -124,7 +124,7 @@ void SegmentorThread::run() {
     Travis travis;  // quiet, overwrite (faster)
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm, threshold);
-    travis.morphClosing( inYarpImg->width() * 0.1 ); // 4 for 100, very rule-of-thumb
+    travis.morphClosing( inYarpImg->width() * 0.05 ); // 4 for 100, very rule-of-thumb
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
