@@ -37,7 +37,7 @@
  *
  */
 
-#include "ColorDepth.hpp"
+#include "VisionDepth.hpp"
 
 int main(int argc, char** argv) {
 
