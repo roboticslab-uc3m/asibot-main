@@ -25,10 +25,10 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     segmentorThread.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
-    inDepth.open("/colorDepth/depth:i");
-    inImg.open("/colorDepth/img:i");
-    outImg.open("/colorDepth/img:o");
-    outPort.open("/colorDepth/state:o");
+    inDepth.open("/visionDepth/depth:i");
+    inImg.open("/visionDepth/img:i");
+    outImg.open("/visionDepth/img:o");
+    outPort.open("/visionDepth/state:o");
 
     return true;
 }
