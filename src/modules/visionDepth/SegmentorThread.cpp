@@ -102,7 +102,7 @@ void SegmentorThread::run() {
     // int code = img->getPixelCode();
     // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
     
-    IplImage *rgb = cvCreateImage(cvSize(img->width(),  
+/*    IplImage *rgb = cvCreateImage(cvSize(img->width(),  
                                              img->height()), 
                                              IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)img->getIplImage(), rgb, CV_RGB2BGR);
@@ -200,6 +200,6 @@ void SegmentorThread::run() {
     pOutPort->write(container);
 
     cvReleaseImage( &rgb ); //release the memory for the image
-
+*/
 }
 
