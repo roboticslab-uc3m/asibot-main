@@ -7,7 +7,7 @@
         </module>
         <module>
                 <name>visionDepth</name>
-                <parameters>--algorithm greenMinusRed --seeBounding 1 --maxNumBlobs 1</parameters>
+                <!--parameters>--algorithm blueMinusRed --threshold 50 --seeBounding 3 --maxNumBlobs 1</parameters-->
                 <node>localhost</node>
         </module>
         <module>
