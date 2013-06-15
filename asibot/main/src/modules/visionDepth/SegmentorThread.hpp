@@ -14,25 +14,27 @@
 
 #include <yarp/math/Math.h>
 
-/*#include "cv.h"
+#include "cv.h"
 //#include "highgui.h" // to show windows
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
-#include "TravisLib.hpp"*/
+#include "TravisLib.hpp"
 
 #define DEFAULT_FX          640     //
 #define DEFAULT_FY          640     //
 #define DEFAULT_CX          320     //
 #define DEFAULT_CY          240     //
-#define DEFAULT_ALGORITHM "redMinusGreen"
+#define DEFAULT_ALGORITHM "blueMinusRed"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
+#define DEFAULT_OUT_FEATURES_FORMAT 0
+#define DEFAULT_OUT_IMAGE 1
 #define DEFAULT_RATE_MS 20
 #define DEFAULT_SEE_BOUNDING 0
-#define DEFAULT_THRESHOLD 50
+#define DEFAULT_THRESHOLD 55
 
 using namespace yarp::os;
 using namespace yarp::sig;
@@ -48,7 +50,10 @@ private:
     ConstString algorithm;
     ConstString locate;
     int maxNumBlobs;
-    bool seeBounding;
+    Bottle outFeatures;
+    int outFeaturesFormat;
+    int outImage;
+    int seeBounding;
     int threshold;
     //
     double fx,fy,cx,cy;
