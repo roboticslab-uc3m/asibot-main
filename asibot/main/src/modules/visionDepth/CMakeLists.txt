@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-IF (ENABLE_visionDepth)
+#IF (ENABLE_visionDepth)
 
 set(KEYWORD "visionDepth")
 
@@ -38,5 +38,5 @@ else (folder_source)
   message(FATAL_ERROR "No source code files found. Please add something")
 endif (folder_source)
 
-ENDIF (ENABLE_visionDepth)
+#ENDIF (ENABLE_visionDepth)
 
