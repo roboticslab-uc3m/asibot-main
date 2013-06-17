@@ -36,6 +36,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     outImage = DEFAULT_OUT_IMAGE;
     outFeatures.addString("locX");  // hardcode
     outFeatures.addString("locY");  // the
+    outFeatures.addString("locZ");  // the
     outFeatures.addString("angle");  // default
     outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
     int rateMs = DEFAULT_RATE_MS;
@@ -142,8 +143,16 @@ void SegmentorThread::run() {
     ImageOf<PixelRgb> outYarpImg;
     outYarpImg.wrapIplImage(&outIplImage);
     PixelRgb blue(0,0,255);
-    for( int i = 0; i < blobsXY.size(); i++)
-       addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
+    vector<double> mmX;
+    vector<double> mmY;
+    vector<double> mmZ;
+    for( int i = 0; i < blobsXY.size(); i++) {
+        addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
+        double mmZ_tmp = depth->pixel(int(blobsXY[i].x),int(blobsXY[i].y));
+        mmZ.push_back( mmZ_tmp );
+        mmX.push_back( 1000.0 * (blobsXY[i].x - (cx * mmZ_tmp/1000.0)) / fx );
+        mmY.push_back( 1000.0 * (blobsXY[i].y - (cy * mmZ_tmp/1000.0)) / fy );
+    }
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
 
@@ -152,21 +161,34 @@ void SegmentorThread::run() {
     for (int elem = 0; elem < outFeatures.size() ; elem++) {
         if ( outFeatures.get(elem).asString() == "locX" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
-                output.addDouble(blobsXY[0].x);
+                //output.addDouble(blobsXY[0].x);
+                output.addDouble(mmX[0]);
             } else {
                 Bottle locXs;
                 for (int i = 0; i < blobsXY.size(); i++)
-                    locXs.addDouble(blobsXY[i].x);
+                    //locXs.addDouble(blobsXY[i].x);
+                    locXs.addDouble(mmX[i]);
                 output.addList() = locXs;
             }
         } else if ( outFeatures.get(elem).asString() == "locY" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
-                output.addDouble(blobsXY[0].y);
+                //output.addDouble(blobsXY[0].y);
+                output.addDouble(mmY[0]);
             } else {
                 Bottle locYs;
                 for (int i = 0; i < blobsXY.size(); i++)
-                    locYs.addDouble(blobsXY[i].y);
+                    //locYs.addDouble(blobsXY[i].y);
+                    locYs.addDouble(mmY[i]);
                 output.addList() = locYs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "locZ" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(mmZ[0]);
+            } else {
+                Bottle locZs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locZs.addDouble(mmZ[i]);
+                output.addList() = locZs;
             }
         } else if ( outFeatures.get(elem).asString() == "angle" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
