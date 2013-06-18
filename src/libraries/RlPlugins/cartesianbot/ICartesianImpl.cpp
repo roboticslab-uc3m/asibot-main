@@ -418,6 +418,24 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
 
 // -----------------------------------------------------------------------------
 
+bool CartesianBot::attachTipFrame(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+
+bool CartesianBot::getTipFrame(yarp::sig::Vector &x, yarp::sig::Vector &o) {
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+
+bool CartesianBot::removeTipFrame() {
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+
 bool CartesianBot::checkMotionDone(bool *f) {
     bool tmpf = false;
     if(cmc_status<=0) tmpf = true;
