@@ -300,6 +300,24 @@ bool KdlBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::sig::V
 
 // -----------------------------------------------------------------------------
 
+bool KdlBot::attachTipFrame(const yarp::sig::Vector &x, const yarp::sig::Vector &o) {
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+
+bool KdlBot::getTipFrame(yarp::sig::Vector &x, yarp::sig::Vector &o) {
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+
+bool KdlBot::removeTipFrame() {
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+
 bool KdlBot::checkMotionDone(bool *f) {
     bool tmpf = false;
     if(cmc_status<=0) tmpf = true;
