@@ -107,8 +107,8 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         printf("[success] %s on BLOCKING WAIT for draw request,\n", pointsRpcServerName.c_str());
-        printf("usage: draw r g b p0x p0y p1x p1y ... pNx pNy\n");
-        printf("example: draw 1 1 1 0 0 .1 0 .1 .1 0 .1 0 0\n");
+        printf("usage: [draw] r g b p0x p0y p1x p1y ... pNx pNy\n");
+        printf("example: [draw] 1 1 1 0 0 .1 0 .1 .1 0 .1 0 0\n");
 
         Bottle bIn, bOut;
         pointsRpcServer.read(bIn,true);
