@@ -35,6 +35,7 @@
 #define DEFAULT_ROBOT "/ravebot"
 #define DEFAULT_HEIGHT 0.4;
 
+#define VOCAB_DRAW VOCAB('d','r','a','w')
 
 using namespace yarp::os;
 using namespace yarp::dev;
