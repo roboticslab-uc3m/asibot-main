@@ -2,7 +2,7 @@
 <name>visionSegmentorWebcam App</name>
         <module>
                 <name>yarpdev</name>
-                <parameters>--device opencv_grabber --name /grabber/img:o</parameters>
+                <parameters>--device ffmpeg_grabber --v4l2 /dev/video0 --name /grabber/img:o</parameters>
                 <node>localhost</node>
         </module>
 
