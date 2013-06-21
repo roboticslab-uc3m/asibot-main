@@ -147,6 +147,8 @@ void SegmentorThread::run() {
     vector<double> mmZ;
     for( int i = 0; i < blobsXY.size(); i++) {
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
+        if (blobsXY[i].x<0) return;
+        if (blobsXY[i].y<0) return;
         double mmZ_tmp = depth->pixel(int(blobsXY[i].x),int(blobsXY[i].y));
         mmZ.push_back( mmZ_tmp );
         mmX.push_back( 1000.0 * (blobsXY[i].x - (cx * mmZ_tmp/1000.0)) / fx );
