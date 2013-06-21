@@ -121,8 +121,7 @@ void SegmentorThread::run() {
     Mat inCvMat(inIplImage);
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
-    // Travis travis(false, false);  // verbose, copy (slower and more mem)
-    Travis travis;  // quiet, overwrite (faster)
+    Travis travis;  // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm, threshold);
     travis.morphClosing( inYarpImg->width() * 0.05 ); // 4 for 100, very rule-of-thumb
