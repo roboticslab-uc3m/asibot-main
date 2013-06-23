@@ -121,7 +121,8 @@ void SegmentorThread::run() {
     Mat inCvMat(inIplImage);
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
-    Travis travis;  // ::Travis(quiet=true, overwrite=true);
+    //Travis travis;  // ::Travis(quiet=true, overwrite=true);
+    Travis travis(false,true);  // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm, threshold);
     travis.morphClosing( inYarpImg->width() * 0.05 ); // 4 for 100, very rule-of-thumb
@@ -133,7 +134,7 @@ void SegmentorThread::run() {
     if (!ok) return;
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
     travis.release();
-
+printf("DEBUG-1\n");
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
     IplImage outIplImage = outCvMat;
     cvCvtColor(&outIplImage,&outIplImage, CV_BGR2RGB);
@@ -145,7 +146,9 @@ void SegmentorThread::run() {
     vector<double> mmX;
     vector<double> mmY;
     vector<double> mmZ;
+    if(blobsXY.size() < 1) return;
     for( int i = 0; i < blobsXY.size(); i++) {
+printf("DEBUG-2\n");
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
         if (blobsXY[i].x<0) return;
         if (blobsXY[i].y<0) return;
@@ -156,6 +159,7 @@ void SegmentorThread::run() {
     }
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
+printf("DEBUG-3\n");
 
     // Take advantage we have the travis object and get features for text output
     Bottle output;
