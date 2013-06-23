@@ -37,7 +37,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     outFeatures.addString("locX");  // hardcode
     outFeatures.addString("locY");  // the
     outFeatures.addString("locZ");  // the
-    outFeatures.addString("angle");  // default
+    //outFeatures.addString("angle");  // default
     outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
     int rateMs = DEFAULT_RATE_MS;
     seeBounding = DEFAULT_SEE_BOUNDING;
