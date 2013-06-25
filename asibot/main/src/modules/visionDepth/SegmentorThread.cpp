@@ -158,6 +158,9 @@ void SegmentorThread::run() {
     vector<double> mmX;
     vector<double> mmY;
     vector<double> mmZ;
+    vector<double> mmX_0;
+    vector<double> mmY_0;
+    vector<double> mmZ_0;
     if(blobsXY.size() < 1) return;
     for( int i = 0; i < blobsXY.size(); i++) {
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
