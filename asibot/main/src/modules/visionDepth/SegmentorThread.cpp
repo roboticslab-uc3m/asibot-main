@@ -112,6 +112,13 @@ void SegmentorThread::init(ResourceFinder &rf) {
     H_0_c(3,3)=1;
     printf("*** H_0_c *** \n(%s)\n\n", H_0_c.toString().c_str());
 
+    yarp::sig::Matrix H_c_k = rotY(tilt);
+    H_c_k.resize(4,4);
+    H_c_k(2,3)=height;
+    H_c_k(3,3)=1;
+    printf("*** H_c_k *** \n(%s)\n\n", H_c_k.toString().c_str());
+
+    H_0_k = H_0_c * H_c_k;
 
     this->setRate(rateMs);
     this->start();
@@ -173,9 +180,22 @@ void SegmentorThread::run() {
         if (blobsXY[i].x<0) return;
         if (blobsXY[i].y<0) return;
         double mmZ_tmp = depth->pixel(int(blobsXY[i].x),int(blobsXY[i].y));
+        double mmX_tmp = 1000.0 * (blobsXY[i].x - (cx * mmZ_tmp/1000.0)) / fx;
+        double mmY_tmp = 1000.0 * (blobsXY[i].y - (cy * mmZ_tmp/1000.0)) / fy;
         mmZ.push_back( mmZ_tmp );
-        mmX.push_back( 1000.0 * (blobsXY[i].x - (cx * mmZ_tmp/1000.0)) / fx );
-        mmY.push_back( 1000.0 * (blobsXY[i].y - (cy * mmZ_tmp/1000.0)) / fy );
+        mmX.push_back( mmX_tmp );
+        mmY.push_back( mmY_tmp );
+
+        yarp::sig::Matrix X_k_P(4,1);
+        X_k_P(0,0)=mmX_tmp;
+        X_k_P(1,0)=mmY_tmp;
+        X_k_P(2,0)=mmZ_tmp;
+        X_k_P(3,0)=1;
+
+        yarp::sig::Matrix X_0_P = H_0_k * X_k_P;
+        mmX_0.push_back( X_0_P(0,0) );
+        mmY_0.push_back( X_0_P(1,0) );
+        mmZ_0.push_back( X_0_P(2,0) );
     }
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
