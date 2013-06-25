@@ -208,6 +208,33 @@ void SegmentorThread::run() {
                     locZs.addDouble(mmZ[i]);
                 output.addList() = locZs;
             }
+        } else if ( outFeatures.get(elem).asString() == "locX_0" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(mmX_0[0]);
+            } else {
+                Bottle locXs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locXs.addDouble(mmX_0[i]);
+                output.addList() = locXs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "locY_0" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(mmY_0[0]);
+            } else {
+                Bottle locYs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locYs.addDouble(mmY_0[i]);
+                output.addList() = locYs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "locZ_0" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(mmZ_0[0]);
+            } else {
+                Bottle locZs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locZs.addDouble(mmZ_0[i]);
+                output.addList() = locZs;
+            }
         } else if ( outFeatures.get(elem).asString() == "angle" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsAngle[0]);
