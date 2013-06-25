@@ -62,6 +62,8 @@ private:
     int threshold;
     //
     double fx,fy,cx,cy;
+    //
+    double height, pan, tilt;
 
 public:
     SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}
