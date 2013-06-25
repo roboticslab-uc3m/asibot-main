@@ -22,6 +22,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 #include "TravisLib.hpp"
+#include "TinyMath.hpp"
 
 #define DEFAULT_FX          640     //
 #define DEFAULT_FY          640     //

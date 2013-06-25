@@ -147,7 +147,6 @@ void SegmentorThread::run() {
     if (!ok) return;
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
     travis.release();
-printf("DEBUG-1\n");
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
     IplImage outIplImage = outCvMat;
     cvCvtColor(&outIplImage,&outIplImage, CV_BGR2RGB);
@@ -161,7 +160,6 @@ printf("DEBUG-1\n");
     vector<double> mmZ;
     if(blobsXY.size() < 1) return;
     for( int i = 0; i < blobsXY.size(); i++) {
-printf("DEBUG-2\n");
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
         if (blobsXY[i].x<0) return;
         if (blobsXY[i].y<0) return;
@@ -172,7 +170,6 @@ printf("DEBUG-2\n");
     }
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
-printf("DEBUG-3\n");
 
     // Take advantage we have the travis object and get features for text output
     Bottle output;
