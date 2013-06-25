@@ -30,6 +30,11 @@ void SegmentorThread::init(ResourceFinder &rf) {
     fy = DEFAULT_FY;
     cx = DEFAULT_CX;
     cy = DEFAULT_CY;
+
+    height = DEFAULT_HEIGHT;
+    pan = DEFAULT_PAN;
+    tilt = DEFAULT_TILT;
+
     algorithm = DEFAULT_ALGORITHM;
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
@@ -51,6 +56,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--fy (default: \"%f\")\n",fy);
         printf("\t--cx (default: \"%f\")\n",cx);
         printf("\t--cy (default: \"%f\")\n",cy);
+        printf("\t--pan (default: \"%f\")\n",pan);
+        printf("\t--tilt (default: \"%f\")\n",tilt);
+        printf("\t--height (default: \"%f\")\n",height);
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
@@ -67,6 +75,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("fy")) fy = rf.find("fy").asDouble();
     if (rf.check("cx")) cx = rf.find("cx").asDouble();
     if (rf.check("cy")) cy = rf.find("cy").asDouble();
+    if (rf.check("pan")) pan = rf.find("pan").asDouble();
+    if (rf.check("tilt")) tilt = rf.find("tilt").asDouble();
+    if (rf.check("height")) height = rf.find("height").asDouble();
     if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
@@ -74,6 +85,8 @@ void SegmentorThread::init(ResourceFinder &rf) {
 
     printf("SegmentorThread using fx: %f, fy: %f, cx: %f, cy: %f.\n",
         fx,fy,cx,cy);
+    printf("SegmentorThread using pan: %f, tilt: %f, height: %f.\n",
+        pan,tilt,height);
     printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, outFeaturesFormat: %d.\n",
         algorithm.c_str(),locate.c_str(),maxNumBlobs,outFeaturesFormat);
 
