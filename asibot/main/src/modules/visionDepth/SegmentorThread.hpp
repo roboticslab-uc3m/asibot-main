@@ -27,6 +27,11 @@
 #define DEFAULT_FY          640     //
 #define DEFAULT_CX          320     //
 #define DEFAULT_CY          240     //
+
+#define DEFAULT_HEIGHT         0     // Base TransZ [m]
+#define DEFAULT_PAN            0     // Base RotZ [deg]
+#define DEFAULT_TILT           0     // Extra RotY [deg]
+
 #define DEFAULT_ALGORITHM "blueMinusRed"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
