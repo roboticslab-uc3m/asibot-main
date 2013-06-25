@@ -31,7 +31,7 @@
 
 #define DEFAULT_HEIGHT         0     // Base TransZ [m]
 #define DEFAULT_PAN            0     // Base RotZ [deg]
-#define DEFAULT_TILT           0     // Extra RotY [deg]
+#define DEFAULT_TILT           0     // Extra RotY [deg], neg looks down as in OpenNI
 
 #define DEFAULT_ALGORITHM "blueMinusRed"
 #define DEFAULT_LOCATE "centroid"
