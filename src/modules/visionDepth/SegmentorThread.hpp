@@ -65,6 +65,7 @@ private:
     double fx,fy,cx,cy;
     //
     double height, pan, tilt;
+    yarp::sig::Matrix H_0_k;
 
 public:
     SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}
