@@ -107,6 +107,12 @@ void SegmentorThread::init(ResourceFinder &rf) {
         ::exit(1);
     }
 
+    yarp::sig::Matrix H_0_c = rotZ(pan);
+    H_0_c.resize(4,4);
+    H_0_c(3,3)=1;
+    printf("*** H_0_c *** \n(%s)\n\n", H_0_c.toString().c_str());
+
+
     this->setRate(rateMs);
     this->start();
 
