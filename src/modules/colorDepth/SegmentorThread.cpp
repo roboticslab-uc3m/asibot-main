@@ -3,14 +3,8 @@
 #include "SegmentorThread.hpp"
 
 /************************************************************************/
-void
-SegmentorThread::setInDepth(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> > * _pInDepth) {
-    pInDepth = _pInDepth;
-}
-
-/************************************************************************/
-void SegmentorThread::setInImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg) {
-    pInImg = _pInImg;
+void SegmentorThread::setIKinectDeviceDriver(IKinectDeviceDriver * _kinect) {
+    kinect = _kinect;
 }
 
 /************************************************************************/
@@ -86,7 +80,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
 void SegmentorThread::run() {
     // printf("[SegmentorThread] run()\n");
 
-    ImageOf<PixelRgb> *img = pInImg->read(false);
+    /*ImageOf<PixelRgb> *img = pInImg->read(false);
     ImageOf<PixelFloat> *depth = pInDepth->read(false);
     if (img==NULL) {
         //printf("No img yet...\n");
@@ -95,6 +89,17 @@ void SegmentorThread::run() {
     if (depth==NULL) {
         //printf("No depth yet...\n");
         return;
+    };*/
+
+    ImageOf<PixelRgb> img = kinect->getImageMap();
+    if (img.height()<10) {
+        //printf("No img yet...\n");
+        return;
+    };
+    ImageOf<PixelInt> depth = kinect->getDepthMap();
+    if (depth.height()<10) {
+        //printf("No img yet...\n");
+        return;
     };
 
     //printf("Got img & depth!\n");
@@ -102,10 +107,10 @@ void SegmentorThread::run() {
     // int code = img->getPixelCode();
     // printf("[SegmentorThread] img->getPixelCode() gets pixel code: %d\n", code);
     
-    IplImage *rgb = cvCreateImage(cvSize(img->width(),  
-                                             img->height()), 
+    IplImage *rgb = cvCreateImage(cvSize(img.width(),  
+                                             img.height()), 
                                              IPL_DEPTH_8U, 3 );
-    cvCvtColor((IplImage*)img->getIplImage(), rgb, CV_RGB2BGR);
+    cvCvtColor((IplImage*)img.getIplImage(), rgb, CV_RGB2BGR);
 
     Bottle container;
     //ImageOf<PixelBgr> yarpReturnImage;
@@ -128,6 +133,15 @@ void SegmentorThread::run() {
         cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
         cvSub(g,r,rgbMod,NULL);  // subtract
         cvReleaseImage( &g ); //release the memory for the image
+        cvReleaseImage( &r ); //release the memory for the image
+        cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
+    } else if (algorithm=="blueMinusRed") {
+        IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        cvSplit( rgb, b, NULL, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
+        cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
+        cvSub(b,r,rgbMod,NULL);  // subtract
+        cvReleaseImage( &b ); //release the memory for the image
         cvReleaseImage( &r ); //release the memory for the image
         cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
     } else fprintf(stderr,"[warning] Unrecognized algorithm.\n");
@@ -163,14 +177,14 @@ void SegmentorThread::run() {
         if(seeBounding>0){
             PixelRgb green(0,255,0);
             CvRect bb = bigBlob.GetBoundingBox();
-            addRectangleOutline(*img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
+            addRectangleOutline(img,green,bb.x+bb.width/2.0,bb.y+bb.height/2.0,bb.width/2.0,bb.height/2.0);
         }
 
         // cvSub( rgb, r, rgb);
         // yarpReturnImage.wrapIplImage(rgb);
         // add a blue centroid/bottom circle
         PixelRgb blue(0,0,255);
-        addCircle(*img,blue,myx,myy,3);
+        addCircle(img,blue,myx,myy,3);
 
         // printf("Image is width: %d, height: %d.\n",rgb->width,rgb->height);
         // printf("Blob centroid at x: %d, y: %d.\n",myx,myy);
@@ -180,7 +194,7 @@ void SegmentorThread::run() {
         //b_xy.addDouble(myy);
         //container.addList() = b_xy;
 
-        double mmZ = depth->pixel(int(myx),int(myy));  // maybe better do a mean around area?
+        double mmZ = depth.pixel(int(myx),int(myy));  // maybe better do a mean around area?
         //fprintf(stdout,"[CallbackPort] depth at (%d,%d) is %f.\n",int(myx),int(myy),mmZ);
         Bottle mmOut;
         double mmX = 1000.0 * (myx - (cx * mmZ/1000.0)) / fx;
@@ -194,7 +208,7 @@ void SegmentorThread::run() {
 
     cvReleaseImage( &rgbMod ); //release the memory for the image
 
-    pOutImg->prepare() = *img;
+    pOutImg->prepare() = img;
     pOutImg->write();
 
     pOutPort->write(container);

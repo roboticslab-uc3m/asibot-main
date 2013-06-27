@@ -14,8 +14,9 @@ class ColorDepth : public RFModule {
   private:
     SegmentorThread segmentorThread;
     //
-    BufferedPort<ImageOf<PixelFloat> > inDepth;
-    BufferedPort<ImageOf<PixelRgb> > inImg;
+    PolyDriver dd;
+    IKinectDeviceDriver *kinect;
+    
     BufferedPort<ImageOf<PixelRgb> > outImg;
     Port outPort;
 
