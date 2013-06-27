@@ -10,6 +10,8 @@
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/RateThread.h>
 
+#include <yarp/dev/all.h>
+
 #include <yarp/sig/all.h>
 
 #include <yarp/math/Math.h>
@@ -30,13 +32,13 @@
 #define DEFAULT_THRESHOLD 50
 
 using namespace yarp::os;
+using namespace yarp::dev;
 using namespace yarp::sig;
 using namespace yarp::sig::draw;
 
 class SegmentorThread : public RateThread {
 private:
-    BufferedPort<ImageOf<PixelFloat> > *pInDepth;
-    BufferedPort<ImageOf<PixelRgb> > *pInImg;
+    IKinectDeviceDriver *kinect;
     BufferedPort<ImageOf<PixelRgb> > *pOutImg;  // for testing
     Port *pOutPort;
     //
@@ -51,8 +53,7 @@ private:
 public:
     SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}
 
-    void setInDepth(BufferedPort<ImageOf<PixelFloat> > * _pInDepth);
-    void setInImg(BufferedPort<ImageOf<PixelRgb> > * _pInImg);
+    void setIKinectDeviceDriver(IKinectDeviceDriver * _kinect);
     void setOutImg(BufferedPort<ImageOf<PixelRgb> > * _pOutImg);
     void setOutPort(Port *_pOutPort);
     void init(ResourceFinder &rf);
