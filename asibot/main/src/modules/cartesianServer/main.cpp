@@ -71,7 +71,7 @@
  * \[movl\] (.1 .3 .8 90 0)   | \[ok\]                                            | Movement with interpolation in Cartesian space.
  * \[stat\]                   | (0.0 0.0 1.4 0.0 0.0) \[ok\]                      | Status poll, returns the current cartesian position (perform direct kinematics).
  * \[stop\]                   | \[ok\]                                            | Stop.
- * \[tool\]                   | \[ok\]                                            | Select tool.
+ * \[tool\] 1                 | \[ok\]                                            | Select tool.
  *
  * As an example of use, we can get the current Cartesian position (perform direct kinematics) by sending a \[stat\] rpc: 
 \verbatim
