@@ -47,7 +47,6 @@ bool RaveBot::open(Searchable& config) {
     const char *asibot_root = ::getenv("ASIBOT_ROOT");
     if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
 
-    if (config.check("viewer")) viewer = config.find("viewer").asInt();
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
     if (config.check("env")) env = config.find("env").asString();
     if (config.check("extraRobot")) extraRobot = config.find("extraRobot").asString();
@@ -63,11 +62,12 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
     if (config.check("modePosVel")) modePosVel = config.find("modePosVel").asInt();
     if (config.check("physics")) physics = config.find("physics").asString();
+    if (config.check("viewer")) viewer = config.find("viewer").asInt();
     printf("RaveBot using genInitPos: %f, genJointTol: %f, genMaxLimit: %f, genMinLimit: %f.\n",
         genInitPos, genJointTol,genMaxLimit,genMinLimit);
     printf("RaveBot using genRefSpeed: %f, genEncRawExposed: %f, genVelRawExposed: %f.\n",
         genRefSpeed,genEncRawExposed, genVelRawExposed);
-    printf("RaveBot using jmcMs: %f, modePosVel: %d, physics: %s.\n",jmcMs,modePosVel,physics.c_str());
+    printf("RaveBot using jmcMs: %f, modePosVel: %d, physics: %s, viewer: %d.\n",jmcMs,modePosVel,physics.c_str(),viewer);
 
     Bottle* initPoss;
     if (config.check("initPoss")) {
@@ -414,7 +414,7 @@ void SetViewer(EnvironmentBasePtr penv, const std::string& viewername, int _view
 
     // finally you call the viewer's infinite loop (this is why you need a separate thread):
     bool showgui = true; // change to false to disable scene view
-    if(!_viewer) showgui = false;
+    if(!_viewer) showgui = false;  // if viewer arg = 0
     viewer->main(showgui);
 }
 
