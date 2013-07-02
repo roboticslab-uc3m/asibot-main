@@ -20,6 +20,7 @@ bool RaveBot::open(Searchable& config) {
     double genRefSpeed = DEFAULT_GEN_REF_SPEED;
     double genEncRawExposed = DEFAULT_GEN_ENC_RAW_EXPOSED;
     double genVelRawExposed = DEFAULT_GEN_VEL_RAW_EXPOSED;
+    modePosVel = DEFAULT_MODE_POS_VEL;
     ConstString physics = DEFAULT_PHYSICS;
     viewer = DEFAULT_VIEWER;
 
@@ -39,6 +40,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--genEncRawExposed (encoder [raw / exposed] ratio, default: \"%f\")\n",genEncRawExposed);
         printf("\t--genVelRawExposed (velocity [raw / exposed] ratio, default: \"%f\")\n",genVelRawExposed);
         printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
+        printf("\t--modePosVel (default: \"%d\")\n",modePosVel);
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
     }
 
@@ -59,12 +61,13 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genEncRawExposed")) genEncRawExposed = config.find("genEncRawExposed").asDouble();
     if (config.check("genVelRawExposed")) genVelRawExposed = config.find("genVelRawExposed").asDouble();    
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
+    if (config.check("modePosVel")) modePosVel = config.find("modePosVel").asInt();
     if (config.check("physics")) physics = config.find("physics").asString();
     printf("RaveBot using genInitPos: %f, genJointTol: %f, genMaxLimit: %f, genMinLimit: %f.\n",
         genInitPos, genJointTol,genMaxLimit,genMinLimit);
     printf("RaveBot using genRefSpeed: %f, genEncRawExposed: %f, genVelRawExposed: %f.\n",
         genRefSpeed,genEncRawExposed, genVelRawExposed);
-    printf("RaveBot using jmcMs: %f, physics: %s.\n",jmcMs,physics.c_str());
+    printf("RaveBot using jmcMs: %f, modePosVel: %d, physics: %s.\n",jmcMs,modePosVel,physics.c_str());
 
     Bottle* initPoss;
     if (config.check("initPoss")) {
@@ -134,8 +137,6 @@ bool RaveBot::open(Searchable& config) {
     if(config.check("help")) {
         ::exit(1);
     }
-
-    modePosVel = 0;  // 0 = Pos; 1 = Vel;
 
     encRawExposed.resize(numMotors);
     jointStatus.resize(numMotors);
