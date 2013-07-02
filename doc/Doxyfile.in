@@ -115,7 +115,7 @@ FULL_PATH_NAMES        = YES
 # path to strip.
 
 # WARNING, THIS IS TOTALLY MACHINE-DEPENDANT
-STRIP_FROM_PATH        = /home/yo/svn/roboticslab
+#j# STRIP_FROM_PATH        = /home/yo/svn/roboticslab
 # WARNING, THIS IS TOTALLY MACHINE-DEPENDANT
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of
@@ -576,7 +576,8 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = . ../src ../app ../../example
+#j# INPUT                  = . ../src ../app ../../example
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@ @CMAKE_CURRENT_SOURCE_DIR@/../src/ @CMAKE_CURRENT_SOURCE_DIR@/../app/ @CMAKE_CURRENT_SOURCE_DIR@/../../example/
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -653,7 +654,8 @@ EXAMPLE_RECURSIVE      = YES
 # directories that contain image that are included in the documentation (see
 # the \image command).
 
-IMAGE_PATH             = ./fig
+#j# IMAGE_PATH             = ./fig
+IMAGE_PATH             = @CMAKE_CURRENT_SOURCE_DIR@ @CMAKE_CURRENT_SOURCE_DIR@/fig
 
 # The INPUT_FILTER tag can be used to specify a program that doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program
