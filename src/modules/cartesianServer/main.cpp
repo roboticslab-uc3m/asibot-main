@@ -63,15 +63,15 @@
 
  * The following table depicts implemented RPC commands you can issue from this connection (similar to the CartesianClient class API, as it actually wraps these commands). 
  *
- * RPC command format         | example response                                    | description
- * ---------------------------|-----------------------------------------------------|-------------
+ * RPC command format         | Example response                                  | Description
+ * ---------------------------|---------------------------------------------------|------------
  * \[inv\] (0.3 0.3 0.7 90 0) | (45.0 -41.169914 116.855705 14.314209 0.0) \[ok\] | Kinematic inversion without movement, returns the joint values that would be needed to reach that position.
  * \[movj\] (.1 .1 .7 90 0)   | \[ok\]                                            | Movement with interpolation in the Joint space.
  * \[movl\] (.1 .3 .8 90 0)   | \[ok\]                                            | Movement with interpolation in Cartesian space.
  * \[stat\]                   | (0.0 0.0 1.4 0.0 0.0) \[ok\]                      | Status poll, returns the current cartesian position (perform direct kinematics).
  * \[stop\]                   | \[ok\]                                            | Stop.
  *
- * As an example of use, we can get the current Cartesian position (perform direct kinematics) by sending a <b>stat</b> rpc: 
+ * As an example of use, we can get the current Cartesian position (perform direct kinematics) by sending a \[stat\] rpc: 
 \verbatim
 [on terminal 3] [stat]
 \endverbatim
@@ -88,14 +88,13 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
  *
  * The following table depicts implemented streaming commands you can issue from this connection (no acknowledgement response).
  *
- * <table>
- * <tr class="fragment"><td>streaming command format</td><td>description</td></tr>
- * <tr><td>[bkwd] (0.0 90.0)</td><td>[Track virtual point behind the end-effector] (dot(rot(z))[deg/s] rot(y')[deg])</td></tr>
- * <tr><td>[fwd] (0.0 90.0)</td><td>[Track virtual point in front of end-effector] (dot(rot(z))[deg/s] rot(y')[deg]))</td></tr>
- * <tr><td>[rot] (0.0 90.0)</td><td>[Track virtual point orientation] (dot(rot(z))[deg/s] rot(y')[deg]))</td></tr>
- * <tr><td>[vmos] (0.0 1.0 0.0 0.0 0.0)</td><td>Direct velocity movement command, in the Cartesian space.</td></tr>
- * <tr><td>[pose] (0.0 1.0 0.0 0.0 0.0)</td><td>Direct pose movement command, in the Cartesian space.</td></tr>
- * </table>
+ * Streaming command format       | Description
+ * -------------------------------|----------------------------------------------------------------------------------
+ * \[bkwd\] (0.0 90.0)            | [Track virtual point behind the end-effector] (<b>dot(rot(z))</b>[deg/s] <b>rot(y')</b>[deg])
+ * \[fwd\] (0.0 90.0)             | [Track virtual point in front of end-effector] (<b>dot(rot(z))</b>[deg/s] <b>rot(y')</b>[deg]))
+ * \[rot\] (0.0 90.0)             | [Track virtual point orientation] (<b>dot(rot(z))</b>[deg/s] <b>rot(y')</b>[deg]))
+ * \[vmos\] (0.0 1.0 0.0 0.0 0.0) | Direct velocity movement command, in the Cartesian space.
+ * \[pose\] (0.0 1.0 0.0 0.0 0.0) | Direct pose movement command, in the Cartesian space.
  *
  * @section cartesianServer_modify Modify
  *
