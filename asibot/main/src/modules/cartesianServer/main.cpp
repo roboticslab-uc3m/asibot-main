@@ -65,11 +65,13 @@
  *
  * RPC command format         | Example response                                  | Description
  * ---------------------------|---------------------------------------------------|------------
+ * \[help\]                   | Available commands: [help] [inv] [movj] ....      | Returns a list of commands similar to this one.
  * \[inv\] (0.3 0.3 0.7 90 0) | (45.0 -41.169914 116.855705 14.314209 0.0) \[ok\] | Kinematic inversion without movement, returns the joint values that would be needed to reach that position.
  * \[movj\] (.1 .1 .7 90 0)   | \[ok\]                                            | Movement with interpolation in the Joint space.
  * \[movl\] (.1 .3 .8 90 0)   | \[ok\]                                            | Movement with interpolation in Cartesian space.
  * \[stat\]                   | (0.0 0.0 1.4 0.0 0.0) \[ok\]                      | Status poll, returns the current cartesian position (perform direct kinematics).
  * \[stop\]                   | \[ok\]                                            | Stop.
+ * \[tool\]                   | \[ok\]                                            | Select tool.
  *
  * As an example of use, we can get the current Cartesian position (perform direct kinematics) by sending a \[stat\] rpc: 
 \verbatim
