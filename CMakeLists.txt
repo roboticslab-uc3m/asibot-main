@@ -41,6 +41,9 @@ option(ENABLE_visionSegmentor "Choose if you want to compile visionSegmentor" FA
 option(ENABLE_webInterface "Choose if you want to compile webInterface" FALSE)
 option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
 
+### options: misc
+option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" FALSE)
+
 if(MSVC)
   MESSAGE(STATUS "Running on windows")    
   set(CMAKE_DEBUG_POSTFIX "d")
@@ -84,6 +87,7 @@ set(ASIBOT_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
 set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 
 # add main contents
+add_subdirectory(doc)
 add_subdirectory(src)
 
 # export our variables to a ASIBOTConfig.cmake creation
