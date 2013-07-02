@@ -63,14 +63,13 @@
 
  * The following table depicts implemented RPC commands you can issue from this connection (similar to the CartesianClient class API, as it actually wraps these commands). 
  *
- * <table>
- * <tr class="fragment"><td>rpc command format</td><td>example response</td><td>description</td></tr>
- * <tr><td>[inv] (0.3 0.3 0.7 90 0)</td><td>(45.0 -41.169914 116.855705 14.314209 0.0) [ok]</td><td>Kinematic inversion without movement, returns the joint values that would be needed to reach that position.</td></tr>
- * <tr><td>[movj] (.1 .1 .7 90 0)</td><td>[ok]</td><td>Movement with interpolation in the Joint space.</td></tr>
- * <tr><td>[movl] (.1 .3 .8 90 0)</td><td>[ok]</td><td>Movement with interpolation in Cartesian space.</td></tr>
- * <tr><td>[stat]</td><td>(0.0 0.0 1.4 0.0 0.0) [ok]</td><td>Status poll, returns the current cartesian position (perform direct kinematics).</td></tr>
- * <tr><td>[stop] </td><td>[ok]</td><td>Stop.</td></tr>
- * </table>
+ * RPC command format         | example response                                    | description
+ * ---------------------------|-----------------------------------------------------|-------------
+ * \[inv\] (0.3 0.3 0.7 90 0) | (45.0 -41.169914 116.855705 14.314209 0.0) \[ok\] | Kinematic inversion without movement, returns the joint values that would be needed to reach that position.
+ * \[movj\] (.1 .1 .7 90 0)   | \[ok\]                                            | Movement with interpolation in the Joint space.
+ * \[movl\] (.1 .3 .8 90 0)   | \[ok\]                                            | Movement with interpolation in Cartesian space.
+ * \[stat\]                   | (0.0 0.0 1.4 0.0 0.0) \[ok\]                      | Status poll, returns the current cartesian position (perform direct kinematics).
+ * \[stop\]                   | \[ok\]                                            | Stop.
  *
  * As an example of use, we can get the current Cartesian position (perform direct kinematics) by sending a <b>stat</b> rpc: 
 \verbatim
