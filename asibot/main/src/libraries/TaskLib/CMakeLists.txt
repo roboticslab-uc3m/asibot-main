@@ -24,6 +24,9 @@ endforeach(header_file ${folder_header})
 # Inclue any directories needed for YARP
 include_directories(${YARP_INCLUDE_DIRS} ${ASIBOT_INCLUDE_DIRS})
 
+# Include link directories
+link_directories(${ASIBOT_LINK_DIRS})
+
 # Set up our library.
 if (folder_source)
   add_library(${KEYWORD} ${folder_source} ${folder_header})
