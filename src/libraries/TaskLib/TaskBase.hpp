@@ -3,6 +3,8 @@
 #ifndef __TASK_BASE_HPP__
 #define __TASK_BASE_HPP__
 
+#include <yarp/os/Searchable.h>
+
 /**
  * @ingroup asibot_libraries
  *
