@@ -21,7 +21,9 @@ class TaskGrabCan : TaskBase {
     RpcClient worldRpcClient;
 
   public:
-
+    virtual bool configure(yarp::os::Searchable& config);
+    virtual bool run();
+    virtual bool close();
 };
 
 #endif  // __TASK_GRAB_CAN_HPP__
