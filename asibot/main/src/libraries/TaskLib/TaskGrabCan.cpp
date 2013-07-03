@@ -4,23 +4,27 @@
 
 /************************************************************************/
 bool TaskGrabCan::configure(yarp::os::Searchable& config) {
+    if (!_quiet) printf("[TaskGrabCan] success: begin{configure()}\n");
+    if (!_quiet) printf("[TaskGrabCan] success: end{configure()}\n");    
     return true;
 }
 
 /************************************************************************/
 bool TaskGrabCan::run() {
-    printf("[TaskGrabCan] succeess: begin{run()}\n");
+    if (!_quiet) printf("[TaskGrabCan] success: begin{run()}\n");
     {
         double targets[5] = {0,-0.3,0.9,90,0};
         printf("Movj to targets: {0,-0.3, 0.9, 90.0, 0.0}...\n");
         cartesianClient.movj(targets);
     }
-    printf("[TaskGrabCan] succeess: end{run()}\n");
+    if (!_quiet) printf("[TaskGrabCan] success: end{run()}\n");
     return true;
 }
 
 /************************************************************************/
 bool TaskGrabCan::close() {
+    if (!_quiet) printf("[TaskGrabCan] success: begin{close()}\n");
+    if (!_quiet) printf("[TaskGrabCan] success: end{close()}\n");
     return true;
 }
 
