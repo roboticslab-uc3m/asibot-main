@@ -16,6 +16,9 @@ bool TaskGrabCan::configure(yarp::os::Searchable& config) {
 /************************************************************************/
 bool TaskGrabCan::run() {
     if (!_quiet) printf("[TaskGrabCan] success: begin{run()}\n");
+    if (!cartesianClient.open("/ravebot"))  return false;
+
+
     {
         double targets[5] = {0,-0.3,0.9,90,0};
         printf("Movj to targets: {0,-0.3, 0.9, 90.0, 0.0}...\n");
