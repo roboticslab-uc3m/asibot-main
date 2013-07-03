@@ -5,6 +5,9 @@
 
 #include "TaskBase.hpp"
 
+#include "CartesianClient.h"
+#include <yarp/os/RpcClient.h>
+
 /**
  * @ingroup TaskGrabCan
  *
