@@ -22,6 +22,7 @@ option(ENABLE_ColorClientLib "Choose if you want to compile ColorClientLib" TRUE
 option(ENABLE_RlPlugins "Choose if you want to compile RlPlugins" TRUE)
 option(ENABLE_TestRaveBotLib "Choose if you want to compile RlPlugins" TRUE)
 option(ENABLE_TinyMath "Choose if you want to compile TinyMath" TRUE)
+option(ENABLE_TaskLib "Choose if you want to compile TaskLib" TRUE)
 option(ENABLE_TrajGen "Choose if you want to compile TrajGen" TRUE)
 option(ENABLE_TravisLib "Choose if you want to compile TravisLib" TRUE)
 
