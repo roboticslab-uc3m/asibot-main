@@ -10,9 +10,9 @@ set(KEYWORD "TaskLib")
 find_package(YARP REQUIRED)
 
 # Search for source code.
-#file(GLOB folder_source *.cpp *.cc *.c)
+file(GLOB folder_source *.cpp *.cc *.c)
 file(GLOB folder_header *.hpp)
-#source_group("Source Files" FILES ${folder_source})
+source_group("Source Files" FILES ${folder_source})
 source_group("Header Files" FILES ${folder_header})
 
 # Automatically add include directories if needed.
@@ -25,16 +25,16 @@ endforeach(header_file ${folder_header})
 include_directories(${YARP_INCLUDE_DIRS})
 
 # Set up our library.
-#if (folder_source)
-####  add_library(${KEYWORD} ${folder_source} ${folder_header})
-####  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
-#else (folder_source)
-#  message(FATAL_ERROR "No source code files found. Please add something")
-#endif (folder_source)
+if (folder_source)
+  add_library(${KEYWORD} ${folder_source} ${folder_header})
+  target_link_libraries(${KEYWORD} ${YARP_LIBRARIES})
+else (folder_source)
+  message(FATAL_ERROR "No source code files found. Please add something")
+endif (folder_source)
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
-#set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
 ENDIF (ENABLE_TaskLib)
 
