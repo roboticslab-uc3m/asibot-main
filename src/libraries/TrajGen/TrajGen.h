@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __TRAJGEN_H__
-#define __TRAJGEN_H__
+#ifndef __TRAJ_GEN_H__
+#define __TRAJ_GEN_H__
 
 #include <stdio.h>
 
@@ -177,5 +177,5 @@ class OrderThreeTraj : public Traj {
     double a3,a2,a1,a0,T;
 };
 
-#endif
+#endif  // __TRAJ_GEN_H__
 
