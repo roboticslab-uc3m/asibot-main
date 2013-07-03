@@ -22,7 +22,7 @@ foreach(header_file ${folder_header})
 endforeach(header_file ${folder_header})
 
 # Inclue any directories needed for YARP
-include_directories(${YARP_INCLUDE_DIRS})
+include_directories(${YARP_INCLUDE_DIRS} ${ASIBOT_INCLUDE_DIRS})
 
 # Set up our library.
 if (folder_source)
