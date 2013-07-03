@@ -23,6 +23,8 @@
  *
  */
 class TaskBase {
+  protected:
+    bool _quiet;
   public:
     virtual bool configure(yarp::os::Searchable& config) = 0;
     virtual bool run() = 0;
