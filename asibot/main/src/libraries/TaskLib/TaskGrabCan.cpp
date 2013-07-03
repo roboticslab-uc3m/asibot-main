@@ -5,6 +5,10 @@
 /************************************************************************/
 bool TaskGrabCan::configure(yarp::os::Searchable& config) {
     if (!_quiet) printf("[TaskGrabCan] success: begin{configure()}\n");
+
+    _quiet = false;
+    if (config.check("quiet")) _quiet = true;
+
     if (!_quiet) printf("[TaskGrabCan] success: end{configure()}\n");    
     return true;
 }
