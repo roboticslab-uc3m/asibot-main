@@ -126,6 +126,15 @@ void SegmentorThread::run() {
         cvReleaseImage( &r ); //release the memory for the image
         cvReleaseImage( &g ); //release the memory for the image
         cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
+    } else if (algorithm=="redMinusBlue") {
+        IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
+        cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
+        cvSub(b,r,rgbMod,NULL);  // subtract
+        cvReleaseImage( &r ); //release the memory for the image
+        cvReleaseImage( &b ); //release the memory for the image
+        cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
     } else if (algorithm=="greenMinusRed") {
         IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
         IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
@@ -135,14 +144,32 @@ void SegmentorThread::run() {
         cvReleaseImage( &g ); //release the memory for the image
         cvReleaseImage( &r ); //release the memory for the image
         cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
+    } else if (algorithm=="greenMinusBlue") {
+        IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        cvSplit( rgb, NULL, g, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
+        cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
+        cvSub(g,b,rgbMod,NULL);  // subtract
+        cvReleaseImage( &g ); //release the memory for the image
+        cvReleaseImage( &b ); //release the memory for the image
+        cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
     } else if (algorithm=="blueMinusRed") {
         IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
         IplImage* r = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
-        cvSplit( rgb, b, NULL, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
+        cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
         cvSplit( rgb, NULL, NULL, r, NULL );  // get red as in (const rgb, b, g r, NULL)
         cvSub(b,r,rgbMod,NULL);  // subtract
         cvReleaseImage( &b ); //release the memory for the image
         cvReleaseImage( &r ); //release the memory for the image
+        cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
+    } else if (algorithm=="blueMinusGreen") {
+        IplImage* b = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        IplImage* g = cvCreateImage( cvGetSize(rgb), rgb->depth,1 );
+        cvSplit( rgb, b, NULL, NULL, NULL );  // get blue as in (const rgb, b, g r, NULL)
+        cvSplit( rgb, NULL, g, NULL, NULL );  // get green as in (const rgb, b, g r, NULL)
+        cvSub(b,g,rgbMod,NULL);  // subtract
+        cvReleaseImage( &b ); //release the memory for the image
+        cvReleaseImage( &g ); //release the memory for the image
         cvCmpS( rgbMod, threshold, rgbMod, CV_CMP_GE );  // binarize
     } else fprintf(stderr,"[warning] Unrecognized algorithm.\n");
 
