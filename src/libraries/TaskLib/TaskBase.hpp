@@ -24,7 +24,9 @@
  */
 class TaskBase {
   public:
-    virtual bool configure() = 0;
+    virtual bool configure(yarp::os::Searchable& config) = 0;
+    virtual bool run() = 0;
+    virtual bool close() = 0;
 };
 
 #endif  // __TASK_BASE_HPP__
