@@ -3,6 +3,11 @@
 #include "TaskGrabCan.hpp"
 
 /************************************************************************/
+bool TaskGrabCan::configure(yarp::os::Searchable& config) {
+    return true;
+}
+
+/************************************************************************/
 bool TaskGrabCan::run() {
     printf("[TaskGrabCan] succeess: begin{run()}\n");
     {
@@ -15,4 +20,7 @@ bool TaskGrabCan::run() {
 }
 
 /************************************************************************/
+bool TaskGrabCan::close() {
+    return true;
+}
 
