@@ -24,7 +24,7 @@
  */
 class TaskBase {
   public:
-    virtual bool configure(const double xi, const double xf, const double _T) = 0;
+    virtual bool configure() = 0;
 };
 
 #endif  // __TASK_BASE_HPP__
