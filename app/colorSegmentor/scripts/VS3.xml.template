@@ -2,7 +2,7 @@
 <name>VS3 App</name>
         <module>
                 <name>optirun</name>
-                <parameters>cartesianServer --env VS3.env.xml --numMotors 6</parameters>
+                <parameters>cartesianServer --env VS3.env.xml --numMotors 6 --modePosVel 1</parameters>
                 <node>localhost</node>
         </module>
         <module>
