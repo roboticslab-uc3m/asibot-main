@@ -1,5 +1,6 @@
-README.txt
-----------
+# Copyright: (C) RoboticsLab @ 2013 Universidad Carlos III de Madrid
+# Authors: Alvaro Estrade, Juan G. Victores
+# CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
 
 * distancia: Calcula la distancia euclídea entre dos puntos (en 2D).
 * ordenacion: Ordena 4 puntos en el orden de la toolbox (aprox. Fig 3.4).
