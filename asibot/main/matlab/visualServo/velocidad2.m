@@ -1,6 +1,6 @@
 %%Cálculo de velocidades en función de la imagen actual y la deseada
 
-function [e] = velguai2x (cfin,cact,velport,cam)
+function [e] = velocidad2 (cfin,cact,velport,cam)
 
 %%Preparación de puertos entre yarp y matlab%%%%%%%%%%%%%
 
