@@ -49,8 +49,8 @@ vel(5) = lambda2*vel(5);
 
 bOut.addVocab(yarp.Vocab.encode('vmos'));
 dBottle = bOut.addList;
-dBottle.addDouble(vel(1));
-dBottle.addDouble(vel(2));
+dBottle.addDouble(vel(2)); %dBottle.addDouble(vel(1));
+dBottle.addDouble(-vel(1)); %dBottle.addDouble(vel(2));
 dBottle.addDouble(vel(3));
 dBottle.addDouble(vel(4));
 dBottle.addDouble(vel(5));
