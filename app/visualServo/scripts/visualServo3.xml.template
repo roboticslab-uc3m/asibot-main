@@ -1,5 +1,5 @@
 <application>
-<name>VS3 App</name>
+<name>visualServo3 App</name>
         <module>
                 <name>optirun</name>
                 <parameters>cartesianServer --env VS3.env.xml --numMotors 6 --modePosVel 1</parameters>
