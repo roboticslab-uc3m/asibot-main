@@ -1,5 +1,5 @@
 <application>
-<name>VS2 App</name>
+<name>visualServo2 App</name>
         <module>
                 <name>optirun</name>
                 <parameters>cartesianServer --env VS2.env.xml --numMotors 3</parameters>
