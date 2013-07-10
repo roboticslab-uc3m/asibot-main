@@ -400,8 +400,8 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
         xdotd.push_back( H_0_target(0,3) );
         xdotd.push_back( H_0_target(1,3) );
         xdotd.push_back( H_0_target(2,3) );
-        xdotd.push_back( 0 ); //o[0]+od[0];  // !!!! (but why not!?)
-        xdotd.push_back( 0 ); //o[1]+od[1];  // !!!! (but why not!?)
+        xdotd.push_back( toRad(odot[0]) ); //o[0]+od[0];  // !!!! (but why not!?)
+        xdotd.push_back( toRad(odot[1]) ); //o[1]+od[1];  // !!!! (but why not!?)
     } else fprintf(stderr, "[CartesianBot] warning: Tool %d not implemented.\n",tool);
     
     yarp::sig::Vector t;
