@@ -73,9 +73,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
         printf("\t--outFeatures (default: \"(%s)\")\n",outFeatures.toString().c_str());
         printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
-        printf("\t--outImage (0=rgb,1=bw; default: \"%d\")\n",outImage);
+        printf("\t--outImage (0=rgb,1=bin; default: \"%d\")\n",outImage);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
-        printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
+        printf("\t--seeBounding (0=none,1=box,2=contour,3=both; default: \"%d\")\n",seeBounding);
         printf("\t--threshold (default: \"%d\")\n",threshold);
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
@@ -97,8 +97,10 @@ void SegmentorThread::init(ResourceFinder &rf) {
         fx,fy,cx,cy);
     printf("SegmentorThread using pan: %f, tilt: %f, height: %f.\n",
         pan,tilt,height);
-    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, morphClosing: %f, outFeaturesFormat: %d.\n",
-        algorithm.c_str(),locate.c_str(),maxNumBlobs,morphClosing,outFeaturesFormat);
+    printf("SegmentorThread using algorithm: %s, locate: %s.\n",
+        algorithm.c_str(),locate.c_str());
+    printf("SegmentorThread using maxNumBlobs: %d, morphClosing: %.2f, outFeaturesFormat: %d.\n",
+        maxNumBlobs,morphClosing,outFeaturesFormat);
 
     if (rf.check("outFeatures")) {
         outFeatures = *(rf.find("outFeatures").asList());  // simple overrride
