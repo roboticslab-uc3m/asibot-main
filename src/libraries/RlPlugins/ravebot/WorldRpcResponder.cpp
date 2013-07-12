@@ -167,7 +167,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
             } else if (in.get(2).asString()=="obj") {
                 KinBodyPtr objPtr = pEnv->GetKinBody(in.get(3).asString().c_str());
                 if(objPtr) {
-                    printf("[success] object %s exists.\n", in.get(3).asString().c_str());
+                    printf("[WorldRpcResponder] success: object %s exists.\n", in.get(3).asString().c_str());
                     if (in.get(4).asInt()==1) {
                         pRobot->Grab(objPtr);
                         out.addVocab(VOCAB_OK);
@@ -176,7 +176,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                         out.addVocab(VOCAB_OK);
                     } else out.addVocab(VOCAB_FAILED);
                 } else {  // null pointer
-                    printf("[warning] object %s does not exist.\n", in.get(3).asString().c_str());
+                    printf("[WorldRpcResponder] warning: object %s does not exist.\n", in.get(3).asString().c_str());
                     out.addVocab(VOCAB_FAILED);
                 }
             } else out.addVocab(VOCAB_FAILED);
@@ -186,7 +186,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 if(objPtr) {
                     //Transform t = objPtr->GetTransform();
                     Vector tr = objPtr->GetTransform().trans;
-                    printf("[success] object %s at %f, %f, %f.\n", in.get(3).asString().c_str(), tr.x,tr.y,tr.z);
+                    printf("[WorldRpcResponder] success: object %s at %f, %f, %f.\n", in.get(3).asString().c_str(), tr.x,tr.y,tr.z);
                     Bottle trans;
                     trans.addDouble(tr.x);
                     trans.addDouble(tr.y);
@@ -194,7 +194,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                     out.addList() = trans;
                     out.addVocab(VOCAB_OK);
                 } else {  // null pointer
-                    printf("[warning] object %s does not exist.\n", in.get(3).asString().c_str());
+                    printf("[WorldRpcResponder] warning: object %s does not exist.\n", in.get(3).asString().c_str());
                     out.addVocab(VOCAB_FAILED);
                 }
             } else if (in.get(2).asString()=="tcp") {
@@ -204,7 +204,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 //tool.rot = quatFromAxisAngle(Vector(0,0,0));
                 tool.rot = ee.rot;
                 Transform tcp = ee * tool;
-                printf("[success] TCP at %f, %f, %f.\n", tcp.trans.x, tcp.trans.y, tcp.trans.z);
+                printf("[WorldRpcResponder] success: TCP at %f, %f, %f.\n", tcp.trans.x, tcp.trans.y, tcp.trans.z);
                 Bottle trans;
                 trans.addDouble(tcp.trans.x);
                 trans.addDouble(tcp.trans.y);
@@ -212,16 +212,16 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 out.addList() = trans;
                 out.addVocab(VOCAB_OK);
             } else {
-                printf("where is what?\n");
+                printf("[WorldRpcResponder] warning: where is what?\n");
                 out.addVocab(VOCAB_FAILED);
             }
         } else if (in.get(1).asString()=="draw") {
             if (in.get(2).asInt() == 0) {
-                printf("Turning draw OFF.\n");
+                printf("[WorldRpcResponder] success: Turning draw OFF.\n");
                 robotDraw = 0;
                 out.addVocab(VOCAB_OK);
             } else {
-                printf("Turning draw ON.\n");
+                printf("[WorldRpcResponder] success: Turning draw ON.\n");
                 robotDraw = in.get(2).asInt();
                 if (in.size() >= 4) drawRadius = in.get(3).asDouble();
                 if (in.size() >= 7) {
