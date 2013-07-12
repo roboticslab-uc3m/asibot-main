@@ -34,9 +34,9 @@
 #define DEFAULT_CX_RGB        328.94272028759258  // 320
 #define DEFAULT_CY_RGB        267.48068171871557  // 240
 
-#define DEFAULT_HEIGHT         0     // Base TransZ [m]
+#define DEFAULT_HEIGHT         512     // Base TransZ [mm]
 #define DEFAULT_PAN            0     // Base RotZ [deg]
-#define DEFAULT_TILT           0     // Extra RotY [deg], neg looks down as in OpenNI
+#define DEFAULT_TILT           -42     // Extra RotY [deg], neg looks down as in OpenNI, -42 goes good with real -50
 
 #define DEFAULT_ALGORITHM "blueMinusRed"
 #define DEFAULT_LOCATE "centroid"
