@@ -38,33 +38,39 @@ void SegmentorThread::init(ResourceFinder &rf) {
     algorithm = DEFAULT_ALGORITHM;
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
+    morphClosing = DEFAULT_MORPH_CLOSING;
     outImage = DEFAULT_OUT_IMAGE;
-    outFeatures.addString("locX");  // hardcode
-    outFeatures.addString("locY");  // the
-    outFeatures.addString("locZ");  // the
-    outFeatures.addString("locX_0");  // hardcode
-    outFeatures.addString("locY_0");  // the
-    outFeatures.addString("locZ_0");  // the
-    //outFeatures.addString("angle");  // default
     outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
     int rateMs = DEFAULT_RATE_MS;
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
 
+    //outFeatures.addString("locX");  // hardcode
+    //outFeatures.addString("locY");  // the
+    //outFeatures.addString("locZ");  // default
+    outFeatures.addString("locX_0");  // hardcode
+    outFeatures.addString("locY_0");  // the
+    outFeatures.addString("locZ_0");  // default
+    //outFeatures.addString("angle");  // hardcode the default
+
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+
         printf("\t--fx (default: \"%f\")\n",fx);
         printf("\t--fy (default: \"%f\")\n",fy);
         printf("\t--cx (default: \"%f\")\n",cx);
         printf("\t--cy (default: \"%f\")\n",cy);
+
         printf("\t--pan (default: \"%f\")\n",pan);
         printf("\t--tilt (default: \"%f\")\n",tilt);
         printf("\t--height (default: \"%f\")\n",height);
+
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
+        printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
         printf("\t--outFeatures (default: \"(%s)\")\n",outFeatures.toString().c_str());
         printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
         printf("\t--outImage (0=rgb,1=bw; default: \"%d\")\n",outImage);
@@ -84,14 +90,15 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
+    if (rf.check("morphClosing")) morphClosing = rf.find("morphClosing").asDouble();
     if (rf.check("outFeaturesFormat")) outFeaturesFormat = rf.find("outFeaturesFormat").asInt();
 
     printf("SegmentorThread using fx: %f, fy: %f, cx: %f, cy: %f.\n",
         fx,fy,cx,cy);
     printf("SegmentorThread using pan: %f, tilt: %f, height: %f.\n",
         pan,tilt,height);
-    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, outFeaturesFormat: %d.\n",
-        algorithm.c_str(),locate.c_str(),maxNumBlobs,outFeaturesFormat);
+    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, morphClosing: %f, outFeaturesFormat: %d.\n",
+        algorithm.c_str(),locate.c_str(),maxNumBlobs,morphClosing,outFeaturesFormat);
 
     if (rf.check("outFeatures")) {
         outFeatures = *(rf.find("outFeatures").asList());  // simple overrride
@@ -154,7 +161,7 @@ void SegmentorThread::run() {
     Travis travis(false,true);  // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm, threshold);
-    travis.morphClosing( inYarpImg->width() * 0.04 ); // 4 for 100, very rule-of-thumb
+    travis.morphClosing( inYarpImg->width() * morphClosing / 100.0 );
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
