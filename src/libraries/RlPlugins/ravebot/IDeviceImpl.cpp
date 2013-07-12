@@ -54,7 +54,8 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("env")) env = config.find("env").asString();
     if (config.check("externObj")) externObj = config.find("externObj").asString();
     if (config.check("extraRobot")) extraRobot = config.find("extraRobot").asString();
-    printf("RaveBot using numMotors: %d, env: %s, extraRobot: %s.\n",numMotors,env.c_str(),extraRobot.c_str());
+    printf("RaveBot using numMotors: %d, env: %s, externObj: %s, extraRobot: %s.\n",
+        numMotors, env.c_str(), externObj.c_str(), extraRobot.c_str());
 
     if (config.check("genInitPos")) genInitPos = config.find("genInitPos").asDouble();
     if (config.check("genJointTol")) genJointTol = config.find("genJointTol").asDouble();
