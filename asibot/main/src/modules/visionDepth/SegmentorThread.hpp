@@ -24,10 +24,15 @@
 #include "TravisLib.hpp"
 #include "TinyMath.hpp"
 
-#define DEFAULT_FX          640     //
-#define DEFAULT_FY          640     //
-#define DEFAULT_CX          320     //
-#define DEFAULT_CY          240     //
+// thanks! http://nicolas.burrus.name/index.php/Research/KinectCalibration
+#define DEFAULT_FX_D          594.21434211923247  // 640
+#define DEFAULT_FY_D          591.04053696870778  // 640
+#define DEFAULT_CX_D          339.30780975300314  // 320
+#define DEFAULT_CY_D          242.73913761751615  // 240
+#define DEFAULT_FX_RGB        529.21508098293293  // 640
+#define DEFAULT_FY_RGB        525.56393630057437  // 640
+#define DEFAULT_CX_RGB        328.94272028759258  // 320
+#define DEFAULT_CY_RGB        267.48068171871557  // 240
 
 #define DEFAULT_HEIGHT         0     // Base TransZ [m]
 #define DEFAULT_PAN            0     // Base RotZ [deg]
@@ -63,7 +68,7 @@ private:
     int seeBounding;
     int threshold;
     //
-    double fx,fy,cx,cy;
+    double fx_d,fy_d,cx_d,cy_d,fx_rgb,fy_rgb,cx_rgb,cy_rgb;
     //
     double height, pan, tilt;
     //
