@@ -26,10 +26,14 @@ void SegmentorThread::setOutPort(Port * _pOutPort) {
 /************************************************************************/
 void SegmentorThread::init(ResourceFinder &rf) {
 
-    fx = DEFAULT_FX;
-    fy = DEFAULT_FY;
-    cx = DEFAULT_CX;
-    cy = DEFAULT_CY;
+    fx_d = DEFAULT_FX_D;
+    fy_d = DEFAULT_FY_D;
+    cx_d = DEFAULT_CX_D;
+    cy_d = DEFAULT_CY_D;
+    fx_rgb = DEFAULT_FX_RGB;
+    fy_rgb = DEFAULT_FY_RGB;
+    cx_rgb = DEFAULT_CX_RGB;
+    cy_rgb = DEFAULT_CY_RGB;
 
     height = DEFAULT_HEIGHT;
     pan = DEFAULT_PAN;
@@ -45,23 +49,30 @@ void SegmentorThread::init(ResourceFinder &rf) {
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
 
-    //outFeatures.addString("locX");  // hardcode
-    //outFeatures.addString("locY");  // the
-    //outFeatures.addString("locZ");  // default
-    outFeatures.addString("locX_0");  // hardcode
-    outFeatures.addString("locY_0");  // the
-    outFeatures.addString("locZ_0");  // default
-    outFeatures.addString("angle");  // hardcode the default
+    // hardcode the default
+    //outFeatures.addString("rawX");
+    //outFeatures.addString("rawY");
+    outFeatures.addString("locX");
+    outFeatures.addString("locY");
+    outFeatures.addString("locZ");
+    outFeatures.addString("locX_0");
+    outFeatures.addString("locY_0");
+    outFeatures.addString("locZ_0");
+    outFeatures.addString("angle");  
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
 
-        printf("\t--fx (default: \"%f\")\n",fx);
-        printf("\t--fy (default: \"%f\")\n",fy);
-        printf("\t--cx (default: \"%f\")\n",cx);
-        printf("\t--cy (default: \"%f\")\n",cy);
+        printf("\t--fx_d (default: \"%f\")\n",fx_d);
+        printf("\t--fy_d (default: \"%f\")\n",fy_d);
+        printf("\t--cx_d (default: \"%f\")\n",cx_d);
+        printf("\t--cy_d (default: \"%f\")\n",cy_d);
+        printf("\t--fx_rgb (default: \"%f\")\n",fx_rgb);
+        printf("\t--fy_rgb (default: \"%f\")\n",fy_rgb);
+        printf("\t--cx_rgb (default: \"%f\")\n",cx_rgb);
+        printf("\t--cy_rgb (default: \"%f\")\n",cy_rgb);
 
         printf("\t--pan (default: \"%f\")\n",pan);
         printf("\t--tilt (default: \"%f\")\n",tilt);
@@ -80,10 +91,14 @@ void SegmentorThread::init(ResourceFinder &rf) {
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
 
-    if (rf.check("fx")) fx = rf.find("fx").asDouble();
-    if (rf.check("fy")) fy = rf.find("fy").asDouble();
-    if (rf.check("cx")) cx = rf.find("cx").asDouble();
-    if (rf.check("cy")) cy = rf.find("cy").asDouble();
+    if (rf.check("fx_d")) fx_d = rf.find("fx_d").asDouble();
+    if (rf.check("fy_d")) fy_d = rf.find("fy_d").asDouble();
+    if (rf.check("cx_d")) cx_d = rf.find("cx_d").asDouble();
+    if (rf.check("cy_d")) cy_d = rf.find("cy_d").asDouble();
+    if (rf.check("fx_rgb")) fx_rgb = rf.find("fx_rgb").asDouble();
+    if (rf.check("fy_rgb")) fy_rgb = rf.find("fy_rgb").asDouble();
+    if (rf.check("cx_rgb")) cx_rgb = rf.find("cx_rgb").asDouble();
+    if (rf.check("cy_rgb")) cy_rgb = rf.find("cy_rgb").asDouble();
     if (rf.check("pan")) pan = rf.find("pan").asDouble();
     if (rf.check("tilt")) tilt = rf.find("tilt").asDouble();
     if (rf.check("height")) height = rf.find("height").asDouble();
@@ -93,8 +108,8 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("morphClosing")) morphClosing = rf.find("morphClosing").asDouble();
     if (rf.check("outFeaturesFormat")) outFeaturesFormat = rf.find("outFeaturesFormat").asInt();
 
-    printf("SegmentorThread using fx: %f, fy: %f, cx: %f, cy: %f.\n",
-        fx,fy,cx,cy);
+    printf("SegmentorThread using fx_d: %f, fy_d: %f, cx_d: %f, cy_d: %f, fx_rgb: %f, fy_rgb: %f, cx_rgb: %f, cy_rgb: %f.\n",
+        fx_d,fy_d,cx_d,cy_d,fx_rgb,fy_rgb,cx_rgb,cy_rgb);
     printf("SegmentorThread using pan: %f, tilt: %f, height: %f.\n",
         pan,tilt,height);
     printf("SegmentorThread using algorithm: %s, locate: %s.\n",
@@ -191,9 +206,9 @@ void SegmentorThread::run() {
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
         if (blobsXY[i].x<0) return;
         if (blobsXY[i].y<0) return;
-        double mmZ_tmp = depth->pixel(int(blobsXY[i].x),int(blobsXY[i].y));
-        double mmX_tmp = 1000.0 * (blobsXY[i].x - (cx * mmZ_tmp/1000.0)) / fx;
-        double mmY_tmp = 1000.0 * (blobsXY[i].y - (cy * mmZ_tmp/1000.0)) / fy;
+        double mmZ_tmp = depth->pixel(int(blobsXY[i].x +cx_d-cx_rgb),int(blobsXY[i].y +cy_d-cy_rgb));
+        double mmX_tmp = 1000.0 * ( (blobsXY[i].x - cx_d) * mmZ_tmp/1000.0 ) / fx_d;
+        double mmY_tmp = 1000.0 * ( (blobsXY[i].y - cy_d) * mmZ_tmp/1000.0 ) / fy_d;
         mmZ.push_back( mmZ_tmp );
         mmX.push_back( mmX_tmp );
         mmY.push_back( mmY_tmp );
@@ -222,23 +237,19 @@ void SegmentorThread::run() {
     for (int elem = 0; elem < outFeatures.size() ; elem++) {
         if ( outFeatures.get(elem).asString() == "locX" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
-                //output.addDouble(blobsXY[0].x);
                 output.addDouble(mmX[0]);
             } else {
                 Bottle locXs;
                 for (int i = 0; i < blobsXY.size(); i++)
-                    //locXs.addDouble(blobsXY[i].x);
                     locXs.addDouble(mmX[i]);
                 output.addList() = locXs;
             }
         } else if ( outFeatures.get(elem).asString() == "locY" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
-                //output.addDouble(blobsXY[0].y);
                 output.addDouble(mmY[0]);
             } else {
                 Bottle locYs;
                 for (int i = 0; i < blobsXY.size(); i++)
-                    //locYs.addDouble(blobsXY[i].y);
                     locYs.addDouble(mmY[i]);
                 output.addList() = locYs;
             }
@@ -277,6 +288,24 @@ void SegmentorThread::run() {
                 for (int i = 0; i < blobsXY.size(); i++)
                     locZs.addDouble(mmZ_0[i]);
                 output.addList() = locZs;
+            }
+         } else if ( outFeatures.get(elem).asString() == "rawX" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].x - cx_d);
+            } else {
+                Bottle locXs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locXs.addDouble(blobsXY[i].x - cx_d);
+                output.addList() = locXs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "rawY" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].y - cy_d);
+            } else {
+                Bottle locYs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locYs.addDouble(blobsXY[i].y - cy_d);
+                output.addList() = locYs;
             }
         } else if ( outFeatures.get(elem).asString() == "angle" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
