@@ -24,6 +24,7 @@
 
 #define DEFAULT_ENV "asibot_kitchen.env.xml"
 #define DEFAULT_EXTRA_ROBOT "none"
+#define DEFAULT_EXTERN_OBJ "none"
 #define DEFAULT_GEN_ENC_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_GEN_INIT_POS 0  // Exposed.
 #define DEFAULT_GEN_JOINT_TOL 0.25  // Exposed.
