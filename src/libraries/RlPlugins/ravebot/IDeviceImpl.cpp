@@ -363,7 +363,7 @@ bool RaveBot::open(Searchable& config) {
     if(externObj=="redCan") {
         printf("--------------------------------------------2\n");
         RaveLoadPlugin("ExternObj");
-        //ModuleBasePtr pExternObj = RaveCreateModule(penv,"ExternObj"); // create the module
+        ModuleBasePtr pExternObj = RaveCreateModule(penv,"ExternObj"); // create the module
         printf("--------------------------------------------3\n");
     }
     printf("--------------------------------------------4\n");
