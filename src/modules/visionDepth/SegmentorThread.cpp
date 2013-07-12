@@ -51,7 +51,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     outFeatures.addString("locX_0");  // hardcode
     outFeatures.addString("locY_0");  // the
     outFeatures.addString("locZ_0");  // default
-    //outFeatures.addString("angle");  // hardcode the default
+    outFeatures.addString("angle");  // hardcode the default
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
