@@ -45,9 +45,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
 
-    //outFeatures.addString("locX");  // hardcode
-    //outFeatures.addString("locY");  // the
-    //outFeatures.addString("locZ");  // default
+    outFeatures.addString("locX");  // hardcode
+    outFeatures.addString("locY");  // the
+    outFeatures.addString("locZ");  // default
     outFeatures.addString("locX_0");  // hardcode
     outFeatures.addString("locY_0");  // the
     outFeatures.addString("locZ_0");  // default
@@ -205,6 +205,11 @@ void SegmentorThread::run() {
         X_k_P(3,0)=1;
 
         yarp::sig::Matrix X_0_P = H_0_k * X_k_P;
+        if (mmZ_tmp < 0.001) {
+            X_0_P(0,0) = -9999;
+            X_0_P(1,0) = -9999;
+            X_0_P(2,0) = -9999;
+        }
         mmX_0.push_back( X_0_P(0,0) );
         mmY_0.push_back( X_0_P(1,0) );
         mmZ_0.push_back( X_0_P(2,0) );
