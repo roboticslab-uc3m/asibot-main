@@ -52,9 +52,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
     // hardcode the default
     //outFeatures.addString("rawX");
     //outFeatures.addString("rawY");
-    outFeatures.addString("locX");
-    outFeatures.addString("locY");
-    outFeatures.addString("locZ");
+    //outFeatures.addString("locX");
+    //outFeatures.addString("locY");
+    //outFeatures.addString("locZ");
     outFeatures.addString("locX_0");
     outFeatures.addString("locY_0");
     outFeatures.addString("locZ_0");
@@ -139,7 +139,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     H_0_c(3,3)=1;
     printf("*** H_0_c *** \n(%s)\n\n", H_0_c.toString().c_str());
 
-    yarp::sig::Matrix H_c_k = rotY(90.0-tilt);
+    yarp::sig::Matrix H_c_k = rotX(90.0-tilt);
     H_c_k.resize(4,4);
     H_c_k(2,3)=height;
     H_c_k(3,3)=1;
@@ -206,7 +206,8 @@ void SegmentorThread::run() {
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
         if (blobsXY[i].x<0) return;
         if (blobsXY[i].y<0) return;
-        double mmZ_tmp = depth->pixel(int(blobsXY[i].x +cx_d-cx_rgb),int(blobsXY[i].y +cy_d-cy_rgb));
+        // double mmZ_tmp = depth->pixel(int(blobsXY[i].x +cx_d-cx_rgb),int(blobsXY[i].y +cy_d-cy_rgb));
+        double mmZ_tmp = depth->pixel(int(blobsXY[i].x),int(blobsXY[i].y));
         double mmX_tmp = 1000.0 * ( (blobsXY[i].x - cx_d) * mmZ_tmp/1000.0 ) / fx_d;
         double mmY_tmp = 1000.0 * ( (blobsXY[i].y - cy_d) * mmZ_tmp/1000.0 ) / fy_d;
         mmZ.push_back( mmZ_tmp );
