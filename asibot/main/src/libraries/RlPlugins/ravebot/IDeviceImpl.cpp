@@ -364,6 +364,7 @@ bool RaveBot::open(Searchable& config) {
         printf("--------------------------------------------2\n");
         RaveLoadPlugin("ExternObj");
         ModuleBasePtr pExternObj = RaveCreateModule(penv,"ExternObj"); // create the module
+        penv->Add(pExternObj,true); // load the module, calls main and also enables good destroy.
         printf("--------------------------------------------3\n");
     }
     printf("--------------------------------------------4\n");
