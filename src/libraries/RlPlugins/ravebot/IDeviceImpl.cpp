@@ -359,15 +359,18 @@ bool RaveBot::open(Searchable& config) {
         extraCallbackPort.useCallback();
     }
 
-    printf("--------------------------------------------1\n");
     if(externObj=="redCan") {
-        printf("--------------------------------------------2\n");
         RaveLoadPlugin("ExternObj");
         ModuleBasePtr pExternObj = RaveCreateModule(penv,"ExternObj"); // create the module
         penv->Add(pExternObj,true); // load the module, calls main and also enables good destroy.
-        printf("--------------------------------------------3\n");
+        std::stringstream cmdin,cmdout;
+        cmdin << "Open";  // default maxiter:4000
+        RAVELOG_INFO("%s\n",cmdin.str().c_str());
+        if( !pExternObj->SendCommand(cmdout,cmdin) ) {
+            fprintf(stderr,"Bad send Open command.\n");
+        }
+        printf("Sent Open command.\n");
     }
-    printf("--------------------------------------------4\n");
 
     // Start the RateThread
     this->setRate(jmcMs);
