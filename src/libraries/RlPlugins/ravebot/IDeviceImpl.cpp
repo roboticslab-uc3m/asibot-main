@@ -359,6 +359,11 @@ bool RaveBot::open(Searchable& config) {
         extraCallbackPort.useCallback();
     }
 
+    if(externObj=="redCan") {
+        printf("--------------------------------------------1\n");
+        printf("--------------------------------------------2\n");
+    }
+
     // Start the RateThread
     this->setRate(jmcMs);
     this->start();
