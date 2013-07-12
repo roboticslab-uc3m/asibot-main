@@ -45,9 +45,9 @@ void SegmentorThread::init(ResourceFinder &rf) {
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
 
-    outFeatures.addString("locX");  // hardcode
-    outFeatures.addString("locY");  // the
-    outFeatures.addString("locZ");  // default
+    //outFeatures.addString("locX");  // hardcode
+    //outFeatures.addString("locY");  // the
+    //outFeatures.addString("locZ");  // default
     outFeatures.addString("locX_0");  // hardcode
     outFeatures.addString("locY_0");  // the
     outFeatures.addString("locZ_0");  // default
