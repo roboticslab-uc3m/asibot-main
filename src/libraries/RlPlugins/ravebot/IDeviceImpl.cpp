@@ -12,6 +12,7 @@ bool RaveBot::open(Searchable& config) {
     jmcMs = DEFAULT_JMC_MS;
 
     ConstString env = DEFAULT_ENV;
+    ConstString externObj = DEFAULT_EXTERN_OBJ;
     ConstString extraRobot = DEFAULT_EXTRA_ROBOT;
     double genInitPos = DEFAULT_GEN_INIT_POS;
     double genJointTol = DEFAULT_GEN_JOINT_TOL;
@@ -31,6 +32,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--numMotors [int] (number of motors to control, default: \"%d\")\n",numMotors);
 
         printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
+        printf("\t--externObj (default: \"%s\")\n",externObj.c_str());
         printf("\t--extraRobot (type of extra robot, default: \"%s\")\n",extraRobot.c_str());
         printf("\t--genInitPos [units] (default: \"%f\")\n",genInitPos);
         printf("\t--genJointTol [units] (default: \"%f\")\n",genJointTol);
@@ -42,6 +44,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
         printf("\t--modePosVel (default: \"%d\")\n",modePosVel);
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
+        printf("\t--viewer [type] (set to 0 for none, default: \"%d\")\n",viewer);
     }
 
     const char *asibot_root = ::getenv("ASIBOT_ROOT");
@@ -49,6 +52,7 @@ bool RaveBot::open(Searchable& config) {
 
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
     if (config.check("env")) env = config.find("env").asString();
+    if (config.check("externObj")) externObj = config.find("externObj").asString();
     if (config.check("extraRobot")) extraRobot = config.find("extraRobot").asString();
     printf("RaveBot using numMotors: %d, env: %s, extraRobot: %s.\n",numMotors,env.c_str(),extraRobot.c_str());
 
