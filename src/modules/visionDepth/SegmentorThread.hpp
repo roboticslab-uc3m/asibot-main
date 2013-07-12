@@ -36,6 +36,7 @@
 #define DEFAULT_ALGORITHM "blueMinusRed"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
+#define DEFAULT_MORPH_CLOSING 2
 #define DEFAULT_OUT_FEATURES_FORMAT 0
 #define DEFAULT_OUT_IMAGE 1
 #define DEFAULT_RATE_MS 20
@@ -56,7 +57,7 @@ private:
     ConstString algorithm;
     ConstString locate;
     int maxNumBlobs;
-    Bottle outFeatures;
+    double morphClosing;
     int outFeaturesFormat;
     int outImage;
     int seeBounding;
@@ -65,6 +66,9 @@ private:
     double fx,fy,cx,cy;
     //
     double height, pan, tilt;
+    //
+    Bottle outFeatures;
+    //
     yarp::sig::Matrix H_0_k;
 
 public:
