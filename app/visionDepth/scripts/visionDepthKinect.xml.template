@@ -22,7 +22,7 @@
         </module>
         <module>
                 <name>yarpview</name>
-                <parameters>--name /yarpview/img:i</parameters>
+                <parameters>--name /yarpview/visionDepth/img:i</parameters>
                 <node>localhost</node>
         </module>
 
@@ -36,7 +36,7 @@
         </connection>
         <connection>
                 <from>/visionDepth/img:o</from>
-                <to>/yarpview/img:i</to>
+                <to>/yarpview/visionDepth/img:i</to>
         </connection>
 
 </application>
