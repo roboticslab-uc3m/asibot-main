@@ -6,7 +6,6 @@
 #include "TaskBase.hpp"
 
 #include "CartesianClient.h"
-#include <yarp/os/RpcClient.h>
 
 /**
  * @ingroup TaskGrabCan
@@ -18,7 +17,6 @@
 class TaskGrabCan : TaskBase {
   protected:
     CartesianClient cartesianClient;
-    RpcClient worldRpcClient;
 
   public:
     virtual bool configure(yarp::os::Searchable& config);
