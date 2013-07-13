@@ -16,7 +16,9 @@ bool TaskGrabCanSim::configure(yarp::os::Searchable& config) {
 /************************************************************************/
 bool TaskGrabCanSim::run() {
     if (!_quiet) printf("[TaskGrabCanSim] success: begin{run()}\n");
-    if (!cartesianClient.open("/ravebot"))  return false;
+    if (!cartesianClient.open("/ravebot")) return false;
+    if (!worldRpcClient.open("/taskGrabCanSim/world:o")) return false;
+    if (!worldRpcClient.addOutput("/ravebot/world")) return false;
 
 
     {
