@@ -9,13 +9,13 @@
 #include <yarp/os/RpcClient.h>
 
 /**
- * @ingroup TaskGrabCan
+ * @ingroup TaskGrabCanSim
  *
- * The TaskGrabCan class implements a client part that connects to a remote
+ * The TaskGrabCanSim class implements a client part that connects to a remote
  * \ref cartesianServer module. Warning: Be careful with NUM_AXES, depends on angle representation!
  * 
  */
-class TaskGrabCan : TaskBase {
+class TaskGrabCanSim : TaskBase {
   protected:
     CartesianClient cartesianClient;
     RpcClient worldRpcClient;
