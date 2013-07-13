@@ -19,6 +19,18 @@ bool TaskGrabCanSim::run() {
     if (!cartesianClient.open("/ravebot")) return false;
     if (!worldRpcClient.open("/taskGrabCanSim/world:o")) return false;
     if (!worldRpcClient.addOutput("/ravebot/world")) return false;
+    Bottle bOut, bIn;
+    bOut.addString("world");
+    bOut.addString("whereis");
+    bOut.addString("obj");
+    bOut.addString("redCan");
+    worldRpcClient.write(bOut, bIn);
+    //printf("[TaskGrabCanSim] Got info on redCan: %s\n",bIn.toString().c_str());
+    Bottle* data = bIn.get(0).asList();
+    double x = data->get(0).asDouble();
+    double y = data->get(1).asDouble();
+    double z = data->get(2).asDouble();
+    printf("[TaskGrabCanSim] redCan at %f %f %f.\n",x,y,z);
 
 
     {
