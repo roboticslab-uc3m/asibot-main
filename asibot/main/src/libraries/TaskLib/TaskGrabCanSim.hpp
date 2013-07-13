@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __TASK_GRAB_CAN_HPP__
-#define __TASK_GRAB_CAN_HPP__
+#ifndef __TASK_GRAB_CAN_SIM_HPP__
+#define __TASK_GRAB_CAN_SIM_HPP__
 
 #include "TaskBase.hpp"
 
@@ -12,7 +12,7 @@
  * @ingroup TaskGrabCanSim
  *
  * The TaskGrabCanSim class implements a client part that connects to a remote
- * \ref cartesianServer module. Warning: Be careful with NUM_AXES, depends on angle representation!
+ * \ref cartesianServer module.
  * 
  */
 class TaskGrabCanSim : TaskBase {
@@ -26,5 +26,5 @@ class TaskGrabCanSim : TaskBase {
     virtual bool close();
 };
 
-#endif  // __TASK_GRAB_CAN_HPP__
+#endif  // __TASK_GRAB_CAN_SIM_HPP__
 
