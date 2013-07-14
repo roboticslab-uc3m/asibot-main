@@ -5,8 +5,11 @@
 
 #include "TaskBase.hpp"
 
-#include "CartesianClient.h"
 #include <yarp/os/RpcClient.h>
+#include <yarp/sig/Matrix.h>
+
+#include "CartesianClient.h"
+#include "TinyMath.hpp"
 
 #define DEFAULT_ROBOT_ANGLE 30.0
 
