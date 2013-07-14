@@ -72,9 +72,24 @@ bool TaskGrabCanSim::run() {
     if (!_quiet) printf("*** H_base_redCan *** \n(%s)\n\n", H_base_redCan.toString().c_str());
     
     {
-        double targets[5] = {0,-0.3,0.9,90,0};
-        printf("[TaskGrabCanSim] Commanding Movj to targets: {0,-0.3, 0.9, 90.0, 0.0}...\n");
+        double targets[5] = {0, -.3, 0.8, 90, 0};
+        printf("[TaskGrabCanSim] Commanding Movj to targets: {0, -.3, 0.8, 90, 0}... [wait]\n");
         _cartesianClient.movj(targets);
+        _cartesianClient.wait();
+    }
+    {
+        double targets[5] = {-.5, -.5, 0.3, 90, 0};
+        printf("[TaskGrabCanSim] Commanding Movj to targets: {-.5, -.5, 0.3, 90, 0}... [wait]\n");
+        _cartesianClient.movj(targets);
+        Time::delay(.1);
+        _cartesianClient.wait();
+    }
+    {
+        double targets[5] = {H_base_redCan(0,3), H_base_redCan(1,3), H_base_redCan(2,3), 90, 0};
+        printf("[TaskGrabCanSim] Commanding Movl to targets: {%f, %f, %f, 90, 0}... [wait]\n",targets[0],targets[1],targets[2]);
+        _cartesianClient.movl(targets);
+        Time::delay(.1);
+        _cartesianClient.wait();
     }
 
 
