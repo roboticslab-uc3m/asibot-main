@@ -31,6 +31,7 @@ bool TaskGrabCanSim::run() {
     Bottle* data = bIn.get(0).asList();
     double X_0_redCan[3] = {data->get(0).asDouble(), data->get(1).asDouble(), data->get(2).asDouble()};
     //if (!_quiet) printf("[TaskGrabCanSim] Got info on redCan: %s\n",bIn.toString().c_str());
+    X_0_redCan[2] +=.05; // to avoid collision with table
     if (!_quiet) printf("[TaskGrabCanSim] X_0_redCan: %f %f %f.\n",X_0_redCan[0],X_0_redCan[1],X_0_redCan[2]);
     //
     bOut.clear(); bIn.clear();
@@ -64,17 +65,19 @@ bool TaskGrabCanSim::run() {
     H_0_redCan.eye();
     H_0_redCan(0,3)=X_0_redCan[0];
     H_0_redCan(1,3)=X_0_redCan[1];
-    H_0_redCan(2,3)=X_0_redCan[2]+.05;  // +.05 to avoid table
+    H_0_redCan(2,3)=X_0_redCan[2];
     if (!_quiet) printf("*** H_0_redCan *** \n(%s)\n\n", H_0_redCan.toString().c_str());
     //
     yarp::sig::Matrix H_base_redCan = H_base_0 * H_0_redCan;
     if (!_quiet) printf("*** H_base_redCan *** \n(%s)\n\n", H_base_redCan.toString().c_str());
     
-    /*{
+    {
         double targets[5] = {0,-0.3,0.9,90,0};
         printf("[TaskGrabCanSim] Commanding Movj to targets: {0,-0.3, 0.9, 90.0, 0.0}...\n");
         _cartesianClient.movj(targets);
-    }*/
+    }
+
+
     if (!_quiet) printf("[TaskGrabCanSim] success: end{run()}\n");
     return true;
 }
