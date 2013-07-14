@@ -7,6 +7,8 @@
 
 #include <yarp/os/RpcClient.h>
 #include <yarp/sig/Matrix.h>
+#include <yarp/math/SVD.h>  // pinv
+//#include <yarp/math/Math.h>
 
 #include "CartesianClient.h"
 #include "TinyMath.hpp"
