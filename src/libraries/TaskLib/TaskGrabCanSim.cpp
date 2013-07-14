@@ -70,7 +70,7 @@ bool TaskGrabCanSim::run() {
     //
     yarp::sig::Matrix H_base_redCan = H_base_0 * H_0_redCan;
     if (!_quiet) printf("*** H_base_redCan *** \n(%s)\n\n", H_base_redCan.toString().c_str());
-    
+    //
     {
         double targets[5] = {0, -.3, 0.8, 90, 0};
         printf("[TaskGrabCanSim] Commanding Movj to targets: {0, -.3, 0.8, 90, 0}... [wait]\n");
@@ -91,8 +91,25 @@ bool TaskGrabCanSim::run() {
         Time::delay(.1);
         _cartesianClient.wait();
     }
-
-
+    //
+    bOut.clear(); bIn.clear();
+    bOut.addString("world");
+    bOut.addString("grab");
+    bOut.addString("obj");
+    bOut.addString("redCan");
+    bOut.addInt(1);
+    _worldRpcClient.write(bOut, bIn);
+    if (!_quiet) printf("[TaskGrabCanSim] Grab redCan: %s\n",bIn.toString().c_str());
+    //
+    {
+        double targets[5] = {-.5, -.5, 0.3, 90, 0};
+        printf("[TaskGrabCanSim] Commanding Movl to targets: {-.5, -.5, 0.3, 90, 0}... [wait]\n");
+        //_cartesianClient.movl(targets);
+        _cartesianClient.movj(targets);  // robust against singularity :)
+        Time::delay(.1);
+        _cartesianClient.wait();
+    }
+    //
     if (!_quiet) printf("[TaskGrabCanSim] success: end{run()}\n");
     return true;
 }
