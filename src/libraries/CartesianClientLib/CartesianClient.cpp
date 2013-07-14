@@ -23,7 +23,7 @@ bool CartesianClient::open(const ConstString& serverPrefix) {
 /************************************************************************/
 bool CartesianClient::close() {
 //    valid = false;
-    printf("CartesianClient close...\n");
+    printf("[CartesianClient] close...\n");
     rpcClient.interrupt();
     rpcClient.close();
     return true;
