@@ -29,9 +29,9 @@ bool TaskGrabCanSim::run() {
     bOut.addString("redCan");
     _worldRpcClient.write(bOut, bIn);
     Bottle* data = bIn.get(0).asList();
-    double redCan[3] = {data->get(0).asDouble(), data->get(1).asDouble(), data->get(2).asDouble()};
+    double X_0_obj[3] = {data->get(0).asDouble(), data->get(1).asDouble(), data->get(2).asDouble()};
     //if (!_quiet) printf("[TaskGrabCanSim] Got info on redCan: %s\n",bIn.toString().c_str());
-    if (!_quiet) printf("[TaskGrabCanSim] world says redCan at: %f %f %f.\n",redCan[0],redCan[1],redCan[2]);
+    if (!_quiet) printf("[TaskGrabCanSim] X_0_obj: %f %f %f.\n",X_0_obj[0],X_0_obj[1],X_0_obj[2]);
     //
     bOut.clear(); bIn.clear();
     bOut.addString("world");
@@ -39,17 +39,26 @@ bool TaskGrabCanSim::run() {
     bOut.addString("tcp");
     _worldRpcClient.write(bOut, bIn);
     data = bIn.get(0).asList();
-    double tcp[3] = {data->get(0).asDouble(), data->get(1).asDouble(), data->get(2).asDouble()};
-    if (!_quiet) printf("[TaskGrabCanSim] world says tcp at: %f %f %f.\n",tcp[0],tcp[1],tcp[2]);
+    double X_0_tcp[3] = {data->get(0).asDouble(), data->get(1).asDouble(), data->get(2).asDouble()};
+    if (!_quiet) printf("[TaskGrabCanSim] X_0_tcp: %f %f %f.\n",X_0_tcp[0],X_0_tcp[1],X_0_tcp[2]);
     //
-    double solverTcp[5];
-    _cartesianClient.stat(solverTcp);
-    if (!_quiet) printf("[TaskGrabCanSim] solver says tcp at: %f %f %f.\n",solverTcp[0],solverTcp[1],solverTcp[2]);
+    double X_base_tcp[5];
+    _cartesianClient.stat(X_base_tcp);
+    if (!_quiet) printf("[TaskGrabCanSim] X_base_tcp: %f %f %f.\n",X_base_tcp[0],X_base_tcp[1],X_base_tcp[2]);
     //
-    double solverRedCan[3] = {-9999,-9999,-9999};
-    //_cartesianClient.stat(solverTcp);
-    if (!_quiet) printf("[TaskGrabCanSim] redCan in solver coordinates: %f %f %f.\n",solverRedCan[0],solverRedCan[1],solverRedCan[2]);
+    double X_0_base[3] = {X_0_tcp[0]-X_base_tcp[0], X_0_tcp[1]-X_base_tcp[1], X_0_tcp[2]-X_base_tcp[2]};
+    if (!_quiet) printf("[TaskGrabCanSim] X_0_base: %f %f %f.\n",X_0_base[0],X_0_base[1],X_0_base[2]);
+    //
+    yarp::sig::Matrix H_0_base = rotZ(_robotAngle);
+    H_0_base.resize(4,4);
+    H_0_base(0,3)=X_0_base[0];
+    H_0_base(1,3)=X_0_base[1];
+    H_0_base(2,3)=X_0_base[2];
+    H_0_base(3,3)=1;
+    printf("*** H_0_base *** \n(%s)\n\n", H_0_base.toString().c_str());
+   
 
+    //
     /*{
         double targets[5] = {0,-0.3,0.9,90,0};
         printf("[TaskGrabCanSim] Commanding Movj to targets: {0,-0.3, 0.9, 90.0, 0.0}...\n");
