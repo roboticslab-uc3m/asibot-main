@@ -29,9 +29,9 @@ bool TaskGrabCanSim::run() {
     bOut.addString("redCan");
     _worldRpcClient.write(bOut, bIn);
     Bottle* data = bIn.get(0).asList();
-    double X_0_obj[3] = {data->get(0).asDouble(), data->get(1).asDouble(), data->get(2).asDouble()};
+    double X_0_redCan[3] = {data->get(0).asDouble(), data->get(1).asDouble(), data->get(2).asDouble()};
     //if (!_quiet) printf("[TaskGrabCanSim] Got info on redCan: %s\n",bIn.toString().c_str());
-    if (!_quiet) printf("[TaskGrabCanSim] X_0_obj: %f %f %f.\n",X_0_obj[0],X_0_obj[1],X_0_obj[2]);
+    if (!_quiet) printf("[TaskGrabCanSim] X_0_redCan: %f %f %f.\n",X_0_redCan[0],X_0_redCan[1],X_0_redCan[2]);
     //
     bOut.clear(); bIn.clear();
     bOut.addString("world");
@@ -55,10 +55,21 @@ bool TaskGrabCanSim::run() {
     H_0_base(1,3)=X_0_base[1];
     H_0_base(2,3)=X_0_base[2];
     H_0_base(3,3)=1;
-    printf("*** H_0_base *** \n(%s)\n\n", H_0_base.toString().c_str());
-   
-
+    if (!_quiet) printf("*** H_0_base *** \n(%s)\n\n", H_0_base.toString().c_str());
     //
+    yarp::sig::Matrix H_base_0 = pinv(H_0_base);
+    if (!_quiet) printf("*** H_base_0 *** \n(%s)\n\n", H_base_0.toString().c_str());
+    //
+    yarp::sig::Matrix H_0_redCan(4,4);
+    H_0_redCan.eye();
+    H_0_redCan(0,3)=X_0_redCan[0];
+    H_0_redCan(1,3)=X_0_redCan[1];
+    H_0_redCan(2,3)=X_0_redCan[2]+.05;  // +.05 to avoid table
+    if (!_quiet) printf("*** H_0_redCan *** \n(%s)\n\n", H_0_redCan.toString().c_str());
+    //
+    yarp::sig::Matrix H_base_redCan = H_base_0 * H_0_redCan;
+    if (!_quiet) printf("*** H_base_redCan *** \n(%s)\n\n", H_base_redCan.toString().c_str());
+    
     /*{
         double targets[5] = {0,-0.3,0.9,90,0};
         printf("[TaskGrabCanSim] Commanding Movj to targets: {0,-0.3, 0.9, 90.0, 0.0}...\n");
