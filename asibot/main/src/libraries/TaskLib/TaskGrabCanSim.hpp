@@ -8,6 +8,8 @@
 #include "CartesianClient.h"
 #include <yarp/os/RpcClient.h>
 
+#define DEFAULT_ROBOT_ANGLE 30.0
+
 /**
  * @ingroup TaskGrabCanSim
  *
@@ -17,8 +19,9 @@
  */
 class TaskGrabCanSim : TaskBase {
   protected:
-    CartesianClient cartesianClient;
-    RpcClient worldRpcClient;
+    CartesianClient _cartesianClient;
+    RpcClient _worldRpcClient;
+    double _robotAngle;
 
   public:
     virtual bool configure(yarp::os::Searchable& config);
