@@ -13,10 +13,10 @@ bool CartesianClient::open(const ConstString& serverPrefix) {
     ConstString serverStr(serverPrefix);
     serverStr += "/cartesianServer/rpc:i";
     if (!rpcClient.addOutput(serverStr)) {
-        fprintf(stderr,"[error] no cartesianServer connection possible\n");
+        fprintf(stderr,"[CartesianClient] error: no cartesianServer connection possible\n");
         return false;
     }
-    printf("[success] Opened connection with cartesianServer.\n");
+    printf("[CartesianClient] success: Opened connection with cartesianServer.\n");
     return true;
 }
 
