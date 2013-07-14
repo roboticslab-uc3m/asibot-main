@@ -37,7 +37,7 @@ endif (folder_source)
 
 # Exporting dependencies for ASIBOTConfig.cmake quite manually for now... 
 set(ASIBOT_INCLUDE_DIRS ${ASIBOT_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
-set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} CACHE INTERNAL "appended libraries") # Not for now as it is a header
+set(ASIBOT_LIBRARIES ${ASIBOT_LIBRARIES} ${KEYWORD} TinyMath CACHE INTERNAL "appended libraries") # Not for now as it is a header
 
 ENDIF (ENABLE_TaskLib)
 
