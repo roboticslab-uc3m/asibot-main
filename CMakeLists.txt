@@ -35,6 +35,7 @@ option(ENABLE_kinectPxToReal "Choose if you want to compile kinectPxToReal" FALS
 option(ENABLE_pointAtObjectServer "Choose if you want to compile pointAtObjectServer" FALSE)
 option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_robotDraw "Choose if you want to compile robotDraw" FALSE)
+option(ENABLE_taskServer "Choose if you want to compile taskServer" FALSE)
 option(ENABLE_testRaveBot "Choose if you want to compile testRaveBot" FALSE)
 option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
 option(ENABLE_visionDepth "Choose if you want to compile visionDepth" FALSE)
