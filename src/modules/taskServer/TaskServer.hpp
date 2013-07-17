@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __CARTESIAN_SERVER__
-#define __CARTESIAN_SERVER__
+#ifndef __TASK_SERVER__
+#define __TASK_SERVER__
 
 #include <yarp/os/RFModule.h>
 #include <yarp/os/Module.h>
@@ -11,13 +11,9 @@
 
 #include "TaskRpcResponder.hpp"
 
-#define DEFAULT_CONTROLLER "cartesianbot"
-#define DEFAULT_PREFIX "/ravebot"
-#define DEFAULT_MOVJ_LOCAL "/ravebot/movjTaskServer"
-#define DEFAULT_MOVJ_REMOTE "/ravebot"
+//#define DEFAULT_CONTROLLER "cartesianbot"
 
 using namespace yarp::os;
-using namespace yarp::dev;
 
 /**
  * @ingroup asibot_libraries
@@ -52,5 +48,5 @@ public:
     bool configure(ResourceFinder &rf);
 };
 
-#endif
+#endif  // __TASK_SERVER__
 
