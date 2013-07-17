@@ -15,17 +15,22 @@ bool TaskRpcResponder::read(ConnectionReader& connection) {
         out.addString("Available commands: [help] [run] more info at [http://roboticslab.sourceforge.net/asibot/group__cartesianServer.html]");
         return out.write(*returnToSender);
     } else if ((in.get(0).asString() == "run")||(in.get(0).asVocab() == VOCAB_RUN)) {  // run //
-        Property options;
-        options.put("robotAngle",30.0);
-        taskGrabCanSim.configure(options);
-        if(taskGrabCanSim.run() ) {
-            printf("[TaskRpcResponder] success: taskGrabCanSim.run()\n");
-            out.addVocab(VOCAB_OK);
+        if (in.get(1).asString() == "grab") {
+            Property options;
+            options.put("robotAngle",30.0);
+            taskGrabCanSim.configure(options);
+            if(taskGrabCanSim.run() ) {
+                printf("[TaskRpcResponder] success: taskGrabCanSim.run()\n");
+                out.addVocab(VOCAB_OK);
+            } else {
+                fprintf(stderr,"[TaskRpcResponder] failed: taskGrabCanSim.run()\n");
+                out.addVocab(VOCAB_FAILED);
+            }
+            taskGrabCanSim.close();
         } else {
-            fprintf(stderr,"[TaskRpcResponder] failed: taskGrabCanSim.run()\n");
+            fprintf(stderr,"[TaskRpcResponder] failed: I don't know how to run that.\n");
             out.addVocab(VOCAB_FAILED);
         }
-        taskGrabCanSim.close();
         return out.write(*returnToSender);
     } else {
         fprintf(stderr,"[TaskRpcResponder] fail: Unknown command (use 'help' if needed).\n");
