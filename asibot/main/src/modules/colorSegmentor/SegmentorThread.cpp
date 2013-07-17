@@ -130,7 +130,7 @@ void SegmentorThread::run() {
         if (locate == "bottom") {
             CBlobGetMaxY getYMax;
             myy = getYMax( bigBlob );
-        } else if ( (locate == "centroid") || (locate == "corners") ) {  
+        } else if ( (locate == "centroid") || (locate == "corners") || (locate == "square") ) {  
             CBlobGetYCenter getYCenter;
             myy = getYCenter( bigBlob );
         } else fprintf(stderr,"locate anomaly!\n");
@@ -162,6 +162,24 @@ void SegmentorThread::run() {
             b_c4.addDouble(bb.x+bb.width/2.0);
             b_c4.addDouble(bb.y-bb.height/2.0);
             container.addList() = b_c4;
+        } else if (locate == "square") {
+            CvRect bb = bigBlob.GetBoundingBox();
+            Bottle b_s1;
+            b_s1.addDouble(bb.x-bb.width/2.0);
+            b_s1.addDouble(bb.y-bb.width/2.0);
+            container.addList() = b_s1;
+            Bottle b_s2;
+            b_s2.addDouble(bb.x-bb.width/2.0);
+            b_s2.addDouble(bb.y+bb.width/2.0);
+            container.addList() = b_s2;
+            Bottle b_s3;
+            b_s3.addDouble(bb.x+bb.width/2.0);
+            b_s3.addDouble(bb.y+bb.width/2.0);
+            container.addList() = b_s3;
+            Bottle b_s4;
+            b_s4.addDouble(bb.x+bb.width/2.0);
+            b_s4.addDouble(bb.y-bb.width/2.0);
+            container.addList() = b_s4;
         } else {
             Bottle b_xy;
             b_xy.addDouble(myx);
