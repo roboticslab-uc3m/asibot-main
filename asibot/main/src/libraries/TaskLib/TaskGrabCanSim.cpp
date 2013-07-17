@@ -119,6 +119,7 @@ bool TaskGrabCanSim::close() {
     if (!_quiet) printf("[TaskGrabCanSim] success: begin{close()}\n");
     _worldRpcClient.interrupt();
     _cartesianClient.close();
+    _worldRpcClient.close();
     if (!_quiet) printf("[TaskGrabCanSim] success: end{close()}\n");
     return true;
 }
