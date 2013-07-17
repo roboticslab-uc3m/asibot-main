@@ -27,6 +27,17 @@ bool TaskRpcResponder::read(ConnectionReader& connection) {
                 out.addVocab(VOCAB_FAILED);
             }
             taskGrabCanSim.close();
+        } else if (in.get(1).asString() == "drink") {
+            Property options;
+            taskDrinkSim.configure(options);
+            if(taskDrinkSim.run() ) {
+                printf("[TaskRpcResponder] success: taskDrinkSim.run()\n");
+                out.addVocab(VOCAB_OK);
+            } else {
+                fprintf(stderr,"[TaskRpcResponder] failed: taskDrinkSim.run()\n");
+                out.addVocab(VOCAB_FAILED);
+            }
+            taskDrinkSim.close();
         } else {
             fprintf(stderr,"[TaskRpcResponder] failed: I don't know how to run that.\n");
             out.addVocab(VOCAB_FAILED);

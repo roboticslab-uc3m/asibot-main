@@ -8,6 +8,7 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/Vocab.h>
 
+#include "TaskDrinkSim.hpp"
 #include "TaskGrabCanSim.hpp"
 
 //#define MAX_NUM_MOTORS 100
@@ -34,6 +35,7 @@ protected:
     int *tsStatus;
 
     TaskGrabCanSim taskGrabCanSim;
+    TaskDrinkSim taskDrinkSim;
 
 public:
 
