@@ -41,7 +41,7 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
     yarp::dev::IPositionControl *ipos;
-    int *csStatus;
+    int *tsStatus;
 
 public:
 
@@ -58,7 +58,7 @@ public:
     /**
     * Register.
     */
-    void setCsStatus(int* _csStatus);
+    void setCsStatus(int* _tsStatus);
 };
 
 #endif

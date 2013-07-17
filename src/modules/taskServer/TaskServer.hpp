@@ -38,7 +38,7 @@ using namespace yarp::dev;
 class TaskServer : public RFModule {
 protected:
 
-    int *csStatus;
+    int *tsStatus;
 
     RpcServer taskRpcServer;
 	TaskRpcResponder taskResponder;
