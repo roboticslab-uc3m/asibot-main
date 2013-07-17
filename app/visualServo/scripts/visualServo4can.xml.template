@@ -7,7 +7,7 @@
         </module>
         <module>
                 <name>colorSegmentor</name>
-                <parameters>--maxNumBlobs 1 --algorithm redMinusGreen --threshold 120 --locate corners --seeBounding 1</parameters>
+                <parameters>--maxNumBlobs 1 --algorithm redMinusGreen --threshold 120 --locate square --seeBounding 1</parameters>
                 <node>localhost</node>
         </module>
         <module>
