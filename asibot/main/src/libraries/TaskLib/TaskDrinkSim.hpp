@@ -1,7 +1,7 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-#ifndef __TASK_GRAB_CAN_SIM_HPP__
-#define __TASK_GRAB_CAN_SIM_HPP__
+#ifndef __TASK_DRINK_SIM_HPP__
+#define __TASK_DRINK_SIM_HPP__
 
 #include "TaskBase.hpp"
 
@@ -34,5 +34,5 @@ class TaskDrinkSim : TaskBase {
     virtual bool close();
 };
 
-#endif  // __TASK_GRAB_CAN_SIM_HPP__
+#endif  // __TASK_DRINK_SIM_HPP__
 
