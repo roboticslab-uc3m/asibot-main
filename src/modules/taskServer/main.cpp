@@ -3,11 +3,11 @@
 /**
  *
  * @ingroup asibot_modules
- * \defgroup cartesianServer cartesianServer
+ * \defgroup taskServer taskServer
  *
- * The \ref cartesianServer module creates an instance of CartesianServer to load a controller (default: \ref CartesianBot) and acts as the server part of a network wrapper for it.
+ * The \ref taskServer module creates an instance of CartesianServer to load a controller (default: \ref CartesianBot) and acts as the server part of a network wrapper for it.
  *
- * @section cartesianServer_legal Legal
+ * @section taskServer_legal Legal
  *
  * Copyright: 2012 (C) Universidad Carlos III de Madrid
  *
@@ -20,12 +20,12 @@
  *
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, see license/LGPL.TXT
  *
- * @section cartesianServer_install Installation
+ * @section taskServer_install Installation
  *
- * The module is compiled when ENABLE_cartesianServer is activated (default: OFF). For further
+ * The module is compiled when ENABLE_taskServer is activated (default: OFF). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  *
- * @section cartesianServer_running Running (assuming correct installation)
+ * @section taskServer_running Running (assuming correct installation)
  *
  * First we must run a YARP name server if it is not running in our current namespace:
 \verbatim
@@ -33,22 +33,22 @@
 \endverbatim
  * And then launch the actual module:
 \verbatim
-[on terminal 2] cartesianServer
+[on terminal 2] taskServer
 \endverbatim
  *
  * You should get a window similar to the one depicted on Figure 1.
 
 \image html ravebot-300px.png
-<center>Fig. 1 - An instance of the \ref cartesianServer module.</center>
+<center>Fig. 1 - An instance of the \ref taskServer module.</center>
 
- * @section cartesianServer_interfacing Interfacing with the cartesianServer module
+ * @section taskServer_interfacing Interfacing with the taskServer module
  *
- * The \ref cartesianServer module acts as the server part of a network wrapper of the CartesianBot class
+ * The \ref taskServer module acts as the server part of a network wrapper of the CartesianBot class
  * using the CartesianServer class.
  * The implementation maps certain YARP rpc's to CartesianBot function calls. Therefore, we can interface
  * with the class from the command-line (or try using the new \ref CartesianClient library) by typing:
 \verbatim
-[on terminal 3] yarp rpc /ravebot/cartesianServer/rpc:i
+[on terminal 3] yarp rpc /ravebot/taskServer/rpc:i
 \endverbatim
  *
  * Note 1: Change 'ravebot' for 'canbot' for the real robot!
@@ -85,7 +85,7 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
  * The implementation also maps certain YARP streaming commands to CartesianBot function calls. Therefore, we can also interface with the class from the command-line by typing (change 'ravebot' for 'canbot' for the real robot): 
  * 
 \verbatim
-[on terminal 4] yarp write ... /ravebot/cartesianServer/command:i
+[on terminal 4] yarp write ... /ravebot/taskServer/command:i
 \endverbatim
  *
  * The following table depicts implemented streaming commands you can issue from this connection (no acknowledgement response).
@@ -98,10 +98,10 @@ Response: (0.0 0.0 1.4 0.0 0.0) [ok]
  * \[vmos\] (0.0 1.0 0.0 0.0 0.0) | Direct velocity movement command, in the Cartesian space.
  * \[pose\] (0.0 1.0 0.0 0.0 0.0) | Direct pose movement command, in the Cartesian space.
  *
- * @section cartesianServer_modify Modify
+ * @section taskServer_modify Modify
  *
  * This file can be edited at 
- * src/modules/cartesianServer/main.cpp
+ * src/modules/taskServer/main.cpp
  *
  */
 
@@ -118,8 +118,8 @@ int main(int argc, char *argv[]) {
 
     ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("cartesianServer/conf");
-    rf.setDefaultConfigFile("cartesianServer.ini");
+    rf.setDefaultContext("taskServer/conf");
+    rf.setDefaultConfigFile("taskServer.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
     CartesianServer mod;
@@ -127,12 +127,12 @@ int main(int argc, char *argv[]) {
         return mod.runModule(rf);
     }
 
-    printf("Run \"cartesianServer --help\" for options.\n");
-    printf("cartesianServer checking for yarp network... ");
+    printf("Run \"taskServer --help\" for options.\n");
+    printf("taskServer checking for yarp network... ");
     fflush(stdout);
     Network yarp;
     if (!yarp.checkNetwork()) {
-        printf("[fail]\ncartesianServer found no yarp network (try running \"yarpserver &\"), bye!\n");
+        printf("[fail]\ntaskServer found no yarp network (try running \"yarpserver &\"), bye!\n");
         return -1;
     } else printf("[ok]\n");
 
