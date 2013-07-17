@@ -6,6 +6,6 @@ IF (ENABLE_RavePlugins)
 
 add_subdirectory(exterobj)
 
-ENDIF (ENABLE_RlPlugins)
+ENDIF (ENABLE_RavePlugins)
 
 
