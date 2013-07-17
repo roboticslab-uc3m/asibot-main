@@ -22,7 +22,7 @@
     </module>
     <connection>
         <from>/asr:o</from>
-        <to>/xyzRec/asr:i</to>
+        <to>/gafasAR/asr:i</to>
     </connection>
 
     <module>
@@ -30,7 +30,7 @@
         <node>localhost</node>
     </module>
     <connection>
-        <from>/xyzRec/tts:o</from>
+        <from>/gafasAR/tts:o</from>
         <to>/iSpeak</to>
     </connection>
 
