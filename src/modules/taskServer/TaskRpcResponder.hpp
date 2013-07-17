@@ -14,6 +14,8 @@
 
 #define VOCAB_HELP VOCAB4('h','e','l','p')
 #define VOCAB_FAILED VOCAB4('f','a','i','l')
+#define VOCAB_OK VOCAB2('o','k')
+#define VOCAB_RUN VOCAB3('r','u','n')
 
 using namespace yarp::os;
 
@@ -31,7 +33,7 @@ protected:
 
     int *tsStatus;
 
-    TaskGrabCanSim task;
+    TaskGrabCanSim taskGrabCanSim;
 
 public:
 
