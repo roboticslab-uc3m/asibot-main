@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     rf.setDefaultConfigFile("taskServer.ini");
     rf.configure("ASIBOT_ROOT", argc, argv);
 
-    CartesianServer mod;
+    TaskServer mod;
     if(rf.check("help")) {
         return mod.runModule(rf);
     }
