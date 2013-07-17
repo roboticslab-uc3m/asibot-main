@@ -19,23 +19,23 @@ bool TaskRpcResponder::read(ConnectionReader& connection) {
             if(ipos->stop()) {
                 if(ipos->setPositionMode()) {
                     out.addVocab(VOCAB_OK);
-                    *csStatus = 0;
+                    *tsStatus = 0;
                 } else out.addVocab(VOCAB_FAILED);
             } else out.addVocab(VOCAB_FAILED);
         } else out.addVocab(VOCAB_FAILED);
         return out.write(*returnToSender);
     } else if ((in.get(0).asString() == "wait")||(in.get(0).asVocab() == VOCAB_WAIT)) {  // wait //
-        while (*csStatus != 0) {
+        while (*tsStatus != 0) {
             printf(".");
             fflush(stdout);
-            if (*csStatus==1) { // movj
+            if (*tsStatus==1) { // movj
                 bool done;
                 ipos->checkMotionDone(&done);
-                if(done) *csStatus = 0;
-            } else if (*csStatus==2) { // movl
+                if(done) *tsStatus = 0;
+            } else if (*tsStatus==2) { // movl
                 bool done;
                 icart->checkMotionDone(&done);
-                if(done) *csStatus = 0;
+                if(done) *tsStatus = 0;
             }
             Time::delay(0.5);
         }
@@ -43,18 +43,18 @@ bool TaskRpcResponder::read(ConnectionReader& connection) {
         out.addVocab(VOCAB_OK);
         return out.write(*returnToSender);
     } else if ((in.get(0).asString() == "stat")||(in.get(0).asVocab() == VOCAB_STAT)) { // stat //
-        if (*csStatus==1) { // movj
+        if (*tsStatus==1) { // movj
             bool done;
             ipos->checkMotionDone(&done);
-            if(done) *csStatus = 0;
-        } else if (*csStatus==2) { // movl
+            if(done) *tsStatus = 0;
+        } else if (*tsStatus==2) { // movl
             bool done;
             icart->checkMotionDone(&done);
-            if(done) *csStatus = 0;
+            if(done) *tsStatus = 0;
         }        
-        if (*csStatus==0) out.addVocab(VOCAB_MY_STOP);
-        else if (*csStatus==1) out.addVocab(VOCAB_MOVJ);
-        else if (*csStatus==2) out.addVocab(VOCAB_MOVL);
+        if (*tsStatus==0) out.addVocab(VOCAB_MY_STOP);
+        else if (*tsStatus==1) out.addVocab(VOCAB_MOVJ);
+        else if (*tsStatus==2) out.addVocab(VOCAB_MOVL);
         else out.addVocab(VOCAB_FAILED);
         Vector x,o;
         if(icart->getPose(x,o)) {
@@ -76,7 +76,7 @@ bool TaskRpcResponder::read(ConnectionReader& connection) {
         for (int i = 3; i < lst->size(); i++)
             o.push_back(lst->get(i).asDouble());
         if(icart->goToPoseSync(x,o)){
-            *csStatus = 2;
+            *tsStatus = 2;
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
@@ -97,7 +97,7 @@ bool TaskRpcResponder::read(ConnectionReader& connection) {
             icart->stopControl(); // new!!!!
             ipos->setPositionMode();
             ipos->positionMove(qd);
-            *csStatus = 1;
+            *tsStatus = 1;
             out.addVocab(VOCAB_OK);
         } else
             out.addVocab(VOCAB_FAILED);
@@ -148,8 +148,8 @@ void TaskRpcResponder::setPositionInterface(yarp::dev::IPositionControl* _ipos) 
 
 /************************************************************************/
 
-void TaskRpcResponder::setCsStatus(int* _csStatus) {
-    csStatus = _csStatus;
+void TaskRpcResponder::setCsStatus(int* _tsStatus) {
+    tsStatus = _tsStatus;
 }
 
 /************************************************************************/
