@@ -31,6 +31,8 @@ protected:
 
     int *tsStatus;
 
+    TaskGrabCanSim task;
+
 public:
 
     /**
