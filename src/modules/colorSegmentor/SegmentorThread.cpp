@@ -32,7 +32,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("SegmentorThread options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--algorithm (default: \"%s\")\n",algorithm.c_str());
-        printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
+        printf("\t--locate (centroid or bottom, corners; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
         printf("\t--seeBounding (default: \"%d\")\n",seeBounding);
@@ -130,10 +130,10 @@ void SegmentorThread::run() {
         if (locate == "bottom") {
             CBlobGetMaxY getYMax;
             myy = getYMax( bigBlob );
-        } else {  // locate == "centroid"
+        } else if ( (locate == "centroid") || (locate == "corners") ) {  
             CBlobGetYCenter getYCenter;
             myy = getYCenter( bigBlob );
-        }
+        } else fprintf(stderr,"locate anomaly!\n");
 
         if(seeBounding>0){
             PixelRgb green(0,255,0);
@@ -144,10 +144,31 @@ void SegmentorThread::run() {
         PixelRgb blue(0,0,255);
         addCircle(*img,blue,myx,myy,3);
 
-        Bottle b_xy;
-        b_xy.addDouble(myx);
-        b_xy.addDouble(myy);
-        container.addList() = b_xy;
+        if (locate == "corners") {
+            CvRect bb = bigBlob.GetBoundingBox();
+            Bottle b_c1;
+            b_c1.addDouble(bb.x-bb.width/2.0);
+            b_c1.addDouble(bb.y-bb.height/2.0);
+            container.addList() = b_c1;
+            Bottle b_c2;
+            b_c2.addDouble(bb.x-bb.width/2.0);
+            b_c2.addDouble(bb.y+bb.height/2.0);
+            container.addList() = b_c2;
+            Bottle b_c3;
+            b_c3.addDouble(bb.x+bb.width/2.0);
+            b_c3.addDouble(bb.y+bb.height/2.0);
+            container.addList() = b_c3;
+            Bottle b_c4;
+            b_c4.addDouble(bb.x+bb.width/2.0);
+            b_c4.addDouble(bb.y-bb.height/2.0);
+            container.addList() = b_c4;
+        } else {
+            Bottle b_xy;
+            b_xy.addDouble(myx);
+            b_xy.addDouble(myy);
+            container.addList() = b_xy;
+        }
+
     }
 
     pOutImg->prepare() = *img;
