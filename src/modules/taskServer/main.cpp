@@ -42,7 +42,6 @@
 #include "TaskServer.hpp"
 
 using namespace yarp::os;
-using namespace yarp::dev;
 
 int main(int argc, char *argv[]) {
 
