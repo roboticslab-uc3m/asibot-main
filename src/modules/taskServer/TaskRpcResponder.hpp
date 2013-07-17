@@ -8,6 +8,8 @@
 #include <yarp/os/Time.h>
 #include <yarp/os/Vocab.h>
 
+#include "TaskGrabCanSim.hpp"
+
 //#define MAX_NUM_MOTORS 100
 
 #define VOCAB_HELP VOCAB4('h','e','l','p')
