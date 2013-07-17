@@ -4,7 +4,7 @@
 
 IF (ENABLE_RavePlugins)
 
-add_subdirectory(exterobj)
+add_subdirectory(externobj)
 
 ENDIF (ENABLE_RavePlugins)
 
