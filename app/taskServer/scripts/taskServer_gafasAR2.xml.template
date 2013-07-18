@@ -1,5 +1,5 @@
 <application>
-<name>taskServer_gafasAR App</name>
+<name>taskServer_gafasAR2 App</name>
     <module>
         <name>cartesianServer</name>
         <parameters>--env asibot_kitchen_gafasAR.env.xml --extraRobot 3dof</parameters>
@@ -38,6 +38,29 @@
         <from>/gafasAR_head</from>
         <to>/ravebot/3dof/command:i</to>
     </connection>
+
+    <module>
+        <name>visionSegmentor</name>
+        <parameters>--algorithm redMinusGreen --threshold 120 --seeBounding 3</parameters>
+        <prefix>/right</prefix>
+        <node>localhost</node>
+    </module>
+    <connection>
+        <from>/ravebot/ip_camera_right/img:o</from>
+        <to>/right/visionSegmentor/img:i</to>
+    </connection>
+
+    <module>
+        <name>visionSegmentor</name>
+        <parameters>--algorithm redMinusGreen --threshold 120 --seeBounding 3</parameters>
+        <prefix>/left</prefix>
+        <node>localhost</node>
+    </module>
+    <connection>
+        <from>/ravebot/ip_camera_left/img:o</from>
+        <to>/left/visionSegmentor/img:i</to>
+    </connection>
+
 
 </application>
 
