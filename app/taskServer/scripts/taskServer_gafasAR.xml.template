@@ -1,8 +1,8 @@
 <application>
-<name>taskServer App</name>
+<name>taskServer_gafasAR App</name>
     <module>
         <name>cartesianServer</name>
-        <parameters>--env asibot_kitchen_cameras.env.xml</parameters>
+        <parameters>--env asibot_kitchen_gafasAR.env.xml</parameters>
         <node>localhost</node>
     </module>
 

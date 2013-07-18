@@ -2,7 +2,6 @@
 <name>taskServer App</name>
     <module>
         <name>cartesianServer</name>
-        <parameters>--env asibot_kitchen_cameras.env.xml</parameters>
         <node>localhost</node>
     </module>
 
@@ -10,29 +9,6 @@
          <name>taskServer</name>
          <node>localhost</node>
     </module>
-
-    <connection>
-        <from>/gafasAR/task/rpc:o</from>
-        <to>/taskServer/rpc:i</to>
-    </connection>
-
-    <module>
-        <name>asr.py</name>
-        <node>localhost</node>
-    </module>
-    <connection>
-        <from>/asr:o</from>
-        <to>/gafasAR/asr:i</to>
-    </connection>
-
-    <module>
-        <name>iSpeak</name>
-        <node>localhost</node>
-    </module>
-    <connection>
-        <from>/gafasAR/tts:o</from>
-        <to>/iSpeak</to>
-    </connection>
 
 </application>
 
