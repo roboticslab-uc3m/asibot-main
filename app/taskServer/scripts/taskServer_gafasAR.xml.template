@@ -34,5 +34,10 @@
         <to>/iSpeak</to>
     </connection>
 
+    <connection>
+        <from>/gafasAR_head</from>
+        <to>/ravebot/3dof/command:i</to>
+    </connection>
+
 </application>
 
