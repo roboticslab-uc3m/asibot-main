@@ -1,0 +1,53 @@
+<!-- wheelchairR.kinbody.xml -->
+
+<KinBody name="wheelchairRkinbody">
+    <Body name="wheelchairRheadless" type="static">
+        <Geom type="box">
+            <Render>./wrls/wheelchairRheadless.wrl .02</Render>
+            <Extents>0.4 0.55 .5</Extents>
+            <!--Translation>0.2 0 0.58</Translation-->
+            <diffuseColor>0 0 1</diffuseColor>
+            <transparency>0.5</transparency>
+        </Geom>
+    </Body>
+    <Body name="wheelchairRhead">
+        <Geom type="box">
+            <Render>./wrls/wheelchairRhead.wrl .02</Render>
+            <Extents>0.01 0.01 0.01</Extents>            
+            <!--RotationAxis>1 0 0 -90</RotationAxis-->
+            <translation>0.0 0.05 0.0</translation>
+            <diffuseColor>1 0 0</diffuseColor>
+        </Geom>
+    </Body>
+    <Body name="link0">
+        <Geom type="box">
+            <diffuseColor>1 1 1</diffuseColor>
+            <Extents>0.005 0.005 0.005</Extents>
+        </Geom>
+    </Body>
+    <Body name="link1">
+        <Geom type="box">
+            <diffuseColor>1 1 1</diffuseColor>
+            <Extents>0.005 0.005 0.005</Extents>
+        </Geom>
+    </Body>
+    <Joint name="pitch" type="hinge">
+        <body>wheelchairRheadless</body>
+        <body>link0</body>
+        <axis>1 0 0</axis>
+        <anchor>0 0.05 0.5</anchor>
+    </Joint>
+    <Joint name="roll" type="hinge">
+        <body>link0</body>
+        <body>link1</body>
+        <axis>0 1 0</axis>
+        <anchor>0 0.05 0.5</anchor>
+    </Joint>
+    <Joint name="yaw" type="hinge">
+        <body>link1</body>
+        <body>wheelchairRhead</body>
+        <axis>0 0 1</axis>
+        <anchor>0 0.05 0.5</anchor>
+    </Joint>
+</KinBody>
+
