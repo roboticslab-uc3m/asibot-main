@@ -41,7 +41,7 @@
 
     <module>
         <name>visionSegmentor</name>
-        <parameters>--algorithm redMinusGreen --threshold 120 --seeBounding 3</parameters>
+        <parameters>--algorithm redMinusGreen --threshold 130 --seeBounding 3 --outImage 0</parameters>
         <prefix>/right</prefix>
         <node>localhost</node>
     </module>
@@ -52,7 +52,7 @@
 
     <module>
         <name>visionSegmentor</name>
-        <parameters>--algorithm redMinusGreen --threshold 120 --seeBounding 3</parameters>
+        <parameters>--algorithm redMinusGreen --threshold 130 --seeBounding 3 --outImage 0</parameters>
         <prefix>/left</prefix>
         <node>localhost</node>
     </module>
