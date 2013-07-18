@@ -2,7 +2,7 @@
 <name>taskServer_gafasAR App</name>
     <module>
         <name>cartesianServer</name>
-        <parameters>--env asibot_kitchen_gafasAR.env.xml</parameters>
+        <parameters>--env asibot_kitchen_gafasAR.env.xml --extraRobot 3dof</parameters>
         <node>localhost</node>
     </module>
 
