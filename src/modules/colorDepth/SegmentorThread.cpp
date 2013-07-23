@@ -224,8 +224,8 @@ void SegmentorThread::run() {
         double mmZ = depth.pixel(int(myx),int(myy));  // maybe better do a mean around area?
         //fprintf(stdout,"[CallbackPort] depth at (%d,%d) is %f.\n",int(myx),int(myy),mmZ);
         Bottle mmOut;
-        double mmX = 1000.0 * (myx - (cx * mmZ/1000.0)) / fx;
-        double mmY = 1000.0 * (myy - (cy * mmZ/1000.0)) / fy;
+        double mmX = 1000.0 * ((myx - cx) * mmZ/1000.0) / fx;
+        double mmY = 1000.0 * ((myy - cy) * mmZ/1000.0) / fy;
         mmOut.addDouble(mmX);
         mmOut.addDouble(mmY);
         mmOut.addDouble(mmZ);
