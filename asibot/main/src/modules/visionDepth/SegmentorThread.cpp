@@ -44,21 +44,11 @@ void SegmentorThread::init(ResourceFinder &rf) {
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
     morphClosing = DEFAULT_MORPH_CLOSING;
     outImage = DEFAULT_OUT_IMAGE;
+    outFeatures.fromString(DEFAULT_OUT_FEATURES);  // it's a bottle!!
     outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
     int rateMs = DEFAULT_RATE_MS;
     seeBounding = DEFAULT_SEE_BOUNDING;
     threshold = DEFAULT_THRESHOLD;
-
-    // hardcode the default
-    //outFeatures.addString("rawX");
-    //outFeatures.addString("rawY");
-    //outFeatures.addString("locX");
-    //outFeatures.addString("locY");
-    //outFeatures.addString("locZ");
-    outFeatures.addString("locX_0");
-    outFeatures.addString("locY_0");
-    outFeatures.addString("locZ_0");
-    outFeatures.addString("angle");  
 
     printf("--------------------------------------------------------------\n");
     if (rf.check("help")) {
