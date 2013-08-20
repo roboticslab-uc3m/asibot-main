@@ -98,7 +98,8 @@ void SegmentorThread::run() {
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
-    vector<double> blobsAngle;
+    vector<double> blobsAngle, blobsArea;
+    travis.getBlobsArea(blobsArea);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
@@ -146,6 +147,15 @@ void SegmentorThread::run() {
                 for (int i = 0; i < blobsAngle.size(); i++)
                     angles.addDouble(blobsAngle[i]);
                 output.addList() = angles;
+            }
+        } else if ( outFeatures.get(elem).asString() == "area" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsArea[0]);
+            } else {
+                Bottle areas;
+                for (int i = 0; i < blobsArea.size(); i++)
+                    areas.addDouble(blobsArea[i]);
+                output.addList() = areas;
             }
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
