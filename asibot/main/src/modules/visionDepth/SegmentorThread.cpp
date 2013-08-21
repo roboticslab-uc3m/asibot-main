@@ -72,7 +72,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
-        printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX_0,locY_0,locZ_0,angle,area;\n\t\tdefault: \"(%s)\")\n",outFeatures.toString().c_str());
+        printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX0,locY0,locZ0,angle,area;\n\t\tdefault: \"(%s)\")\n",outFeatures.toString().c_str());
         printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
         printf("\t--outImage (0=rgb,1=bin; default: \"%d\")\n",outImage);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
@@ -252,7 +252,7 @@ void SegmentorThread::run() {
                     locZs.addDouble(mmZ[i]);
                 output.addList() = locZs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locX_0" ) {
+        } else if ( outFeatures.get(elem).asString() == "locX0" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmX_0[0]);
             } else {
@@ -261,7 +261,7 @@ void SegmentorThread::run() {
                     locXs.addDouble(mmX_0[i]);
                 output.addList() = locXs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locY_0" ) {
+        } else if ( outFeatures.get(elem).asString() == "locY0" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmY_0[0]);
             } else {
@@ -270,7 +270,7 @@ void SegmentorThread::run() {
                     locYs.addDouble(mmY_0[i]);
                 output.addList() = locYs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locZ_0" ) {
+        } else if ( outFeatures.get(elem).asString() == "locZ0" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmZ_0[0]);
             } else {
