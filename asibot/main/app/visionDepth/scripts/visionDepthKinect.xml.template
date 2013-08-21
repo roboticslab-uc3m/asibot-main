@@ -17,7 +17,7 @@
 
     <module>
         <name>visionDepth</name>
-        <parameters>--tilt -42 --height 512 --maxNumBlobs 1 --algorithm blueMinusRed --morphClosing 2 --threshold 55 --outFeaturesFormat 1</parameters>
+        <parameters>--maxNumBlobs 1 --outFeaturesFormat 1</parameters>
         <node>localhost</node>
     </module>
     <module>
