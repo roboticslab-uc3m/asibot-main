@@ -42,7 +42,6 @@
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 2
 #define DEFAULT_MORPH_CLOSING 2
-//#define DEFAULT_OUT_FEATURES "rawX rawY locX locY locZ"  // it's a bottle!!
 #define DEFAULT_OUT_FEATURES "locX_0 locY_0 locZ_0 angle area"  // it's a bottle!!
 #define DEFAULT_OUT_FEATURES_FORMAT 0  // 0=bottled,1=minimal
 #define DEFAULT_OUT_IMAGE 1

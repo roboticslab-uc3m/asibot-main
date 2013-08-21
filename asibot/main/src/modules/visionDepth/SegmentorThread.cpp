@@ -72,7 +72,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
-        printf("\t--outFeatures (default: \"(%s)\")\n",outFeatures.toString().c_str());
+        printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX_0,locY_0,locZ_0,angle,area;\n\t\tdefault: \"(%s)\")\n",outFeatures.toString().c_str());
         printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
         printf("\t--outImage (0=rgb,1=bin; default: \"%d\")\n",outImage);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
@@ -98,8 +98,10 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("morphClosing")) morphClosing = rf.find("morphClosing").asDouble();
     if (rf.check("outFeaturesFormat")) outFeaturesFormat = rf.find("outFeaturesFormat").asInt();
 
-    printf("SegmentorThread using fx_d: %f, fy_d: %f, cx_d: %f, cy_d: %f, fx_rgb: %f, fy_rgb: %f, cx_rgb: %f, cy_rgb: %f.\n",
-        fx_d,fy_d,cx_d,cy_d,fx_rgb,fy_rgb,cx_rgb,cy_rgb);
+    printf("SegmentorThread using fx_d: %f, fy_d: %f, cx_d: %f, cy_d: %f.\n",
+        fx_d,fy_d,cx_d,cy_d);
+    printf("SegmentorThread using fx_rgb: %f, fy_rgb: %f, cx_rgb: %f, cy_rgb: %f.\n",
+        fx_rgb,fy_rgb,cx_rgb,cy_rgb);
     printf("SegmentorThread using pan: %f, tilt: %f, height: %f.\n",
         pan,tilt,height);
     printf("SegmentorThread using algorithm: %s, locate: %s.\n",
