@@ -337,6 +337,24 @@ void SegmentorThread::run() {
                     rectangularities.addDouble(blobsRectangularity[i]);
                 output.addList() = rectangularities;
             }
+        } else if ( outFeatures.get(elem).asString() == "axisFirst" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAxisFirst[0]);
+            } else {
+                Bottle axisFirsts;
+                for (int i = 0; i < blobsAxisFirst.size(); i++)
+                    axisFirsts.addDouble(blobsAxisFirst[i]);
+                output.addList() = axisFirsts;
+            }
+        } else if ( outFeatures.get(elem).asString() == "axisSecond" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAxisSecond[0]);
+            } else {
+                Bottle axisSeconds;
+                for (int i = 0; i < blobsAxisSecond.size(); i++)
+                    axisSeconds.addDouble(blobsAxisSecond[i]);
+                output.addList() = axisSeconds;
+            }
         } else if ( outFeatures.get(elem).asString() == "hue" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsHue[0]);
