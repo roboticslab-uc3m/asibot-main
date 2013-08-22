@@ -72,7 +72,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
-        printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX0,locY0,locZ0,angle,area,hue,sat,val;\n\t\tdefault: \"(%s)\")\n",outFeatures.toString().c_str());
+        printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX0,locY0,locZ0,angle,area,hue,sat,val,aspectRatio;\n\t\tdefault: \"(%s)\")\n",outFeatures.toString().c_str());
         printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
         printf("\t--outImage (0=rgb,1=bin; default: \"%d\")\n",outImage);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
@@ -174,11 +174,13 @@ void SegmentorThread::run() {
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
-    vector<double> blobsAngle,blobsArea,blobsHue,blobsSat,blobsVal;
+    vector<double> blobsAngle,blobsArea,blobsAspectRatio;
+    vector<double> blobsHue,blobsSat,blobsVal;
     travis.getBlobsArea(blobsArea);
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
+    travis.getBlobsAspectRatio(blobsAspectRatio); // must be called after getBlobsAngle!!!!
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
     travis.release();
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
@@ -342,6 +344,15 @@ void SegmentorThread::run() {
                 for (int i = 0; i < blobsVal.size(); i++)
                     vals.addDouble(blobsVal[i]);
                 output.addList() = vals;
+            }
+        } else if ( outFeatures.get(elem).asString() == "aspectRatio" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAspectRatio[0]);
+            } else {
+                Bottle aspectRatios;
+                for (int i = 0; i < blobsAspectRatio.size(); i++)
+                    aspectRatios.addDouble(blobsVal[i]);
+                output.addList() = aspectRatios;
             }
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
