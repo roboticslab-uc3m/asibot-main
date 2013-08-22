@@ -329,7 +329,7 @@ void SegmentorThread::run() {
             } else {
                 Bottle aspectRatios;
                 for (int i = 0; i < blobsAspectRatio.size(); i++)
-                    aspectRatios.addDouble(blobsVal[i]);
+                    aspectRatios.addDouble(blobsAspectRatio[i]);
                 output.addList() = aspectRatios;
             }
         } else if ( outFeatures.get(elem).asString() == "rectangularity" ) {
