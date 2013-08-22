@@ -72,7 +72,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
-        printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX0,locY0,locZ0,angle,area,hue,sat,val,aspectRatio,rectangularty;\n\t\tdefault: \"(%s)\")\n",outFeatures.toString().c_str());
+        printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX0,locY0,locZ0,angle,area,aspectRatio,rectangularty,hue,sat,val,hueStdDev,satStdDev,valStdDev;\n\t\tdefault: \"(%s)\")\n",outFeatures.toString().c_str());
         printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
         printf("\t--outImage (0=rgb,1=bin; default: \"%d\")\n",outImage);
         printf("\t--rateMs (default: \"%d\")\n",rateMs);
@@ -174,13 +174,13 @@ void SegmentorThread::run() {
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
-    vector<double> blobsAngle,blobsArea,blobsAspectRatio,blobsRectangularity;
-    vector<double> blobsHue,blobsSat,blobsVal;
+    vector<double> blobsAngle,blobsArea,blobsAspectRatio,blobsAxisFirst,blobsAxisSecond,blobsRectangularity;
+    vector<double> blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev;
     travis.getBlobsArea(blobsArea);
-    travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
+    travis.getBlobsHSV(blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
-    travis.getBlobsAspectRatio(blobsAspectRatio);  // must be called after getBlobsAngle!!!!
+    travis.getBlobsAspectRatio(blobsAspectRatio,blobsAxisFirst,blobsAxisSecond);  // must be called after getBlobsAngle!!!!
     travis.getBlobsRectangularity(blobsRectangularity);  // must be called after getBlobsAngle!!!!
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
     travis.release();
@@ -319,6 +319,24 @@ void SegmentorThread::run() {
                     areas.addDouble(blobsArea[i]);
                 output.addList() = areas;
             }
+        } else if ( outFeatures.get(elem).asString() == "aspectRatio" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAspectRatio[0]);
+            } else {
+                Bottle aspectRatios;
+                for (int i = 0; i < blobsAspectRatio.size(); i++)
+                    aspectRatios.addDouble(blobsVal[i]);
+                output.addList() = aspectRatios;
+            }
+        } else if ( outFeatures.get(elem).asString() == "rectangularity" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsRectangularity[0]);
+            } else {
+                Bottle rectangularities;
+                for (int i = 0; i < blobsRectangularity.size(); i++)
+                    rectangularities.addDouble(blobsRectangularity[i]);
+                output.addList() = rectangularities;
+            }
         } else if ( outFeatures.get(elem).asString() == "hue" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsHue[0]);
@@ -346,23 +364,32 @@ void SegmentorThread::run() {
                     vals.addDouble(blobsVal[i]);
                 output.addList() = vals;
             }
-        } else if ( outFeatures.get(elem).asString() == "aspectRatio" ) {
+        } else if ( outFeatures.get(elem).asString() == "hueStdDev" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
-                output.addDouble(blobsAspectRatio[0]);
+                output.addDouble(blobsHueStdDev[0]);
             } else {
-                Bottle aspectRatios;
-                for (int i = 0; i < blobsAspectRatio.size(); i++)
-                    aspectRatios.addDouble(blobsVal[i]);
-                output.addList() = aspectRatios;
+                Bottle hueStdDevs;
+                for (int i = 0; i < blobsHueStdDev.size(); i++)
+                    hueStdDevs.addDouble(blobsHueStdDev[i]);
+                output.addList() = hueStdDevs;
             }
-        } else if ( outFeatures.get(elem).asString() == "rectangularity" ) {
+        } else if ( outFeatures.get(elem).asString() == "satStdDev" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
-                output.addDouble(blobsRectangularity[0]);
+                output.addDouble(blobsSatStdDev[0]);
             } else {
-                Bottle rectangularities;
-                for (int i = 0; i < blobsRectangularity.size(); i++)
-                    rectangularities.addDouble(blobsRectangularity[i]);
-                output.addList() = rectangularities;
+                Bottle satStdDevs;
+                for (int i = 0; i < blobsSatStdDev.size(); i++)
+                    satStdDevs.addDouble(blobsSatStdDev[i]);
+                output.addList() = satStdDevs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "valStdDev" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsValStdDev[0]);
+            } else {
+                Bottle valStdDevs;
+                for (int i = 0; i < blobsValStdDev.size(); i++)
+                    valStdDevs.addDouble(blobsValStdDev[i]);
+                output.addList() = valStdDevs;
             }
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
