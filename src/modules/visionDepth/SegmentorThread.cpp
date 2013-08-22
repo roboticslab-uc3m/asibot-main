@@ -174,9 +174,11 @@ void SegmentorThread::run() {
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
-    vector<double> blobsAngle,blobsArea,blobsAspectRatio,blobsAxisFirst,blobsAxisSecond,blobsRectangularity;
+    vector<double> blobsAngle,blobsArea,blobsAspectRatio,blobsAxisFirst,blobsAxisSecond;
+    vector<double> blobsRectangularity,blobsSolidity;
     vector<double> blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev;
     travis.getBlobsArea(blobsArea);
+    travis.getBlobsSolidity(blobsSolidity);
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
@@ -354,6 +356,15 @@ void SegmentorThread::run() {
                 for (int i = 0; i < blobsAxisSecond.size(); i++)
                     axisSeconds.addDouble(blobsAxisSecond[i]);
                 output.addList() = axisSeconds;
+            }
+        } else if ( outFeatures.get(elem).asString() == "solidity" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsSolidity[0]);
+            } else {
+                Bottle solidities;
+                for (int i = 0; i < blobsSolidity.size(); i++)
+                    solidities.addDouble(blobsSolidity[i]);
+                output.addList() = solidities;
             }
         } else if ( outFeatures.get(elem).asString() == "hue" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
