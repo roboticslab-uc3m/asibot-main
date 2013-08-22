@@ -174,8 +174,9 @@ void SegmentorThread::run() {
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
-    vector<double> blobsAngle,blobsArea;
+    vector<double> blobsAngle,blobsArea,blobsHue,blobsSat,blobsVal;
     travis.getBlobsArea(blobsArea);
+    travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
@@ -314,6 +315,33 @@ void SegmentorThread::run() {
                 for (int i = 0; i < blobsArea.size(); i++)
                     areas.addDouble(blobsArea[i]);
                 output.addList() = areas;
+            }
+        } else if ( outFeatures.get(elem).asString() == "hue" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsHue[0]);
+            } else {
+                Bottle hues;
+                for (int i = 0; i < blobsHue.size(); i++)
+                    hues.addDouble(blobsHue[i]);
+                output.addList() = hues;
+            }
+        } else if ( outFeatures.get(elem).asString() == "sat" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsSat[0]);
+            } else {
+                Bottle sats;
+                for (int i = 0; i < blobsSat.size(); i++)
+                    sats.addDouble(blobsSat[i]);
+                output.addList() = sats;
+            }
+        } else if ( outFeatures.get(elem).asString() == "val" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsVal[0]);
+            } else {
+                Bottle vals;
+                for (int i = 0; i < blobsVal.size(); i++)
+                    vals.addDouble(blobsVal[i]);
+                output.addList() = vals;
             }
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
