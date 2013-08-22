@@ -174,13 +174,14 @@ void SegmentorThread::run() {
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
-    vector<double> blobsAngle,blobsArea,blobsAspectRatio;
+    vector<double> blobsAngle,blobsArea,blobsAspectRatio,blobsRectangularity;
     vector<double> blobsHue,blobsSat,blobsVal;
     travis.getBlobsArea(blobsArea);
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
     if (!ok) return;
-    travis.getBlobsAspectRatio(blobsAspectRatio); // must be called after getBlobsAngle!!!!
+    travis.getBlobsAspectRatio(blobsAspectRatio);  // must be called after getBlobsAngle!!!!
+    travis.getBlobsRectangularity(blobsRectangularity);  // must be called after getBlobsAngle!!!!
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
     travis.release();
     // { openCv Mat Bgr -> yarp ImageOf Rgb}
@@ -353,6 +354,15 @@ void SegmentorThread::run() {
                 for (int i = 0; i < blobsAspectRatio.size(); i++)
                     aspectRatios.addDouble(blobsVal[i]);
                 output.addList() = aspectRatios;
+            }
+        } else if ( outFeatures.get(elem).asString() == "rectangularity" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsRectangularity[0]);
+            } else {
+                Bottle rectangularities;
+                for (int i = 0; i < blobsRectangularity.size(); i++)
+                    rectangularities.addDouble(blobsRectangularity[i]);
+                output.addList() = rectangularities;
             }
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
