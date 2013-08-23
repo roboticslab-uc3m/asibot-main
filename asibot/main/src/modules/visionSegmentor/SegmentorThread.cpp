@@ -93,7 +93,7 @@ void SegmentorThread::run() {
     // Because Travis stuff goes with [openCv Mat Bgr] for now
     Travis travis;    // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
-    travis.binarize(algorithm, threshold);
+    travis.binarize(algorithm.c_str(), threshold);
     travis.morphClosing( inYarpImg->width() * 0.04 ); // 4 for 100, very rule-of-thumb
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
