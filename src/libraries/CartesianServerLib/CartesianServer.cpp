@@ -34,7 +34,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     printf("CartesianServer using movjLocal: %s, movjRemote: %s.\n",movjLocal.c_str(),movjRemote.c_str());
 
     //------------------------------CARTESIAN--------------------------------//
-    Property options(rf.toString());  // Little hack to get rf stuff to the cartesian device
+    Property options(rf.toString().c_str());  // Little hack to get rf stuff to the cartesian device
     options.put("device",controller);
     cartesianDevice.open(options);
     if (!cartesianDevice.isValid()) {
@@ -50,7 +50,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     } else printf("[CartesianServer] success: Acquired cartesian interface.\n");
 
     //--------------------------------JOINT----------------------------------//
-    Property robotOptions(rf.toString());  // Little hack to get rf stuff to the module
+    Property robotOptions(rf.toString().c_str());  // Little hack to get rf stuff to the module
     robotOptions.put("device","remote_controlboard");
     robotOptions.put("remote",movjRemote);
     robotOptions.put("local",movjLocal);

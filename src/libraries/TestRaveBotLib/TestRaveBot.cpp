@@ -20,7 +20,7 @@ bool TestRaveBot::configure(ResourceFinder &rf) {
     else robot_name = DEFAULT_ROBOT_NAME;
 
 //    Property options;
-    Property options(rf.toString());  // Little hack to get rf stuff to the robot device
+    Property options(rf.toString().c_str());  // Little hack to get rf stuff to the robot device
     options.put("device","controlboard");
     options.put("subdevice","ravebot");
     options.put("name","/ravebot");
