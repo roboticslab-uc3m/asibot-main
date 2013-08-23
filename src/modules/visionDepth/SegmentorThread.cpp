@@ -130,11 +130,25 @@ void SegmentorThread::init(ResourceFinder &rf) {
 
     yarp::sig::Matrix H_0_c = rotZ(-90+pan);
     H_0_c.resize(4,4);
+    H_0_c(0,3)=0;
+    H_0_c(1,3)=0;
+    H_0_c(2,3)=0;
+    H_0_c(3,0)=0;
+    H_0_c(3,1)=0;
+    H_0_c(3,2)=0;
     H_0_c(3,3)=1;
     printf("*** H_0_c *** \n(%s)\n\n", H_0_c.toString().c_str());
 
     yarp::sig::Matrix H_c_k = rotX(-90.0+tilt);
     H_c_k.resize(4,4);
+    //
+    H_c_k(0,3)=0;
+    H_c_k(1,3)=0;
+    H_c_k(2,3)=0;
+    H_c_k(3,0)=0;
+    H_c_k(3,1)=0;
+    H_c_k(3,2)=0;
+    //
     H_c_k(2,3)=height;
     H_c_k(3,3)=1;
     printf("*** H_c_k *** \n(%s)\n\n", H_c_k.toString().c_str());
