@@ -42,7 +42,7 @@
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 2
 #define DEFAULT_MORPH_CLOSING 2
-#define DEFAULT_OUT_FEATURES "locX0 locY0 locZ0 aspectRatio area rectangularity axisFirst axisSecond solidity angle hue sat val hueStdDev satStdDev valStdDev"  // it's a bottle!!
+#define DEFAULT_OUT_FEATURES "locX0 locY0 locZ0 area hue sat val angle aspectRatio rectangularity axisFirst axisSecond solidity hueStdDev satStdDev valStdDev"  // it's a bottle!!
 #define DEFAULT_OUT_FEATURES_FORMAT 0  // 0=bottled,1=minimal
 #define DEFAULT_OUT_IMAGE 1
 #define DEFAULT_RATE_MS 20
