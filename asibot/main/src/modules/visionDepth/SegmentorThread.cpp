@@ -3,14 +3,8 @@
 #include "SegmentorThread.hpp"
 
 /************************************************************************/
-void
-SegmentorThread::setInDepth(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> > * _pInDepth) {
-    pInDepth = _pInDepth;
-}
-
-/************************************************************************/
-void SegmentorThread::setInImg(BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> > * _pInImg) {
-    pInImg = _pInImg;
+void SegmentorThread::setIKinectDeviceDriver(IKinectDeviceDriver * _kinect) {
+    kinect = _kinect;
 }
 
 /************************************************************************/
@@ -164,7 +158,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
 void SegmentorThread::run() {
     // printf("[SegmentorThread] run()\n");
 
-    ImageOf<PixelRgb> *inYarpImg = pInImg->read(false);
+    /*ImageOf<PixelRgb> *inYarpImg = pInImg->read(false);
     ImageOf<PixelFloat> *depth = pInDepth->read(false);
     if (inYarpImg==NULL) {
         //printf("No img yet...\n");
@@ -173,12 +167,24 @@ void SegmentorThread::run() {
     if (depth==NULL) {
         //printf("No depth yet...\n");
         return;
+    };*/
+
+    ImageOf<PixelRgb> inYarpImg = kinect->getImageMap();
+    if (inYarpImg.height()<10) {
+        //printf("No img yet...\n");
+        return;
+    };
+    ImageOf<PixelInt> depth = kinect->getDepthMap();
+    if (depth.height()<10) {
+        //printf("No img yet...\n");
+        return;
     };
 
+
     // {yarp ImageOf Rgb -> openCv Mat Bgr}
-    IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg->width(), inYarpImg->height()),
+    IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg.width(), inYarpImg.height()),
                                          IPL_DEPTH_8U, 3 );
-    cvCvtColor((IplImage*)inYarpImg->getIplImage(), inIplImage, CV_RGB2BGR);
+    cvCvtColor((IplImage*)inYarpImg.getIplImage(), inIplImage, CV_RGB2BGR);
     Mat inCvMat(inIplImage);
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
@@ -186,7 +192,7 @@ void SegmentorThread::run() {
     Travis travis(false,true);  // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
     travis.binarize(algorithm.c_str(), threshold);
-    travis.morphClosing( inYarpImg->width() * morphClosing / 100.0 );
+    travis.morphClosing( inYarpImg.width() * morphClosing / 100.0 );
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
@@ -218,7 +224,7 @@ void SegmentorThread::run() {
         if (blobsXY[i].x<0) return;
         if (blobsXY[i].y<0) return;
         // double mmZ_tmp = depth->pixel(int(blobsXY[i].x +cx_d-cx_rgb),int(blobsXY[i].y +cy_d-cy_rgb));
-        double mmZ_tmp = depth->pixel(int(blobsXY[i].x),int(blobsXY[i].y));
+        double mmZ_tmp = depth.pixel(int(blobsXY[i].x),int(blobsXY[i].y));
         double mmX_tmp = 1000.0 * ( (blobsXY[i].x - cx_d) * mmZ_tmp/1000.0 ) / fx_d;
         double mmY_tmp = 1000.0 * ( (blobsXY[i].y - cy_d) * mmZ_tmp/1000.0 ) / fy_d;
         mmZ.push_back( mmZ_tmp );

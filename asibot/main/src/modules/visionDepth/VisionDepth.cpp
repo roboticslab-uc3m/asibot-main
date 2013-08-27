@@ -17,16 +17,26 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     if(rf.check("watchdog")) watchdog = rf.find("watchdog").asDouble();
     fprintf(stdout,"VisionDepth using watchdog: %f.\n",watchdog);
 
-    segmentorThread.setInDepth(&inDepth);
-    segmentorThread.setInImg(&inImg);
+    Property options;
+    options.put("device","KinectDeviceLocal");
+    dd.open(options);
+    if(!dd.isValid()) {
+        printf("KinectDeviceLocal device not available.\n");
+	    dd.close();
+        //Network::fini();
+        return false;
+    }
+    printf("KinectDeviceLocal device available.\n");
+    if (! dd.view(kinect) ) printf("KinectDeviceLocal bad view.\n");
+    printf("KinectDeviceLocal ok view.\n");
+
+    segmentorThread.setIKinectDeviceDriver(kinect);
     segmentorThread.setOutImg(&outImg);
     segmentorThread.setOutPort(&outPort);
 
     segmentorThread.init(rf);
 
     //-----------------OPEN LOCAL PORTS------------//
-    inDepth.open("/visionDepth/depth:i");
-    inImg.open("/visionDepth/img:i");
     outImg.open("/visionDepth/img:o");
     outPort.open("/visionDepth/state:o");
 
@@ -49,12 +59,9 @@ bool VisionDepth::updateModule() {
 
 bool VisionDepth::interruptModule() {
     printf("VisionDepth closing...\n");
-    inDepth.interrupt();
-    inImg.interrupt();
     outImg.interrupt();
     outPort.interrupt();
-    inDepth.close();
-    inImg.close();
+    dd.close();
     outImg.close();
     outPort.close();
     return true;
