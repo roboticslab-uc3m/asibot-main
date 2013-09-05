@@ -134,7 +134,8 @@ bool KdlBot::open(Searchable& config) {
     cmc_status = 0;
     startTime = 0;
 
-    Property options(config.toString());
+    Property options;
+    options.fromString(config.toString());
     options.put("device",strRobotDevice);
     options.put("subdevice",strRobotSubDevice);
     options.put("name",strRobotName);
