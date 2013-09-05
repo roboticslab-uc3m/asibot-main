@@ -30,7 +30,7 @@ Assuming you have done the steps in \ref install_asibot, type:
 
 \verbatim
 cd $ASIBOT_DIR
-cmake .. -DENABLE_colorSegmentor=ON -DENABLE_colorDepth=ON
+cmake .. -DENABLE_colorSegmentor=ON -DENABLE_colorDepth=ON -DENABLE_visionSegmentor=ON -DENABLE_visionDepth=ON
 make -j3; sudo make install; cd ../../..
 \endverbatim
 
@@ -40,6 +40,7 @@ Done! You are now probably interested in one of the following links:
   \li \ref asibot_colorDepthKinect
   \li \ref asibot_colorDepthSim
   \li \ref asibot_colorSegmentorSim
+  \li \ref asibot_visionDepthKinect
 
 <hr>
 
