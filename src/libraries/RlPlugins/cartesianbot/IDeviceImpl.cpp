@@ -74,7 +74,8 @@ bool CartesianBot::open(Searchable& config) {
         ::exit(1);
     }
 
-    Property options(config.toString());
+    Property options;
+    options.fromString(config.toString());
     options.put("device",strRobotDevice);
     options.put("subdevice",strRobotSubDevice);
     options.put("name",strRobotName);
