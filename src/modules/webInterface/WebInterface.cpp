@@ -68,7 +68,9 @@ bool WebInterface::updateModule() {
                    contact.getPort());
     Bottle push;
     push.addString("web");
-    ConstString div = ConstString("<div>")+ConstString::toString(counter)+" counter count</div>";
+    std::ostringstream s;
+    s << counter;
+    ConstString div = ConstString("<div>")+s.str()+" counter count</div>";
     push.addString(div);
     server.write(push);
     counter++;
