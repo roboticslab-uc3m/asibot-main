@@ -6,6 +6,7 @@ First install the depencencies:
   \li \ref install_cmake_on_ubuntu
   \li \ref install_yarp_on_ubuntu
   \li \ref install_opencv_on_ubuntu
+  \li \ref install_travis_on_ubuntu
 
 For Kinect support, install OpenNI, and then type:
 
