@@ -67,10 +67,10 @@ using namespace yarp::math;
  */
 
 class CartesianBot : public DeviceDriver, public RateThread, public ICartesianControl {
- public:
+  public:
 
-  // Set the Thread Rate in the class constructor
-  CartesianBot() : RateThread(DEFAULT_CMC_MS) {}  // In ms
+    // Set the Thread Rate in the class constructor
+    CartesianBot() : RateThread(DEFAULT_CMC_MS) {}  // In ms
 
 // -- Helper Funcion declarations. Implementation in HelperFuncs.cpp--
 
@@ -703,5 +703,5 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     bool isQuiet;
 };
 
-#endif
+#endif  // __CARTESIANBOT_H__
 
