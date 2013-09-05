@@ -66,7 +66,9 @@ void RaveBot::run() {
         drawnInfoList.push_back(drawnInfo);
         drawnKinBodyPtr->InitFromGeometries(drawnInfoList);
         ConstString drawnName("drawn_");
-        drawnName += ConstString::toString(drawnElems++);
+        std::ostringstream s;  // drawnName += std::to_string(drawnElems++);  // C++11 only
+        s << drawnElems++;
+        drawnName += s.str();
         drawnKinBodyPtr->SetName(drawnName.c_str());
         penv->Add(drawnKinBodyPtr,true);
         }  // the environment is not locked anymore
