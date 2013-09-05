@@ -80,7 +80,9 @@ bool KdlBot::open(Searchable& config) {
 
     for(int motor=0;motor<cmcNumMotors;motor++) {
         ConstString link("link_");
-        link+=ConstString::toString(motor);
+        std::ostringstream s;  // link+=ConstString::toString(motor);
+        s << motor;
+        link += s.str();
         Bottle &bLink=config.findGroup(link);
         if(!bLink.isNull()) printf("KdlBot using %s: ", link.c_str());
         else printf("[warning] No args at: %s\n", link.c_str());
