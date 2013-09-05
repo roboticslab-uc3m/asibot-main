@@ -50,6 +50,7 @@ protected:
     int stringToInt(const ConstString& inString);
     double stringToDouble(const ConstString& inString);
     ConstString doubleToString(const double& inDouble);
+    ConstString intToString(const int& inInt);
     ConstString pointButtonCreator(const ConstString& pointsFile);
     ConstString wordOptionCreator(const ConstString& wordsFile);
     ConstString fileListCreator();
