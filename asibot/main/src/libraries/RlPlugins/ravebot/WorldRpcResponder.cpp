@@ -23,7 +23,9 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr boxKinBodyPtr = RaveCreateKinBody(pEnv,"");
                 ConstString boxName("box_");
-                boxName += ConstString::toString(boxKinBodyPtrs.size()+1);
+                std::ostringstream s;  // boxName += std::to_string(boxKinBodyPtrs.size()+1);  // C++11 only
+                s << boxKinBodyPtrs.size()+1;
+                boxName += s.str();
                 boxKinBodyPtr->SetName(boxName.c_str());
                 //
                 std::vector<AABB> boxes(1);
@@ -46,7 +48,9 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr sboxKinBodyPtr = RaveCreateKinBody(pEnv,"");
                 ConstString sboxName("sbox_");
-                sboxName += ConstString::toString(sboxKinBodyPtrs.size()+1);
+                std::ostringstream s;  // sboxName += std::to_string(sboxKinBodyPtrs.size()+1);  // C++11 only
+                s << sboxKinBodyPtrs.size()+1;
+                sboxName += s.str();
                 sboxKinBodyPtr->SetName(sboxName.c_str());
                 //
                 std::vector<AABB> boxes(1);
@@ -63,7 +67,9 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr ssphKinBodyPtr = RaveCreateKinBody(pEnv,"");
                 ConstString ssphName("ssph_");
-                ssphName += ConstString::toString(ssphKinBodyPtrs.size()+1);
+                std::ostringstream s;  // ssphName += std::to_string(ssphKinBodyPtrs.size()+1);  // C++11 only
+                s << ssphKinBodyPtrs.size()+1;
+                ssphName += s.str();
                 ssphKinBodyPtr->SetName(ssphName.c_str());
                 //
                 std::vector<Vector> spheres(1);
@@ -79,7 +85,9 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
                 KinBodyPtr scylKinBodyPtr = RaveCreateKinBody(pEnv,"");
                 ConstString scylName("scyl_");
-                scylName += ConstString::toString(scylKinBodyPtrs.size()+1);
+                std::ostringstream s;  // scylName += std::to_string(scylKinBodyPtrs.size()+1);  // C++11 only
+                s << scylKinBodyPtrs.size()+1;
+                scylName += s.str();
                 scylKinBodyPtr->SetName(scylName.c_str());
                 //
                 std::list<KinBody::Link::GeometryInfo> scylInfoList;
