@@ -153,6 +153,13 @@ ConstString WebResponder::doubleToString(const double& inDouble) {
 }
 
 /************************************************************************/
+ConstString WebResponder::intToString(const int& inInt) {
+    std::ostringstream s;
+    s << inInt;
+    return ConstString(s.str().c_str());
+}
+
+/************************************************************************/
 ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
     ConstString ret;
     printf("Reading points from file: %s\n",pointsFile.c_str());
@@ -596,7 +603,7 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString camHost = Network::queryName("/ravebot/asibot_tip/img:o").getHost();
         int camPort = Network::queryName("/ravebot/asibot_tip/img:o").getPort();
         ConstString camSocket = "http://";
-        camSocket += camHost + ":" + ConstString::toString(camPort) + "/?action";
+        camSocket += camHost + ":" + intToString(camPort) + "/?action";
         printf("\nCam running at: %s\n\n", camSocket.c_str());
         string str = readHtml("video.html");
         replaceAll(str, "<SIMCAMIP>", camSocket.c_str());
