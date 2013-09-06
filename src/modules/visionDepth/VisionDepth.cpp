@@ -5,30 +5,34 @@
 /************************************************************************/
 bool VisionDepth::configure(ResourceFinder &rf) {
 
+    ConstString strKinectDevice = DEFAULT_KINECT_DEVICE;
     watchdog = DEFAULT_WATCHDOG;  // double
 
     fprintf(stdout,"--------------------------------------------------------------\n");
     if (rf.check("help")) {
         printf("VisionDepth options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--kinectDevice (device we create, default: \"%s\")\n",strKinectDevice.c_str());
         printf("\t--watchdog ([s] default: \"%f\")\n",watchdog);
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
+    if(rf.check("kinectDevice")) strKinectDevice = rf.find("kinectDevice").asString();
     if(rf.check("watchdog")) watchdog = rf.find("watchdog").asDouble();
-    fprintf(stdout,"VisionDepth using watchdog: %f.\n",watchdog);
+    printf("VisionDepth using watchdog: %f.\n",watchdog);
 
     Property options;
-    options.put("device","KinectDeviceLocal");
+    options.put("device",strKinectDevice);
+    options.put("localPortPrefix","/me");
     dd.open(options);
     if(!dd.isValid()) {
-        printf("KinectDeviceLocal device not available.\n");
+        printf("kinectDevice not available.\n");
 	    dd.close();
         //Network::fini();
         return false;
     }
-    printf("KinectDeviceLocal device available.\n");
-    if (! dd.view(kinect) ) printf("KinectDeviceLocal bad view.\n");
-    printf("KinectDeviceLocal ok view.\n");
+    printf("kinectDevice available.\n");
+    if (! dd.view(kinect) ) fprintf(stderr,"kinectDevice bad view.\n");
+    else printf("kinectDevice ok view.\n");
 
     segmentorThread.setIKinectDeviceDriver(kinect);
     segmentorThread.setOutImg(&outImg);

@@ -5,6 +5,7 @@
 
 #include "SegmentorThread.hpp"
 
+#define DEFAULT_KINECT_DEVICE "KinectDeviceLocal"
 #define DEFAULT_WATCHDOG    2       // [s]
 
 using namespace yarp::os;
