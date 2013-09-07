@@ -6,6 +6,8 @@
 #include "SegmentorThread.hpp"
 
 #define DEFAULT_KINECT_DEVICE "KinectDeviceLocal"
+#define DEFAULT_KINECT_LOCAL "/visionDepth"
+#define DEFAULT_KINECT_REMOTE "/kinect"
 #define DEFAULT_WATCHDOG    2       // [s]
 
 using namespace yarp::os;
