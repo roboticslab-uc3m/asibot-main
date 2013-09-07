@@ -13,16 +13,21 @@ bool VisionDepth::configure(ResourceFinder &rf) {
         printf("VisionDepth options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--kinectDevice (device we create, default: \"%s\")\n",strKinectDevice.c_str());
+        printf("\t--kinectLocal (if accesing remote, local port name, default: \"%s\")\n",strKinectLocal.c_str());
+        printf("\t--kinectRemote (if accesing remote, remote port name, default: \"%s\")\n",strKinectRemote.c_str());
         printf("\t--watchdog ([s] default: \"%f\")\n",watchdog);
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
     if(rf.check("kinectDevice")) strKinectDevice = rf.find("kinectDevice").asString();
+    if(rf.check("kinectLocal")) strKinectLocal = rf.find("kinectLocal").asString();
+    if(rf.check("kinectRemote")) strKinectRemote = rf.find("kinectRemote").asString();
     if(rf.check("watchdog")) watchdog = rf.find("watchdog").asDouble();
     printf("VisionDepth using watchdog: %f.\n",watchdog);
 
     Property options;
     options.put("device",strKinectDevice);
-    options.put("localPortPrefix","/me");
+    options.put("localPortPrefix",strKinectLocal);  //
+    options.put("remotePortPrefix",strKinectRemote);  //
     dd.open(options);
     if(!dd.isValid()) {
         printf("kinectDevice not available.\n");
