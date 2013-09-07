@@ -24,6 +24,8 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     if(rf.check("kinectLocal")) strKinectLocal = rf.find("kinectLocal").asString();
     if(rf.check("kinectRemote")) strKinectRemote = rf.find("kinectRemote").asString();
     if(rf.check("watchdog")) watchdog = rf.find("watchdog").asDouble();
+    printf("VisionDepth using kinectDevice: %s, kinectLocal: %s, kinectRemote: %s.\n",
+        strKinectDevice.c_str(), strKinectLocal.c_str(), strKinectRemote.c_str());
     printf("VisionDepth using watchdog: %f.\n",watchdog);
 
     Property options;
@@ -32,14 +34,14 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     options.put("remotePortPrefix",strKinectRemote);  //
     dd.open(options);
     if(!dd.isValid()) {
-        printf("kinectDevice not available.\n");
+        fprintf(stderr,"[VisionDepth] warning: kinectDevice not available.\n");
 	    dd.close();
         //Network::fini();
         return false;
     }
-    printf("kinectDevice available.\n");
-    if (! dd.view(kinect) ) fprintf(stderr,"kinectDevice bad view.\n");
-    else printf("kinectDevice ok view.\n");
+    printf("[VisionDepth] success: kinectDevice available.\n");
+    if (! dd.view(kinect) ) fprintf(stderr,"[VisionDepth] warning: kinectDevice bad view.\n");
+    else printf("[VisionDepth] success: kinectDevice ok view.\n");
 
     segmentorThread.setIKinectDeviceDriver(kinect);
     segmentorThread.setOutImg(&outImg);
