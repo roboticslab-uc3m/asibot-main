@@ -6,6 +6,8 @@
 bool VisionDepth::configure(ResourceFinder &rf) {
 
     ConstString strKinectDevice = DEFAULT_KINECT_DEVICE;
+    ConstString strKinectLocal = DEFAULT_KINECT_LOCAL;
+    ConstString strKinectRemote = DEFAULT_KINECT_REMOTE;
     watchdog = DEFAULT_WATCHDOG;  // double
 
     fprintf(stdout,"--------------------------------------------------------------\n");
