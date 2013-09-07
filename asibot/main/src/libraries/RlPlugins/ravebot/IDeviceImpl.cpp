@@ -266,8 +266,15 @@ bool RaveBot::open(Searchable& config) {
                 pcamerasensorbase.push_back(psensorbase);  // "save"
                 BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >;
                 ConstString tmpName("/ravebot/");
-                tmpName += psensorbase->GetName().c_str();
-                tmpName += "/img:o";
+                ConstString cameraSensorString(psensorbase->GetName());
+                size_t pos = cameraSensorString.find("imageMap");
+                if ( pos != std::string::npos) {
+                    tmpName += cameraSensorString.substr (0,pos-1);
+                    tmpName += "/imageMap:o";
+                } else {
+                    tmpName += cameraSensorString.c_str();
+                    tmpName += "/img:o";
+                }
                 tmpPort->open(tmpName);
                 p_imagen.push_back(tmpPort);
             } else if (psensorbase->Supports(SensorBase::ST_Laser)) {
@@ -286,8 +293,15 @@ bool RaveBot::open(Searchable& config) {
                 plasersensorbase.push_back(psensorbase);  // "save"
                 BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >;
                 ConstString tmpName("/ravebot/");
-                tmpName += psensorbase->GetName().c_str();
-                tmpName += "/depth:o";
+                ConstString depthSensorString(psensorbase->GetName());
+                size_t pos = depthSensorString.find("depthMap");
+                if ( pos != std::string::npos) {
+                    tmpName += depthSensorString.substr (0,pos-1);
+                    tmpName += "/depthMap:o";
+                } else {
+                    tmpName += depthSensorString.c_str();
+                    tmpName += "/depth:o";
+                }
                 tmpPort->open(tmpName);
                 p_depth.push_back(tmpPort);
             } else if (psensorbase->Supports(SensorBase::ST_Force6D)) {
