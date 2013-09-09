@@ -443,6 +443,15 @@ void SegmentorThread::run() {
                     valStdDevs.addDouble(blobsValStdDev[i]);
                 output.addList() = valStdDevs;
             }
+        } else if ( outFeatures.get(elem).asString() == "time" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(Time::now());
+            } else {
+                Bottle times;
+                for (int i = 0; i < blobsArea.size(); i++)
+                    times.addDouble(Time::now());
+                output.addList() = times;
+            }
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
     pOutPort->write(output);
