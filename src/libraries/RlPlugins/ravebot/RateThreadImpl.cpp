@@ -142,7 +142,8 @@ void RaveBot::run() {
         else if(sensorRanges.size()==49152) i_depth.resize(256,192);
         else if(sensorRanges.size()==307200) i_depth.resize(640,480);
         else if(sensorRanges.size()==4) i_depth.resize(2,2);
-        else printf("[warning] unrecognized laser sensor data size.\n");
+        //else printf("[warning] unrecognized laser sensor data size.\n");
+        else i_depth.resize(sensorRanges.size(),1);
         for (int i_y = 0; i_y < i_depth.height(); ++i_y) {  // was y in x before
             for (int i_x = 0; i_x < i_depth.width(); ++i_x) {
                 //double p = sensorRanges[i_y+(i_x*i_depth.height())].z;
