@@ -33,6 +33,7 @@
 #define DEFAULT_GEN_REF_SPEED 7.5  // Exposed.
 #define DEFAULT_GEN_VEL_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_JMC_MS 20  // [ms]
+#define DEFAULT_JMC_MS_ACC 1  // multiplier
 #define DEFAULT_MODE_POS_VEL 0  // 0=Position, 1=Velocity.
 #define DEFAULT_PHYSICS "none"
 #define DEFAULT_VIEWER 1
@@ -388,7 +389,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<double> targetExposed;  // Exposed.
     std::vector<double> velRawExposed;  // For conversion.
     std::vector<double> velRaw;
-    double jmcMs;
+    double jmcMs, jmcMsAcc;
     // Rave-specific parameters //
     EnvironmentBasePtr penv;
     PhysicsEngineBasePtr pe;
@@ -417,7 +418,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     std::vector<int> cameraHeight;
     // YARP_sig (simulated camera image publishing)
     std::vector< BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelRgb> >* > p_imagen;
-    std::vector< BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >* > p_depth;
+    std::vector< BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelInt> >* > p_depth;
     std::vector< BufferedPort<yarp::os::Bottle>* > p_force6d;
     // world rpc server
     RpcServer worldRpcServer;

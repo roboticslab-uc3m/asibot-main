@@ -81,7 +81,7 @@ void RaveBot::run() {
         pndof->SetJointValues(extraEncRaw);  // More compatible with physics??
     }
 
-    penv->StepSimulation(jmcMs/1000.0);  // StepSimulation must be given in seconds
+    penv->StepSimulation(jmcMsAcc*jmcMs/1000.0);  // StepSimulation must be given in seconds
 
     for(unsigned int camIter = 0; camIter<pcamerasensorbase.size(); camIter++ ) {
         pcamerasensorbase[camIter]->GetSensorData(pcamerasensordata[camIter]);
@@ -136,7 +136,7 @@ void RaveBot::run() {
                 p[3] = _data->intensity[i];
             }
         }*/
-        yarp::sig::ImageOf<yarp::sig::PixelFloat>& i_depth = p_depth[laserIter]->prepare();
+        yarp::sig::ImageOf<yarp::sig::PixelInt>& i_depth = p_depth[laserIter]->prepare();
         if(sensorRanges.size()==3072) i_depth.resize(64,48);  // Tamaño de la pantalla (64,48)
         else if(sensorRanges.size()==12288) i_depth.resize(128,96);
         else if(sensorRanges.size()==49152) i_depth.resize(256,192);
