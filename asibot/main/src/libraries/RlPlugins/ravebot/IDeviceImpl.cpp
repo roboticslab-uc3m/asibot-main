@@ -10,6 +10,7 @@ bool RaveBot::open(Searchable& config) {
 
     numMotors = DEFAULT_NUM_MOTORS;
     jmcMs = DEFAULT_JMC_MS;
+    jmcMsAcc = DEFAULT_JMC_MS_ACC;
 
     ConstString env = DEFAULT_ENV;
     ConstString externObj = DEFAULT_EXTERN_OBJ;
@@ -65,6 +66,7 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genEncRawExposed")) genEncRawExposed = config.find("genEncRawExposed").asDouble();
     if (config.check("genVelRawExposed")) genVelRawExposed = config.find("genVelRawExposed").asDouble();    
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
+    if (config.check("jmcMsAcc")) jmcMsAcc = config.find("jmcMsAcc").asDouble();
     if (config.check("modePosVel")) modePosVel = config.find("modePosVel").asInt();
     if (config.check("physics")) physics = config.find("physics").asString();
     if (config.check("viewer")) viewer = config.find("viewer").asInt();
@@ -72,7 +74,8 @@ bool RaveBot::open(Searchable& config) {
         genInitPos, genJointTol,genMaxLimit,genMinLimit);
     printf("RaveBot using genRefSpeed: %f, genEncRawExposed: %f, genVelRawExposed: %f.\n",
         genRefSpeed,genEncRawExposed, genVelRawExposed);
-    printf("RaveBot using jmcMs: %f, modePosVel: %d, physics: %s, viewer: %d.\n",jmcMs,modePosVel,physics.c_str(),viewer);
+    printf("RaveBot using jmcMs: %f, jmcMsAcc: %f, modePosVel: %d, physics: %s, viewer: %d.\n",
+        jmcMs,jmcMsAcc,modePosVel,physics.c_str(),viewer);
 
     Bottle* initPoss;
     if (config.check("initPoss")) {
@@ -291,7 +294,7 @@ bool RaveBot::open(Searchable& config) {
                 // Get a pointer to access the laser data stream
                 plasersensordata.push_back(boost::dynamic_pointer_cast<SensorBase::LaserSensorData>(psensorbase->CreateSensorData(SensorBase::ST_Laser)));
                 plasersensorbase.push_back(psensorbase);  // "save"
-                BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelFloat> >;
+                BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelInt> >* tmpPort = new BufferedPort<yarp::sig::ImageOf<yarp::sig::PixelInt> >;
                 ConstString tmpName("/ravebot/");
                 ConstString depthSensorString(psensorbase->GetName());
                 size_t pos = depthSensorString.find("depthMap");
