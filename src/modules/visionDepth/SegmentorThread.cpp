@@ -176,7 +176,7 @@ void SegmentorThread::run() {
     };
     ImageOf<PixelInt> depth = kinect->getDepthMap();
     if (depth.height()<10) {
-        //printf("No img yet...\n");
+        //printf("No depth yet...\n");
         return;
     };
 
