@@ -17,7 +17,7 @@
 
         <module>
                 <name>visionDepth</name>
-                <parameters>--kinectDevice KinectDeviceClient --tilt 0 --height 595 --maxNumBlobs 1 --algorithm blueMinusRed --morphClosing 2 --threshold 30 --outFeaturesFormat 1</parameters>
+                <parameters>--kinectDevice KinectDeviceClient --tilt 0 --height 595 --maxNumBlobs 1 --algorithm blueMinusRed --threshold 65 --morphClosing 0 --outFeaturesFormat 1</parameters>
                 <node>localhost</node>
         </module>
         <module>
