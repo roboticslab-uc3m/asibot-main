@@ -27,14 +27,6 @@
         </module>
 
         <connection>
-                <from>/kinect/imageMap:o</from>
-                <to>/visionDepth/img:i</to>
-        </connection>
-        <connection>
-                <from>/kinect/depthMap:o</from>
-                <to>/visionDepth/depth:i</to>
-        </connection>
-        <connection>
                 <from>/visionDepth/img:o</from>
                 <to>/yarpview/visionDepth/img:i</to>
         </connection>
