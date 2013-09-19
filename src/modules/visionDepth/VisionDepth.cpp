@@ -32,12 +32,9 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     options.put("device",strKinectDevice);
     options.put("localPortPrefix",strKinectLocal);  //
     options.put("remotePortPrefix",strKinectRemote);  //
-    dd.open(options);
-    if(!dd.isValid()) {
-        fprintf(stderr,"[VisionDepth] warning: kinectDevice not available.\n");
-	    dd.close();
-        //Network::fini();
-        return false;
+    while(!dd.open(options)) {
+        printf("Waiting for kinectDevice \"%s\"...\n",strKinectDevice.c_str());
+        Time::delay(1);
     }
     printf("[VisionDepth] success: kinectDevice available.\n");
     if (! dd.view(kinect) ) fprintf(stderr,"[VisionDepth] warning: kinectDevice bad view.\n");
