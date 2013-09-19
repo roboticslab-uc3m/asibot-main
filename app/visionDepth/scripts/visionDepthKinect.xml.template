@@ -8,7 +8,7 @@
 
         <module>
                 <name>yarpview</name>
-                <parameters>--name /yarpview/kinect/img:i</parameters>
+                <parameters>--name /yarpview/visionDepth/img:i</parameters>
                 <node>localhost</node>
         </module>
         <connection>
