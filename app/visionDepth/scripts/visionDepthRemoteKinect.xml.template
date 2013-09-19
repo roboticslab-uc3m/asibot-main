@@ -1,5 +1,5 @@
 <application>
-<name>visionDepthKinect App</name>
+<name>visionDepthRemoteKinect App</name>
         <module>
                 <name>yarpdev</name>
                 <parameters>--device KinectDeviceLocal --portPrefix /kinect --noMirror</parameters>
@@ -17,7 +17,7 @@
 
         <module>
                 <name>visionDepth</name>
-                <parameters>--tilt -42 --height 512 --maxNumBlobs 1 --algorithm blueMinusRed --morphClosing 2 --threshold 55 --outFeaturesFormat 1</parameters>
+                <parameters>--kinectDevice KinectDeviceClient --tilt -42 --height 512 --maxNumBlobs 1 --algorithm blueMinusRed --morphClosing 2 --threshold 55 --outFeaturesFormat 1</parameters>
                 <node>localhost</node>
         </module>
         <module>
