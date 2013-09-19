@@ -2,7 +2,7 @@
 <name>visionDepthKinect App</name>
         <module>
                 <name>visionDepth</name>
-                <parameters>--tilt 0 --height 595 --maxNumBlobs 1 --algorithm greenMinusRed --morphClosing 2 --threshold 50 --outFeaturesFormat 1</parameters>
+                <parameters>--tilt 0 --height 595 --maxNumBlobs 1 --algorithm blueMinusRed --threshold 65 --morphClosing 0 --outFeaturesFormat 1</parameters>
                 <node>localhost</node>
         </module>
 
