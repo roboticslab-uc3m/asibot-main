@@ -64,7 +64,7 @@ bool KdlBot::open(Searchable& config) {
     if (config.check("robotLocal")) strRobotLocal = config.find("robotLocal").asString();
     if (config.check("robotRemote")) strRobotRemote = config.find("robotRemote").asString();
     printf("KdlBot using robotDevice: %s, robotSubDevice: %s, robotName: %s.\n",strRobotDevice.c_str(),strRobotSubDevice.c_str(),strRobotName.c_str());
-    printf("CartesianBot using robotLocal: %s, robotRemote: %s.\n",strRobotLocal.c_str(),strRobotRemote.c_str());
+    printf("KdlBot using robotLocal: %s, robotRemote: %s.\n",strRobotLocal.c_str(),strRobotRemote.c_str());
 
     yarp::sig::Matrix ymH0(4,4);
     ConstString ycsH0("H0");
