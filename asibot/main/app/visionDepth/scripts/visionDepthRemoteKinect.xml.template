@@ -1,0 +1,43 @@
+<application>
+<name>visionDepthKinect App</name>
+        <module>
+                <name>yarpdev</name>
+                <parameters>--device KinectDeviceLocal --portPrefix /kinect --noMirror</parameters>
+                <node>localhost</node>
+        </module>
+        <module>
+                <name>yarpview</name>
+                <parameters>--name /yarpview/kinect/img:i</parameters>
+                <node>localhost</node>
+        </module>
+        <connection>
+                <from>/kinect/imageMap:o</from>
+                <to>/yarpview/kinect/img:i</to>
+        </connection>
+
+        <module>
+                <name>visionDepth</name>
+                <parameters>--tilt -42 --height 512 --maxNumBlobs 1 --algorithm blueMinusRed --morphClosing 2 --threshold 55 --outFeaturesFormat 1</parameters>
+                <node>localhost</node>
+        </module>
+        <module>
+                <name>yarpview</name>
+                <parameters>--name /yarpview/visionDepth/img:i</parameters>
+                <node>localhost</node>
+        </module>
+
+        <connection>
+                <from>/kinect/imageMap:o</from>
+                <to>/visionDepth/img:i</to>
+        </connection>
+        <connection>
+                <from>/kinect/depthMap:o</from>
+                <to>/visionDepth/depth:i</to>
+        </connection>
+        <connection>
+                <from>/visionDepth/img:o</from>
+                <to>/yarpview/visionDepth/img:i</to>
+        </connection>
+
+</application>
+
