@@ -32,6 +32,7 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     options.put("device",strKinectDevice);
     options.put("localPortPrefix",strKinectLocal);  //
     options.put("remotePortPrefix",strKinectRemote);  //
+    if(rf.check("noMirror")) options.put("noMirror",1);
     while(!dd.open(options)) {
         printf("Waiting for kinectDevice \"%s\"...\n",strKinectDevice.c_str());
         Time::delay(1);
