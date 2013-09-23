@@ -5,6 +5,21 @@
 
 void xCallbackPort::onRead(Bottle& b) {
     printf("[CartesianServerLib] xCallbackPort Got %s\n", b.toString().c_str());
+    if (b.get(0).getCode() == BOTTLE_TAG_DOUBLE) {
+        Vector xd,od,xdhat,odhat,qdhat;
+        xd.push_back(b.get(0).asDouble());
+        xd.push_back(b.get(1).asDouble());
+        xd.push_back(b.get(2).asDouble());
+        //for (int i = 3; i < lst->size(); i++)
+        //    od.push_back(lst->get(i).asDouble());
+        if(!icart->askForPose(xd,od,xdhat,odhat,qdhat)) return;
+        double qd[100];  // should actually do a malloc depending on qdhat.size() 
+        for (int i = 0; i < qdhat.size(); i++)
+            qd[i] = qdhat[i];
+        icart->stopControl(); // new!!!!
+        ipos->setPositionMode();
+        ipos->positionMove(qd);
+    }
     int choice = b.get(0).asVocab();
     if (b.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
     if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
