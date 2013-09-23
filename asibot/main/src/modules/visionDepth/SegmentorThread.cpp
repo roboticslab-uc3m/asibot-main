@@ -254,7 +254,7 @@ void SegmentorThread::run() {
     // Take advantage we have the travis object and get features for text output
     Bottle output;
     for (int elem = 0; elem < outFeatures.size() ; elem++) {
-        if ( outFeatures.get(elem).asString() == "locX" ) {
+        if ( outFeatures.get(elem).asString() == "mmX" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmX[0]);
             } else {
@@ -263,7 +263,7 @@ void SegmentorThread::run() {
                     locXs.addDouble(mmX[i]);
                 output.addList() = locXs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locY" ) {
+        } else if ( outFeatures.get(elem).asString() == "mmY" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmY[0]);
             } else {
@@ -272,7 +272,7 @@ void SegmentorThread::run() {
                     locYs.addDouble(mmY[i]);
                 output.addList() = locYs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locZ" ) {
+        } else if ( outFeatures.get(elem).asString() == "mmZ" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmZ[0]);
             } else {
@@ -281,7 +281,7 @@ void SegmentorThread::run() {
                     locZs.addDouble(mmZ[i]);
                 output.addList() = locZs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locX0" ) {
+        } else if ( outFeatures.get(elem).asString() == "mmX0" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmX_0[0]);
             } else {
@@ -290,7 +290,7 @@ void SegmentorThread::run() {
                     locXs.addDouble(mmX_0[i]);
                 output.addList() = locXs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locY0" ) {
+        } else if ( outFeatures.get(elem).asString() == "mmY0" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmY_0[0]);
             } else {
@@ -299,7 +299,7 @@ void SegmentorThread::run() {
                     locYs.addDouble(mmY_0[i]);
                 output.addList() = locYs;
             }
-        } else if ( outFeatures.get(elem).asString() == "locZ0" ) {
+        } else if ( outFeatures.get(elem).asString() == "mmZ0" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(mmZ_0[0]);
             } else {
@@ -308,7 +308,34 @@ void SegmentorThread::run() {
                     locZs.addDouble(mmZ_0[i]);
                 output.addList() = locZs;
             }
-         } else if ( outFeatures.get(elem).asString() == "rawX" ) {
+         }else if ( outFeatures.get(elem).asString() == "mX0" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(mmX_0[0]/1000.0);
+            } else {
+                Bottle locXs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locXs.addDouble(mmX_0[i]/1000.0);
+                output.addList() = locXs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "mY0" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(mmY_0[0]/1000.0);
+            } else {
+                Bottle locYs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locYs.addDouble(mmY_0[i]/1000.0);
+                output.addList() = locYs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "mZ0" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(mmZ_0[0]/1000.0);
+            } else {
+                Bottle locZs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locZs.addDouble(mmZ_0[i]/1000.0);
+                output.addList() = locZs;
+            }
+         } else if ( outFeatures.get(elem).asString() == "pxX" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsXY[0].x - cx_d);
             } else {
@@ -317,7 +344,7 @@ void SegmentorThread::run() {
                     locXs.addDouble(blobsXY[i].x - cx_d);
                 output.addList() = locXs;
             }
-        } else if ( outFeatures.get(elem).asString() == "rawY" ) {
+        } else if ( outFeatures.get(elem).asString() == "pxY" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsXY[0].y - cy_d);
             } else {
