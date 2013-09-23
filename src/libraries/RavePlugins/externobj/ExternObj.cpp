@@ -63,7 +63,7 @@ class ExternObjCallbackPort : public yarp::os::BufferedPort<yarp::os::Bottle> {
         //printf("[ExternObjCallbackPort] success: object \"redCan\" exists and at %f %f %f.\n",T.trans.x,T.trans.y,T.trans.z);
         T.trans.x = b.get(0).asDouble()/1000.0;
         T.trans.y = b.get(1).asDouble()/1000.0;
-        //T.trans.z = b.get(2).asDouble();
+        T.trans.z = b.get(2).asDouble()/1000.0;
         _objPtr->SetTransform(T);
     }
 };
