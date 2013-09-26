@@ -13,10 +13,10 @@ void xCallbackPort::onRead(Bottle& b) {
         //for (int i = 3; i < lst->size(); i++)
         //    od.push_back(lst->get(i).asDouble());
         if(!icart->askForPose(xd,od,xdhat,odhat,qdhat)) return;
-        double qd[100];  // should actually do a malloc depending on qdhat.size() 
+        double qd[qdhat.size()];  // should actually do a malloc depending on qdhat.size() 
         for (int i = 0; i < qdhat.size(); i++)
             qd[i] = qdhat[i];
-        icart->stopControl(); // new!!!!
+        //icart->stopControl(); // new!!!!
         ipos->setPositionMode();
         ipos->positionMove(qd);
     }
