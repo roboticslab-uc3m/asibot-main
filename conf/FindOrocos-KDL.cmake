@@ -40,5 +40,13 @@ ELSEIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 #ENDIF ( PKG_CONFIG_FOUND )
 
+SET(KDL_LIBRARIES "/usr/local/lib/liborocos-kdl.so")
+IF ( KDL_LIBRARIES )
+    MESSAGE(STATUS "-- Looking for Orocos-KDL libraries - found")
+    #    SET(KDL_CFLAGS "${KDL_CFLAGS} -I\"${EIGEN2_INCLUDE_DIR}\"" CACHE INTERNAL "")
+ELSE ( KDL_LIBRARIES )
+    MESSAGE(FATAL_ERROR "-- Looking for Orocos-KDL libraries - not found")
+ENDIF ( KDL_LIBRARIES )
+
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
