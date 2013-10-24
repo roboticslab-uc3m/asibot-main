@@ -166,6 +166,15 @@ void SegmentorThread::run() {
                     areas.addDouble(blobsArea[i]);
                 output.addList() = areas;
             }
+        } else if ( outFeatures.get(elem).asString() == "aspectRatio" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAspectRatio[0]);
+            } else {
+                Bottle aspectRatios;
+                for (int i = 0; i < blobsAspectRatio.size(); i++)
+                    aspectRatios.addDouble(blobsAspectRatio[i]);
+                output.addList() = aspectRatios;
+            }
         } else if ( outFeatures.get(elem).asString() == "rectangularity" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsRectangularity[0]);
@@ -174,6 +183,96 @@ void SegmentorThread::run() {
                 for (int i = 0; i < blobsRectangularity.size(); i++)
                     rectangularities.addDouble(blobsRectangularity[i]);
                 output.addList() = rectangularities;
+            }
+        } else if ( outFeatures.get(elem).asString() == "axisFirst" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAxisFirst[0]);
+            } else {
+                Bottle axisFirsts;
+                for (int i = 0; i < blobsAxisFirst.size(); i++)
+                    axisFirsts.addDouble(blobsAxisFirst[i]);
+                output.addList() = axisFirsts;
+            }
+        } else if ( outFeatures.get(elem).asString() == "axisSecond" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsAxisSecond[0]);
+            } else {
+                Bottle axisSeconds;
+                for (int i = 0; i < blobsAxisSecond.size(); i++)
+                    axisSeconds.addDouble(blobsAxisSecond[i]);
+                output.addList() = axisSeconds;
+            }
+        } else if ( outFeatures.get(elem).asString() == "solidity" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsSolidity[0]);
+            } else {
+                Bottle solidities;
+                for (int i = 0; i < blobsSolidity.size(); i++)
+                    solidities.addDouble(blobsSolidity[i]);
+                output.addList() = solidities;
+            }
+        } else if ( outFeatures.get(elem).asString() == "hue" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsHue[0]);
+            } else {
+                Bottle hues;
+                for (int i = 0; i < blobsHue.size(); i++)
+                    hues.addDouble(blobsHue[i]);
+                output.addList() = hues;
+            }
+        } else if ( outFeatures.get(elem).asString() == "sat" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsSat[0]);
+            } else {
+                Bottle sats;
+                for (int i = 0; i < blobsSat.size(); i++)
+                    sats.addDouble(blobsSat[i]);
+                output.addList() = sats;
+            }
+        } else if ( outFeatures.get(elem).asString() == "val" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsVal[0]);
+            } else {
+                Bottle vals;
+                for (int i = 0; i < blobsVal.size(); i++)
+                    vals.addDouble(blobsVal[i]);
+                output.addList() = vals;
+            }
+        } else if ( outFeatures.get(elem).asString() == "hueStdDev" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsHueStdDev[0]);
+            } else {
+                Bottle hueStdDevs;
+                for (int i = 0; i < blobsHueStdDev.size(); i++)
+                    hueStdDevs.addDouble(blobsHueStdDev[i]);
+                output.addList() = hueStdDevs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "satStdDev" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsSatStdDev[0]);
+            } else {
+                Bottle satStdDevs;
+                for (int i = 0; i < blobsSatStdDev.size(); i++)
+                    satStdDevs.addDouble(blobsSatStdDev[i]);
+                output.addList() = satStdDevs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "valStdDev" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsValStdDev[0]);
+            } else {
+                Bottle valStdDevs;
+                for (int i = 0; i < blobsValStdDev.size(); i++)
+                    valStdDevs.addDouble(blobsValStdDev[i]);
+                output.addList() = valStdDevs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "time" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(Time::now());
+            } else {
+                Bottle times;
+                for (int i = 0; i < blobsArea.size(); i++)
+                    times.addDouble(Time::now());
+                output.addList() = times;
             }
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
