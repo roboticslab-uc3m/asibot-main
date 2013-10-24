@@ -23,6 +23,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     algorithm = DEFAULT_ALGORITHM;
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
+    morphClosing = DEFAULT_MORPH_CLOSING;
     outImage = DEFAULT_OUT_IMAGE;
     outFeatures.fromString(DEFAULT_OUT_FEATURES);  // it's a bottle!!
     outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
@@ -37,6 +38,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--algorithm (redMinusBlue,greenMinusRed...; default: \"%s\")\n",algorithm.c_str());
         printf("\t--locate (centroid,bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
+        printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
         printf("\t--outFeatures (default: \"(%s)\")\n",outFeatures.toString().c_str());
         printf("\t--outFeaturesFormat (0=bottled,1=minimal; default: \"%d\")\n",outFeaturesFormat);
         printf("\t--outImage (0=rgb,1=bw; default: \"%d\")\n",outImage);
@@ -93,8 +95,9 @@ void SegmentorThread::run() {
     // Because Travis stuff goes with [openCv Mat Bgr] for now
     Travis travis;    // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
-    travis.binarize(algorithm.c_str(), threshold);
-    travis.morphClosing( inYarpImg->width() * 0.04 ); // 4 for 100, very rule-of-thumb
+    if(algorithm=="hue") travis.binarize("hue", threshold-5,threshold+5);
+    else travis.binarize(algorithm.c_str(), threshold);
+    travis.morphClosing( inYarpImg->width() * morphClosing / 100.0 );
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);

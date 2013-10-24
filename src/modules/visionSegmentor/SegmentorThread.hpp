@@ -24,6 +24,7 @@
 #define DEFAULT_ALGORITHM "blueMinusRed"
 #define DEFAULT_LOCATE "centroid"
 #define DEFAULT_MAX_NUM_BLOBS 1
+#define DEFAULT_MORPH_CLOSING 2
 #define DEFAULT_OUT_FEATURES "locX locY angle area"  // it's a bottle!!
 #define DEFAULT_OUT_FEATURES_FORMAT 0
 #define DEFAULT_OUT_IMAGE 1
@@ -46,6 +47,7 @@ private:
     ConstString algorithm;
     ConstString locate;
     int maxNumBlobs;
+    double morphClosing;
     Bottle outFeatures;
     int outFeaturesFormat;
     int outImage;
