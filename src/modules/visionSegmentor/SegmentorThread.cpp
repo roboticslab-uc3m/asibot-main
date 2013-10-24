@@ -96,6 +96,7 @@ void SegmentorThread::run() {
     Travis travis;    // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
     if(algorithm=="hue") travis.binarize("hue", threshold-5,threshold+5);
+    else if(algorithm=="grayscale") travis.binarize("grayscale");
     else travis.binarize(algorithm.c_str(), threshold);
     travis.morphClosing( inYarpImg->width() * morphClosing / 100.0 );
     travis.blobize(maxNumBlobs);
