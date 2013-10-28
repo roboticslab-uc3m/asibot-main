@@ -50,9 +50,10 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("algorithm")) algorithm = rf.find("algorithm").asString();
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
+    if (rf.check("morphClosing")) morphClosing = rf.find("morphClosing").asDouble();
     if (rf.check("outFeaturesFormat")) outFeaturesFormat = rf.find("outFeaturesFormat").asInt();
-    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, outFeaturesFormat: %d.\n",
-        algorithm.c_str(),locate.c_str(),maxNumBlobs,outFeaturesFormat);
+    printf("SegmentorThread using algorithm: %s, locate: %s, maxNumBlobs: %d, morphClosing: %f, outFeaturesFormat: %d.\n",
+        algorithm.c_str(),locate.c_str(),maxNumBlobs,morphClosing,outFeaturesFormat);
 
     if (rf.check("outFeatures")) {
         outFeatures = *(rf.find("outFeatures").asList());  // simple overrride
