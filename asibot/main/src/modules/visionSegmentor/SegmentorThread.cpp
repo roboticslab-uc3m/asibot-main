@@ -93,10 +93,10 @@ void SegmentorThread::run() {
     Mat inCvMat(inIplImage);
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
-    Travis travis;    // ::Travis(quiet=true, overwrite=true);
+    Travis travis(false,true);    // ::Travis(quiet=true, overwrite=true);
     travis.setCvMat(inCvMat);
     if(algorithm=="hue") travis.binarize("hue", threshold-5,threshold+5);
-    else if(algorithm=="grayscale") travis.binarize("grayscale");
+    else if(algorithm=="canny") travis.binarize("canny");
     else travis.binarize(algorithm.c_str(), threshold);
     travis.morphClosing( inYarpImg->width() * morphClosing / 100.0 );
     travis.blobize(maxNumBlobs);
