@@ -336,7 +336,25 @@ void SegmentorThread::run() {
                     locZs.addDouble(mmZ_0[i]/1000.0);
                 output.addList() = locZs;
             }
-         } else if ( outFeatures.get(elem).asString() == "pxX" ) {
+         } else if ( outFeatures.get(elem).asString() == "pxXpos" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].x);
+            } else {
+                Bottle locXs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locXs.addDouble(blobsXY[i].x);
+                output.addList() = locXs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "pxYpos" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsXY[0].y);
+            } else {
+                Bottle locYs;
+                for (int i = 0; i < blobsXY.size(); i++)
+                    locYs.addDouble(blobsXY[i].y);
+                output.addList() = locYs;
+            }
+        } else if ( outFeatures.get(elem).asString() == "pxX" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsXY[0].x - cx_d);
             } else {
