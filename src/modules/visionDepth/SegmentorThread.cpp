@@ -390,6 +390,15 @@ void SegmentorThread::run() {
                     areas.addDouble(blobsArea[i]);
                 output.addList() = areas;
             }
+        } else if ( outFeatures.get(elem).asString() == "realArea" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsArea[0] * mmX_0[0]/1000.0 );
+            } else {
+                Bottle areas;
+                for (int i = 0; i < blobsArea.size(); i++)
+                    areas.addDouble(blobsArea[i] * mmX_0[i]/1000.0 );
+                output.addList() = areas;
+            }
         } else if ( outFeatures.get(elem).asString() == "aspectRatio" ) {
             if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
                 output.addDouble(blobsAspectRatio[0]);
