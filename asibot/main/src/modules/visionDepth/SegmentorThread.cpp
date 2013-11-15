@@ -94,6 +94,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     if (rf.check("locate")) locate = rf.find("locate").asString();
     if (rf.check("maxNumBlobs")) maxNumBlobs = rf.find("maxNumBlobs").asInt();
     if (rf.check("morphClosing")) morphClosing = rf.find("morphClosing").asDouble();
+    if (rf.check("morphOpening")) morphOpening = rf.find("morphOpening").asDouble();
     if (rf.check("outFeaturesFormat")) outFeaturesFormat = rf.find("outFeaturesFormat").asInt();
 
     printf("SegmentorThread using fx_d: %f, fy_d: %f, cx_d: %f, cy_d: %f.\n",
@@ -198,6 +199,8 @@ void SegmentorThread::run() {
     else travis.binarize(algorithm.c_str(), threshold);
     travis.morphOpening( inYarpImg.width() * morphOpening / 100.0 );
     travis.morphClosing( inYarpImg.width() * morphClosing / 100.0 );
+    //travis.morphOpening( morphOpening );
+    //travis.morphClosing( morphClosing );
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
