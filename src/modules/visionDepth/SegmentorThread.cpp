@@ -197,8 +197,8 @@ void SegmentorThread::run() {
     if(algorithm=="hue") travis.binarize("hue", threshold-5,threshold+5);
     else if(algorithm=="canny") travis.binarize("canny");
     else travis.binarize(algorithm.c_str(), threshold);
-    travis.morphOpening( inYarpImg.width() * morphOpening / 100.0 );
-    travis.morphClosing( inYarpImg.width() * morphClosing / 100.0 );
+    travis.morphOpening( inYarpImg.width() * morphOpening / 100.0 );  // percent
+    travis.morphClosing( inYarpImg.width() * morphClosing / 100.0 );  // percent
     //travis.morphOpening( morphOpening );
     //travis.morphClosing( morphClosing );
     travis.blobize(maxNumBlobs);
