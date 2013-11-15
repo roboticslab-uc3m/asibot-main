@@ -37,6 +37,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
     locate = DEFAULT_LOCATE;
     maxNumBlobs = DEFAULT_MAX_NUM_BLOBS;
     morphClosing = DEFAULT_MORPH_CLOSING;
+    morphOpening = DEFAULT_MORPH_OPENING;
     outImage = DEFAULT_OUT_IMAGE;
     outFeatures.fromString(DEFAULT_OUT_FEATURES);  // it's a bottle!!
     outFeaturesFormat = DEFAULT_OUT_FEATURES_FORMAT;
@@ -66,6 +67,7 @@ void SegmentorThread::init(ResourceFinder &rf) {
         printf("\t--locate (centroid or bottom; default: \"%s\")\n",locate.c_str());
         printf("\t--maxNumBlobs (default: \"%d\")\n",maxNumBlobs);
         printf("\t--morphClosing (percentage, 2 or 4 okay; default: \"%f\")\n",morphClosing);
+        printf("\t--morphOpening (percentage, 2 or 4 okay; default: \"%f\")\n",morphOpening);
         printf("\t--outFeatures (rawX,rawY,locX,locY,locZ,locX0,locY0,locZ0,angle,area,aspectRatio,axisFirst,axisSecond,\n \
                 solidity,rectangularty,hue,sat,val,hueStdDev,satStdDev,valStdDev;\n \
                 default: \"(%s)\")\n",outFeatures.toString().c_str());
@@ -194,6 +196,7 @@ void SegmentorThread::run() {
     if(algorithm=="hue") travis.binarize("hue", threshold-5,threshold+5);
     else if(algorithm=="canny") travis.binarize("canny");
     else travis.binarize(algorithm.c_str(), threshold);
+    travis.morphOpening( inYarpImg.width() * morphOpening / 100.0 );
     travis.morphClosing( inYarpImg.width() * morphClosing / 100.0 );
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
