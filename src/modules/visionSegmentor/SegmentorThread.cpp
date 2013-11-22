@@ -103,10 +103,11 @@ void SegmentorThread::run() {
     travis.blobize(maxNumBlobs);
     vector<cv::Point> blobsXY;
     travis.getBlobsXY(blobsXY);
-    vector<double> blobsAngle,blobsArea,blobsAspectRatio,blobsAxisFirst,blobsAxisSecond;
+    vector<double> blobsAngle,blobsArea,blobsAspectRatio,blobsAxisFirst,blobsAxisSecond,blobsPerimeter;
     vector<double> blobsRectangularity,blobsSolidity;
     vector<double> blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev;
     travis.getBlobsArea(blobsArea);
+    travis.getBlobsPerimeter(blobsPerimeter);
     travis.getBlobsSolidity(blobsSolidity);
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
@@ -166,6 +167,15 @@ void SegmentorThread::run() {
                 Bottle areas;
                 for (int i = 0; i < blobsArea.size(); i++)
                     areas.addDouble(blobsArea[i]);
+                output.addList() = areas;
+            }
+        } else if ( outFeatures.get(elem).asString() == "perimeter" ) {
+            if ( outFeaturesFormat == 1 ) {  // 0: Bottled, 1: Minimal
+                output.addDouble(blobsPerimeter[0]);
+            } else {
+                Bottle areas;
+                for (int i = 0; i < blobsPerimeter.size(); i++)
+                    areas.addDouble(blobsPerimeter[i]);
                 output.addList() = areas;
             }
         } else if ( outFeatures.get(elem).asString() == "aspectRatio" ) {
