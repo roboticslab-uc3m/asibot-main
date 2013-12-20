@@ -211,7 +211,10 @@ void SegmentorThread::run() {
     travis.getBlobsSolidity(blobsSolidity);
     travis.getBlobsHSV(blobsHue,blobsSat,blobsVal,blobsHueStdDev,blobsSatStdDev,blobsValStdDev);
     bool ok = travis.getBlobsAngle(0,blobsAngle);  // method: 0=box, 1=ellipse; note check for return as 1 can break
-    if (!ok) return;
+    if (!ok) {
+        fprintf(stderr,"[warning] SegmentorThread: getBlobsAngle failed.\n");
+        return;
+    }
     travis.getBlobsAspectRatio(blobsAspectRatio,blobsAxisFirst,blobsAxisSecond);  // must be called after getBlobsAngle!!!!
     travis.getBlobsRectangularity(blobsRectangularity);  // must be called after getBlobsAngle!!!!
     Mat outCvMat = travis.getCvMat(outImage,seeBounding);
@@ -226,11 +229,22 @@ void SegmentorThread::run() {
     PixelRgb blue(0,0,255);
     vector<double> mmX, mmY, mmZ;
     vector<double> mmX_0, mmY_0, mmZ_0;
-    if(blobsXY.size() < 1) return;
+    if(blobsXY.size() < 1) {
+        fprintf(stderr,"[warning] SegmentorThread: err1.\n");
+        return;
+    }
     for( int i = 0; i < blobsXY.size(); i++) {
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
-        if (blobsXY[i].x<0) return;
-        if (blobsXY[i].y<0) return;
+        if (blobsXY[i].x<0) {
+            fprintf(stderr,"[warning] SegmentorThread[%d]: err2.\n",i);
+            //return;
+            blobsXY[i].x = 0;
+        }
+        if (blobsXY[i].y<0) {
+            fprintf(stderr,"[warning] SegmentorThread[%d]: err3.\n",i);
+            //return;
+            blobsXY[i].y = 0;
+        }
         // double mmZ_tmp = depth->pixel(int(blobsXY[i].x +cx_d-cx_rgb),int(blobsXY[i].y +cy_d-cy_rgb));
         double mmZ_tmp = depth.pixel(int(blobsXY[i].x),int(blobsXY[i].y));
         double mmX_tmp = 1000.0 * ( (blobsXY[i].x - cx_d) * mmZ_tmp/1000.0 ) / fx_d;
