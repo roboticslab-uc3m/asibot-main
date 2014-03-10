@@ -28,22 +28,24 @@ bool VisionDepth::configure(ResourceFinder &rf) {
         strKinectDevice.c_str(), strKinectLocal.c_str(), strKinectRemote.c_str());
     printf("VisionDepth using watchdog: %f.\n",watchdog);
 
-    Property options;
-    options.put("device",strKinectDevice);
-    options.put("localPortPrefix",strKinectLocal);  //
-    options.put("remotePortPrefix",strKinectRemote);  //
-    if(rf.check("noMirror")) options.put("noMirror",1);
-    while(!dd.open(options)) {
-        printf("Waiting for kinectDevice \"%s\"...\n",strKinectDevice.c_str());
-        Time::delay(1);
-    }
-    printf("[VisionDepth] success: kinectDevice available.\n");
-    if (! dd.view(kinect) ) fprintf(stderr,"[VisionDepth] warning: kinectDevice bad view.\n");
-    else printf("[VisionDepth] success: kinectDevice ok view.\n");
+    if (!rf.check("help")) {
+        Property options;
+        options.put("device",strKinectDevice);
+        options.put("localPortPrefix",strKinectLocal);  //
+        options.put("remotePortPrefix",strKinectRemote);  //
+        if(rf.check("noMirror")) options.put("noMirror",1);
+        while(!dd.open(options)) {
+            printf("Waiting for kinectDevice \"%s\"...\n",strKinectDevice.c_str());
+            Time::delay(1);
+        }
+        printf("[VisionDepth] success: kinectDevice available.\n");
+        if (! dd.view(kinect) ) fprintf(stderr,"[VisionDepth] warning: kinectDevice bad view.\n");
+        else printf("[VisionDepth] success: kinectDevice ok view.\n");
 
-    segmentorThread.setIKinectDeviceDriver(kinect);
-    segmentorThread.setOutImg(&outImg);
-    segmentorThread.setOutPort(&outPort);
+        segmentorThread.setIKinectDeviceDriver(kinect);
+        segmentorThread.setOutImg(&outImg);
+        segmentorThread.setOutPort(&outPort);
+    }
 
     segmentorThread.init(rf);
 
