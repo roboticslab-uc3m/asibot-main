@@ -5,6 +5,7 @@
 
 #include "SegmentorThread.hpp"
 
+#define DEFAULT_CROP_SELECTOR 0  // 1=true
 #define DEFAULT_KINECT_DEVICE "KinectDeviceLocal"
 #define DEFAULT_KINECT_LOCAL "/visionDepth"
 #define DEFAULT_KINECT_REMOTE "/kinect"
@@ -22,6 +23,10 @@ class VisionDepth : public RFModule {
 
     BufferedPort<ImageOf<PixelRgb> > outImg;
     Port outPort;
+
+    int cropSelector;
+    BufferedPort<ImageOf<PixelRgb> > outCropSelectorImg;
+    Port inCropSelectorPort;
 
     bool interruptModule();
     double getPeriod();
