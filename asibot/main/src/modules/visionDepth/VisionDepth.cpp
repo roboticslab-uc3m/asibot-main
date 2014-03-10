@@ -5,6 +5,7 @@
 /************************************************************************/
 bool VisionDepth::configure(ResourceFinder &rf) {
 
+    cropSelector = DEFAULT_CROP_SELECTOR;
     ConstString strKinectDevice = DEFAULT_KINECT_DEVICE;
     ConstString strKinectLocal = DEFAULT_KINECT_LOCAL;
     ConstString strKinectRemote = DEFAULT_KINECT_REMOTE;
@@ -14,12 +15,15 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     if (rf.check("help")) {
         printf("VisionDepth options:\n");
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
+        printf("\t--cropSelector (default: \"%d\")\n",cropSelector);
         printf("\t--kinectDevice (device we create, default: \"%s\")\n",strKinectDevice.c_str());
         printf("\t--kinectLocal (if accesing remote, local port name, default: \"%s\")\n",strKinectLocal.c_str());
         printf("\t--kinectRemote (if accesing remote, remote port name, default: \"%s\")\n",strKinectRemote.c_str());
         printf("\t--watchdog ([s] default: \"%f\")\n",watchdog);
         // Do not exit: let last layer exit so we get help from the complete chain.
     }
+    if(rf.check("cropSelector")) cropSelector = rf.find("cropSelector").asInt();
+    printf("VisionDepth using cropSelector: %d.\n",cropSelector);
     if(rf.check("kinectDevice")) strKinectDevice = rf.find("kinectDevice").asString();
     if(rf.check("kinectLocal")) strKinectLocal = rf.find("kinectLocal").asString();
     if(rf.check("kinectRemote")) strKinectRemote = rf.find("kinectRemote").asString();
@@ -45,6 +49,12 @@ bool VisionDepth::configure(ResourceFinder &rf) {
         segmentorThread.setIKinectDeviceDriver(kinect);
         segmentorThread.setOutImg(&outImg);
         segmentorThread.setOutPort(&outPort);
+
+        segmentorThread.setCropSelector(cropSelector);
+        if(cropSelector != 0) {
+            segmentorThread.setOutCropSelectorImg(&outCropSelectorImg);
+            segmentorThread.setInCropSelectorPort(&inCropSelectorPort);
+        }
     }
 
     segmentorThread.init(rf);
@@ -52,7 +62,10 @@ bool VisionDepth::configure(ResourceFinder &rf) {
     //-----------------OPEN LOCAL PORTS------------//
     outImg.open("/visionDepth/img:o");
     outPort.open("/visionDepth/state:o");
-
+    if(cropSelector != 0) {
+        outCropSelectorImg.open("/visionDepth/cropSelector/img:o");
+        inCropSelectorPort.open("/visionDepth/cropSelector/state:i");
+    }
     return true;
 }
 
@@ -72,11 +85,20 @@ bool VisionDepth::updateModule() {
 
 bool VisionDepth::interruptModule() {
     printf("VisionDepth closing...\n");
+    segmentorThread.stop();
     outImg.interrupt();
     outPort.interrupt();
+    if(cropSelector != 0) {
+        outCropSelectorImg.interrupt();
+        inCropSelectorPort.interrupt();
+    }
     dd.close();
     outImg.close();
     outPort.close();
+    if(cropSelector != 0) {
+        outCropSelectorImg.close();
+        inCropSelectorPort.close();
+    }
     return true;
 }
 

@@ -80,6 +80,10 @@ private:
     Bottle outFeatures;
     //
     yarp::sig::Matrix H_0_k;
+    //
+    int cropSelector;
+    BufferedPort<ImageOf<PixelRgb> >* outCropSelectorImg;
+    Port* inCropSelectorPort;
 
 public:
     SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}
@@ -89,6 +93,11 @@ public:
     void setOutPort(Port *_pOutPort);
     void init(ResourceFinder &rf);
     void run();  // The periodical function
+
+    void setCropSelector(int cropSelector) { this->cropSelector = cropSelector; }
+    void setOutCropSelectorImg(BufferedPort<ImageOf<PixelRgb> >* outCropSelectorImg) { this->outCropSelectorImg = outCropSelectorImg; }
+    void setInCropSelectorPort(Port* inCropSelectorPort) { this->inCropSelectorPort = inCropSelectorPort; }
+    
 };
 
 #endif  // __SEGMENTOR_THREAD_HPP__
