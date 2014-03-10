@@ -57,6 +57,25 @@ using namespace yarp::dev;
 using namespace yarp::sig;
 using namespace yarp::sig::draw;
 
+class DataProcessor : public PortReader {
+     virtual bool read(ConnectionReader& connection) {
+          Bottle b;
+          b.read(connection);
+          // process data in b
+          printf("Got %s\n", b.toString().c_str());
+          x1 = b.get(0).asInt();
+          x2 = b.get(1).asInt();
+          return true;
+     }
+public:
+     bool reset() {
+        x1 = 0;
+        x2 = 0;
+     }
+     int x1, x2;
+
+};
+
 class SegmentorThread : public RateThread {
 private:
     IKinectDeviceDriver *kinect;
@@ -84,6 +103,7 @@ private:
     int cropSelector;
     BufferedPort<ImageOf<PixelRgb> >* outCropSelectorImg;
     Port* inCropSelectorPort;
+    DataProcessor processor;
 
 public:
     SegmentorThread() : RateThread(DEFAULT_RATE_MS) {}
