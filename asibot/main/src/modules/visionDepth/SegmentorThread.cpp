@@ -152,6 +152,11 @@ void SegmentorThread::init(ResourceFinder &rf) {
 
     H_0_k = H_0_c * H_c_k;
 
+    if(cropSelector != 0) {
+        processor.reset();
+        inCropSelectorPort->setReader(processor);
+    }
+
     this->setRate(rateMs);
     this->start();
 
@@ -187,6 +192,7 @@ void SegmentorThread::run() {
     if(cropSelector != 0) {
         outCropSelectorImg->prepare() = inYarpImg;
         outCropSelectorImg->write();
+        printf("x1: %d, x2: %d.\n",processor.x1,processor.x2);
     }
 
     // {yarp ImageOf Rgb -> openCv Mat Bgr}
