@@ -183,16 +183,17 @@ void SegmentorThread::run() {
         return;
     };
 
+    // publish the original yarp img if crop selector invoked.
+    if(cropSelector != 0) {
+        outCropSelectorImg->prepare() = inYarpImg;
+        outCropSelectorImg->write();
+    }
 
     // {yarp ImageOf Rgb -> openCv Mat Bgr}
     IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg.width(), inYarpImg.height()),
                                          IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)inYarpImg.getIplImage(), inIplImage, CV_RGB2BGR);
     Mat inCvMat(inIplImage);
-    if(cropSelector != 0) {
-        outCropSelectorImg->prepare() = inYarpImg;
-        outCropSelectorImg->write();
-    }
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
     //Travis travis;  // ::Travis(quiet=true, overwrite=true);
