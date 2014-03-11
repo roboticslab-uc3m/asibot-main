@@ -241,18 +241,18 @@ void SegmentorThread::run() {
     vector<double> mmX, mmY, mmZ;
     vector<double> mmX_0, mmY_0, mmZ_0;
     if(blobsXY.size() < 1) {
-        fprintf(stderr,"[warning] SegmentorThread: err1.\n");
+        fprintf(stderr,"[warning] SegmentorThread run(): blobsXY.size().\n");
         return;
     }
     for( int i = 0; i < blobsXY.size(); i++) {
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
         if (blobsXY[i].x<0) {
-            fprintf(stderr,"[warning] SegmentorThread[%d]: err2.\n",i);
+            fprintf(stderr,"[warning] SegmentorThread run(): blobsXY[%d].x<0.\n",i);
             //return;
             blobsXY[i].x = 0;
         }
         if (blobsXY[i].y<0) {
-            fprintf(stderr,"[warning] SegmentorThread[%d]: err3.\n",i);
+            fprintf(stderr,"[warning] SegmentorThread run(): blobsXY[%d].y<0.\n",i);
             //return;
             blobsXY[i].y = 0;
         }
