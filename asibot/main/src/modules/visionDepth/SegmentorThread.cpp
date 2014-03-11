@@ -200,7 +200,7 @@ void SegmentorThread::run() {
         //printf("1 x: %d, y: %d, w: %d, h: %d.\n",processor.x,processor.y,processor.w,processor.h);
         if( (processor.w!=0)&&(processor.h!=0)) {
             travisCrop(processor.x,processor.y,processor.w,processor.h,inCvMat);
-            addRectangleOutline(inYarpImg,green,processor.x,processor.y,processor.w,processor.h);
+            addRectangleOutline(inYarpImg,green,processor.x+processor.w/2.0,processor.y+processor.h/2.0,processor.w/2.0,processor.h/2.0);
         }
         outCropSelectorImg->prepare() = inYarpImg;
         outCropSelectorImg->write();
