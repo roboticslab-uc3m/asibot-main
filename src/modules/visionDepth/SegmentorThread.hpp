@@ -64,10 +64,12 @@ class DataProcessor : public PortReader {
         // process data in b
         printf("Got %s\n", b.toString().c_str());
         if(waitForFirst) {
-            x = b.get(0).asInt();
-            y = b.get(1).asInt();
+            xKeep = b.get(0).asInt();
+            yKeep = b.get(1).asInt();
             waitForFirst = false;
         } else {
+            x = xKeep;
+            y = yKeep;
             w = b.get(0).asInt() - x;
             h = b.get(1).asInt() - y;
             waitForFirst = true;
@@ -82,7 +84,10 @@ public:
         y = 0;
         w = 0;
         h = 0;
+        xKeep = 0;
+        yKeep = 0;
     }
+    int xKeep, yKeep;
     int x, y, w, h;
     bool waitForFirst;
 };
