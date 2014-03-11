@@ -1,8 +1,8 @@
 <application>
-<name>visionDepthKinect App</name>
+<name>visionDepthKinectSelector App</name>
         <module>
                 <name>visionDepth</name>
-                <parameters>--tilt 0 --height 595 --maxNumBlobs 1 --algorithm blueMinusRed --threshold 65 --morphClosing 0 --outFeaturesFormat 1</parameters>
+                <parameters>--tilt 0 --height 595 --maxNumBlobs 1 --algorithm blueMinusRed --threshold 65 --morphClosing 0 --outFeaturesFormat 1 --cropSelector 1</parameters>
                 <node>localhost</node>
         </module>
 
@@ -14,6 +14,20 @@
         <connection>
                 <from>/visionDepth/img:o</from>
                 <to>/yarpview/visionDepth/img:i</to>
+        </connection>
+
+        <module>
+                <name>yarpview</name>
+                <parameters>--name /yarpview/cropSelector/img:i --out /yarpview/cropSelector/state:o </parameters>
+                <node>localhost</node>
+        </module>
+        <connection>
+                <from>/visionDepth/cropSelector/img:o</from>
+                <to>/yarpview/cropSelector/img:i</to>
+        </connection>
+        <connection>
+                <from>/yarpview/cropSelector/state:o</from>
+                <to>/visionDepth/cropSelector/state:i</to>
         </connection>
 
 </application>
