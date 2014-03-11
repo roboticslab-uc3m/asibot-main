@@ -68,10 +68,17 @@ class DataProcessor : public PortReader {
             yKeep = b.get(1).asInt();
             waitForFirst = false;
         } else {
-            x = xKeep;
-            y = yKeep;
-            w = b.get(0).asInt() - x;
-            h = b.get(1).asInt() - y;
+            if((b.get(0).asInt()<xKeep)||(b.get(1).asInt()<yKeep)){
+                x = 0;
+                y = 0;
+                w = 0;
+                h = 0;
+            } else {
+                x = xKeep;
+                y = yKeep;
+                w = b.get(0).asInt() - x;
+                h = b.get(1).asInt() - y;
+            }
             waitForFirst = true;
         }
         return true;
