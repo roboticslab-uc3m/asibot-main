@@ -188,18 +188,23 @@ void SegmentorThread::run() {
         return;
     };
 
-    // publish the original yarp img if crop selector invoked.
-    if(cropSelector != 0) {
-        outCropSelectorImg->prepare() = inYarpImg;
-        outCropSelectorImg->write();
-        printf("x1: %d, x2: %d.\n",processor.x1,processor.x2);
-    }
-
     // {yarp ImageOf Rgb -> openCv Mat Bgr}
     IplImage *inIplImage = cvCreateImage(cvSize(inYarpImg.width(), inYarpImg.height()),
                                          IPL_DEPTH_8U, 3 );
     cvCvtColor((IplImage*)inYarpImg.getIplImage(), inIplImage, CV_RGB2BGR);
     Mat inCvMat(inIplImage);
+
+    PixelRgb green(0,255,0);
+    // publish the original yarp img if crop selector invoked.
+    if(cropSelector != 0) {
+        //printf("1 x: %d, y: %d, w: %d, h: %d.\n",processor.x,processor.y,processor.w,processor.h);
+        if( (processor.w!=0)&&(processor.h!=0)) {
+            travisCrop(processor.x,processor.y,processor.w,processor.h,inCvMat);
+            addRectangleOutline(inYarpImg,green,processor.x,processor.y,processor.w,processor.h);
+        }
+        outCropSelectorImg->prepare() = inYarpImg;
+        outCropSelectorImg->write();
+    }
 
     // Because Travis stuff goes with [openCv Mat Bgr] for now
     //Travis travis;  // ::Travis(quiet=true, overwrite=true);
@@ -241,18 +246,18 @@ void SegmentorThread::run() {
     vector<double> mmX, mmY, mmZ;
     vector<double> mmX_0, mmY_0, mmZ_0;
     if(blobsXY.size() < 1) {
-        fprintf(stderr,"[warning] SegmentorThread run(): blobsXY.size().\n");
-        return;
+        fprintf(stderr,"[warning] SegmentorThread run(): blobsXY.size() < 1.\n");
+        //return;
     }
     for( int i = 0; i < blobsXY.size(); i++) {
         addCircle(outYarpImg,blue,blobsXY[i].x,blobsXY[i].y,3);
         if (blobsXY[i].x<0) {
-            fprintf(stderr,"[warning] SegmentorThread run(): blobsXY[%d].x<0.\n",i);
+            fprintf(stderr,"[warning] SegmentorThread run(): blobsXY[%d].x < 0.\n",i);
             //return;
             blobsXY[i].x = 0;
         }
         if (blobsXY[i].y<0) {
-            fprintf(stderr,"[warning] SegmentorThread run(): blobsXY[%d].y<0.\n",i);
+            fprintf(stderr,"[warning] SegmentorThread run(): blobsXY[%d].y < 0.\n",i);
             //return;
             blobsXY[i].y = 0;
         }
@@ -280,6 +285,7 @@ void SegmentorThread::run() {
         mmY_0.push_back( X_0_P(1,0) );
         mmZ_0.push_back( X_0_P(2,0) );
     }
+
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
 

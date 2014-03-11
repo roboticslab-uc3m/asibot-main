@@ -58,22 +58,33 @@ using namespace yarp::sig;
 using namespace yarp::sig::draw;
 
 class DataProcessor : public PortReader {
-     virtual bool read(ConnectionReader& connection) {
-          Bottle b;
-          b.read(connection);
-          // process data in b
-          printf("Got %s\n", b.toString().c_str());
-          x1 = b.get(0).asInt();
-          x2 = b.get(1).asInt();
-          return true;
-     }
-public:
-     bool reset() {
-        x1 = 0;
-        x2 = 0;
-     }
-     int x1, x2;
+    virtual bool read(ConnectionReader& connection) {
+        Bottle b;
+        b.read(connection);
+        // process data in b
+        printf("Got %s\n", b.toString().c_str());
+        if(waitForFirst) {
+            x = b.get(0).asInt();
+            y = b.get(1).asInt();
+            waitForFirst = false;
+        } else {
+            w = b.get(0).asInt() - x;
+            h = b.get(1).asInt() - y;
+            waitForFirst = true;
+        }
+        return true;
 
+    }
+public:
+    bool reset() {
+        waitForFirst = true;
+        x = 0;
+        y = 0;
+        w = 0;
+        h = 0;
+    }
+    int x, y, w, h;
+    bool waitForFirst;
 };
 
 class SegmentorThread : public RateThread {
