@@ -21,7 +21,8 @@
 #include <pcl/segmentation/extract_clusters.h>
 //#include <pcl/surface/gp3.h>  // better use poisson; this leaves holes
 #include <pcl/surface/poisson.h>
-#include <pcl/surface/vtk_utils.h>
+//#include <pcl/surface/vtk_utils.h> // worked in pcl-1.6
+#include <pcl/surface/vtk_smoothing/vtk_utils.h> // worked in pcl-1.7
 
 #include <vtkActor.h>
 #include <vtkAxesActor.h>
