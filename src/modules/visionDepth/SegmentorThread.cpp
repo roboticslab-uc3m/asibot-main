@@ -288,6 +288,10 @@ void SegmentorThread::run() {
 
     pOutImg->prepare() = outYarpImg;
     pOutImg->write();
+    cvReleaseImage( &inIplImage );  // release the memory for the image
+    outCvMat.release();  // cvReleaseImage( &outIplImage );  // release the memory for the image
+
+    if ( ( blobsXY.size() < 1) && ( outFeaturesFormat == 1 ) ) return;
 
     // Take advantage we have the travis object and get features for text output
     Bottle output;
@@ -547,9 +551,6 @@ void SegmentorThread::run() {
         } else fprintf(stderr,"[SegmentorThread] warning: bogus outFeatures.\n");
     }
     pOutPort->write(output);
-
-    cvReleaseImage( &inIplImage );  // release the memory for the image
-    outCvMat.release();  // cvReleaseImage( &outIplImage );  // release the memory for the image
 
 }
 
