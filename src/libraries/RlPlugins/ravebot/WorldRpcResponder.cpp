@@ -108,6 +108,34 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 scylKinBodyPtrs.push_back(scylKinBodyPtr);
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
+            } else if (in.get(2).asString() == "mesh") {
+                { // lock the environment!           
+                OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
+                KinBodyPtr meshKinBodyPtr = RaveCreateKinBody(pEnv,"");
+                ConstString meshName("mesh_");
+                std::ostringstream s;  // meshName += std::to_string(meshKinBodyPtrs.size()+1);  // C++11 only
+                s << meshKinBodyPtrs.size()+1;
+                meshName += s.str();
+                meshKinBodyPtr->SetName(meshName.c_str());
+                //
+                //std::vector<AABB> boxes(1);
+                //boxes[0].extents = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
+                //boxes[0].pos = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
+                OpenRAVE::KinBody::Link::TRIMESH raveMesh;
+                raveMesh.indices.resize(3);
+                raveMesh.indices[0]=0;
+                raveMesh.indices[1]=1;
+                raveMesh.indices[2]=2;
+                raveMesh.vertices.resize(3);
+                raveMesh.vertices[0] = Vector(1,1,1);
+                raveMesh.vertices[1] = Vector(1,1.5,1);
+                raveMesh.vertices[2] = Vector(1.5,1,1);
+                meshKinBodyPtr->InitFromTrimesh(raveMesh,true); 
+                //
+                pEnv->Add(meshKinBodyPtr,true);
+                meshKinBodyPtrs.push_back(meshKinBodyPtr);
+                }  // the environment is not locked anymore
+                out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
         } else if ((in.get(1).asString()=="del")&&(in.get(2).asString()=="all")) {
             for (unsigned int i=0;i<boxKinBodyPtrs.size();i++) {
@@ -126,6 +154,10 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 pEnv->Remove(scylKinBodyPtrs[i]);
             }
             scylKinBodyPtrs.clear();
+            for (unsigned int i=0;i<meshKinBodyPtrs.size();i++) {
+                pEnv->Remove(meshKinBodyPtrs[i]);
+            }
+            meshKinBodyPtrs.clear();
             out.addVocab(VOCAB_OK);
         } else if (in.get(1).asString()=="grab") {
             if(in.get(2).asString()=="box") {
