@@ -122,14 +122,20 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 //boxes[0].extents = Vector(in.get(3).asDouble(), in.get(4).asDouble(), in.get(5).asDouble());
                 //boxes[0].pos = Vector(in.get(6).asDouble(), in.get(7).asDouble(), in.get(8).asDouble());
                 OpenRAVE::KinBody::Link::TRIMESH raveMesh;
-                raveMesh.indices.resize(3);
+                raveMesh.indices.resize(6);
                 raveMesh.indices[0]=0;
                 raveMesh.indices[1]=1;
                 raveMesh.indices[2]=2;
-                raveMesh.vertices.resize(3);
-                raveMesh.vertices[0] = Vector(1,1,1);
-                raveMesh.vertices[1] = Vector(1,1.5,1);
-                raveMesh.vertices[2] = Vector(1.5,1,1);
+                raveMesh.indices[3]=3;
+                raveMesh.indices[4]=4;
+                raveMesh.indices[5]=5;
+                raveMesh.vertices.resize(6);
+                raveMesh.vertices[0] = Vector(1.0,1.0,1.0);
+                raveMesh.vertices[1] = Vector(1.0,1.5,1.0);
+                raveMesh.vertices[2] = Vector(1.5,1.0,1.0);
+                raveMesh.vertices[3] = Vector(1.0,1.5,1.0);
+                raveMesh.vertices[4] = Vector(1.5,1.0,1.0);
+                raveMesh.vertices[5] = Vector(1.5,1.5,1.5);
                 meshKinBodyPtr->InitFromTrimesh(raveMesh,true); 
                 //
                 pEnv->Add(meshKinBodyPtr,true);
