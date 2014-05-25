@@ -35,6 +35,7 @@ protected:
     std::vector<KinBodyPtr> scylKinBodyPtrs;
     std::vector<KinBodyPtr> sphKinBodyPtrs;
     std::vector<KinBodyPtr> ssphKinBodyPtrs;
+    std::vector<KinBodyPtr> meshKinBodyPtrs;
 
     EnvironmentBasePtr pEnv;  // set in setEnvironment
     RobotBasePtr pRobot;  // set in setRobot
