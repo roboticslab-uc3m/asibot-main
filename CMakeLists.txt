@@ -81,6 +81,8 @@ mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
 # Pick up our scripts - they are all in the conf subdirectory
 set(ASIBOT_MODULE_PATH ${CMAKE_SOURCE_DIR}/conf)
 
+set(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH})
+
 #set_property(GLOBAL PROPERTY ASIBOT_INCLUDE_DIRS)
 #set_property(GLOBAL PROPERTY ASIBOT_LINK_DIRS)
 #set_property(GLOBAL PROPERTY ASIBOT_LIBRARIES)
