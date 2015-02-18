@@ -129,6 +129,21 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     */
     virtual bool getReferenceMode(bool *f);
 
+    /*!
+     * Ask the controller to weigh more either the position or the
+     * orientation while reaching in full pose. [wait for reply]
+     * \param p can be "position" or "orientation".
+     * \return true/false on success/failure.
+     */
+    virtual bool setPosePriority(const yarp::os::ConstString &p) { return true; }
+
+    /*!
+     * Get the current pose priority. [wait for reply]
+     * \param p here is returned either as "position" or "orientation".
+     * \return true/false on success/failure.
+     */
+    virtual bool getPosePriority(yarp::os::ConstString &p) { return true; }
+
     /**
     * Get the current pose of the end-effector. [do not wait for 
     * reply] 
