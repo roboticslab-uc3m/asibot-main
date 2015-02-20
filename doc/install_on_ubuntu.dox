@@ -12,37 +12,10 @@ First install the depencencies:
 Our software integrates the previous dependencies. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
 \verbatim
-svn co https://svn.code.sf.net/p/roboticslab/code/asibot asibot
-cd asibot/main; mkdir build; cd build
+git clone https://github.com/roboticslab-uc3m/asibot-main.git
+cd asibot-main; mkdir build; cd build
 cmake .. -DENABLE_cartesianServer=ON -DENABLE_RlPlugins_cartesianbot=ON -DENABLE_RlPlugins_ravebot=ON
-make -j3; sudo make install; cd ../../..
-\endverbatim
-
-For additional ASIBOT options use ccmake instead of cmake.
-
-Do not forget to set the ASIBOT_ROOT environment variable to ''asibot'' and the ASIBOT_DIR environment variable to ''asibot/main/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed on reboot). For this option, type:
- 
-\verbatim
-echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.profile
-echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.profile
-source ~/.profile
-\endverbatim
-
- 2) Through ~/.bashrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export ASIBOT_ROOT=$PWD/asibot" >> ~/.bashrc
-echo "export ASIBOT_DIR=$PWD/asibot/main/build" >> ~/.bashrc
-source ~/.bashrc
-\endverbatim
-
-Now install the applications:
-
-\verbatim
-cd $ASIBOT_DIR
-make install_applications
+make -j3; sudo make install; cd ../..
 \endverbatim
 
 @section install_on_ubuntu_even_more Even more!
