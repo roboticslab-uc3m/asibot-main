@@ -17,7 +17,7 @@
 * Ideally these directories will contain only scripts 
 * and ini/txt files. Use src to store source code. 
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
@@ -28,7 +28,7 @@
 *
 * <hr>
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
@@ -37,13 +37,13 @@
 * Documentation for each library goes in each 
 * directory.
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
 * \defgroup asibot_examples List of ASIBOT Examples
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
@@ -52,7 +52,7 @@
 *
 * Documentation for each example goes in each example source.
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
@@ -61,7 +61,7 @@
 *
 * Documentation for each example goes in each directory.
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
@@ -70,7 +70,7 @@
 *
 * Documentation for each example goes in each directory.
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
@@ -84,7 +84,7 @@
 * is the PC equivalent to RlPlugins2, which is intended for cross-compiling
 * for the robot and can be found inside $ASIBOT_ROOT/pxa270/src/libraries
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 
 /**
@@ -95,6 +95,6 @@
 * <a class="el" href="http://eris.liralab.it/yarpdoc/group__dev__runtime.html">yarpdev</a>, but also includes
 * the compiled \ref RlPlugins.
 *
-* This file can be edited at $ASIBOT_ROOT/main/doc/groups.dox
+* This file can be edited at asibot-main/doc/groups.dox
 */
 

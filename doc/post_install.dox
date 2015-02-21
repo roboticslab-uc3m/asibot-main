@@ -30,7 +30,7 @@ You should get a window similar to the one depicted on Figure 1.
 Each layer of ASIBOT modules has parameters that can be modified three different ways. They are parsed in the following order (the second parsing overwrites the first, and the third one overwrites both):
 
   \li Default parameters defined in the class header files (*.h or *.hpp extension). You must recompile the project if you change any of these parameters.
-  \li Configuration files (*.ini or *.xml extension). These files are downloaded from $ASIBOT_ROOT/main/app and installed to $ASIBOT/app with the <i>make install_applications</i> command we issued. Within this folder, separate folders are maintained for modules and module layers.
+  \li Configuration files (*.ini or *.xml extension). These files are downloaded from asibot-main/app and installed to $ASIBOT/app with the <i>make install_applications</i> command we issued. Within this folder, separate folders are maintained for modules and module layers.
   \li Command line (on program execution). Parameters may be modified executing a program using the following format: <i>./program --parameter new_value</i>.
 
 Let's say, for example, our graphic card supports offscreen rendering and we want \ref cartesianServer to load an enviroment that has cameras in the simulated environment. We can execute the program touching the parameters at the command line level which, as we have said, are parsed last:
@@ -79,7 +79,7 @@ Done! You are now probably interested in one of the following links:
 
 <hr>
 
-This page can be edited at $ASIBOT_ROOT/main/doc/post_install.dox.
+This page can be edited at asibot-main/doc/post_install.dox.
 
 *
 */
