@@ -10,7 +10,7 @@ sudo apt-get install libglib2.0-dev
 
 <hr>
 
-This page can be edited at $ASIBOT_ROOT/main/doc/install_glib_on_ubuntu.dox.
+This page can be edited at asibot-main/doc/install_glib_on_ubuntu.dox.
 
 *
 */

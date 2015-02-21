@@ -11,7 +11,7 @@ sudo apt-get install cmake-curses-gui  # Needed for ccmake.
 
 <br><hr>
 
-This page can be edited at $ASIBOT_ROOT/main/doc/install_cmake_on_ubuntu.dox.
+This page can be edited at asibot-main/doc/install_cmake_on_ubuntu.dox.
 
 *
 */
