@@ -1,0 +1,10 @@
+<!-- wheelchairLW.robot.xml -->
+
+<Robot name="wheelchairLWRobot">
+    <KinBody file="./wheelchairLW.kinbody.xml"/>
+    <Manipulator name="wheelchairManipulator">
+        <base>chair</base>
+        <effector>chairDocking</effector>
+    </Manipulator>
+</Robot>
+

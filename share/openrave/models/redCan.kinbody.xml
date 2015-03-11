@@ -1,0 +1,28 @@
+<KinBody name="redCan">
+  <Body type="dynamic">
+    <Geom type="cylinder">
+      <RotationAxis>1 0 0 -90</RotationAxis>
+      <translation>0 0 -0.005</translation>
+      <radius>0.025</radius>
+      <height>0.105</height>
+      <diffuseColor>0.5 0.5 0.5</diffuseColor>
+    </Geom>
+    <Geom type="cylinder">
+      <RotationAxis>1 0 0 -90</RotationAxis>
+      <translation>-0.00015 0 -0.004</translation>
+      <radius>0.032</radius>
+      <height>0.091</height>
+      <diffuseColor>0.9 0.1 0.1</diffuseColor>
+    </Geom>
+    <Geom type="sphere">
+      <RotationAxis>1 0 0 90</RotationAxis>
+      <translation>0.0095 -0.0190 0.023</translation>
+      <radius>0.002</radius>
+      <Render>./ivs/lata.iv 0.95</Render>
+    </Geom>
+    <mass type="sphere">
+      <total>1</total>
+      <radius>1</radius>
+    </mass>
+  </Body>
+</KinBody>

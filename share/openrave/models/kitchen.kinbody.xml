@@ -1,0 +1,9 @@
+<KinBody name="Cocina">
+  <RotationAxis>1 0 0 0</RotationAxis>
+  <Body type="static">
+    <Geom type="trimesh">
+      <Data>./ivs/cocina.iv</Data>
+      <Render>./ivs/cocina.iv</Render>
+    </Geom>      
+  </Body>
+</KinBody>

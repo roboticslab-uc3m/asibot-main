@@ -1,0 +1,10 @@
+<!-- wheelchairR.robot.xml -->
+
+<Robot name="wheelchairRrobot">
+    <KinBody file="./wheelchair_gafasAR.kinbody.xml"/>
+    <Manipulator name="wheelchairManipulator">
+        <base>wheelchairRheadless</base>
+        <effector>wheelchairRhead</effector>
+    </Manipulator>
+</Robot>
+

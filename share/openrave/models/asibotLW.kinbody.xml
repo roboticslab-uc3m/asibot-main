@@ -1,0 +1,133 @@
+<!-- asibotLW.kinbody.xml  -->
+
+<KinBody name="asibotLWKinbody">
+    <Body type="static" name="link0">
+        <Geom type="box">
+            <rotationaxis>1 0 0 -90</rotationaxis>
+            <rotationaxis>0 0 1 180</rotationaxis>
+            <translation>0 0 -0.07</translation>
+            <render>./ivs/elmacho.iv 1 </render>
+            <Extents>0.01 0.01 0.01</Extents>
+        </Geom>
+        <Geom type="box">
+            <render>./ivs/ensam01sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
+    </Body>
+    <Body name="link1">
+        <offsetfrom>link0</offsetfrom>
+        <Geom type="box">
+            <translation>0 0 0.12</translation>
+            <render>./ivs/ensam02sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
+    </Body>
+    <Joint name="M1" type="hinge">
+        <offsetfrom>link0</offsetfrom>
+        <body>link0</body>
+        <body>link1</body>
+        <axis>0 0 1</axis>
+        <maxvel>2</maxvel>
+    </Joint>
+    <Body name="link2">
+        <offsetfrom>link0</offsetfrom>
+        <Geom type="box">
+            <translation>0 0.0145 0.365</translation>
+            <render>./ivs/ensam03sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
+    </Body>
+    <Joint name="M2" type="hinge">
+        <offsetfrom>link1</offsetfrom>
+        <body>link1</body>
+        <body>link2</body>
+        <axis>0 1 0</axis>
+        <anchor>0 0 0.165</anchor>
+        <limitsdeg>-135 135</limitsdeg>
+        <maxvel>2</maxvel>
+    </Joint>
+    <Body name="link3">
+        <offsetfrom>link0</offsetfrom>
+        <Geom type="box">
+            <translation>0 0.0145 0.76</translation>
+            <render>./ivs/ensam04sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
+    </Body>
+    <Joint name="M3" type="hinge">
+        <offsetfrom>link2</offsetfrom>
+        <body>link2</body>
+        <body>link3</body>
+        <axis>0 1 0</axis>
+        <anchor>0 0 0.563</anchor>
+        <limitsdeg>-135 135</limitsdeg>
+        <maxvel>2</maxvel>
+      </Joint>
+    <Body name="link4">
+        <offsetfrom>link0</offsetfrom>
+        <Geom type="box">
+            <rotationaxis>1 0 0 180</rotationaxis>
+            <translation>0 0.001 1.007</translation>
+            <render>./ivs/ensam02sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
+    </Body>
+    <Joint name="M4" type="hinge">
+        <offsetfrom>link3</offsetfrom>
+        <body>link3</body>
+        <body>link4</body>
+        <axis>0 1 0</axis>
+        <anchor>0 0 0.962</anchor>
+        <limitsdeg>-135 135</limitsdeg>
+        <maxvel>2</maxvel>
+    </Joint>
+    <Body name="link5">
+        <offsetfrom>link0</offsetfrom>
+        <Geom type="box">
+            <rotationaxis>1 0 0 180</rotationaxis>
+            <translation>0 0 1.127</translation>
+            <render>./ivs/ensam01sn.iv</render>
+            <Extents>0.01 0.01 0.01</Extents>            
+        </Geom>
+        <Geom type="box">
+            <rotationaxis>1 0 0 90</rotationaxis>
+            <translation>0 0 1.197</translation>
+            <render>./ivs/elmacho.iv 1 </render>
+            <Extents>0.01 0.01 0.01</Extents>            
+        </Geom>
+        <mass type="sphere">
+            <total>.1</total>
+            <radius>1</radius>
+        </mass>
+    </Body>
+    <Joint name="M5" type="hinge">
+        <offsetfrom>link3</offsetfrom>
+        <body>link4</body>
+        <body>link5</body>
+        <axis>0 0 1</axis>
+        <anchor>0 0 1</anchor>
+        <maxvel>2</maxvel>
+    </Joint>
+    <!-- no joint limits -->
+</KinBody>
+
