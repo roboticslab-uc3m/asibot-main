@@ -48,9 +48,6 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--viewer [type] (set to 0 for none, default: \"%d\")\n",viewer);
     }
 
-    const char *asibot_root = ::getenv("ASIBOT_ROOT");
-    if(!asibot_root) printf("[warning] $ASIBOT_ROOT is not set.\n");
-
     if (config.check("numMotors")) numMotors = config.find("numMotors").asDouble();
     if (config.check("env")) env = config.find("env").asString();
     if (config.check("externObj")) externObj = config.find("externObj").asString();
@@ -191,16 +188,14 @@ bool RaveBot::open(Searchable& config) {
 
 
     // Actually load the scene
-    ConstString envAbsFile(asibot_root);
-    envAbsFile += "/app/ravebot/models/";
-    envAbsFile += env;
+    yarp::os::ResourceFinder rf;
+    rf.setVerbose(true);
+    rf.setDefaultContext("asibot");
+    std::string envFull( rf.findFileByName(env) );
 
-    if(!penv->Load(envAbsFile.c_str())) {
-        printf("[warning] RaveBot could not load %s environment.\n",envAbsFile.c_str());
-        if (!penv->Load(env.c_str())) {
-            printf("[error] RaveBot could not load %s environment either.\n",env.c_str());
-            return false;
-        }
+    if (! penv->Load(envFull.c_str()) ) {
+        printf("[error] RaveBot could not load %s environment.\n",envFull.c_str());
+        return false;
     }
     printf("[success] RaveBot loaded environment.\n");
 
