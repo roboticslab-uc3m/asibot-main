@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     rf.setVerbose(true);
     rf.setDefaultContext("kinectPxToReal/conf");
     rf.setDefaultConfigFile("kinectPxToReal.ini");
-    rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     KinectPxToReal mod;
     if(rf.check("help")) {
