@@ -1,0 +1,28 @@
+<!-- wheelchairLW.kinbody.xml -->
+
+<KinBody name="wheelchairLWKinbody">
+    <Body name="chair">
+        <Geom type="box">
+            <Render>./wrls/wheelchairElder.wrl .02</Render>
+            <Extents>0.4 0.55 .5</Extents>
+            <Translation>0.2 0 0.58</Translation>
+            <diffuseColor>0 0 1</diffuseColor>
+            <transparency>0.5</transparency>
+        </Geom>
+    </Body>
+    <Body name="chairDocking">
+        <Geom type="box">
+            <Render>./ivs/dstation.iv</Render>
+            <Extents>0.01 0.01 0.01</Extents>            
+            <RotationAxis>1 0 0 -90</RotationAxis>
+            <translation>-0.3 -0.05 0.646</translation>
+            <diffuseColor>1 0 0</diffuseColor>
+        </Geom>
+    </Body>
+    <Joint name="fake" type="hinge" enable="false">
+        <body>chair</body>
+        <body>chairDocking</body>
+        <limits>0 0</limits>
+    </Joint>
+</KinBody>
+

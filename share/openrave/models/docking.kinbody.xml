@@ -1,0 +1,14 @@
+<KinBody name="dockingStation">
+  <RotationAxis>1 0 0 90</RotationAxis>
+  <Body type="static">
+    <Geom type="trimesh">
+      <Render>./ivs/dstation.iv 1 </Render>
+      <Data>./ivs/dstation.iv 1 </Data>
+    </Geom>
+<!--    <Geom type="box">
+      <diffuseColor>0.5 0 0</diffuseColor>
+      <Translation>0 0.06 0.0321</Translation>
+      <Extents>0.0018 0.04 0.0018</Extents>
+    </Geom>-->
+  </Body>
+</KinBody>

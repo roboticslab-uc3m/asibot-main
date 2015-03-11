@@ -1,0 +1,9 @@
+
+<Robot name="ipCart3">
+    <KinBody file="./ipcamCart3.kinbody.xml"/>
+    <Manipulator name="ipcamCart3Manipulator">
+        <base>link0</base>
+        <effector>link6</effector>
+    </Manipulator>
+</Robot>
+
