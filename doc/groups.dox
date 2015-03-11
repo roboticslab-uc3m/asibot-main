@@ -80,10 +80,6 @@
 * @brief A collection of ASIBOT libraries that implement YARP device interfaces
 * and therefore can be invoked as YARP plugins.
 *
-* This collection of libraries
-* is the PC equivalent to RlPlugins2, which is intended for cross-compiling
-* for the robot and can be found inside $ASIBOT_ROOT/pxa270/src/libraries
-*
 * This file can be edited at asibot-main/doc/groups.dox
 */
 

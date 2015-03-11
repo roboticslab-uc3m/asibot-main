@@ -17,24 +17,6 @@ make -j3;  sudo make install; cd ../..
 
 For additional options use ccmake instead of cmake.
 
-Do not forget to set the YARP_ROOT environment variable to ''yarp'' and the YARP_DIR environment variable to ''yarp/build''. There are two ways of doing this:
-
- 1) Through ~/.profile (parsed on reboot). For this option, type:
- 
-\verbatim
-echo "export YARP_ROOT=$PWD/yarp" >> ~/.profile
-echo "export YARP_DIR=$PWD/yarp/build" >> ~/.profile
-source ~/.profile
-\endverbatim
-
- 2) Through ~/.bashrc (parsed inside each terminal). For this other option, type:
- 
-\verbatim
-echo "export YARP_ROOT=$PWD/yarp" >> ~/.bashrc
-echo "export YARP_DIR=$PWD/yarp/build" >> ~/.bashrc
-source ~/.bashrc
-\endverbatim
-
 <br><hr>
 
 This page can be edited at asibot-main/doc/install_yarp_on_ubuntu.dox.
