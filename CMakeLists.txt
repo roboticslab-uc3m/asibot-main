@@ -1,4 +1,4 @@
-# Copyright: Universidad Carlos III de Madrid (C) 2010;
+# Copyright: Universidad Carlos III de Madrid (C) 2010-2015;
 #            RobotCub Consortium (C) 2009 
 # Authors: Juan G. Victores
 # Contrib: Lorenzo Natale (author of iCub/main/CMakeLists.txt)
@@ -78,9 +78,9 @@ mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
 mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
 ##########################################
 
-# Pick up our scripts - they are all in the conf subdirectory
-set(ASIBOT_MODULE_PATH ${CMAKE_SOURCE_DIR}/conf)
-
+# Pick up our scripts - they are all in the cmake subdirectory
+set(ASIBOT_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+# let cmake use them
 set(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH})
 
 #set_property(GLOBAL PROPERTY ASIBOT_INCLUDE_DIRS)
@@ -92,8 +92,12 @@ set(ASIBOT_LINK_DIRS CACHE INTERNAL "appended link dirs" FORCE)
 set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 
 # add main contents
+add_subdirectory(share)
 add_subdirectory(doc)
 add_subdirectory(src)
+if (ENABLE_tests)           # flag will exist
+    add_subdirectory(test)  # once tests exist
+endif (ENABLE_tests)        # :-)
 
 # export our variables to a ASIBOTConfig.cmake creation
 set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
