@@ -118,9 +118,9 @@ int main(int argc, char *argv[]) {
 
     ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("cartesianServer/conf");
+    rf.setDefaultContext("cartesianServer");
     rf.setDefaultConfigFile("cartesianServer.ini");
-    rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     CartesianServer mod;
     if(rf.check("help")) {
