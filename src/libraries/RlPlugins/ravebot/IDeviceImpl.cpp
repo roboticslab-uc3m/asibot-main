@@ -32,7 +32,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--help (this help)\t--from [file.ini]\t--context [path]\n");
         printf("\t--numMotors [int] (number of motors to control, default: \"%d\")\n",numMotors);
 
-        printf("\t--env [xml] (env in abs or rel to \"$ASIBOT_ROOT/app/ravebot/models\", default: \"%s\")\n",env.c_str());
+        printf("\t--env [xml] (env rel to \"share/ravebot\", default: \"%s\")\n",env.c_str());
         printf("\t--externObj (default: \"%s\")\n",externObj.c_str());
         printf("\t--extraRobot (type of extra robot, default: \"%s\")\n",extraRobot.c_str());
         printf("\t--genInitPos [units] (default: \"%f\")\n",genInitPos);
