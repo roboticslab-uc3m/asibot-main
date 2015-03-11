@@ -101,12 +101,12 @@ endif (ENABLE_tests)        # :-)
 
 # export our variables to a ASIBOTConfig.cmake creation
 set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
-configure_file(${CMAKE_SOURCE_DIR}/conf/template/ASIBOTConfig.cmake.in
+configure_file(${CMAKE_SOURCE_DIR}/cmake/template/ASIBOTConfig.cmake.in
                ${CMAKE_BINARY_DIR}/ASIBOTConfig.cmake @ONLY)
 
 # uninstall target
 configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/conf/template/ASIBOTConfigUninstall.cmake.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ASIBOTConfigUninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall
