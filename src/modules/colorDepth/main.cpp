@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     rf.setVerbose(true);
     rf.setDefaultContext("colorDepth/conf");
     rf.setDefaultConfigFile("colorDepth.ini");
-    rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     ColorDepth mod;
     if(rf.check("help")) {

@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     rf.setVerbose(true);
     rf.setDefaultContext("premultH/conf");
     rf.setDefaultConfigFile("premultH.ini");
-    rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     PremultH mod;
     if(rf.check("help")) {

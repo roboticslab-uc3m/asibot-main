@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     rf.setVerbose(true);
     rf.setDefaultContext("taskServer/conf");
     rf.setDefaultConfigFile("taskServer.ini");
-    rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     TaskServer mod;
     if(rf.check("help")) {

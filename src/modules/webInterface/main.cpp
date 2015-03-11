@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     rf.setVerbose(true);
     rf.setDefaultContext("webInterface/conf");
     rf.setDefaultConfigFile("webInterface.ini");
-    rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     WebInterface mod;
     if(rf.check("help")) {
