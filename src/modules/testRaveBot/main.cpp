@@ -145,7 +145,7 @@ int main(int argc, char *argv[]) {
     rf.setVerbose(true);
     rf.setDefaultContext("testRaveBot/conf");
     rf.setDefaultConfigFile("testRaveBot.ini");
-    rf.configure("ASIBOT_ROOT", argc, argv);
+    rf.configure(argc, argv);
 
     TestRaveBot mod;
     if(rf.check("help")) {
