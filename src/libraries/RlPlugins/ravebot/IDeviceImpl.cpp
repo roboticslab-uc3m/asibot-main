@@ -190,7 +190,7 @@ bool RaveBot::open(Searchable& config) {
     // Actually load the scene
     yarp::os::ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("asibot");
+    rf.setDefaultContext("ravebot");
     std::string envFull( rf.findFileByName(env) );
 
     if (! penv->Load(envFull.c_str()) ) {
