@@ -4,7 +4,7 @@
 # Contrib: Paul Fitzpatrick (YARP examples)
 # CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
 
-YARP_PREPARE_DEVICE(ravebot TYPE RaveBot INCLUDE RaveBot.h WRAPPER controlboard)
+YARP_PREPARE_DEVICE(ravebot TYPE RaveBot INCLUDE RaveBot.h WRAPPER controlboardwrapper2)
 
 IF (NOT SKIP_ravebot)
 

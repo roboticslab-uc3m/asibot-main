@@ -21,7 +21,7 @@ bool TestRaveBot::configure(ResourceFinder &rf) {
 
     Property options;
     options.fromString(rf.toString());  // Get rf stuff to the robot device
-    options.put("device","controlboard");
+    options.put("device","controlboardwrapper2");
     options.put("subdevice","ravebot");
     options.put("name","/ravebot");
 
