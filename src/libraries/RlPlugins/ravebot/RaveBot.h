@@ -69,7 +69,7 @@ using namespace OpenRAVE;
  * and <a class="el" href="group__cartesianServer.html">cartesianServer</a>.
  *
  */
-class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncoders, public IControlLimits {
+class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncodersTimed, public IControlLimits {
  public:
 
   // Set the Thread Rate in the class constructor
@@ -273,6 +273,24 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      * @return true if all goes well, false if anything bad happens. 
      */
     virtual bool getEncoderAccelerations(double *accs);
+
+    /**
+     * Read the instantaneous acceleration of all axes.
+     * \param encs pointer to the array that will contain the output
+     * \param time pointer to the array that will contain individual timestamps
+     * \return true if all goes well, false if anything bad happens.
+     */
+    virtual bool getEncodersTimed(double *encs, double *time);
+
+    /**
+     * Read the instantaneous acceleration of all axes.
+     * \param j axis index
+     * \param encs encoder value (pointer to)
+     * \param time corresponding timestamp (pointer to)
+     * \return true if all goes well, false if anything bad happens.
+     */
+    virtual bool getEncoderTimed(int j, double *encs, double *time);
+
 
 //  --------- IVelocityControl Declarations. Implementation in IVelocityImpl.cpp ---------
 
