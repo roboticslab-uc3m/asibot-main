@@ -2,7 +2,7 @@
 # Author: Juan G Victores
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
-set(appname openrave)
+set(appname ravebot)
 
 file(GLOB models ${CMAKE_CURRENT_SOURCE_DIR}/models/*.xml)
 file(GLOB models/ivs ${CMAKE_CURRENT_SOURCE_DIR}/models/ivs/*.iv)
