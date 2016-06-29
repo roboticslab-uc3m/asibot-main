@@ -92,7 +92,7 @@ void KdlBot::run() {
                 else currentRads(motor)=toRad(dRealUnits[motor]);
             }
 
-            KDL::Twist currentT = diff(currentF, targetF);
+            KDL::Twist currentT = diff(currentF, desiredF);
             for(unsigned int i=0; i<6; i++) {
                 currentT(i) *= GAIN;
                 currentT(i) += desiredT(i);
