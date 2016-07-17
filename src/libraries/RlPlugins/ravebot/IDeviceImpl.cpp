@@ -255,7 +255,7 @@ bool RaveBot::open(Searchable& config) {
                 // Show the camera image in a separate window
                 // pcamerasensorbase->Configure(SensorBase::CC_RenderDataOn);
                 // Get some camera parameter info
-                boost::shared_ptr<SensorBase::CameraGeomData> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
+                boost::shared_ptr<SensorBase::CameraGeomData const> pcamerageomdata = boost::dynamic_pointer_cast<SensorBase::CameraGeomData const>(psensorbase->GetSensorGeometry(SensorBase::ST_Camera));
                 // printf("Camera width: %d, height: %d.\n",pcamerageomdata->width,pcamerageomdata->height);
                 cameraWidth.push_back(pcamerageomdata->width);
                 cameraHeight.push_back(pcamerageomdata->height);
