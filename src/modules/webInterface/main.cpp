@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 
     ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("webInterface/conf");
+    rf.setDefaultContext("webInterface");
     rf.setDefaultConfigFile("webInterface.ini");
     rf.configure(argc, argv);
 

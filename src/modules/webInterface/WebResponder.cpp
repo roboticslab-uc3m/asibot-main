@@ -34,8 +34,8 @@ bool WebResponder::closeDevices() {
 }
 
 /************************************************************************/
-bool WebResponder::setHtmlPath(const ConstString& _htmlPath) {
-    htmlPath = _htmlPath;
+bool WebResponder::setResourceFinder(ResourceFinder &rf) {
+    this->rf = rf;
     return true;
 }
 
@@ -65,7 +65,7 @@ string& WebResponder::replaceAll(string& context, const string& from, const stri
 
 /************************************************************************/
 string WebResponder::readHtml(const ConstString& fileName) {
-    ConstString filePath = htmlPath + fileName;
+    ConstString filePath = rf.findFileByName(std::string("html/")+fileName);
     return readFile(filePath);
 }
 

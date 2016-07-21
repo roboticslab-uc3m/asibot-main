@@ -30,9 +30,7 @@ bool WebInterface::configure(ResourceFinder &rf) {
     printf("WebInterface using period: %f, resources: %s.\n", period,resources.c_str());
     printf("WebInterface using webIp: %s, webPort: %d.\n",webIp.c_str(),webPort);
 
-    ConstString htmlPath = rf.getContextPath() + "/../html/";
-    printf("WebInterface using htmlPath: %s\n",htmlPath.c_str());
-    responder.setHtmlPath(htmlPath);
+    responder.setResourceFinder(rf);
     ConstString userPath = rf.getContextPath() + "/../user/";
     printf("WebInterface using userPath: %s\n",userPath.c_str());
     responder.setUserPath(userPath);
