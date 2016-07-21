@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
 
     ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("testRaveBot/conf");
+    rf.setDefaultContext("testRaveBot");
     rf.setDefaultConfigFile("testRaveBot.ini");
     rf.configure(argc, argv);
 
