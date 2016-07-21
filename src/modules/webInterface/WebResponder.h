@@ -37,8 +37,8 @@ using std::string;
  */
 class WebResponder : public PortReader {
 protected:
+    ResourceFinder rf;
     bool simConnected, realConnected;
-    ConstString htmlPath;
     ConstString userPath;
     ConstString resourcePath;
     string readFile(const ConstString& filePath);  // needs absoulte path
@@ -73,7 +73,7 @@ public:
     bool init();
     bool closeDevices();
     bool read(ConnectionReader& in);
-    bool setHtmlPath(const ConstString& _htmlPath);
+    bool setResourceFinder(ResourceFinder &rf);
     bool setUserPath(const ConstString& _userPath);
     bool setResourcePath(const ConstString& _resourcePath);
 };
