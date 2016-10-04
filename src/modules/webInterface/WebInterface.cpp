@@ -31,7 +31,7 @@ bool WebInterface::configure(ResourceFinder &rf) {
     printf("WebInterface using webIp: %s, webPort: %d.\n",webIp.c_str(),webPort);
 
     responder.setResourceFinder(rf);
-    ConstString userPath = rf.getContextPath() + "/";
+    ConstString userPath = rf.getHomeContextPath() + "/";
     printf("WebInterface using userPath: %s\n",userPath.c_str());
     responder.setUserPath(userPath);
     ConstString resourcePath = "http://";

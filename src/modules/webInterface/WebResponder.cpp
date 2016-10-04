@@ -77,7 +77,7 @@ string WebResponder::readFile(const ConstString& filePath) {
     std::ifstream t(filePath.c_str());
     std::string str;
     if(!t.is_open()) {
-        str.append("Not able to open file.\n");
+        printf("Not able to open file.\n");
         return str;
     }
     t.seekg(0, std::ios::end);   
@@ -664,7 +664,7 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString nfile = request.find("nfile").asString();
         response.addString(nfile);
         nfile += ".py";
-        ConstString templatePath = userPath + "template.py";
+        ConstString templatePath = rf.findFileByName(string("user/") + "template.py");
         string str = readFile(templatePath);
         appendToFile(nfile,str.c_str());
         printf("create.0 %s file.\n",nfile.c_str());
