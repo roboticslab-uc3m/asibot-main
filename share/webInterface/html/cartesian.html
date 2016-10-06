@@ -51,8 +51,8 @@ Released for free under a Creative Commons Attribution 2.5 License
 				<!--INPUT TYPE=RADIO NAME="origin" VALUE="base">&nbsp;<font size="3">Base</font> &nbsp;&nbsp;
 				<INPUT TYPE=RADIO NAME="origin" VALUE="tool">&nbsp;<font size="3">Tool</font> <br><br-->
 				<br><br><br>
-				<button type="submit" onClick="return cartesianMove('left')"><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="submit" onClick="return cartesianMove('right')"><img src="fig/right.png" width="50" height="50"></button>
+				<button type="submit" onClick="return cartesianMove('left')" disabled><img src="fig/left.png" width="50" height="50"></button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="submit" onClick="return cartesianMove('right')" disabled><img src="fig/right.png" width="50" height="50"></button>
 				<br>
 				<P>
             </form>
@@ -197,9 +197,9 @@ function psave() {
 						<b>Yaw </b> &nbsp;<input name="yaw"/>
 					</div-->	 
 					<P>
-					<button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric('movj')">MOVJ</button>
+					<button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric('movj')" disabled>MOVJ</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric('movl')">MOVL</button>
+                    <button type=submit style="height: 25px; width: 100px;" onClick="return cnumeric('movl')" disabled>MOVL</button>
                     <br><br>
 				</form>
 <script>
@@ -223,11 +223,23 @@ function cnumeric(str) {
 
 	</div>
 
+<script>
+var radios = document.querySelectorAll("input[type=radio]");
 
-		
-
-
-
+for (var radioIndex = 0; radioIndex < radios.length; radioIndex++) {
+	radios[radioIndex].onchange = function (evt) {
+		var buttons = this.form.getElementsByTagName('button');
+		for (var i = 0; i < buttons.length; i++) {
+			buttons[i].disabled = false;
+		}
+		for (i = 0; i < radios.length; i++) {
+			if (radios[i].form === this.form) {
+				radios[i].onchange = null;
+			}
+		}
+	};
+}
+</script>
 	<!-- end content -->
 	
 </div>
