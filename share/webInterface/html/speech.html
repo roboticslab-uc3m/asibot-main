@@ -42,8 +42,7 @@ Released for free under a Creative Commons Attribution 2.5 License
        		 <!--font color="#000000" size="4">Speech recognition</font-->
 			<form id="recognition" action="speech">
 			<img src="fig/speech.png" width="70" height="70"/>
-				<!--input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech onwebkitspeechchange="submitform()"-->
-				<input type='text' name='word' style="height: 25px; width: 340px;" x-webkit-speech="x-webkit-speech" onwebkitspeechchange="submitSpeech(this.form)">
+				<input type='text' name='word' style="height: 25px; width: 340px;" onchange="submitSpeech(this.form)">
 			</form>
 <script type="text/javascript">
 function submitSpeech(id) {
