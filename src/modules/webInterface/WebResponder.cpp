@@ -320,7 +320,7 @@ ConstString WebResponder::taskButtonCreator() {
                     lineCount++;
                 }
                 printf("Program: %s\nSpeech: %s\nIcon: %s\n",strProgram.c_str(),strSpeech.c_str(),strIcon.c_str());
-                ret += "<button name='program' type='submit' value='";
+                ret += "<button name='program' type='button' value='";
                 ret += strProgram.c_str();
                 ret += "'><img src='";
                 ret += resourcePath;
@@ -782,7 +782,7 @@ bool WebResponder::read(ConnectionReader& in) {
         lstr += iname + "\n";
         rewriteFile(tname,lstr.c_str());
         return response.write(*out);
-    } else if (code=="execute") {
+    } else if (code=="launch.0") {
         ConstString program = request.find("program").asString();
         printf("execute %s program.\n",program.c_str());
         response.addString(program.c_str());
@@ -790,18 +790,8 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString cmd("python ");
         cmd += programPath;
         cmd += ".py";
-//        ConstString cmd("dir ");
-//        cmd += userPath;
         int i=system (cmd.c_str());
         printf ("The value returned was: %d.\n",i);
-//        system
-//        ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
-//        prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
-//        prefix += "</head>\n<body>\n";
-//        prefix += "<h1>Execution</h1>\n";
-//        response.addString(prefix);
-//        response.addString("stream");
-//        response.addInt(1);
         return response.write(*out);
     }
 

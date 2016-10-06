@@ -39,7 +39,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 						<div align="center">
 							<font size="6"><b>Multi-Modal Task Launcher</b></font><br><br>
      	 				</div>
-		<form action="execute">
+		<form id="launchForm">
             <BOTONESTAREAS>
 			<!--button name="program" type="submit" value="water"><img src="fig/drinkWater.jpg" height="200"></button> &nbsp;
 			<button name="program" type="submit" value="can"><img src="fig/pickCan.jpg" height="200"></button> <br><br>
@@ -51,6 +51,25 @@ Released for free under a Creative Commons Attribution 2.5 License
 <br><br>
 		</form>
 	</div>
+<script>
+var form = document.getElementById('launchForm');
+
+document.addEventListener('click', function (evt) {
+	if (evt.target.name === 'program') {
+		if (!confirm('Launch program ' + evt.target.value + '?')) return false;
+		url = 'launch.0?program=' + evt.target.value;
+		xmlhttp.open('GET', url, true);
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState === 4) {
+				alert('Program ' + evt.target.value + ' completed.')
+			}
+		}
+		xmlhttp.setRequestHeader('Accept', 'message/x-jl-formresult');
+		xmlhttp.send();
+	}
+	return false;
+}, false);
+</script>
 	<!-- end content -->
 
 </div>
