@@ -54,16 +54,34 @@ function fcreate(form) {
         if (xmlhttp.readyState==4) {
             alert('Created ' + xmlhttp.responseText)
             // Now update efile and dfile
-            var eoption=document.createElement("option");
-            eoption.text=form.nfile.value;
             var eselect = document.getElementById("efile");
-            eselect.add(eoption,eselect.options[null]);
-            eselect.selectedIndex = eselect.options.length-1;
-            var doption=document.createElement("option");
-            doption.text=form.nfile.value;
+            var haseoption = false;
+           	for (var i = 0; i < eselect.options.length; i++) {
+           	   	if (eselect.options[i].value === form.nfile.value) {
+           	        haseoption = true;
+           	        break;
+           	    }
+           	}
+           	if (!haseoption) {
+           	    var eoption=document.createElement("option");
+                eoption.text=form.nfile.value;
+                eselect.add(eoption,eselect.options[null]);
+                eselect.selectedIndex = eselect.options.length-1;
+           	}
             var dselect = document.getElementById("dfile");
-            dselect.add(doption,dselect.options[null]);
-            dselect.selectedIndex = dselect.options.length-1;
+            var hasdoption = false;
+           	for (i = 0; i < dselect.options.length; i++) {
+           	    if (dselect.options[i].value === form.nfile.value) {
+           	        hasdoption = true;
+           	        break;
+           	     }
+           	}
+           	if (!hasdoption) {
+           	    var doption=document.createElement("option");
+                doption.text=form.nfile.value;
+                dselect.add(doption,dselect.options[null]);
+                dselect.selectedIndex = dselect.options.length-1;
+           	}
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
