@@ -89,22 +89,27 @@ function changeIcon(val) {
         <table id ="table_right" width="300" cellspacing="1" cellpadding="3" border="0" bgcolor="F8F8F8"><tr><td> 
             <div align="center"><br>
                 <font size="5"><b>Assign to Task</b></font><br><br>
-                    <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button><input name="iname" id="iname" type="hidden" value="null">
+                    <button name="sfile" id="sfile" onClick="submitSave();"><img src="fig/save.png" width="80" height="80" ></button><input name="iname" id="iname" type="hidden">
                 <br><br>
 <script>
 function submitSave() {
     var pFile = document.getElementById("pfile").value;
-    if (!pFile) return false;
+    if (!pFile) {
+    	alert("Please select program.");
+    	return false;
+    }
     var sWords = document.getElementById("swords").value;
-    if (!sWords) return false;
+    if (!sWords) {
+    	alert("Please select speech data.");
+    	return false;
+    }
     var iName = document.getElementById("iname").value;
-    if (!iName) return false;
-    if (iName == "null") {
+    if (!iName) {
         alert("Please select icon.");
         return false;
     }
     tName = prompt("Program: " + pFile + "\nSelected words: " + sWords + "\nIcon:" + iName, "task01");
-    if(tName==null || tName=="") {
+    if(!tName) {
         alert("Task name needed");
         return false;
     }
