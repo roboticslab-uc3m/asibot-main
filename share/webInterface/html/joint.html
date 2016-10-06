@@ -152,11 +152,11 @@ function psave() {
 				<font size="4"><strong><u>Numeric</u></strong></font>&nbsp;<br><br>
 				<INPUT TYPE=RADIO NAME="movement" VALUE="absolute">&nbsp;<font size="3">Absolute</font> &nbsp;&nbsp;
 				<INPUT TYPE=RADIO NAME="movement" VALUE="relative">&nbsp;<font size="3">Relative</font> <br><br>
-				<font size="3">One</font> &nbsp;&nbsp;&nbsp;<INPUT NAME="one" > <br>
-				<font size="3">Two</font> &nbsp;&nbsp;&nbsp;<INPUT NAME="two" > <br>
-				<font size="3">Three</font>&nbsp;           <INPUT NAME="three" > <br>
-				<font size="3">Four</font>&nbsp;&nbsp;&nbsp;<INPUT NAME="four" > <br>
-				<font size="3">Five</font>&nbsp;&nbsp;&nbsp;<INPUT NAME="five" > <br>
+				<font size="3">One</font> &nbsp;&nbsp;&nbsp;<INPUT NAME="one" disabled > <br>
+				<font size="3">Two</font> &nbsp;&nbsp;&nbsp;<INPUT NAME="two" disabled > <br>
+				<font size="3">Three</font>&nbsp;           <INPUT NAME="three" disabled > <br>
+				<font size="3">Four</font>&nbsp;&nbsp;&nbsp;<INPUT NAME="four" disabled > <br>
+				<font size="3">Five</font>&nbsp;&nbsp;&nbsp;<INPUT NAME="five" disabled > <br>
 				<P>
 				<button type=submit style="height: 25px; width: 100px;" onClick="return numeric()" disabled>GO!</button><br><br>
 			</form>
@@ -184,6 +184,12 @@ for (var radioIndex = 0; radioIndex < radios.length; radioIndex++) {
 		var buttons = this.form.getElementsByTagName('button');
 		for (var i = 0; i < buttons.length; i++) {
 			buttons[i].disabled = false;
+		}
+		var inputs = this.form.getElementsByTagName('input');
+		for (i = 0; i < inputs.length; i++) {
+			if (inputs[i].type === 'text') {
+				inputs[i].disabled = false;
+			}
 		}
 		for (i = 0; i < radios.length; i++) {
 			if (radios[i].form === this.form) {

@@ -174,23 +174,23 @@ function psave() {
 					<INPUT TYPE=RADIO NAME="origin" VALUE="rel_base">&nbsp;<font size="3">Relative</font> &nbsp;&nbsp;
 					<!--INPUT TYPE=RADIO NAME="origin" VALUE="tool">&nbsp;<font size="3">Tool</font--><br><br>
 					<div>
-						<b>x</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="px" />
+						<b>x</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="px" disabled />
 					</div> 
 					<br>
 					<div>
-						<b>y</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="py" />
+						<b>y</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="py" disabled />
 					</div>	 
 					<br>
 					<div>
-						<b>z</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="pz" />
+						<b>z</b> &nbsp;&nbsp;&nbsp;&nbsp;<input name="pz" disabled />
 					</div> 
 					<br>
 					<div>
-    					<b>rot(y')</b> &nbsp; <input name="oyP"/>
+    					<b>rot(y')</b> &nbsp; <input name="oyP" disabled />
 					</div>	 
 					<br>
 					<div>
-						<b>rot(z'')</b> <input name="ozPP" />
+						<b>rot(z'')</b> <input name="ozPP" disabled />
 	    			</div> 
 					<br>
 					<!--div>
@@ -231,6 +231,12 @@ for (var radioIndex = 0; radioIndex < radios.length; radioIndex++) {
 		var buttons = this.form.getElementsByTagName('button');
 		for (var i = 0; i < buttons.length; i++) {
 			buttons[i].disabled = false;
+		}
+		var inputs = this.form.getElementsByTagName('input');
+		for (i = 0; i < inputs.length; i++) {
+			if (inputs[i].type === 'text') {
+				inputs[i].disabled = false;
+			}
 		}
 		for (i = 0; i < radios.length; i++) {
 			if (radios[i].form === this.form) {
