@@ -12,20 +12,6 @@ bool RaveBot::getAxes(int *ax) {
 
 // -----------------------------------------------------------------------------
 
-bool RaveBot::setPositionMode() {
-    printf("[RaveBot] setPositionMode()\n");
-    if (modePosVel==0) return true;  // Simply return true if we were already in pos mode.
-    // Do anything additional before setting flag to pos...
-    if(!stop()) {
-        fprintf(stderr,"[RaveBot] warning: setPositionMode() return false; failed to stop\n");
-        return false;
-    }
-    modePosVel = 0;
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-
 bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
     if ((unsigned int)j>numMotors) return false;
     if(modePosVel!=0) {  // Check if we are in position mode.

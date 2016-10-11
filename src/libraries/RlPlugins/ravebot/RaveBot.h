@@ -69,7 +69,7 @@ using namespace OpenRAVE;
  * and <a class="el" href="group__cartesianServer.html">cartesianServer</a>.
  *
  */
-class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncodersTimed, public IControlLimits {
+class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncodersTimed, public IControlLimits, public IControlMode {
  public:
 
   // Set the Thread Rate in the class constructor
@@ -84,14 +84,6 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      * @return true/false.
      */
     virtual bool getAxes(int *ax);
-
-    /** Set position mode. This command
-     * is required by control boards implementing different
-     * control methods (e.g. velocity/torque), in some cases
-     * it can be left empty.
-     * return true/false on success/failure
-     */
-    virtual bool setPositionMode();
 
     /** Set new reference point for a single axis.
      * @param j joint number
@@ -295,15 +287,6 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
 //  --------- IVelocityControl Declarations. Implementation in IVelocityImpl.cpp ---------
 
     /**
-     * Set velocity mode. This command
-     * is required by control boards implementing different
-     * control methods (e.g. velocity/torque), in some cases
-     * it can be left empty.
-     * @return true/false on success failure
-     */
-    virtual bool setVelocityMode();
-
-    /**
      * Start motion at a given speed, single joint.
      * @param j joint number
      * @param sp speed value
@@ -337,6 +320,65 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      * @return true if everything goes fine, false otherwise.
      */
     virtual bool getLimits(int axis, double *min, double *max);
+
+// -------- IControlMode declarations. Implementation in IControlModeImpl.cpp --------
+
+    /**
+     * Set position mode, single axis.
+     * @param j joint number
+     * @return: true/false success failure.
+     */
+    virtual bool setPositionMode(int j);
+
+    /**
+     * Set velocity mode, single axis.
+     * @param j joint number
+     * @return: true/false success failure.
+     */
+    virtual bool setVelocityMode(int j);
+
+    /**
+     * Set torque mode, single axis.
+     * @param j joint number
+     * @return: true/false success failure.
+     */
+    virtual bool setTorqueMode(int j);
+
+    /**
+     * Set impedance position mode, single axis.
+     * @param j joint number
+     * @return: true/false success failure.
+     */
+    virtual bool setImpedancePositionMode(int j);
+
+    /**
+     * Set impedance velocity mode, single axis.
+     * @param j joint number
+     * @return: true/false success failure.
+     */
+    virtual bool setImpedanceVelocityMode(int j);
+
+    /**
+     * Set open loop mode, single axis.
+     * @param j joint number
+     * @return: true/false success failure.
+     */
+    virtual bool setOpenLoopMode(int j);
+
+    /**
+     * Get the current control mode.
+     * @param j joint number
+     * @param mode a vocab of the current control mode for joint j.
+     * @return: true/false success failure.
+     */
+    virtual bool getControlMode(int j, int *mode);
+
+    /**
+     * Get the current control mode (multiple joints).
+     * @param modes a vector containing vocabs for the current control modes of the joints.
+     * @return: true/false success failure.
+     */
+    virtual bool getControlModes(int *modes);
 
 // -------- DeviceDriver declarations. Implementation in IDeviceImpl.cpp --------
 
