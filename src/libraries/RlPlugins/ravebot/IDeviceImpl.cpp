@@ -22,7 +22,7 @@ bool RaveBot::open(Searchable& config) {
     double genRefSpeed = DEFAULT_GEN_REF_SPEED;
     double genEncRawExposed = DEFAULT_GEN_ENC_RAW_EXPOSED;
     double genVelRawExposed = DEFAULT_GEN_VEL_RAW_EXPOSED;
-    modePosVel = DEFAULT_MODE_POS_VEL;
+    int modePosVel = DEFAULT_MODE_POS_VEL;
     ConstString physics = DEFAULT_PHYSICS;
     viewer = DEFAULT_VIEWER;
 
@@ -73,6 +73,8 @@ bool RaveBot::open(Searchable& config) {
         genRefSpeed,genEncRawExposed, genVelRawExposed);
     printf("RaveBot using jmcMs: %f, jmcMsAcc: %f, modePosVel: %d, physics: %s, viewer: %d.\n",
         jmcMs,jmcMsAcc,modePosVel,physics.c_str(),viewer);
+
+    vModePosVel.assign(numMotors, modePosVel);
 
     Bottle* initPoss;
     if (config.check("initPoss")) {

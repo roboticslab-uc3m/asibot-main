@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #include "WorldRpcResponder.h"
 #include "MobileRpcResponder.h"
@@ -434,7 +435,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     // General Joint Motion Controller parameters //
     unsigned int numMotors;
     //
-    int modePosVel;
+    std::vector<int> vModePosVel;
     double lastTime;
     Semaphore encRawMutex;  // SharedArea
     std::vector<double> encRaw;
