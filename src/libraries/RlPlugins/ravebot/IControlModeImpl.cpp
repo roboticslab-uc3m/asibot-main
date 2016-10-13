@@ -55,13 +55,18 @@ bool RaveBot::setOpenLoopMode(int j) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getControlMode(int j, int *mode) {
-    return false; // unimplemented
+    if ((unsigned int)j>numMotors) return false;
+    *mode = vModePosVel[j];
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getControlModes(int *modes) {
-    return false; // unimplemented
+    for(unsigned int motor=0;motor<numMotors;motor++) {
+        modes[motor] = vModePosVel[motor];
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
