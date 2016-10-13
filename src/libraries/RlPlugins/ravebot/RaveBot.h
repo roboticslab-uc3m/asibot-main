@@ -35,7 +35,7 @@
 #define DEFAULT_GEN_VEL_RAW_EXPOSED 0.0174532925199433  // Ratio, 0.0174532925199433 is pi/180 (raw/exp)<->(rad/deg)
 #define DEFAULT_JMC_MS 20  // [ms]
 #define DEFAULT_JMC_MS_ACC 1  // multiplier
-#define DEFAULT_MODE_POS_VEL 0  // 0=Position, 1=Velocity.
+#define DEFAULT_MODE_POS_VEL VOCAB_POSITION_MODE
 #define DEFAULT_PHYSICS "none"
 #define DEFAULT_VIEWER 1
 

@@ -6,7 +6,7 @@
 
 bool RaveBot::velocityMove(int j, double sp) {  // velExposed = sp;
     if ((unsigned int)j>numMotors) return false;
-    if(vModePosVel[j]!=1) {  // Check if we are in velocity mode.
+    if(vModePosVel[j]!=VOCAB_VELOCITY_MODE) {  // Check if we are in velocity mode.
         fprintf(stderr,"[RaveBot] fail: RaveBot will not velocityMove as joint %d not in velocityMode\n",j+1);
         return false;
     }
