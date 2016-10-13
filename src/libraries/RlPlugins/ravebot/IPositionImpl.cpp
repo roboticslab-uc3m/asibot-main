@@ -14,8 +14,8 @@ bool RaveBot::getAxes(int *ax) {
 
 bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
     if ((unsigned int)j>numMotors) return false;
-    if(modePosVel!=0) {  // Check if we are in position mode.
-        fprintf(stderr,"[RaveBot] warning: will not positionMove as not in positionMode\n");
+    if(vModePosVel[j]!=0) {  // Check if we are in position mode.
+        fprintf(stderr,"[RaveBot] warning: will not positionMove as joint %d not in positionMode\n",j+1);
         return false;
     }
     printf("[RaveBot] positionMove(%d,%f) f[begin]\n",j,ref);
@@ -40,9 +40,11 @@ bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
 // -----------------------------------------------------------------------------
 
 bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
-    if(modePosVel!=0) {  // Check if we are in position mode.
-        fprintf(stderr,"[RaveBot] error: Will not positionMove as not in positionMode\n");
-        return false;
+    for(unsigned int motor=0;motor<numMotors;motor++) {
+        if(vModePosVel[motor]!=0) {  // Check if we are in position mode.
+            fprintf(stderr,"[RaveBot] error: Will not positionMove as joint %d not in positionMode\n",motor+1);
+            return false;
+        }
     }
     printf("[RaveBot] positionMove() f[begin]\n");
     // Find out the maximum time to move
@@ -76,8 +78,8 @@ bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
 
 bool RaveBot::relativeMove(int j, double delta) {
     if ((unsigned int)j>numMotors) return false;
-    if(modePosVel!=0) {  // Check if we are in position mode.
-        printf("[fail] RaveBot will not relativeMove as not in positionMode\n");
+    if(vModePosVel[j]!=0) {  // Check if we are in position mode.
+        printf("[fail] RaveBot will not relativeMove as joint %d not in positionMode\n",j+1);
         return false;
     }
     printf("[RaveBot] relativeMove(%d,%f) f[begin]\n",j,delta);
@@ -102,9 +104,11 @@ bool RaveBot::relativeMove(int j, double delta) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::relativeMove(const double *deltas) {  // encExposed = deltas + encExposed
-    if(modePosVel!=0) {  // Check if we are in position mode.
-        fprintf(stderr,"[RaveBot] warning: will not relativeMove as not in positionMode\n");
-        return false;
+    for(unsigned int motor=0;motor<numMotors;motor++) {
+        if(vModePosVel[motor]!=0) {  // Check if we are in position mode.
+            fprintf(stderr,"[RaveBot] warning: will not relativeMove as joint %d not in positionMode\n",motor+1);
+            return false;
+        }
     }
     printf("[RaveBot] relativeMove() f[begin]\n");
     // Find out the maximum angle to move
