@@ -7,13 +7,13 @@
 bool RaveBot::setPositionMode(int j) {
     printf("[RaveBot] setPositionMode(%d)\n", j);
     if ((unsigned int)j>numMotors) return false;
-    if (vModePosVel[j]==0) return true;  // Simply return true if we were already in pos mode.
+    if (vModePosVel[j]==VOCAB_POSITION_MODE) return true;  // Simply return true if we were already in pos mode.
     // Do anything additional before setting flag to pos...
     if(!stop()) {
         fprintf(stderr,"[RaveBot] warning: setPositionMode() return false; failed to stop\n");
         return false;
     }
-    vModePosVel[j] = 0;  // Set flag to pos.
+    vModePosVel[j] = VOCAB_POSITION_MODE;  // Set flag to pos.
     return true;
 }
 
@@ -22,9 +22,9 @@ bool RaveBot::setPositionMode(int j) {
 bool RaveBot::setVelocityMode(int j) {
     printf("[RaveBot] setVelocityMode(%d)\n", j);
     if ((unsigned int)j>numMotors) return false;
-    if (vModePosVel[j]==1) return true;  // Simply return true if we were already in vel mode.
+    if (vModePosVel[j]==VOCAB_VELOCITY_MODE) return true;  // Simply return true if we were already in vel mode.
     // Do anything additional before setting flag to vel...
-    vModePosVel[j] = 1;  // Set flag to vel.
+    vModePosVel[j] = VOCAB_VELOCITY_MODE;  // Set flag to vel.
     return true;
 }
 

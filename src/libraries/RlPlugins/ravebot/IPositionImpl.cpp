@@ -14,7 +14,7 @@ bool RaveBot::getAxes(int *ax) {
 
 bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
     if ((unsigned int)j>numMotors) return false;
-    if(vModePosVel[j]!=0) {  // Check if we are in position mode.
+    if(vModePosVel[j]!=VOCAB_POSITION_MODE) {  // Check if we are in position mode.
         fprintf(stderr,"[RaveBot] warning: will not positionMove as joint %d not in positionMode\n",j+1);
         return false;
     }
@@ -41,7 +41,7 @@ bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
 
 bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
     for(unsigned int motor=0;motor<numMotors;motor++) {
-        if(vModePosVel[motor]!=0) {  // Check if we are in position mode.
+        if(vModePosVel[motor]!=VOCAB_POSITION_MODE) {  // Check if we are in position mode.
             fprintf(stderr,"[RaveBot] error: Will not positionMove as joint %d not in positionMode\n",motor+1);
             return false;
         }
@@ -78,7 +78,7 @@ bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
 
 bool RaveBot::relativeMove(int j, double delta) {
     if ((unsigned int)j>numMotors) return false;
-    if(vModePosVel[j]!=0) {  // Check if we are in position mode.
+    if(vModePosVel[j]!=VOCAB_POSITION_MODE) {  // Check if we are in position mode.
         printf("[fail] RaveBot will not relativeMove as joint %d not in positionMode\n",j+1);
         return false;
     }
@@ -105,7 +105,7 @@ bool RaveBot::relativeMove(int j, double delta) {
 
 bool RaveBot::relativeMove(const double *deltas) {  // encExposed = deltas + encExposed
     for(unsigned int motor=0;motor<numMotors;motor++) {
-        if(vModePosVel[motor]!=0) {  // Check if we are in position mode.
+        if(vModePosVel[motor]!=VOCAB_POSITION_MODE) {  // Check if we are in position mode.
             fprintf(stderr,"[RaveBot] warning: will not relativeMove as joint %d not in positionMode\n",motor+1);
             return false;
         }
