@@ -22,7 +22,7 @@ bool RaveBot::open(Searchable& config) {
     double genRefSpeed = DEFAULT_GEN_REF_SPEED;
     double genEncRawExposed = DEFAULT_GEN_ENC_RAW_EXPOSED;
     double genVelRawExposed = DEFAULT_GEN_VEL_RAW_EXPOSED;
-    modePosVel = DEFAULT_MODE_POS_VEL;
+    int modePosVel = DEFAULT_MODE_POS_VEL;
     ConstString physics = DEFAULT_PHYSICS;
     viewer = DEFAULT_VIEWER;
 
@@ -43,7 +43,9 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--genEncRawExposed (encoder [raw / exposed] ratio, default: \"%f\")\n",genEncRawExposed);
         printf("\t--genVelRawExposed (velocity [raw / exposed] ratio, default: \"%f\")\n",genVelRawExposed);
         printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
-        printf("\t--modePosVel (default: \"%d\")\n",modePosVel);
+        printf("\t--modePosVel [%s | %s] (default: \"%s\")\n",
+            Vocab::decode(VOCAB_POSITION_MODE).c_str(),Vocab::decode(VOCAB_VELOCITY_MODE).c_str(),
+            Vocab::decode(modePosVel).c_str());
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
         printf("\t--viewer [type] (set to 0 for none, default: \"%d\")\n",viewer);
     }
@@ -64,15 +66,17 @@ bool RaveBot::open(Searchable& config) {
     if (config.check("genVelRawExposed")) genVelRawExposed = config.find("genVelRawExposed").asDouble();    
     if (config.check("jmcMs")) jmcMs = config.find("jmcMs").asDouble();
     if (config.check("jmcMsAcc")) jmcMsAcc = config.find("jmcMsAcc").asDouble();
-    if (config.check("modePosVel")) modePosVel = config.find("modePosVel").asInt();
+    if (config.check("modePosVel")) modePosVel = config.find("modePosVel").asVocab();
     if (config.check("physics")) physics = config.find("physics").asString();
     if (config.check("viewer")) viewer = config.find("viewer").asInt();
     printf("RaveBot using genInitPos: %f, genJointTol: %f, genMaxLimit: %f, genMinLimit: %f.\n",
         genInitPos, genJointTol,genMaxLimit,genMinLimit);
     printf("RaveBot using genRefSpeed: %f, genEncRawExposed: %f, genVelRawExposed: %f.\n",
         genRefSpeed,genEncRawExposed, genVelRawExposed);
-    printf("RaveBot using jmcMs: %f, jmcMsAcc: %f, modePosVel: %d, physics: %s, viewer: %d.\n",
-        jmcMs,jmcMsAcc,modePosVel,physics.c_str(),viewer);
+    printf("RaveBot using jmcMs: %f, jmcMsAcc: %f, modePosVel: %s, physics: %s, viewer: %d.\n",
+        jmcMs,jmcMsAcc,Vocab::decode(modePosVel).c_str(),physics.c_str(),viewer);
+
+    vModePosVel.assign(numMotors, modePosVel);
 
     Bottle* initPoss;
     if (config.check("initPoss")) {

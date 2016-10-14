@@ -4,20 +4,10 @@
 
 // ------------------ IVelocity Related ----------------------------------------
 
-bool RaveBot::setVelocityMode() {
-    printf("[RaveBot] setVelocityMode()\n");
-    if (modePosVel==1) return true;  // Simply return true if we were already in vel mode.
-    // Do anything additional before setting flag to vel...
-    modePosVel = 1;  // Set flag to vel.
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-
 bool RaveBot::velocityMove(int j, double sp) {  // velExposed = sp;
     if ((unsigned int)j>numMotors) return false;
-    if(modePosVel!=1) {  // Check if we are in velocity mode.
-        fprintf(stderr,"[RaveBot] fail: RaveBot will not velocityMove as not in velocityMode\n");
+    if(vModePosVel[j]!=VOCAB_VELOCITY_MODE) {  // Check if we are in velocity mode.
+        fprintf(stderr,"[RaveBot] fail: RaveBot will not velocityMove as joint %d not in velocityMode\n",j+1);
         return false;
     }
     velRaw[j] = (sp * velRawExposed[j]);
