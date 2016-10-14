@@ -662,12 +662,13 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="create.0") {
         ConstString nfile = request.find("nfile").asString();
-        response.addString(nfile);
+        lastEditName = nfile;
         nfile += ".py";
         ConstString templatePath = rf.findFileByName(string("user/") + "template.py");
         string str = readFile(templatePath);
-        appendToFile(nfile,str.c_str());
+        appendToFile(nfile,str);
         printf("create.0 %s file.\n",nfile.c_str());
+        response.addString(str);
         return response.write(*out);
     } else if (code=="delete.0") {
         ConstString dfile = userPath;
