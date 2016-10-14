@@ -12,7 +12,12 @@
 
 #include <fstream>
 #include <sstream>
+
+#ifdef WIN32
+#include <windows.h>
+#else
 #include <dirent.h>  // for listing directory contents
+#endif
 
 #include <stdlib.h>  // for system
 
