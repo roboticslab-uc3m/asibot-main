@@ -52,7 +52,10 @@ function fcreate(form) {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            alert('Created ' + xmlhttp.responseText)
+            alert('Created and loaded ' + form.nfile.value);
+            // Update textarea's header & content
+            document.getElementById("programname").innerHTML = form.nfile.value;
+            document.getElementById("programcontents").value = xmlhttp.responseText;
             // Now update efile and dfile
             var eselect = document.getElementById("efile");
             var haseoption = false;
