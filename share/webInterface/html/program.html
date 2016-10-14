@@ -53,9 +53,10 @@ function fcreate(form) {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             alert('Created and loaded ' + form.nfile.value);
-            // Update textarea's header & content
+            // Update textarea's header & content, enable compile button
             document.getElementById("programname").innerHTML = form.nfile.value;
             document.getElementById("programcontents").value = xmlhttp.responseText;
+            document.getElementById("compilebutton").disabled = false;
             // Now update efile and dfile
             var eselect = document.getElementById("efile");
             var haseoption = false;
@@ -117,6 +118,7 @@ function submitEdit(form) {
 //            var dselect = document.getElementById("dfile");
 //            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
             document.getElementById("programcontents").value = xmlhttp.responseText;
+            document.getElementById("compilebutton").disabled = false;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -170,6 +172,8 @@ function submitDelete(form) {
 				<FORM name="myform" ACTION="save">
         			<textarea id="programcontents" name="programcontents"
                     style="width:295px;max-width:335px;height:350px;" spellcheck="false"><CENTRALPIECE></textarea>
+                    <br>
+                    <button id="compilebutton" type="button" onclick="compile()" disabled>Compile</button>
     			</FORM>
 			</div>		
 		</div>
@@ -220,10 +224,34 @@ function submitSave() {
     xmlhttp.send();
     return false;
 }
+function compile() {
+	var theFileInUse = document.getElementById("programname").innerHTML;
+    if (!confirm("Do you want to compile program " + theFileInUse + "?")) return false;
+    url="compile.0?program="+theFileInUse;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            var response = xmlhttp.responseText;
+            if (response.trim()==='') {
+                alert("Compilation was successful!");
+            } else {
+                alert("Output:\n\n" + response);
+            }
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
 </script>
 		    </div>
    		</td></tr></table> 
 	</div>
+<script>
+if (document.getElementById("programname").innerHTML !== '[none]') {
+    document.getElementById("compilebutton").disabled = false;
+}
+</script>
 	<!-- end content -->
 </div>
 <!-- end page -->

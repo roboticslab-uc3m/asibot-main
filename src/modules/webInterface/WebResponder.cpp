@@ -160,6 +160,27 @@ ConstString WebResponder::intToString(const int& inInt) {
 }
 
 /************************************************************************/
+ConstString WebResponder::pipedExec(const ConstString& cmd) {
+    // http://stackoverflow.com/a/478960
+    const int bufferSize = 128;
+    char buffer[bufferSize];
+    std::string result = "";
+    FILE* pipe = popen(cmd.c_str(), "r");
+    if (!pipe) return "could not execute command, popen() failed";
+    try {
+        while (!feof(pipe)) {
+            if (fgets(buffer, bufferSize, pipe) != NULL)
+                result += buffer;
+        }
+    } catch (...) {
+        pclose(pipe);
+        return "error, aborting command: " + cmd;
+    }
+    pclose(pipe);
+    return result;
+}
+
+/************************************************************************/
 ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
     ConstString ret;
     printf("Reading points from file: %s\n",pointsFile.c_str());
@@ -705,6 +726,15 @@ bool WebResponder::read(ConnectionReader& in) {
         replaceAll(lstr, "<equal>", "=");
         replaceAll(lstr, "<numsign>", "#");
         rewriteFile(sfile,lstr.c_str());
+        return response.write(*out);
+    } else if (code=="compile.0") {
+        ConstString program = request.find("program").asString();
+        printf("compile %s program.\n",program.c_str());
+        ConstString cmd("python -m py_compile ");
+        cmd += userPath + program + ".py";
+        cmd += " 2>&1"; // redirect stderr to stdout (see py_compile module)
+        ConstString res = pipedExec(cmd);
+        res.empty() ? response.clear() : response.addString(res);
         return response.write(*out);
     } else if (code=="speech") {
         string str = readHtml("speech.html");
