@@ -12,7 +12,12 @@
 
 #include <fstream>
 #include <sstream>
+
+#ifdef WIN32
+#include <windows.h>
+#else
 #include <dirent.h>  // for listing directory contents
+#endif
 
 #include <stdlib.h>  // for system
 
@@ -51,6 +56,7 @@ protected:
     double stringToDouble(const ConstString& inString);
     ConstString doubleToString(const double& inDouble);
     ConstString intToString(const int& inInt);
+    ConstString pipedExec(const ConstString& cmd);
     ConstString pointButtonCreator(const ConstString& pointsFile);
     ConstString wordOptionCreator(const ConstString& wordsFile);
     ConstString fileListCreator();

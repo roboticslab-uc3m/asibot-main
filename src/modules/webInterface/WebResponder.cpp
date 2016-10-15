@@ -160,6 +160,36 @@ ConstString WebResponder::intToString(const int& inInt) {
 }
 
 /************************************************************************/
+ConstString WebResponder::pipedExec(const ConstString& cmd) {
+    // http://stackoverflow.com/a/478960
+    const int bufferSize = 128;
+    char buffer[bufferSize];
+    std::string result = "";
+    FILE *(*ppopen)(const char *, const char *);
+    int (*ppclose)(FILE *);
+#ifdef WIN32
+    ppopen = _popen;
+    ppclose = _pclose;
+#else
+    ppopen = popen;
+    ppclose = pclose;
+#endif
+    FILE* pipe = ppopen(cmd.c_str(), "r");
+    if (!pipe) return "could not execute command, popen() failed";
+    try {
+        while (!feof(pipe)) {
+            if (fgets(buffer, bufferSize, pipe) != NULL)
+                result += buffer;
+        }
+    } catch (...) {
+        ppclose(pipe);
+        return "error, aborting command: " + cmd;
+    }
+    ppclose(pipe);
+    return result;
+}
+
+/************************************************************************/
 ConstString WebResponder::pointButtonCreator(const ConstString& pointsFile) {
     ConstString ret;
     printf("Reading points from file: %s\n",pointsFile.c_str());
@@ -236,6 +266,112 @@ ConstString WebResponder::wordOptionCreator(const ConstString& wordsFile) {
     return ret;
 }
 
+#ifdef WIN32
+ConstString WebResponder::fileListCreator() {
+    ConstString ret;
+    ConstString filePath = userPath.substr(0, filePath.size() - 1) + "\\*";
+    printf("Reading files from: %s\n", filePath.c_str());
+    HANDLE hFind;
+    WIN32_FIND_DATA ffd;
+    if ((hFind = FindFirstFile(filePath.c_str(), &ffd)) != INVALID_HANDLE_VALUE) {
+        do {
+            string fileName(ffd.cFileName);
+            if (fileName.size() > 3 && (int)fileName.rfind(".py") == fileName.size() - 3) {
+                printf("[%s] was py\n", fileName.c_str());
+                if ((fileName != "AsibotPy.py") && (fileName != "template.py")) {
+                    ret += "<option>";
+                    ret += fileName.substr(0, fileName.size() - 3).c_str();
+                    ret += "</option>";
+                }
+            }
+        } while (FindNextFile(hFind, &ffd));
+        FindClose(hFind);
+    }
+    else printf("[warning] Couldn't open the directory\n");
+    printf("Done reading files from: %s\n", filePath.c_str());
+    return ret;
+}
+
+/************************************************************************/
+ConstString WebResponder::taskListCreator() {
+    ConstString ret;
+    ConstString filePath = userPath.substr(0, filePath.size() - 1) + "\\*";
+    printf("Reading files from: %s\n", filePath.c_str());
+    HANDLE hFind;
+    WIN32_FIND_DATA ffd;
+    if ((hFind = FindFirstFile(filePath.c_str(), &ffd)) != INVALID_HANDLE_VALUE) {
+        do {
+            string fileName(ffd.cFileName);
+            if ((int)fileName.find(".task", 0) != string::npos) {
+                printf("[%s] was task\n", fileName.c_str());
+                ret += "<option>";
+                ret += fileName.substr(0, fileName.size() - 5).c_str();
+                ret += "</option>";
+            }
+        } while (FindNextFile(hFind, &ffd));
+        FindClose(hFind);
+    }
+    else printf("[warning] Couldn't open the directory\n");
+    printf("Done reading files from: %s\n", filePath.c_str());
+    return ret;
+}
+
+/************************************************************************/
+ConstString WebResponder::taskButtonCreator() {
+    ConstString ret;
+    ConstString filePath = userPath.substr(0, filePath.size() - 1) + "\\*";
+    printf("Reading files from: %s\n", filePath.c_str());
+    HANDLE hFind;
+    WIN32_FIND_DATA ffd;
+    if ((hFind = FindFirstFile(filePath.c_str(), &ffd)) != INVALID_HANDLE_VALUE) {
+        do {
+            string fileName(ffd.cFileName);
+            int taskCount = 0;
+            if ((int)fileName.find(".task", 0) != string::npos) {
+                printf("[%s] was task, contents...\n", fileName.c_str());
+                ConstString taskPath(userPath);
+                taskPath += fileName.c_str();
+                std::ifstream ifs(taskPath.c_str());
+                if (!ifs.is_open()) {
+                    printf("[warning] word file not open, assuming no words yet.\n");
+                    ret += "[error]";
+                    return ret;
+                }
+                string line;
+                int lineCount = 0;
+                string strProgram;
+                string strSpeech;
+                string strIcon;
+                while (getline(ifs, line)) {
+                    if (lineCount == 0) strProgram = line;
+                    else if (lineCount == 1) strSpeech = line;
+                    else if (lineCount == 2) strIcon = line;
+                    lineCount++;
+                }
+                printf("Program: %s\nSpeech: %s\nIcon: %s\n", strProgram.c_str(), strSpeech.c_str(), strIcon.c_str());
+                ret += "<button name='program' type='button' value='";
+                ret += strProgram.c_str();
+                ret += "'><img src='";
+                ret += resourcePath;
+                ret += "fig/";
+                ret += strIcon.c_str();
+                ret += "' height='200'></button>";
+                //                printf("<button name='program' type='submit' value=");
+                //                printf("%s", line.c_str());
+                //                printf("</button>\n");
+            }
+            if (taskCount % 2 == 0) ret += " &nbsp;\n";
+            else ret += "<br><br>\n";
+            taskCount++;
+        } while (FindNextFile(hFind, &ffd));
+        FindClose(hFind);
+    }
+    else printf("[warning] Couldn't open the directory\n");
+    printf("Done reading files from: %s\n", filePath.c_str());
+    return ret;
+}
+#else
+
 /************************************************************************/
 ConstString WebResponder::fileListCreator() {
     ConstString ret;
@@ -247,9 +383,9 @@ ConstString WebResponder::fileListCreator() {
     if (dp != NULL) {
         while (ep = readdir (dp)) {
             string fileName(ep->d_name);
-            if((int)fileName.find(".py", 0) != string::npos) {
+            if(fileName.size() > 3 && (int)fileName.rfind(".py") == fileName.size()-3) {
                 printf("[%s] was py\n",fileName.c_str());
-                if((fileName != "AsibotPy.py")&&(fileName != "AsibotPy.pyc")&&(fileName != "template.py")) {
+                if((fileName != "AsibotPy.py")&&(fileName != "template.py")) {
                     ret += "<option>";
                     ret += fileName.substr(0, fileName.size()-3).c_str();
                     ret += "</option>";
@@ -257,7 +393,7 @@ ConstString WebResponder::fileListCreator() {
             }
         }
        (void) closedir (dp);
-    } else printf ("[warning] Couldn't open the directory");
+    } else printf ("[warning] Couldn't open the directory\n");
     printf("Done reading files from: %s\n",filePath.c_str());
     return ret;
 }
@@ -281,7 +417,7 @@ ConstString WebResponder::taskListCreator() {
             }
         }
        (void) closedir (dp);
-    } else printf ("[warning] Couldn't open the directory");
+    } else printf ("[warning] Couldn't open the directory\n");
     printf("Done reading files from: %s\n",filePath.c_str());
     return ret;
 }
@@ -320,7 +456,7 @@ ConstString WebResponder::taskButtonCreator() {
                     lineCount++;
                 }
                 printf("Program: %s\nSpeech: %s\nIcon: %s\n",strProgram.c_str(),strSpeech.c_str(),strIcon.c_str());
-                ret += "<button name='program' type='submit' value='";
+                ret += "<button name='program' type='button' value='";
                 ret += strProgram.c_str();
                 ret += "'><img src='";
                 ret += resourcePath;
@@ -336,10 +472,11 @@ ConstString WebResponder::taskButtonCreator() {
             taskCount++;
         }
         (void) closedir (dp);
-    } else printf ("[warning] Couldn't open the directory");
+    } else printf ("[warning] Couldn't open the directory\n");
     printf("Done reading files from: %s\n",filePath.c_str());
     return ret;
 }
+#endif
 
 /************************************************************************/
 ConstString WebResponder::getCss() {
@@ -662,12 +799,13 @@ bool WebResponder::read(ConnectionReader& in) {
         return response.write(*out);
     } else if (code=="create.0") {
         ConstString nfile = request.find("nfile").asString();
-        response.addString(nfile);
+        lastEditName = nfile;
         nfile += ".py";
         ConstString templatePath = rf.findFileByName(string("user/") + "template.py");
         string str = readFile(templatePath);
-        appendToFile(nfile,str.c_str());
+        appendToFile(nfile,str);
         printf("create.0 %s file.\n",nfile.c_str());
+        response.addString(str);
         return response.write(*out);
     } else if (code=="delete.0") {
         ConstString dfile = userPath;
@@ -704,6 +842,15 @@ bool WebResponder::read(ConnectionReader& in) {
         replaceAll(lstr, "<equal>", "=");
         replaceAll(lstr, "<numsign>", "#");
         rewriteFile(sfile,lstr.c_str());
+        return response.write(*out);
+    } else if (code=="compile.0") {
+        ConstString program = request.find("program").asString();
+        printf("compile %s program.\n",program.c_str());
+        ConstString cmd("python -m py_compile ");
+        cmd += userPath + program + ".py";
+        cmd += " 2>&1"; // redirect stderr to stdout (see py_compile module)
+        ConstString res = pipedExec(cmd);
+        res.empty() ? response.clear() : response.addString(res);
         return response.write(*out);
     } else if (code=="speech") {
         string str = readHtml("speech.html");
@@ -782,7 +929,7 @@ bool WebResponder::read(ConnectionReader& in) {
         lstr += iname + "\n";
         rewriteFile(tname,lstr.c_str());
         return response.write(*out);
-    } else if (code=="execute") {
+    } else if (code=="launch.0") {
         ConstString program = request.find("program").asString();
         printf("execute %s program.\n",program.c_str());
         response.addString(program.c_str());
@@ -790,18 +937,8 @@ bool WebResponder::read(ConnectionReader& in) {
         ConstString cmd("python ");
         cmd += programPath;
         cmd += ".py";
-//        ConstString cmd("dir ");
-//        cmd += userPath;
         int i=system (cmd.c_str());
         printf ("The value returned was: %d.\n",i);
-//        system
-//        ConstString prefix = "<html>\n<head>\n<title>YARP web test</title>\n";
-//        prefix += "<link href=\"style.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n";
-//        prefix += "</head>\n<body>\n";
-//        prefix += "<h1>Execution</h1>\n";
-//        response.addString(prefix);
-//        response.addString("stream");
-//        response.addInt(1);
         return response.write(*out);
     }
 

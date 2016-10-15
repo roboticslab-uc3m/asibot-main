@@ -52,18 +52,40 @@ function fcreate(form) {
     xmlhttp.open("GET",url,true);
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
-            alert('Created ' + xmlhttp.responseText)
+            alert('Created and loaded ' + form.nfile.value);
+            // Update textarea's header & content, enable compile button
+            document.getElementById("programname").innerHTML = form.nfile.value;
+            document.getElementById("programcontents").value = xmlhttp.responseText;
+            document.getElementById("compilebutton").disabled = false;
             // Now update efile and dfile
-            var eoption=document.createElement("option");
-            eoption.text=form.nfile.value;
             var eselect = document.getElementById("efile");
-            eselect.add(eoption,eselect.options[null]);
-            eselect.selectedIndex = eselect.options.length-1;
-            var doption=document.createElement("option");
-            doption.text=form.nfile.value;
+            var haseoption = false;
+           	for (var i = 0; i < eselect.options.length; i++) {
+           	   	if (eselect.options[i].value === form.nfile.value) {
+           	        haseoption = true;
+           	        break;
+           	    }
+           	}
+           	if (!haseoption) {
+           	    var eoption=document.createElement("option");
+                eoption.text=form.nfile.value;
+                eselect.add(eoption,eselect.options[null]);
+                eselect.selectedIndex = eselect.options.length-1;
+           	}
             var dselect = document.getElementById("dfile");
-            dselect.add(doption,dselect.options[null]);
-            dselect.selectedIndex = dselect.options.length-1;
+            var hasdoption = false;
+           	for (i = 0; i < dselect.options.length; i++) {
+           	    if (dselect.options[i].value === form.nfile.value) {
+           	        hasdoption = true;
+           	        break;
+           	     }
+           	}
+           	if (!hasdoption) {
+           	    var doption=document.createElement("option");
+                doption.text=form.nfile.value;
+                dselect.add(doption,dselect.options[null]);
+                dselect.selectedIndex = dselect.options.length-1;
+           	}
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -96,6 +118,7 @@ function submitEdit(form) {
 //            var dselect = document.getElementById("dfile");
 //            document.getElementById("programcontents").innerHTML = xmlhttp.responseText;
             document.getElementById("programcontents").value = xmlhttp.responseText;
+            document.getElementById("compilebutton").disabled = false;
         }
     }
     xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
@@ -149,6 +172,8 @@ function submitDelete(form) {
 				<FORM name="myform" ACTION="save">
         			<textarea id="programcontents" name="programcontents"
                     style="width:295px;max-width:335px;height:350px;" spellcheck="false"><CENTRALPIECE></textarea>
+                    <br>
+                    <button id="compilebutton" type="button" onclick="compile()" disabled>Compile</button>
     			</FORM>
 			</div>		
 		</div>
@@ -199,10 +224,34 @@ function submitSave() {
     xmlhttp.send();
     return false;
 }
+function compile() {
+	var theFileInUse = document.getElementById("programname").innerHTML;
+    if (!confirm("Do you want to compile program " + theFileInUse + "?")) return false;
+    url="compile.0?program="+theFileInUse;
+    xmlhttp.open("GET",url,true);
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4) {
+            var response = xmlhttp.responseText;
+            if (response.trim()==='') {
+                alert("Compilation was successful!");
+            } else {
+                alert("Output:\n\n" + response);
+            }
+        }
+    }
+    xmlhttp.setRequestHeader('Accept','message/x-jl-formresult');
+    xmlhttp.send();
+    return false;
+}
 </script>
 		    </div>
    		</td></tr></table> 
 	</div>
+<script>
+if (document.getElementById("programname").innerHTML !== '[none]') {
+    document.getElementById("compilebutton").disabled = false;
+}
+</script>
 	<!-- end content -->
 </div>
 <!-- end page -->

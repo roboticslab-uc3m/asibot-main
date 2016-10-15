@@ -110,7 +110,7 @@ function submitSave() {
     }
     tName = prompt("Program: " + pFile + "\nSelected words: " + sWords + "\nIcon:" + iName, "task01");
     if(!tName) {
-        alert("Task name needed");
+        if (tname === '') alert("Task name needed");
         return false;
     }
     url="assigner.0?tname=" + tName + "&pfile="+pFile+"&swords="+sWords+"&iname="+iName;
@@ -118,9 +118,14 @@ function submitSave() {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             alert('Saved task: ' + xmlhttp.responseText)
+            var dselect = document.getElementById("dfile");
+           	for (var i = 0; i < dselect.options.length; i++) {
+           	   	if (dselect.options[i].value === tName) {
+           	        return false;
+           	    }
+           	}
             var doption=document.createElement("option");
             doption.text=tName;
-            var dselect = document.getElementById("dfile");
             dselect.add(doption,dselect.options[null]);
             dselect.selectedIndex = dselect.options.length-1;
         }
@@ -149,7 +154,7 @@ function submitDelete(form) {
     xmlhttp.onreadystatechange=function() {
         if (xmlhttp.readyState==4) {
             alert('Deleted: ' + xmlhttp.responseText)
-            // Now update efile and dfile
+            // Now update dfile
             var dselect = document.getElementById("dfile");
             dselect.remove(dselect.selectedIndex);
         }
