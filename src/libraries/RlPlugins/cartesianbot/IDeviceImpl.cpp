@@ -62,7 +62,7 @@ bool CartesianBot::open(Searchable& config) {
     printf("CartesianBot using cmcMs: %f, duration: %f, maxAcc: %f, maxVel: %f.\n",cmcMs,duration,maxAcc,maxVel);
 
     if (config.check("robotDevice")) strRobotDevice = config.find("robotDevice").asString();
-    if (config.check("robotSubDevice")) strRobotDevice = config.find("robotSubDevice").asString();
+    if (config.check("robotSubDevice")) strRobotSubDevice = config.find("robotSubDevice").asString();
     if (config.check("robotName")) strRobotName = config.find("robotName").asString();
     if (config.check("robotLocal")) strRobotLocal = config.find("robotLocal").asString();
     if (config.check("robotRemote")) strRobotRemote = config.find("robotRemote").asString();
