@@ -14,6 +14,12 @@ sudo ldconfig
 
 For additional options use ccmake instead of cmake.
 
+Starting from Ubuntu <b>16.04</b>, KDL is conveniently distributed as a package:
+
+\verbatim
+sudo apt-get install liborocos-kdl-dev
+\endverbatim
+
 <hr>
 
 This page can be edited at asibot-main/doc/install_kdl_on_ubuntu.dox.
