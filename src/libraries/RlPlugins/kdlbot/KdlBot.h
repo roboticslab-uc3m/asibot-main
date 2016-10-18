@@ -61,9 +61,9 @@ using namespace KDL;
  *
  * @section kdlbot_install Installation
  *
- * You'll first need to install Eigen2 (see \ref install_eigen2_on_ubuntu) and KDL (see \ref install_kdl_on_ubuntu).
+ * You'll first need to install KDL (see \ref install_kdl_on_ubuntu).
  *
- * The plugin is compiled when ENABLE_RlPlugins_cartesianbot is activated (not default). For further
+ * The plugin is compiled when ENABLE_RlPlugins_kdlbot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  * 
  * @section kdlbot_running Running (assuming correct installation)
