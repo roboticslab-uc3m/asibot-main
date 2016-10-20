@@ -13,12 +13,13 @@ void xCallbackPort::onRead(Bottle& b) {
         //for (int i = 3; i < lst->size(); i++)
         //    od.push_back(lst->get(i).asDouble());
         if(!icart->askForPose(xd,od,xdhat,odhat,qdhat)) return;
-        double qd[qdhat.size()];  // should actually do a malloc depending on qdhat.size() 
+        double *qd = new double[qdhat.size()];
         for (int i = 0; i < qdhat.size(); i++)
             qd[i] = qdhat[i];
         //icart->stopControl(); // new!!!!
         ipos->setPositionMode();
         ipos->positionMove(qd);
+        delete[] qd;
     }
     int choice = b.get(0).asVocab();
     if (b.get(0).getCode() != BOTTLE_TAG_VOCAB) choice = VOCAB_FAILED;
