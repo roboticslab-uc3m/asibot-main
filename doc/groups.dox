@@ -1,7 +1,7 @@
 /**
 * \defgroup asibot_applications List of ASIBOT Applications (Collections of Modules)
 *
-* The app directory stores directories which group
+* The share directory stores directories which group
 * sets of configuration files and scripts to run
 * a certain group of modules together. Each one 
 * of them is what we call an application. In other

@@ -23,9 +23,9 @@ The application is installed when you install the applications, which for Ubuntu
 make install_applications  # In-project install: No super-user permissions are required.
 \endverbatim
 
-Adapt $ASIBOT_ROOT/app/colorDepth/scripts/colorDepthKinect.xml.template to your needs or just:
+Adapt $ASIBOT_ROOT/share/colorDepth/scripts/colorDepthKinect.xml.template to your needs or just:
 \verbatim
-cd $ASIBOT_ROOT/app/colorDepth/scripts
+cd $ASIBOT_ROOT/share/colorDepth/scripts
 cp colorDepthKinect.xml.template colorDepthKinect.xml
 \endverbatim
 
@@ -39,10 +39,10 @@ First we must run a YARP name server if it is not running in our current namespa
 [on terminal 1] yarp server
 \endverbatim
 
-Browse to $ASIBOT_ROOT/app and run the (g)yarmanager. The colorDepthKinect App should be available.
+Browse to $ASIBOT_ROOT/share and run yarpmanager (formerly gyarpmanager). The colorDepthKinect App should be available.
 \verbatim
-[on terminal 2] cd $ASIBOT_ROOT/app
-[on terminal 2] gyarpmanager
+[on terminal 2] cd $ASIBOT_ROOT/share
+[on terminal 2] yarpmanager
 \endverbatim
 
 

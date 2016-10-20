@@ -7,7 +7,7 @@ We use YARP for communications. Installing YARP on Ubuntu is quite straightforwa
 \verbatim
 sudo apt-get install build-essential libace-dev subversion git
 sudo apt-get install libgsl0-dev  # Needed for creating YARP lib_math we use for kinematics
-sudo apt-get install libgtkmm-2.4-dev  # Needed for YARP GUIs: yarpview, gyarpmanager
+sudo apt-get install libgtkmm-2.4-dev  # Needed for YARP GUIs: yarpview, yarpmanager
 sudo apt-get install libjpeg8-dev   # Needed for mjpeg_carrier for ravebot cam on web
 git clone https://github.com/robotology/yarp
 cd yarp; mkdir build; cd build
