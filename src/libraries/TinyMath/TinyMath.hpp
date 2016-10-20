@@ -3,7 +3,8 @@
 #ifndef __TINY_MATH__
 #define __TINY_MATH__
 
-#include <math.h>  // provides: M_PI ?
+#define _USE_MATH_DEFINES // see <math.h> on Windows
+#include <math.h>  // provides: M_PI
 
 #include <stdio.h>  // provides: fprintf, stderr
 
