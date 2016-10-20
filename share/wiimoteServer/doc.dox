@@ -19,9 +19,9 @@ The application is installed when you install the applications, which for Ubuntu
 make install_applications  # In-project install: No super-user permissions are required.
 \endverbatim
 
-Adapt $ASIBOT_ROOT/app/wiimoteServer/scripts/wiimoteServer.xml.template to your needs or just:
+Adapt $ASIBOT_ROOT/share/wiimoteServer/scripts/wiimoteServer.xml.template to your needs or just:
 \verbatim
-cd $ASIBOT_ROOT/app/wiimoteServer/scripts
+cd $ASIBOT_ROOT/share/wiimoteServer/scripts
 cp wiimoteServer.xml.template wiimoteServer.xml
 \endverbatim
 
@@ -40,10 +40,10 @@ We will also need an instance of yarprun if it is not running in our current nam
 [on terminal 2] yarprun --server /console
 \endverbatim
 
-Browse to $ASIBOT_ROOT/app and run the (g)yarmanager. The wiimoteServer App should be available.
+Browse to $ASIBOT_ROOT/share and run yarpmanager (formerly gyarpmanager). The wiimoteServer App should be available.
 \verbatim
-[on terminal 3] cd $ASIBOT_ROOT/app
-[on terminal 3] gyarpmanager
+[on terminal 3] cd $ASIBOT_ROOT/share
+[on terminal 3] yarpmanager
 \endverbatim
 
 
