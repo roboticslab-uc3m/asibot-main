@@ -76,7 +76,7 @@ bool KdlBot::open(Searchable& config) {
     Vector kdlVec0(ymH0(0,3),ymH0(1,3),ymH0(2,3));
     Rotation kdlRot0( ymH0(0,0),ymH0(0,1),ymH0(0,2),ymH0(1,0),ymH0(1,1),ymH0(1,2),ymH0(2,0),ymH0(2,1),ymH0(2,2));
     // H0 = Frame(kdlRot0,kdlVec0);
-    theChain.addSegment(Segment((Joint::None), Frame(kdlRot0,kdlVec0)));
+    theChain.addSegment(Segment(Joint(Joint::None), Frame(kdlRot0,kdlVec0)));
 
     for(int motor=0;motor<cmcNumMotors;motor++) {
         ConstString link("link_");
@@ -124,7 +124,7 @@ bool KdlBot::open(Searchable& config) {
     Vector kdlVecN(ymHN(0,3),ymHN(1,3),ymHN(2,3));
     Rotation kdlRotN( ymHN(0,0),ymHN(0,1),ymHN(0,2),ymHN(1,0),ymHN(1,1),ymHN(1,2),ymHN(2,0),ymHN(2,1),ymHN(2,2));
     // HN = Frame(kdlRotN,kdlVecN);
-    theChain.addSegment(Segment((Joint::None), Frame(kdlRotN,kdlVecN)));
+    theChain.addSegment(Segment(Joint(Joint::None), Frame(kdlRotN,kdlVecN)));
     
     printf("KdlBot chain number of segments including none-joint (H0 and HN): %d\n",theChain.getNrOfSegments());
 

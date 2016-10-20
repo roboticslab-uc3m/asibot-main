@@ -5,23 +5,19 @@
 Installing KDL on Ubuntu is quite straightforward.
 
 \verbatim
-wget http://people.mech.kuleuven.be/~rsmits/kdl/orocos-kdl-svn-src.tar.bz
-tar xvf orocos-kdl-svn-src.tar.bz
-\endverbatim
-
-In "kdl/config" you'll find a file called "FindEigen2.cmake". Edit its contents for it to point to the installed Eigen2 directory, normally from /usr/include /usr/include/eigen2 to /usr/local/include /usr/local/include/eigen2. For future use, copy it to the CMake Modules path (something like /usr/share/cmake-2.x/Modules). This line would be something like (change the x to your cmake version): 
-
-\verbatim
-sudo cp FindEigen2.cmake /usr/share/cmake-2.x/Modules
-\endverbatim
-
-Then you can:
-
-\verbatim
-cd kdl; mkdir build; cd build
+git clone https://github.com/orocos/orocos_kinematics_dynamics
+cd orocos_kinematics_dynamics/orocos_kdl; mkdir build; cd build
 cmake ..; make -j3; sudo make install
-cd ../..
+cd ../../..
 sudo ldconfig
+\endverbatim
+
+For additional options use ccmake instead of cmake.
+
+Starting from Ubuntu <b>16.04</b>, KDL is conveniently distributed as a package:
+
+\verbatim
+sudo apt-get install liborocos-kdl-dev
 \endverbatim
 
 <hr>
