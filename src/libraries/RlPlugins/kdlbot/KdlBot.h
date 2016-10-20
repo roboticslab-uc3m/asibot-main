@@ -61,9 +61,9 @@ using namespace KDL;
  *
  * @section kdlbot_install Installation
  *
- * You'll first need to install Eigen2 (see \ref install_eigen2_on_ubuntu) and KDL (see \ref install_kdl_on_ubuntu).
+ * You'll first need to install KDL (see \ref install_kdl_on_ubuntu).
  *
- * The plugin is compiled when ENABLE_RlPlugins_cartesianbot is activated (not default). For further
+ * The plugin is compiled when ENABLE_RlPlugins_kdlbot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  * 
  * @section kdlbot_running Running (assuming correct installation)
@@ -155,6 +155,21 @@ class KdlBot : public DeviceDriver, public RateThread, public ICartesianControl 
     * @return true/false on success/failure. 
     */
     virtual bool getReferenceMode(bool *f);
+
+    /**
+     * Ask the controller to weigh more either the position or the
+     * orientation while reaching in full pose. [wait for reply]
+     * \param p can be "position" or "orientation".
+     * \return true/false on success/failure.
+     */
+    virtual bool setPosePriority(const yarp::os::ConstString &p) { return true; }
+
+    /**
+     * Get the current pose priority. [wait for reply]
+     * \param p here is returned either as "position" or "orientation".
+     * \return true/false on success/failure.
+     */
+    virtual bool getPosePriority(yarp::os::ConstString &p) { return true; }
 
     /**
     * Get the current pose of the end-effector. [do not wait for 
