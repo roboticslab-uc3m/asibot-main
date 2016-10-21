@@ -5,7 +5,10 @@
 // ------------------- IPositionControl Related --------------------------------
 
 bool RaveBot::setPositionMode() {
-    return false;
+    bool ok = true;
+    for (unsigned int i=0; i<numMotors; i++)
+        ok &= setPositionMode(i);
+    return ok;
 }
 
 bool RaveBot::getAxes(int *ax) {

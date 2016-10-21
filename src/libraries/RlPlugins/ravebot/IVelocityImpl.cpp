@@ -5,7 +5,10 @@
 // ------------------ IVelocity Related ----------------------------------------
 
 bool RaveBot::setVelocityMode() {
-    return false;
+    bool ok = true;
+    for (unsigned int i=0; i<numMotors; i++)
+        ok &= setVelocityMode(i);
+    return ok;
 }
 
 bool RaveBot::velocityMove(int j, double sp) {  // velExposed = sp;
