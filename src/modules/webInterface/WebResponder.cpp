@@ -10,7 +10,9 @@ bool WebResponder::init() {
     realPos = 0;
     simCart = 0;
     realCart = 0;
-    lastEditName="[none]";
+    simMode = 0;
+    realMode = 0;
+    lastEditName = "[none]";
     return true;
 }
 
@@ -535,7 +537,7 @@ bool WebResponder::read(ConnectionReader& in) {
                 printf("[error] canbot device not available.\n");
                 ok = false;
             } else printf ("[success] canbot device available.\n");
-            if(!realDevice.view(realPos)) {
+            if(!realDevice.view(realPos) || !realDevice.view(realMode)) {
                 printf("[error] canbot interface not available.\n");
                 ok = false;
             } else printf ("[success] canbot interface available.\n");
@@ -577,7 +579,7 @@ bool WebResponder::read(ConnectionReader& in) {
                 printf("[error] ravebot device not available.\n");
                 ok = false;
             } else printf ("[success] ravebot device available.\n");
-            if(!simDevice.view(simPos)) {
+            if(!simDevice.view(simPos) || !simDevice.view(simMode)) {
                 printf("[error] ravebot simPos not available.\n");
                 ok = false;
             } else printf ("[success] ravebot simPos available.\n");
@@ -621,10 +623,18 @@ bool WebResponder::read(ConnectionReader& in) {
         int inJoint = stringToInt(theJoint);
         ConstString inMovement = request.find("movement").asString();
         printf("Going to move joint [%d] towards the [%s].\n", inJoint, inMovement.c_str());
-        if(simPos) simPos->setPositionMode();
+        if(simPos) {
+            int ax;
+            simPos->getAxes(&ax);
+            for (int i=0;i<ax;i++) simMode->setPositionMode(i);
+        }
         if((simPos)&&(inMovement == ConstString("right"))) simPos->relativeMove(inJoint-1,JOYPAD_RELMOVE);
         if((simPos)&&(inMovement == ConstString("left"))) simPos->relativeMove(inJoint-1,-JOYPAD_RELMOVE);
-        if(realPos) realPos->setPositionMode();
+        if(realPos) {
+            int ax;
+            realPos->getAxes(&ax);
+            for (int i=0;i<ax;i++) realMode->setPositionMode(i);
+        }
         if((realPos)&&(inMovement == ConstString("right"))) realPos->relativeMove(inJoint-1,JOYPAD_RELMOVE);
         if((realPos)&&(inMovement == ConstString("left"))) realPos->relativeMove(inJoint-1,-JOYPAD_RELMOVE);
         return response.write(*out);
@@ -642,10 +652,20 @@ bool WebResponder::read(ConnectionReader& in) {
         targets[3] = stringToDouble(q4);
         targets[4] = stringToDouble(q5);
         printf("Going to move%s\n", inMovement.c_str());
-        if(simPos) simPos->setPositionMode();
+        if(simPos) {
+            int ax;
+            simPos->getAxes(&ax);
+            for (int i=0;i<ax;i++)
+                simMode->setPositionMode(i);
+        }
         if((simPos)&&(inMovement == ConstString("absolute"))) simPos->positionMove(targets);
         if((simPos)&&(inMovement == ConstString("relative"))) simPos->relativeMove(targets);
-        if(realPos) realPos->setPositionMode();
+        if(realPos) {
+            int ax;
+            realPos->getAxes(&ax);
+            for (int i=0;i<ax;i++)
+                realMode->setPositionMode(i);
+        }
         if((realPos)&&(inMovement == ConstString("absolute"))) realPos->positionMove(targets);
         if((realPos)&&(inMovement == ConstString("relative"))) realPos->relativeMove(targets);
         return response.write(*out);

@@ -699,8 +699,8 @@ class CartesianBot : public DeviceDriver, public RateThread, public ICartesianCo
     Property options;
     PolyDriver robotDevice;
     IEncoders *enc;
-    IPositionControl *pos;
     IVelocityControl *vel;
+    IControlMode *mode;
 
     int cmc_status;
     bool withOri;

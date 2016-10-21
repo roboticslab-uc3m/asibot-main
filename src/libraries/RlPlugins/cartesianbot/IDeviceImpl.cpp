@@ -90,10 +90,10 @@ bool CartesianBot::open(Searchable& config) {
         return false;
     }
 
-    bool ok;
-    ok = robotDevice.view(pos);
-    ok = ok && robotDevice.view(vel);
-    ok = ok && robotDevice.view(enc);
+    bool ok = true;
+    ok &= robotDevice.view(vel);
+    ok &= robotDevice.view(enc);
+    ok &= robotDevice.view(mode);
     if (!ok) {
         fprintf(stderr, "[CartesianBot] error: Problems acquiring robot interfaces.\n");
         return false;
