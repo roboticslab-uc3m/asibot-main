@@ -92,7 +92,8 @@ bool CartesianBot::goToPose(const yarp::sig::Vector &xd, const yarp::sig::Vector
     printf("[goToPose] end: trajOzPP dump(100 samples).\n");*/
     startTime = Time::now();
     withOri=true;
-    vel->setVelocityMode();
+    for (int i=0; i<NUM_MOTORS; i++)
+        mode->setVelocityMode(i);
     cmc_status=1;
     if (!isQuiet) printf("[CartesianBot] goToPose() End setting absolute base movement.\n");
     return true;
@@ -169,7 +170,8 @@ bool CartesianBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Ve
     printf("[CartesianBot] goToPoseSync trajOzPP dump(100 samples) end.\n");*/
     startTime = Time::now();
     withOri=true;
-    vel->setVelocityMode();
+    for (int i=0; i<NUM_MOTORS; i++)
+        mode->setVelocityMode(i);
     cmc_status=1;
     printf("[CartesianBot] End setting absolute base movement.\n");
     return true;
@@ -413,7 +415,8 @@ bool CartesianBot::setTaskVelocities(const yarp::sig::Vector &xdot, const yarp::
     qdot[2] = toDeg(t[2]);
     qdot[3] = toDeg(t[3]);
     qdot[4] = toDeg(t[4]);
-    vel->setVelocityMode();
+    for (int i=0; i<NUM_MOTORS; i++)
+        mode->setVelocityMode(i);
     if(!vel->velocityMove(qdot))
         fprintf(stderr,"[CartesianBot] warning: COULD NOT SEND VELOCITY MOVE!!!\n");
     return true;

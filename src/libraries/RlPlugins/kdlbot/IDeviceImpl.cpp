@@ -152,11 +152,12 @@ bool KdlBot::open(Searchable& config) {
         return 0;
     }
 
-    bool ok;
-    ok = robotDevice.view(pos);
-    ok = ok && robotDevice.view(vel);
-    ok = ok && robotDevice.view(enc);
-    ok = ok && robotDevice.view(lim);
+    bool ok = true;
+    ok &= robotDevice.view(pos);
+    ok &= robotDevice.view(vel);
+    ok &= robotDevice.view(enc);
+    ok &= robotDevice.view(lim);
+    ok &= robotDevice.view(mode);
     if (!ok) {
         printf("[error] KdlBot problems acquiring robot interfaces\n");
         return false;
