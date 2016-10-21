@@ -70,6 +70,11 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     } else if ((in.get(0).asString() == "movl")||(in.get(0).asVocab() == VOCAB_MOVL)) { // movl //
         Vector x,o;
         Bottle *lst = in.get(1).asList();
+        if (lst == NULL) {
+            fprintf(stderr,"[xRpcResponder] fail: could not parse as list.\n");
+            out.addVocab(VOCAB_FAILED);
+            return out.write(*returnToSender);
+        }
         x.push_back(lst->get(0).asDouble());
         x.push_back(lst->get(1).asDouble());
         x.push_back(lst->get(2).asDouble());
@@ -84,6 +89,11 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     } else if ((in.get(0).asString() == "movj")||(in.get(0).asVocab() == VOCAB_MOVJ)) { // movj //
         Vector xd,od,xdhat,odhat,qdhat;
         Bottle *lst = in.get(1).asList();
+        if (lst == NULL) {
+            fprintf(stderr,"[xRpcResponder] fail: could not parse as list.\n");
+            out.addVocab(VOCAB_FAILED);
+            return out.write(*returnToSender);
+        }
         xd.push_back(lst->get(0).asDouble());
         xd.push_back(lst->get(1).asDouble());
         xd.push_back(lst->get(2).asDouble());
@@ -105,6 +115,11 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     } else if ((in.get(0).asString() == "inv")||(in.get(0).asVocab() == VOCAB_INV)) { // inv //
         Vector xd,od,xdhat,odhat,qdhat;
         Bottle *lst = in.get(1).asList();
+        if (lst == NULL) {
+            fprintf(stderr,"[xRpcResponder] fail: could not parse as list.\n");
+            out.addVocab(VOCAB_FAILED);
+            return out.write(*returnToSender);
+        }
         xd.push_back(lst->get(0).asDouble());
         xd.push_back(lst->get(1).asDouble());
         xd.push_back(lst->get(2).asDouble());
