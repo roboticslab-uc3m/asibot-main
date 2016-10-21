@@ -86,6 +86,16 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      */
     virtual bool getAxes(int *ax);
 
+    /** Set position mode. This command
+     * is required by control boards implementing different
+     * control methods (e.g. velocity/torque), in some cases
+     * it can be left empty.
+     * return true/false on success/failure
+     * @note kept for backwards compatibility with YARP <2.3.65,
+     * use \ref setPositionMode(int) instead
+     */
+    virtual bool setPositionMode();
+
     /** Set new reference point for a single axis.
      * @param j joint number
      * @param ref specifies the new ref point
@@ -286,6 +296,17 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
 
 
 //  --------- IVelocityControl Declarations. Implementation in IVelocityImpl.cpp ---------
+
+    /**
+     * Set velocity mode. This command
+     * is required by control boards implementing different
+     * control methods (e.g. velocity/torque), in some cases
+     * it can be left empty.
+     * @return true/false on success failure
+     * @note kept for backwards compatibility with YARP <2.3.65,
+     * use \ref setVelocityMode(int) instead
+     */
+    virtual bool setVelocityMode();
 
     /**
      * Start motion at a given speed, single joint.
