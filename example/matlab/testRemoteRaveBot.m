@@ -76,7 +76,7 @@ for i = 1:axes
     mode.setPositionMode(i-1);  % use the object to set the device to position mode (as opposed to velocity mode) (note: stops the robot)
 end
 
-disp 'test positionMove(1,35) -> moves motor 1 (start count at motor 0) to -35 degrees';
+disp 'test positionMove(1,35) -> moves motor 1 (start count at motor 0) to 35 degrees';
 pos.positionMove(1,35);
 
 disp 'test delay(5)';
