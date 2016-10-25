@@ -39,7 +39,8 @@ void CartesianBot::run() {
             delete trajOzPP;
             trajOzPP = 0;
             startTime = 0;
-            pos->setPositionMode();
+            for (int i=0; i<NUM_MOTORS; i++)
+                mode->setPositionMode(i);
             cmc_status=0;
         } else {
             //printf("Inside control loop moving.\n");
@@ -54,7 +55,8 @@ void CartesianBot::run() {
             if(sTime>trajPrP->getT()){
                 printf ("[CartesianBot] warning: Out of time at %f.\n",sTime);
                 startTime = 0;
-                pos->setPositionMode();
+                for (int i=0; i<NUM_MOTORS; i++)
+                    mode->setPositionMode(i);
                 cmc_status=0;
                 return;  // bad practice??
             }

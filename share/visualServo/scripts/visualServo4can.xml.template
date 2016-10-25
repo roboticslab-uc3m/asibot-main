@@ -2,7 +2,7 @@
 <name>visualServo4can App</name>
         <module>
                 <name>optirun</name>
-                <parameters>cartesianServer --env VS4.env.xml --numMotors 6 --modePosVel 1</parameters>
+                <parameters>cartesianServer --env VS4.env.xml --numMotors 6 --modePosVel vel</parameters>
                 <node>localhost</node>
         </module>
         <module>

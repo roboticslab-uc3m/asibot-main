@@ -53,6 +53,7 @@ protected:
 
     yarp::dev::ICartesianControl *icart;
     yarp::dev::IPositionControl *ipos;
+    yarp::dev::IControlMode *imode;
     int *csStatus;
 
 public:
@@ -68,6 +69,11 @@ public:
     * Register a position interface for the PortReader.
     */
     void setPositionInterface(yarp::dev::IPositionControl* _ipos);
+
+    /**
+    * Register a control mode interface for the PortReader.
+    */
+    void setControlModeInterface(yarp::dev::IControlMode* _imode);
 
     /**
     * Register a position interface for the PortReader.

@@ -62,7 +62,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
         printf("[error] movjRemote not valid, has a remotely accessible device been open?\n\n");
         return false;
     }
-    bool ok2 = robotDevice.view(ipos);
+    bool ok2 = robotDevice.view(ipos) && robotDevice.view(imode);
     if (!ok2) {
         fprintf(stderr, "[CartesianServer] warning: Problems acquiring robot interfaces.\n");
         return false;
@@ -71,6 +71,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     //---------------------CONFIGURE PORTs------------------------
     xResponder.setPositionInterface(ipos);
     xResponder.setCartesianInterface(icart);
+    xResponder.setControlModeInterface(imode);
     xResponder.setCsStatus(csStatus);
     ConstString xRpcServerStr(prefix);
     xRpcServerStr += "/cartesianServer/rpc:i";
@@ -78,6 +79,7 @@ bool CartesianServer::configure(ResourceFinder &rf) {
     xRpcServer.setReader(xResponder);
     xPort.setPositionInterface(ipos);
     xPort.setCartesianInterface(icart);
+    xPort.setControlModeInterface(imode);
     xPort.setCsStatus(csStatus);
     ConstString xPortStr(prefix);
     xPortStr += "/cartesianServer/command:i";

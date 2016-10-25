@@ -17,7 +17,8 @@ void xCallbackPort::onRead(Bottle& b) {
         for (int i = 0; i < qdhat.size(); i++)
             qd[i] = qdhat[i];
         //icart->stopControl(); // new!!!!
-        ipos->setPositionMode();
+        for (int i = 0; i < qdhat.size(); i++)
+            imode->setPositionMode(i);
         ipos->positionMove(qd);
         delete[] qd;
     }
@@ -26,7 +27,10 @@ void xCallbackPort::onRead(Bottle& b) {
     if (choice==VOCAB_MY_STOP) {  ///////////////////////////////// stop /////////////////////////////////
         icart->stopControl();
         ipos->stop();
-        ipos->setPositionMode();
+        int ax;
+        ipos->getAxes(&ax);
+        for (int i = 0; i < ax; i++)
+            imode->setPositionMode(i);
         *csStatus = 0;
     } else if (choice==VOCAB_FWD) { ///////////////////////////////// fwd /////////////////////////////////
         Vector cmd;
@@ -134,6 +138,12 @@ void xCallbackPort::setCartesianInterface(yarp::dev::ICartesianControl* _icart) 
 
 void xCallbackPort::setPositionInterface(yarp::dev::IPositionControl* _ipos) {
     ipos = _ipos;
+}
+
+/************************************************************************/
+
+void xCallbackPort::setControlModeInterface(yarp::dev::IControlMode* _imode) {
+    imode = _imode;
 }
 
 /************************************************************************/
