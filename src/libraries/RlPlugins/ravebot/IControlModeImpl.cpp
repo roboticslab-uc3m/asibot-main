@@ -5,12 +5,11 @@
 // ------------------- IControlMode Related ------------------------------------
 
 bool RaveBot::setPositionMode(int j) {
-    printf("[RaveBot] setPositionMode(%d)\n", j);
     if ((unsigned int)j>numMotors) return false;
     if (vModePosVel[j]==VOCAB_CM_POSITION) return true;  // Simply return true if we were already in pos mode.
     // Do anything additional before setting flag to pos...
-    if(!stop()) {
-        fprintf(stderr,"[RaveBot] warning: setPositionMode() return false; failed to stop\n");
+    if(!stop(j)) {
+        fprintf(stderr,"[RaveBot] warning: could not set position mode at joint %d; failed to stop\n", j+1);
         return false;
     }
     vModePosVel[j] = VOCAB_CM_POSITION;  // Set flag to pos.
@@ -20,7 +19,6 @@ bool RaveBot::setPositionMode(int j) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setVelocityMode(int j) {
-    printf("[RaveBot] setVelocityMode(%d)\n", j);
     if ((unsigned int)j>numMotors) return false;
     if (vModePosVel[j]==VOCAB_CM_VELOCITY) return true;  // Simply return true if we were already in vel mode.
     // Do anything additional before setting flag to vel...
@@ -63,10 +61,59 @@ bool RaveBot::getControlMode(int j, int *mode) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getControlModes(int *modes) {
-    for(unsigned int motor=0;motor<numMotors;motor++) {
-        modes[motor] = vModePosVel[motor];
+    int joints[numMotors];
+    for (unsigned int i = 0; i < numMotors; i++)
+        joints[i] = i;
+    return getControlModes(numMotors, joints, modes);
+}
+
+// -----------------------------------------------------------------------------
+
+bool RaveBot::getControlModes(const int n_joints, const int *joints, int *modes) {
+    bool ok = true;
+    for (int i = 0; i < n_joints; i++)
+        ok &= getControlMode(joints[i], &modes[i]);
+    return ok;
+}
+
+// -----------------------------------------------------------------------------
+
+bool RaveBot::setControlMode(const int j, const int mode) {
+    if ((unsigned int)j>numMotors) return false;
+    switch (mode) {
+        case VOCAB_CM_POSITION:
+            return setPositionMode(j);
+        case VOCAB_CM_VELOCITY:
+            return setVelocityMode(j);
+        case VOCAB_CM_TORQUE:
+            return setTorqueMode(j);
+        case VOCAB_CM_IMPEDANCE_POS:
+            return setImpedancePositionMode(j);
+        case VOCAB_CM_IMPEDANCE_VEL:
+            return setImpedanceVelocityMode(j);
+        case VOCAB_CM_OPENLOOP:
+            return setOpenLoopMode(j);
+        default:
+            return false; // unrecognized/unsupported
     }
-    return true;
+}
+
+// -----------------------------------------------------------------------------
+
+bool RaveBot::setControlModes(const int n_joints, const int *joints, int *modes) {
+    bool ok = true;
+    for (int i = 0; i < n_joints; i++)
+        ok &= setControlMode(joints[i], modes[i]);
+    return ok;
+}
+
+// -----------------------------------------------------------------------------
+
+bool RaveBot::setControlModes(int *modes) {
+    int joints[numMotors];
+    for (unsigned int i = 0; i < numMotors; i++)
+        joints[i] = i;
+    return setControlModes(numMotors, joints, modes);
 }
 
 // -----------------------------------------------------------------------------
