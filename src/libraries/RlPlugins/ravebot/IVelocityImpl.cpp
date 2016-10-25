@@ -5,12 +5,15 @@
 // ------------------ IVelocity Related ----------------------------------------
 
 bool RaveBot::setVelocityMode() {
-    return false;
+    bool ok = true;
+    for (unsigned int i=0; i<numMotors; i++)
+        ok &= setVelocityMode(i);
+    return ok;
 }
 
 bool RaveBot::velocityMove(int j, double sp) {  // velExposed = sp;
     if ((unsigned int)j>numMotors) return false;
-    if(vModePosVel[j]!=VOCAB_VELOCITY_MODE) {  // Check if we are in velocity mode.
+    if(vModePosVel[j]!=VOCAB_CM_VELOCITY) {  // Check if we are in velocity mode.
         fprintf(stderr,"[RaveBot] fail: RaveBot will not velocityMove as joint %d not in velocityMode\n",j+1);
         return false;
     }

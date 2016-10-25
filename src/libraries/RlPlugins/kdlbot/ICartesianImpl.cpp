@@ -96,7 +96,8 @@ bool KdlBot::goToPoseSync(const yarp::sig::Vector &xd, const yarp::sig::Vector &
 
     startTime = Time::now();
     withOri=true;
-    vel->setVelocityMode();
+    for (int motor=0;motor<cmcNumMotors;motor++)
+        mode->setVelocityMode(motor);
     cmc_status=1;
 
     printf("[KdlBot] End setting absolute base movement.\n");

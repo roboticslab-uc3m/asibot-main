@@ -5,34 +5,43 @@ print "WARNING: only works with RaveBot in YARP yarpmods instead of in ASIBOT Rl
 import yarp
 
 yarp.Network.init()
-if yarp.Network.checkNetwork() != True:
+
+if not yarp.Network.checkNetwork():
     print "[error] Please try running yarp server"
     quit()
+
 options = yarp.Property()
 options.put('device','ravebot')
 dd = yarp.PolyDriver(options)
 
 pos = dd.viewIPositionControl()
-pos.setPositionMode()
+vel = dd.viewIVelocityControl()
+enc = dd.viewIEncoders()
+mode = dd.viewIControlMode()
 
-print "test positionMove(1,-35)"
-pos.positionMove(1,-35)
+axes = enc.getAxes()
+
+for i in range(1,axes): mode.setPositionMode(i-1)
+
+print "test positionMove(1,35)"
+pos.positionMove(1,35)
 
 print "test delay(5)"
 yarp.Time.delay(5)
 
-enc = dd.viewIEncoders()
-v = yarp.DVector(enc.getAxes())
+v = yarp.DVector(axes)
 enc.getEncoders(v)
-v[2]
+print v[2]
 
-vel = dd.viewIVelocityControl()
-vel.setVelocityMode()
+for i in range(1,axes): mode.setVelocityMode(i-1)
 print "test velocityMove(0,10)"
 vel.velocityMove(0,10)
 
 print "test delay(5)"
 yarp.Time.delay(5)
+
+vel.velocityMove(0,0)
+dd.close()
 
 yarp.Network.fini()
 

@@ -65,10 +65,12 @@ protected:
 
     yarp::dev::PolyDriver simDevice;
     yarp::dev::IPositionControl *simPos;
+    yarp::dev::IControlMode *simMode;
     CartesianClient *simCart;  // != ICartesianControl
 
     yarp::dev::PolyDriver realDevice;
     yarp::dev::IPositionControl *realPos;
+    yarp::dev::IControlMode *realMode;
     CartesianClient *realCart;  // != ICartesianControl
 
     double captureX[NUM_CART_COORDS];

@@ -37,9 +37,11 @@ print 'WARNING: requires a running instance of RaveBot (i.e. testRaveBot or cart
 
 import yarp  # imports YARP
 yarp.Network.init()  # connect to YARP network
-if yarp.Network.checkNetwork() != True:  # let's see if there was actually a reachable YARP network
+
+if not yarp.Network.checkNetwork():  # let's see if there was actually a reachable YARP network
     print '[error] Please try running yarp server'  # tell the user to start one with 'yarp server' if there isn't any
     quit()
+
 options = yarp.Property()  # create an instance of Property, a nice YARP class for storing name-value (key-value) pairs
 options.put('device','remote_controlboard')  # we add a name-value pair that indicates the YARP device
 options.put('remote','/ravebot')  # we add info on to whom we will connect
@@ -47,27 +49,33 @@ options.put('local','/testRemoteRavebot')  # we add info on how we will call our
 dd = yarp.PolyDriver(options)  # create a YARP multi-use driver with the given options
 
 pos = dd.viewIPositionControl()  # make a position controller object we call 'pos'
+vel = dd.viewIVelocityControl()  # make a velocity controller object we call 'vel'
+enc = dd.viewIEncoders()  # make an encoder controller object we call 'enc'
+mode = dd.viewIControlMode()  # make a mode controller object we call 'mode'
 
-pos.setPositionMode()  # use the object to set the device to position mode (as opposed to velocity mode)(note: stops the robot)
+axes = enc.getAxes()
 
-print 'test positionMove(1,-35) -> moves motor 1 (start count at motor 0) to -35 degrees'
-pos.positionMove(1,-35)
+for i in range(1,axes): mode.setPositionMode(i-1)  # use the object to set the device to position mode (as opposed to velocity mode) (note: stops the robot)
+
+print 'test positionMove(1,35) -> moves motor 1 (start count at motor 0) to 35 degrees'
+pos.positionMove(1,35)
 
 print 'test delay(5)'
 yarp.Time.delay(5)
 
-enc = dd.viewIEncoders()  # make an encoder controller object we call 'enc'
-v = yarp.DVector(enc.getAxes())  # create a YARP vector of doubles the size of the number of elements read by enc, call it 'v'
+v = yarp.DVector(axes)  # create a YARP vector of doubles the size of the number of elements read by enc, call it 'v'
 enc.getEncoders(v)  # read the encoder values and put them into 'v'
 print 'v[1] is: ' + str(v[1])  # print element 1 of 'v', note that motors and encoders start at 0
 
-vel = dd.viewIVelocityControl()  # make a velocity controller object we call 'pos'
-vel.setVelocityMode()  # use the object to set the device to velocity mode (as opposed to position mode)
+for i in range(1,axes): mode.setVelocityMode(i-1)  # use the object to set the device to velocity mode (as opposed to position mode)
 print 'test velocityMove(0,10) -> moves motor 0 (start count at motor 0) at 10 degrees per second'
 vel.velocityMove(0,10)
 
 print 'test delay(5)'
 yarp.Time.delay(5)
+
+vel.velocityMove(0,0)  # stop the robot
+dd.close()
 
 yarp.Network.fini()  # disconnect from the YARP network
 

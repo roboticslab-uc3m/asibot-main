@@ -44,7 +44,7 @@ bool RaveBot::open(Searchable& config) {
         printf("\t--genVelRawExposed (velocity [raw / exposed] ratio, default: \"%f\")\n",genVelRawExposed);
         printf("\t--jmcMs [ms] (rate of Joint Motion Controller thread, default: \"%f\")\n",jmcMs);
         printf("\t--modePosVel [%s | %s] (default: \"%s\")\n",
-            Vocab::decode(VOCAB_POSITION_MODE).c_str(),Vocab::decode(VOCAB_VELOCITY_MODE).c_str(),
+            Vocab::decode(VOCAB_CM_POSITION).c_str(),Vocab::decode(VOCAB_CM_VELOCITY).c_str(),
             Vocab::decode(modePosVel).c_str());
         printf("\t--physics [type] (type of physics, default: \"%s\")\n",physics.c_str());
         printf("\t--viewer [type] (set to 0 for none, default: \"%d\")\n",viewer);

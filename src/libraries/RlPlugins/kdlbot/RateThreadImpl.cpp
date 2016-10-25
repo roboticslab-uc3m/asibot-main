@@ -57,7 +57,8 @@ void KdlBot::run() {
         if (done) {
             printf("Target reached in %f.\n",Time::now()-startTime);
             startTime = 0;
-            pos->setPositionMode();
+            for (int motor=0;motor<cmcNumMotors;motor++)
+                mode->setPositionMode(motor);
             cmc_status=0;
 //            delete _orient;
 //            _orient=0;
@@ -78,7 +79,8 @@ void KdlBot::run() {
             if(sTime>currentTrajectory->Duration()){
                 printf ("[warning] out of time at %f.\n",sTime);
                 startTime = 0;
-                pos->setPositionMode();
+                for (int motor=0;motor<cmcNumMotors;motor++)
+                    mode->setPositionMode(motor);
                 cmc_status=0;
                 return;  // bad practice??
             }

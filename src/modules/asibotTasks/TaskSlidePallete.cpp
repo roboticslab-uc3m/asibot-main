@@ -19,7 +19,7 @@ bool TaskSlidePallete::open(const ConstString& serverPrefix) {
       return 1;
     }
     printf("[success] Opened connection with robot.\n");
-    bool ok = dd.view(pos);
+    bool ok = dd.view(pos) && dd.view(mode);
     if (!ok) {
         printf("[warning] Problems acquiring robot interface\n");
         return false;
@@ -38,7 +38,10 @@ bool TaskSlidePallete::close() {
 /************************************************************************/
 bool TaskSlidePallete::run(const ConstString a, const ConstString b, const ConstString c, const ConstString d, const ConstString e, const ConstString f) {
     printf("[success] TaskSlidePallete::run(): begin.\n");
-    pos->setPositionMode();
+    int axes;
+    pos->getAxes(&axes);
+    for (unsigned int i = 0; i < axes; i++)
+        mode->setPositionMode(i);
     pos->positionMove(4,150);
     bool done = false;
     while(!done) {

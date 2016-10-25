@@ -20,7 +20,12 @@ bool xRpcResponder::read(ConnectionReader& connection) {
     } else if (asString == "stop" || asVocab == VOCAB_STOP) {  // stop //
         if(icart->stopControl()) {
             if(ipos->stop()) {
-                if(ipos->setPositionMode()) {
+                int ax;
+                ipos->getAxes(&ax);
+                bool ok = true;
+                for (int i = 0; i < ax; i++)
+                    ok &= imode->setPositionMode(i);
+                if(ok) {
                     out.addVocab(VOCAB_OK);
                     *csStatus = 0;
                 } else out.addVocab(VOCAB_FAILED);
@@ -108,7 +113,8 @@ bool xRpcResponder::read(ConnectionReader& connection) {
             for (int i = 0; i < qdhat.size(); i++)
                 qd[i] = qdhat[i];
             icart->stopControl(); // new!!!!
-            ipos->setPositionMode();
+            for (int i = 0; i < qdhat.size(); i++)
+                imode->setPositionMode(i);
             ipos->positionMove(qd);
             *csStatus = 1;
             out.addVocab(VOCAB_OK);
@@ -162,6 +168,12 @@ void xRpcResponder::setCartesianInterface(yarp::dev::ICartesianControl* _icart) 
 
 void xRpcResponder::setPositionInterface(yarp::dev::IPositionControl* _ipos) {
     ipos = _ipos;
+}
+
+/************************************************************************/
+
+void xRpcResponder::setControlModeInterface(yarp::dev::IControlMode* _imode) {
+    imode = _imode;
 }
 
 /************************************************************************/

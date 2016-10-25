@@ -28,6 +28,7 @@ using namespace yarp::dev;
 class TaskSlidePallete {
 protected:
     IPositionControl *pos;
+    IControlMode *mode;
     PolyDriver dd;
     
     public:
