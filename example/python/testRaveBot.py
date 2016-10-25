@@ -41,6 +41,7 @@ print "test delay(5)"
 yarp.Time.delay(5)
 
 vel.velocityMove(0,0)
+dd.close()
 
 yarp.Network.fini()
 
