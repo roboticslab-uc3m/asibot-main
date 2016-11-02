@@ -6,7 +6,7 @@ Link to Doxygen generated documentation: http://robots.uc3m.es/dox-asibot-main
 
 ## Installation
 
-Installation instructions for installing from source can be found [here](http://robots.uc3m.es/dox-asibot-main/install_on_ubuntu.html).
+Installation instructions for installing from source can be found [here](doc/asibot_install_on_ubuntu_14_10.md).
 
 ## Contributing
 

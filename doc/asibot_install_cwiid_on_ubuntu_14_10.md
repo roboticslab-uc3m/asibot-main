@@ -1,17 +1,7 @@
+## Install CWiiD (Ubuntu 14.10)
 
-/**
- * \page install_cwiid_on_ubuntu Install cwiid (Ubuntu)
+Installing CWiiD on Ubuntu is quite straightforward.
 
-Installing cwiid on Ubuntu is quite straightforward.
-
-\verbatim
+```bash
 sudo apt-get install libcwiid-dev
-\endverbatim
-
-<hr>
-
-This page can be edited at asibot-main/doc/install_cwiid_on_ubuntu.dox.
-
-*
-*/
-
+```
