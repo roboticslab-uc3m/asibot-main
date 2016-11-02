@@ -1,29 +1,17 @@
+## Install KDL (Ubuntu 14.10)
 
-/**
- * \page install_kdl_on_ubuntu Install KDL (Ubuntu)
+We use KDL for kinematics. Installing KDL on Ubuntu is quite straightforward. Note that you will be prompted for your password upon using '''sudo''' a couple of times:
 
-Installing KDL on Ubuntu is quite straightforward.
-
-\verbatim
-git clone https://github.com/orocos/orocos_kinematics_dynamics
+```bash
+sudo apt-get install libeigen3-dev
+git clone https://github.com/orocos/orocos_kinematics_dynamics.git
 cd orocos_kinematics_dynamics/orocos_kdl; mkdir build; cd build
-cmake ..; make -j3; sudo make install
-cd ../../..
-sudo ldconfig
-\endverbatim
-
-For additional options use ccmake instead of cmake.
+cmake ..
+make -j3;  sudo make install; sudo ldconfig; cd ../../..
+```
 
 Starting from Ubuntu <b>16.04</b>, KDL is conveniently distributed as a package:
 
-\verbatim
+```bash
 sudo apt-get install liborocos-kdl-dev
-\endverbatim
-
-<hr>
-
-This page can be edited at asibot-main/doc/install_kdl_on_ubuntu.dox.
-
-*
-*/
-
+```

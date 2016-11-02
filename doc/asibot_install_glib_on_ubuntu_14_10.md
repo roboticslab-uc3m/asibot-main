@@ -1,17 +1,7 @@
+## Install GLib (Ubuntu 14.10)
 
-/**
- * \page install_glib_on_ubuntu Install glib (Ubuntu)
+Installing GLib on Ubuntu is quite straightforward.
 
-Installing glib on Ubuntu is quite straightforward.
-
-\verbatim
+```bash
 sudo apt-get install libglib2.0-dev
-\endverbatim
-
-<hr>
-
-This page can be edited at asibot-main/doc/install_glib_on_ubuntu.dox.
-
-*
-*/
-
+```
