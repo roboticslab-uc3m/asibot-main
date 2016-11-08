@@ -48,12 +48,12 @@ option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
 option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" FALSE)
 
 if(MSVC)
-  MESSAGE(STATUS "Running on windows")    
+  MESSAGE(STATUS "Running on windows")
   set(CMAKE_DEBUG_POSTFIX "d")
 endif(MSVC)
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING 
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING
     "Choose the type of build, recommanded options are: Debug or Release")
 endif(NOT CMAKE_BUILD_TYPE)
 # Hide variable to MSVC users, since it is not needed
@@ -95,6 +95,7 @@ set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 add_subdirectory(share)
 add_subdirectory(doc)
 add_subdirectory(src)
+add_subdirectory(scripts)
 if (ENABLE_tests)           # flag will exist
     add_subdirectory(test)  # once tests exist
 endif (ENABLE_tests)        # :-)
