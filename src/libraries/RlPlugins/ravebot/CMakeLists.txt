@@ -30,7 +30,7 @@ endif()
 
 link_directories(${OpenRAVE_LIBRARY_DIRS} ${OPENRAVE_LINK_DIRS}) # All caps -> older
 
-YARP_ADD_PLUGIN(ravebot RaveBot.h IDeviceImpl.cpp IPositionImpl.cpp IVelocityImpl.cpp IEncoderImpl.cpp RateThreadImpl.cpp IControlLimitsImpl.cpp IControlModeImpl.cpp SharedArea.cpp WorldRpcResponder.cpp MobileRpcResponder.cpp ExtraCallbackPort.cpp)
+YARP_ADD_PLUGIN(ravebot RaveBot.h RaveBot.cpp IDeviceImpl.cpp IPositionImpl.cpp IVelocityImpl.cpp IEncoderImpl.cpp RateThreadImpl.cpp IControlLimitsImpl.cpp IControlModeImpl.cpp SharedArea.cpp WorldRpcResponder.cpp MobileRpcResponder.cpp ExtraCallbackPort.cpp)
 set_target_properties(ravebot PROPERTIES COMPILE_FLAGS "${OpenRAVE_CXX_FLAGS}")
 set_target_properties(ravebot PROPERTIES LINK_FLAGS "${OpenRAVE_LINK_FLAGS}")
 TARGET_LINK_LIBRARIES(ravebot ${YARP_LIBRARIES} ${OpenRAVE_CORE_LIBRARIES} ${OPENRAVE_CORE_LIBRARY} ${Boost_THREAD_LIBRARY} ${BOOSt_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${BOOST_SYSTEM_LIBRARY})

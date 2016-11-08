@@ -6,7 +6,7 @@
 
 bool RaveBot::setPositionMode(int j) {
     printf("[RaveBot] setPositionMode(%d)\n", j);
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     if (vModePosVel[j]==VOCAB_CM_POSITION) return true;  // Simply return true if we were already in pos mode.
     // Do anything additional before setting flag to pos...
     if(!stop()) {
@@ -21,7 +21,7 @@ bool RaveBot::setPositionMode(int j) {
 
 bool RaveBot::setVelocityMode(int j) {
     printf("[RaveBot] setVelocityMode(%d)\n", j);
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     if (vModePosVel[j]==VOCAB_CM_VELOCITY) return true;  // Simply return true if we were already in vel mode.
     // Do anything additional before setting flag to vel...
     vModePosVel[j] = VOCAB_CM_VELOCITY;  // Set flag to vel.
@@ -55,7 +55,7 @@ bool RaveBot::setOpenLoopMode(int j) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getControlMode(int j, int *mode) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     *mode = vModePosVel[j];
     return true;
 }

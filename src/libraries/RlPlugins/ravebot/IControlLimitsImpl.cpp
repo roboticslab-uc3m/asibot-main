@@ -5,7 +5,7 @@
 // ------------------- IControlLimits Related ------------------------------------
 
 bool RaveBot::setLimits(int axis, double min, double max) {
-    if(axis>=int(numMotors)) return false;
+    if (!indexWithinRange(axis)) return false;
     minLimit[axis] = min;
     maxLimit[axis] = max;
     printf("[RaveBot] Range of axis %d set to: %f to %f\n",axis,min,max);
@@ -15,7 +15,7 @@ bool RaveBot::setLimits(int axis, double min, double max) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getLimits(int axis, double *min, double *max) {
-    if(axis>=int(numMotors)) return false;
+    if (!indexWithinRange(axis)) return false;
     *min = minLimit[axis];
     *max = maxLimit[axis];
     printf("[RaveBot] Range of axis %d read: %f to %f.\n",axis,*min,*max);

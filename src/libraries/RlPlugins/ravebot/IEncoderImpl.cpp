@@ -5,7 +5,7 @@
 // ------------------ IEncoder Related -----------------------------------------
 
 bool RaveBot::resetEncoder(int j) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     return setEncoder(j,0.0);
   }
 
