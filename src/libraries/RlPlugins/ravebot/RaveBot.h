@@ -450,6 +450,17 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
     double getEncRaw(const int Index);
     double getEncExposed(const int Index);
 
+// ------------------------------- Protected -------------------------------------
+
+  protected:
+
+    /**
+     * Check if index is within range (referred to the number of motors).
+     * @param idx index to check (zero-based).
+     * @return true/false on success/failure.
+     */
+    bool indexWithinRange(const int& idx);
+
 // ------------------------------- Private -------------------------------------
   private:
     int viewer;

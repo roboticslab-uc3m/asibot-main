@@ -20,7 +20,7 @@ bool RaveBot::getAxes(int *ax) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::positionMove(int j, double ref) {  // encExposed = ref;
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     if(vModePosVel[j]!=VOCAB_CM_POSITION) {  // Check if we are in position mode.
         fprintf(stderr,"[RaveBot] warning: will not positionMove as joint %d not in positionMode\n",j+1);
         return false;
@@ -84,7 +84,7 @@ bool RaveBot::positionMove(const double *refs) {  // encExposed = refs;
 // -----------------------------------------------------------------------------
 
 bool RaveBot::relativeMove(int j, double delta) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     if(vModePosVel[j]!=VOCAB_CM_POSITION) {  // Check if we are in position mode.
         printf("[fail] RaveBot will not relativeMove as joint %d not in positionMode\n",j+1);
         return false;
@@ -140,7 +140,7 @@ bool RaveBot::relativeMove(const double *deltas) {  // encExposed = deltas + enc
 // -----------------------------------------------------------------------------
 
 bool RaveBot::checkMotionDone(int j, bool *flag) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     bool done = true;
     if (jointStatus[j]>0) done=false;
     *flag = done;
@@ -161,7 +161,7 @@ bool RaveBot::checkMotionDone(bool *flag) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setRefSpeed(int j, double sp) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     refSpeed[j]=sp;
     return true;
 }
@@ -178,7 +178,7 @@ bool RaveBot::setRefSpeeds(const double *spds) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::setRefAcceleration(int j, double acc) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     refAcc[j]=acc;
     return true;
 }
@@ -195,7 +195,7 @@ bool RaveBot::setRefAccelerations(const double *accs) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getRefSpeed(int j, double *ref) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     *ref=refSpeed[j];
     return true;
 }
@@ -212,7 +212,7 @@ bool RaveBot::getRefSpeeds(double *spds) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::getRefAcceleration(int j, double *acc) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     *acc=refAcc[j];
     return true;
 }
@@ -229,7 +229,7 @@ bool RaveBot::getRefAccelerations(double *accs) {
 // -----------------------------------------------------------------------------
 
 bool RaveBot::stop(int j) {
-    if ((unsigned int)j>numMotors) return false;
+    if (!indexWithinRange(j)) return false;
     printf("[RaveBot] stop(%d)\n",j);
     velRaw[j]=0.0;
     jointStatus[j]=0;
