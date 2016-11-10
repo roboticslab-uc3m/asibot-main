@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
-from os.path import normpath
+from os.path import normpath # see 320d03f
 
 moduleName = 'AsibotPy'
 
@@ -9,7 +9,7 @@ setup(name = moduleName,
         version = '0.0.1',
         description = 'Application launcher for Asibot\'s web interface',
         author = 'Juan G. Victores',
-        url = 'https://roboticslab-uc3m/asibot-main/',
+        url = 'https://github.com/roboticslab-uc3m/asibot-main/',
         package_dir = {'': normpath('${CMAKE_CURRENT_SOURCE_DIR}')},
         py_modules = [moduleName],
     )
