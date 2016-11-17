@@ -10,6 +10,6 @@ setup(name = moduleName,
         description = 'Application launcher for Asibot\'s web interface',
         author = 'Juan G. Victores',
         url = 'https://github.com/roboticslab-uc3m/asibot-main/',
-        package_dir = {'': normpath('${CMAKE_CURRENT_SOURCE_DIR}')},
+        package_dir = {'': normpath('${CMAKE_SOURCE_DIR}/share/webInterface/user/')},
         py_modules = [moduleName],
     )

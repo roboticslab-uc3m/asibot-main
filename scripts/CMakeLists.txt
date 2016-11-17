@@ -1,8 +1,0 @@
-IF (ENABLE_webInterface)
-    SET(SETUP_PY_IN "${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in")
-    SET(SETUP_PY    "${CMAKE_CURRENT_BINARY_DIR}/setup.py")
-    
-    CONFIGURE_FILE(${SETUP_PY_IN} ${SETUP_PY})
-    
-    INSTALL(CODE "EXECUTE_PROCESS(COMMAND python ${CMAKE_CURRENT_BINARY_DIR}/setup.py install)")
-ENDIF (ENABLE_webInterface)

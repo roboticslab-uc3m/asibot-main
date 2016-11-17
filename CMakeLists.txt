@@ -95,21 +95,28 @@ set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 add_subdirectory(share)
 add_subdirectory(doc)
 add_subdirectory(src)
-add_subdirectory(scripts)
+
 if (ENABLE_tests)           # flag will exist
     add_subdirectory(test)  # once tests exist
 endif (ENABLE_tests)        # :-)
 
 # export our variables to a ASIBOTConfig.cmake creation
 set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
-configure_file(${CMAKE_SOURCE_DIR}/cmake/template/ASIBOTConfig.cmake.in
-               ${CMAKE_BINARY_DIR}/ASIBOTConfig.cmake @ONLY)
+configure_file("${CMAKE_SOURCE_DIR}/cmake/template/ASIBOTConfig.cmake.in"
+               "${CMAKE_BINARY_DIR}/ASIBOTConfig.cmake" @ONLY)
 
 # uninstall target
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ASIBOTConfigUninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake" IMMEDIATE @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ASIBOTConfigUninstall.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake)
 
+# configure setup.py
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/setup.py.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/setup.py")
+
+# run setup.py (install rule)
+if (ENABLE_webInterface)
+    install(CODE "EXECUTE_PROCESS(COMMAND python ${CMAKE_CURRENT_BINARY_DIR}/setup.py install)")
+endif (ENABLE_webInterface)
