@@ -67,7 +67,7 @@ string& WebResponder::replaceAll(string& context, const string& from, const stri
 
 /************************************************************************/
 string WebResponder::readHtml(const ConstString& fileName) {
-    ConstString filePath = rf.findFileByName(std::string("html/")+fileName);
+    ConstString filePath = rf.findFileByName("html/"+fileName);
     return readFile(filePath);
 }
 
@@ -870,7 +870,7 @@ bool WebResponder::read(ConnectionReader& in) {
         cmd += userPath + program + ".py";
         cmd += " 2>&1"; // redirect stderr to stdout (see py_compile module)
         ConstString res = pipedExec(cmd);
-        res.empty() ? response.clear() : response.addString(res);
+        res == "" ? response.clear() : response.addString(res);
         return response.write(*out);
     } else if (code=="speech") {
         string str = readHtml("speech.html");
