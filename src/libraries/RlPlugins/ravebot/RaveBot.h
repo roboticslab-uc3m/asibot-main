@@ -70,7 +70,8 @@ using namespace OpenRAVE;
  * and <a class="el" href="group__cartesianServer.html">cartesianServer</a>.
  *
  */
-class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncodersTimed, public IControlLimits, public IControlMode2 {
+class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl,
+    public IEncodersTimed, public IControlLimits, public IControlMode2 {
  public:
 
   // Set the Thread Rate in the class constructor
@@ -203,7 +204,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      */
     virtual bool stop();
 
-//  ---------- IEncoder Declarations. Implementation in IEncoderImpl.cpp ----------
+//  ---------- IEncoders Declarations. Implementation in IEncodersImpl.cpp ----------
 
     /**
      * Reset encoder, single joint. Set the encoder value to zero 
@@ -276,6 +277,8 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      * @return true if all goes well, false if anything bad happens. 
      */
     virtual bool getEncoderAccelerations(double *accs);
+
+//  ---------- IEncodersTimed Declarations. Implementation in IEncodersTimedImpl.cpp ----------
 
     /**
      * Read the instantaneous acceleration of all axes.
@@ -402,7 +405,7 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      */
     virtual bool getControlModes(int *modes);
 
-// -------- IControlMode2 declarations. Implementation in IControlModeImpl.cpp --------
+// -------- IControlMode2 declarations. Implementation in IControlMode2Impl.cpp --------
 
     /**
     * Get the current control mode for a subset of axes.
