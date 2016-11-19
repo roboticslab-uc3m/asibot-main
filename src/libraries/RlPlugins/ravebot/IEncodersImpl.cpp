@@ -2,7 +2,7 @@
 
 #include "RaveBot.h"
 
-// ------------------ IEncoder Related -----------------------------------------
+// ------------------ IEncoders Related -----------------------------------------
 
 bool RaveBot::resetEncoder(int j) {
     if (!indexWithinRange(j)) return false;
@@ -77,24 +77,6 @@ bool RaveBot::getEncoderAcceleration(int j, double *spds) {
 
 bool RaveBot::getEncoderAccelerations(double *accs) {
     return false;
-}
-
-// -----------------------------------------------------------------------------
-
-bool RaveBot::getEncodersTimed(double *encs, double *time) {
-    bool ok = true;
-    for(unsigned int i=0; i < numMotors; i++)
-        ok &= getEncoderTimed(i,&(encs[i]),&(time[i]));
-    return ok;
-}
-
-// -----------------------------------------------------------------------------
-
-bool RaveBot::getEncoderTimed(int j, double *encs, double *time) {
-    getEncoder(j, encs);
-    *time = yarp::os::Time::now();
-
-    return true;
 }
 
 // -----------------------------------------------------------------------------
