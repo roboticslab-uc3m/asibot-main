@@ -6,6 +6,7 @@
 #include <yarp/os/all.h>
 #include <yarp/os/Semaphore.h>
 #include <yarp/dev/ControlBoardInterfaces.h>
+#include <yarp/dev/IControlLimits2.h>
 #include <yarp/dev/Drivers.h>
 #include <yarp/dev/PolyDriver.h>
 #include <yarp/sig/all.h>
@@ -70,7 +71,8 @@ using namespace OpenRAVE;
  * and <a class="el" href="group__cartesianServer.html">cartesianServer</a>.
  *
  */
-class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl, public IEncodersTimed, public IControlLimits, public IControlMode2 {
+class RaveBot : public DeviceDriver, public RateThread, public IPositionControl, public IVelocityControl,
+    public IEncodersTimed, public IControlLimits2, public IControlMode2 {
  public:
 
   // Set the Thread Rate in the class constructor
@@ -335,13 +337,35 @@ class RaveBot : public DeviceDriver, public RateThread, public IPositionControl,
      */
     virtual bool setLimits(int axis, double min, double max);
     
-    /* Get the software limits for a particular axis.
+    /**
+     * Get the software limits for a particular axis.
      * @param axis joint number (again... why am I telling you this)
      * @param pointer to store the value of the lower limit
      * @param pointer to store the value of the upper limit
      * @return true if everything goes fine, false otherwise.
      */
     virtual bool getLimits(int axis, double *min, double *max);
+
+//  --------- IControlLimits2 Declarations. Implementation in IControlLimits2Impl.cpp ---------
+
+    /**
+     * Set the software speed limits for a particular axis, the behavior of the
+     * control card when these limits are exceeded, depends on the implementation.
+     * @param axis joint number
+     * @param min the value of the lower limit
+     * @param max the value of the upper limit
+     * @return true or false on success or failure
+     */
+    virtual bool setVelLimits(int axis, double min, double max);
+
+    /**
+     * Get the software speed limits for a particular axis.
+     * @param axis joint number
+     * @param min pointer to store the value of the lower limit
+     * @param max pointer to store the value of the upper limit
+     * @return true if everything goes fine, false otherwise.
+     */
+    virtual bool getVelLimits(int axis, double *min, double *max);
 
 // -------- IControlMode declarations. Implementation in IControlModeImpl.cpp --------
 
