@@ -1,4 +1,4 @@
-from AsibotPy import *
+from AsibotPy import CartesianClient
 #######################################
 home=[0,0,1.4,0,0]
 #######################################

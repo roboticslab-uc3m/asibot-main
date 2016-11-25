@@ -48,12 +48,12 @@ option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
 option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" FALSE)
 
 if(MSVC)
-  MESSAGE(STATUS "Running on windows")    
+  MESSAGE(STATUS "Running on windows")
   set(CMAKE_DEBUG_POSTFIX "d")
 endif(MSVC)
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING 
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING
     "Choose the type of build, recommanded options are: Debug or Release")
 endif(NOT CMAKE_BUILD_TYPE)
 # Hide variable to MSVC users, since it is not needed
@@ -95,20 +95,28 @@ set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 add_subdirectory(share)
 add_subdirectory(doc)
 add_subdirectory(src)
+
 if (ENABLE_tests)           # flag will exist
     add_subdirectory(test)  # once tests exist
 endif (ENABLE_tests)        # :-)
 
 # export our variables to a ASIBOTConfig.cmake creation
 set(ASIBOT_LINK_DIRS ${ASIBOT_LINK_DIRS} ${LIBRARY_OUTPUT_PATH})
-configure_file(${CMAKE_SOURCE_DIR}/cmake/template/ASIBOTConfig.cmake.in
-               ${CMAKE_BINARY_DIR}/ASIBOTConfig.cmake @ONLY)
+configure_file("${CMAKE_SOURCE_DIR}/cmake/template/ASIBOTConfig.cmake.in"
+               "${CMAKE_BINARY_DIR}/ASIBOTConfig.cmake" @ONLY)
 
 # uninstall target
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ASIBOTConfigUninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake" IMMEDIATE @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ASIBOTConfigUninstall.cmake.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake)
 
+# configure setup.py
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/setup.py.in"
+               "${CMAKE_CURRENT_BINARY_DIR}/setup.py")
+
+# run setup.py (install rule)
+if (ENABLE_webInterface)
+    install(CODE "EXECUTE_PROCESS(COMMAND python ${CMAKE_CURRENT_BINARY_DIR}/setup.py install)")
+endif (ENABLE_webInterface)
