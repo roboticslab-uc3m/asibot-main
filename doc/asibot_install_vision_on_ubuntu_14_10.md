@@ -2,9 +2,9 @@
 
 
 First install the depencencies:
-- [Install CMake (Ubuntu 14.10)](asibot_install_cmake_on_ubuntu_14_10.md)
-- [Install YARP (Ubuntu 14.10)](asibot_install_yarp_on_ubuntu_14_10.md)
-- [Install OpenCV (Ubuntu 14.10)](asibot_install_opencv_on_ubuntu_14_10.md)
+- [Install CMake](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_cmake.md)
+- [Install YARP](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_yarp.md)
+- [Install OpenCV](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_opencv.md)
 - [Install Travis (Ubuntu 14.10)](asibot_install_travis_on_ubuntu_14_10.md)
   
 For Kinect support, install OpenNI, and then type:
