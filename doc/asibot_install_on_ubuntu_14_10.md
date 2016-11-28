@@ -1,9 +1,9 @@
 ## Simulation and Basic Control: Installation from Source Code (Ubuntu 14.10)
 
 First install the dependencies:
-- [Install CMake (Ubuntu 14.10)](asibot_install_cmake_on_ubuntu_14_10.md)
-- [Install YARP (Ubuntu 14.10)](asibot_install_yarp_on_ubuntu_14_10.md)
-- [Install OpenRAVE (Ubuntu 14.10)](asibot_install_openrave_on_ubuntu_14_10.md)
+- [Install CMake](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_cmake.md)
+- [Install YARP](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_yarp.md)
+- [Install OpenRAVE](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_openrave.md)
 
 ### Install the Simulation and Basic Control Software
 
@@ -30,8 +30,8 @@ Done! You are now probably interested in one of the following links:
 - For the KDL controller, you should look at the [KdlBot](http://robots.uc3m.es/dox-asibot-main/group__KdlBot.html) library documentation.
 
 Optional dependencies:
-- [Install KDL (Ubuntu 14.10)](asibot_install_kdl_on_ubuntu_14_10.md)
+- [Install KDL](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_kdl.md)
 - [Install CWiiD (Ubuntu 14.10)](asibot_install_cwiid_on_ubuntu_14_10.md)
 - [Install GLib (Ubuntu 14.10)](asibot_install_glib_on_ubuntu_14_10.md)
-- [Install OpenCV (Ubuntu 14.10)](asibot_install_opencv_on_ubuntu_14_10.md)
+- [Install OpenCV](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_opencv.md)
 - [Install Travis (Ubuntu 14.10)](asibot_install_travis_on_ubuntu_14_10.md)
