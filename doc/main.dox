@@ -8,8 +8,8 @@ Welcome to the Open Source ASIBOT Software Repository documentation. The ASIBOT 
 
 For the most part, everything is platform independent (i.e. any operating system and computer architecture).
 
- \li <a class=el href="https://github.com/roboticslab-uc3m/asibot-main/blob/develop/doc/asibot_install_on_ubuntu_14_10.md">ASIBOT install on ubuntu 14.10</a>
- \li <a class=el href="https://github.com/roboticslab-uc3m/asibot-main/blob/develop/doc/asibot_install_vision_on_ubuntu_14_10.md">Vision install on ubuntu 14.10</a>
+ \li <a class=el href="https://github.com/roboticslab-uc3m/asibot-main/blob/develop/doc/asibot_install.md">ASIBOT install</a>
+ \li <a class=el href="https://github.com/roboticslab-uc3m/asibot-main/blob/develop/doc/asibot_install_vision.md">Vision install</a>
 
 Other internal links of interest:
  \li <a class="el" href="modules.html">List of ASIBOT Modules</a>
