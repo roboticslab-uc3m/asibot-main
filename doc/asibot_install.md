@@ -1,4 +1,4 @@
-## Simulation and Basic Control: Installation from Source Code (Ubuntu 14.10)
+## Simulation and Basic Control: Installation from Source Code
 
 First install the dependencies:
 - [Install CMake](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_cmake.md)

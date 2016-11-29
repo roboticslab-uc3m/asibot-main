@@ -1,4 +1,4 @@
-## Install vision (Ubuntu 14.10)
+## Install vision
 
 
 First install the depencencies:
@@ -25,7 +25,7 @@ make -j3; sudo make install; cd ../../..
 
 ## Install the Basic 2D and 3D Vision Software
 
-Assuming you have done the steps in [ASIBOT install](asibot_install_on_ubuntu_14_10.md), type:
+Assuming you have done the steps in [ASIBOT install](asibot_install.md), type:
 
 ```bash
 cd $ASIBOT_DIR
