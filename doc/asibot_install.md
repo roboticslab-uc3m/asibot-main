@@ -31,7 +31,7 @@ Done! You are now probably interested in one of the following links:
 
 Optional dependencies:
 - [Install KDL](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_kdl.md)
-- [Install CWiiD (Ubuntu 14.10)](asibot_install_cwiid_on_ubuntu_14_10.md)
-- [Install GLib (Ubuntu 14.10)](asibot_install_glib_on_ubuntu_14_10.md)
+- [Install CWiiD](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_cwiid.md)
+- [Install GLib](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_glib.md)
 - [Install OpenCV](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_opencv.md)
-- [Install Travis (Ubuntu 14.10)](asibot_install_travis_on_ubuntu_14_10.md)
+- [Install Travis](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install_travis.md)
