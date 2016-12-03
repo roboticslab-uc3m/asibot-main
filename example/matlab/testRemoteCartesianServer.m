@@ -16,16 +16,12 @@
 %>
 %> <b>Running</b> (assuming correct installation)
 %>
-%> From within MATLAB, just go to the ASIBOT MATLAB examples path:
-%>
-%>\verbatim [MATLAB console] cd(getenv('ASIBOT_ROOT')); cd example/matlab \endverbatim
-%>
-%> And run the program:
+%> From within MATLAB, navigate to the ASIBOT MATLAB examples path and run the program:
 %>
 %>\verbatim [MATLAB console] testRemoteCartesianServer.m \endverbatim
 %> <b>Modify</b>
 %>
-%> This file can be edited at $ASIBOT_ROOT/example/matlab/testRemoteCartesianServer.m
+%> This file can be edited at repos/asibot-main/example/matlab/testRemoteCartesianServer.m
 %>
 
 disp 'WARNING: requires a running instance of cartesianServer'

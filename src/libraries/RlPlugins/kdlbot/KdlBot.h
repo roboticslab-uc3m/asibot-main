@@ -61,14 +61,15 @@ using namespace KDL;
  *
  * @section kdlbot_install Installation
  *
- * You'll first need to install KDL (see \ref install_kdl_on_ubuntu).
+ * You'll first need to install KDL (see installation guides).
  *
  * The plugin is compiled when ENABLE_RlPlugins_kdlbot is activated (not default). For further
  * installation steps refer to <a class="el" href="pages.html">your own system installation guidelines</a>.
  * 
  * @section kdlbot_running Running (assuming correct installation)
  *
- * You should pass <i>kdlbot</i> as the <i>controller</i> parameter (see <a href="post_install.html#post_install_changing_parameters">how to change parameters</a>) along with its configuration to a \ref cartesianServer. Here's a shortcut that loads a file with all the necessary configuration:
+ * You should pass <i>kdlbot</i> as the <i>controller</i> parameter along with its configuration to a
+ * \ref cartesianServer. Here's a shortcut that loads a file with all the necessary configuration:
  *
 \verbatim
 [terminal 1] yarp server
