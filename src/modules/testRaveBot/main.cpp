@@ -113,10 +113,9 @@ Response: [ok]
  *
  * The RaveBot class additionally streams the data of every camera and depth
  * sensor it finds. Let's say you invoked \ref testRaveBot or \ref
- * cartesianServer with the <b>--env asibot_kitchen_cameras.env.xml</b> as
- * described in \ref post_install_changing_parameters. We can view the ip camera
- * image stream with the standard yarp viewer (make sure CREATE_GUIS was enabled
- * when compiling YARP to have <i>yarpview</i>):
+ * cartesianServer with <b>--env asibot_kitchen_cameras.env.xml</b>. We can view
+ * the ip camera image stream with the standard yarp viewer (make sure CREATE_GUIS
+ * was enabled when compiling YARP to have <i>yarpview</i>):
 \verbatim
 [on terminal 5] yarpview /yarpview/img:i &
 [on terminal 5] yarp connect /ravebot/ip_camera/img:o /yarpview/img:i 

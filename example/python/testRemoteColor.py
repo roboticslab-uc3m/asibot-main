@@ -18,12 +18,12 @@
 # @section testRemoteColorPy_running Running (assuming correct installation)
 #
 #\verbatim
-#python $ASIBOT_ROOT/example/python/testRemoteColor.py
+#python repos/asibot-main/example/python/testRemoteColor.py
 #\endverbatim
 #
 # <hr>
 #
-# This file can be edited at $ASIBOT_ROOT/example/python/testRemoteColor.py
+# This file can be edited at repos/asibot-main/example/python/testRemoteColor.py
 #
 
 import yarp  # imports YARP

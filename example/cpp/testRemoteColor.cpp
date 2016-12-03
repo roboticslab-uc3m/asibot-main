@@ -18,7 +18,7 @@
  *
  * @section testRemoteColor_build Building
 \verbatim
-cd $ASIBOT_ROOT/example/cpp
+cd repos/asibot-main/example/cpp
 mkdir build; cd build; cmake ..
 make -j3
 \endverbatim
