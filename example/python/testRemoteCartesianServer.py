@@ -21,18 +21,18 @@
 # We basically just need to give the module running (execution) permissions. In Ubuntu/Linux:
 #
 #\verbatim
-#chmod +x $ASIBOT_ROOT/example/python/testRemoteCartesianServer.py
+#chmod +x repos/asibot-main/example/python/testRemoteCartesianServer.py
 #\endverbatim
 #
 # <b>Running</b> (assuming correct installation)
 #
 #\verbatim
-#$ASIBOT_ROOT/example/python/testRemoteCartesianServer.py
+#repos/asibot-main/example/python/testRemoteCartesianServer.py
 #\endverbatim
 #
 # <b>Modify</b>
 #
-# This file can be edited at $ASIBOT_ROOT/example/python/testRemoteCartesianServer.py
+# This file can be edited at repos/asibot-main/example/python/testRemoteCartesianServer.py
 #
 
 print "WARNING: requires a running instance of cartesianServer"

@@ -12,7 +12,7 @@ For Kinect support, install OpenNI, and then type:
 ```bash
 cd $YARP_DIR
 cmake .. -DDEVICE_LIBRARY_MODULES=ON -DENABLE_yarpmod_KinectDeviceLocal=ON
-make -j3; sudo make install; cd ../../..
+make -j3; sudo make install; cd  # go home
 ```
 
 For Webcam support, you should also type:
@@ -20,7 +20,7 @@ For Webcam support, you should also type:
 ```bash
 cd $YARP_DIR
 cmake .. -DDEVICE_LIBRARY_MODULES=ON -DENABLE_yarpmod_opencv_grabber=ON
-make -j3; sudo make install; cd ../../..
+make -j3; sudo make install; cd  # go home
 ```
 
 ## Install the Basic 2D and 3D Vision Software
@@ -30,7 +30,7 @@ Assuming you have done the steps in [ASIBOT install](asibot_install.md), type:
 ```bash
 cd $ASIBOT_DIR
 cmake .. -DENABLE_colorSegmentor=ON -DENABLE_colorDepth=ON -DENABLE_visionSegmentor=ON -DENABLE_visionDepth=ON
-make -j3; sudo make install; cd ../../..
+make -j3; sudo make install; cd  # go home
 ```
 
 ## Even more!

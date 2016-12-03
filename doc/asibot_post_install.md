@@ -51,7 +51,7 @@ We can actually see the default parameters, and the final selected ones, with th
 [terminal 2] cartesianServer --env asibot_kitchen_cameras.env.xml --help
 ```
 
-If we want to affect this parameter at a more persistent level, we can change the configuration file. For this specific case, the [cartesianServer](http://robots.uc3m.es/dox-asibot-main/group__cartesianServer.html) configuration file is located at <i>$ASIBOT_ROOT/share/cartesianServer/conf/cartesianServer.ini</i>. In this file, we can see that most parameters are commented out (the <b>//</b> characters). This is a common convention to indicate these are the default parameters set in the headers (the first parsed, as explained previously). Here, we would search to subsitute the line:
+If we want to affect this parameter at a more persistent level, we can change the configuration file. For this specific case, the [cartesianServer](http://robots.uc3m.es/dox-asibot-main/group__cartesianServer.html) configuration file is located at <i>repos/asibot-main/share/cartesianServer/conf/cartesianServer.ini</i>. In this file, we can see that most parameters are commented out (the <b>//</b> characters). This is a common convention to indicate these are the default parameters set in the headers (the first parsed, as explained previously). Here, we would search to subsitute the line:
 
 ```bash
 // env asibot_kitchen.env.xml           /// env [xml] environment name in abs or rel
