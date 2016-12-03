@@ -20,9 +20,9 @@ The application is installed when you install the applications, which for Ubuntu
 make install_applications  # In-project install: No super-user permissions are required.
 \endverbatim
 
-Adapt $ASIBOT_ROOT/share/colorSegmentor/scripts/colorSegmentorSim.xml.template to your needs or just:
+Adapt repos/asibot-main/share/colorSegmentor/scripts/colorSegmentorSim.xml.template to your needs or just:
 \verbatim
-cd $ASIBOT_ROOT/share/colorSegmentor/scripts
+cd repos/asibot-main/share/colorSegmentor/scripts
 cp colorSegmentorSim.xml.template colorSegmentorSim.xml
 \endverbatim
 
@@ -36,9 +36,9 @@ First we must run a YARP name server if it is not running in our current namespa
 [on terminal 1] yarp server
 \endverbatim
 
-Browse to $ASIBOT_ROOT/share and run yarpmanager (formerly gyarpmanager). The colorSegmentorSim App should be available.
+Browse to repos/asibot-main/share and run yarpmanager (formerly gyarpmanager). The colorSegmentorSim App should be available.
 \verbatim
-[on terminal 2] cd $ASIBOT_ROOT/share
+[on terminal 2] cd repos/asibot-main/share
 [on terminal 2] yarpmanager
 \endverbatim
 
