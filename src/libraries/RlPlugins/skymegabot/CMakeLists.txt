@@ -4,7 +4,7 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-YARP_PREPARE_DEVICE(skymegabot TYPE SkymegaBot INCLUDE SkymegaBot.h WRAPPER controlboard)
+YARP_PREPARE_PLUGIN(skymegabot CATEGORY device TYPE SkymegaBot INCLUDE SkymegaBot.h WRAPPER controlboard)
 
 IF (NOT SKIP_skymegabot)
 

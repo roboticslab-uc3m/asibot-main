@@ -4,7 +4,7 @@
 # Contrib: Paul Fitzpatrick (YARP device examples and tutorials)
 # CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
 
-YARP_PREPARE_DEVICE(cartesianbot TYPE CartesianBot INCLUDE CartesianBot.h)
+YARP_PREPARE_PLUGIN(cartesianbot CATEGORY device TYPE CartesianBot INCLUDE CartesianBot.h)
 
 IF (NOT SKIP_cartesianbot)
 

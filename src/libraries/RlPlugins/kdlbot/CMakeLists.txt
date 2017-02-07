@@ -4,7 +4,7 @@
 # Contrib: Ugo; Paul Fitzpatrick (YARP device examples and tutorials)
 # CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
 
-YARP_PREPARE_DEVICE(kdlbot TYPE KdlBot INCLUDE KdlBot.h)
+YARP_PREPARE_PLUGIN(kdlbot CATEGORY device TYPE KdlBot INCLUDE KdlBot.h)
 
 IF (NOT SKIP_kdlbot)
 
