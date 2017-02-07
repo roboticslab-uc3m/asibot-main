@@ -8,6 +8,7 @@
 #include <yarp/os/Network.h>
 #include <yarp/os/Port.h>
 #include <yarp/os/BufferedPort.h>
+#include <yarp/os/Contact.h>
 
 #include "WebResponder.h"
 
