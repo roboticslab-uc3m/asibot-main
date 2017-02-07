@@ -10,8 +10,7 @@ IF (NOT SKIP_skymegabot)
 
 find_package(YARP REQUIRED)
 
-# Include any directories needed for YARP
-include_directories(${YARP_INCLUDE_DIRS})
+include_directories(${YARP_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR})
 
 YARP_ADD_PLUGIN(skymegabot SkymegaBot.h SkymegaBot.cpp HelperFuncs.cpp)
 TARGET_LINK_LIBRARIES(skymegabot ${YARP_LIBRARIES})
