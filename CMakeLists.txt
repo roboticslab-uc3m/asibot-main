@@ -83,6 +83,11 @@ set(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH})
 # Bootstrap YCM
 include(YCMBootstrap)
 
+# Superbuild phase - include asibot-openrave-models
+include(FindOrBuildPackage)
+include(YCMEPHelper)
+find_or_build_package(AsibotOpenraveModels)
+
 #set_property(GLOBAL PROPERTY ASIBOT_INCLUDE_DIRS)
 #set_property(GLOBAL PROPERTY ASIBOT_LINK_DIRS)
 #set_property(GLOBAL PROPERTY ASIBOT_LIBRARIES)
