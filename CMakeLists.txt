@@ -85,7 +85,7 @@ include(YCMBootstrap)
 
 # Superbuild phase - include asibot-openrave-models
 include(FindOrBuildPackage)
-find_or_build_package(AsibotOpenRAVEModels REQUIRED CONFIG)
+find_or_build_package(AsibotOpenRAVEModels)
 
 # Install downloaded package.
 if(NOT USE_SYSTEM_ASIBOTOPENRAVEMODELS)
