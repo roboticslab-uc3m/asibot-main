@@ -85,8 +85,7 @@ include(YCMBootstrap)
 
 # Superbuild phase - include asibot-openrave-models
 include(FindOrBuildPackage)
-include(YCMEPHelper)
-find_or_build_package(AsibotOpenraveModels)
+find_or_build_package(AsibotOpenRAVEModels)
 
 #set_property(GLOBAL PROPERTY ASIBOT_INCLUDE_DIRS)
 #set_property(GLOBAL PROPERTY ASIBOT_LINK_DIRS)
