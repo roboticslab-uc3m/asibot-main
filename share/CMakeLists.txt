@@ -11,7 +11,6 @@ yarp_configure_external_installation(asibot)
 yarp_install(FILES ymanager.ini DESTINATION ${ASIBOT_DATA_INSTALL_DIR})  # Cleaner than ${ASIBOT_ROBOTS_INSTALL_DIR}/../ or similar.
 
 ### Go through single applications
-add_subdirectory(ravebot)
 add_subdirectory(testRaveBot)
 add_subdirectory(cartesianServer)
 add_subdirectory(webInterface)
