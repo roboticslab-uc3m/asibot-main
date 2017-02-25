@@ -194,7 +194,7 @@ bool RaveBot::open(Searchable& config) {
     // Actually load the scene
     yarp::os::ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultContext("ravebot");
+    rf.setDefaultContext("openrave");
     std::string envFull( rf.findFileByName(env) );
 
     if (! penv->Load(envFull.c_str()) ) {
