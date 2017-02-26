@@ -4,10 +4,7 @@
 # Contrib: Lorenzo Natale (author of iCub/main/CMakeLists.txt)
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
-# Exploit new cmake 2.6 features (export). 
-
-# reduce warning level with cmake 2.6
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.9)
 #cmake policies
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
@@ -82,6 +79,18 @@ mark_as_advanced(CMAKE_BACKWARDS_COMPATIBILITY)
 set(ASIBOT_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # let cmake use them
 set(CMAKE_MODULE_PATH ${ASIBOT_MODULE_PATH})
+
+# Bootstrap YCM
+include(YCMBootstrap)
+
+# Superbuild phase - include asibot-openrave-models
+include(FindOrBuildPackage)
+find_or_build_package(AsibotOpenRAVEModels)
+
+# Install downloaded package.
+if(NOT USE_SYSTEM_ASIBOTOPENRAVEMODELS)
+    install(DIRECTORY ${CMAKE_BINARY_DIR}/install/ DESTINATION ${CMAKE_INSTALL_PREFIX})
+endif()
 
 #set_property(GLOBAL PROPERTY ASIBOT_INCLUDE_DIRS)
 #set_property(GLOBAL PROPERTY ASIBOT_LINK_DIRS)
