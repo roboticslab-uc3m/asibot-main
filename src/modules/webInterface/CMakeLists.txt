@@ -21,7 +21,7 @@ foreach(header_file ${folder_header})
   include_directories(${p})
 endforeach(header_file ${folder_header})
 
-include_directories(${ASIBOT_INCLUDE_DIRS})
+include_directories(${ASIBOT_INCLUDE_DIRS} ${YARP_INCLUDE_DIRS})
 
 # Set up our main executable.
 if (folder_source)
