@@ -31,7 +31,7 @@ For additional ASIBOT options use ccmake instead of cmake.
 ### Even more!
 
 Done! You are now probably interested in one of the following links:
-- [Simulation and Basic Control: Now what can I do?](asibot_post_install.md)
+- [Simulation and Basic Control: Now what can I do?](asibot-post-install.md)
 - For the KDL controller, you should look at the [KdlBot](http://robots.uc3m.es/dox-asibot-main/group__KdlBot.html) library documentation.
 
 Optional dependencies:

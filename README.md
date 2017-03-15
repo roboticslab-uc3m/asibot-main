@@ -6,7 +6,7 @@ Link to Doxygen generated documentation: http://robots.uc3m.es/dox-asibot-main
 
 ## Installation
 
-Installation instructions for installing from source can be found [here](doc/asibot_install.md).
+Installation instructions for installing from source can be found [here](doc/asibot-install.md).
 
 ## Contributing
 

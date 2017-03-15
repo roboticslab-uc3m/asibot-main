@@ -71,6 +71,6 @@ We can interact with this module through port commands as described in <a href="
 
 Done! You are now probably interested in one of the following links:
 
-- [Install vision](asibot_install_vision.md)
+- [Install vision](asibot-install-vision.md)
 - You can now compile and install any of the [other modules](http://robots.uc3m.es/dox-asibot-main/modules.html).
 - These modules are actually packed up and ready to go in our [ASIBOT applications](http://robots.uc3m.es/dox-asibot-main/group__asibot__applications.html)!
