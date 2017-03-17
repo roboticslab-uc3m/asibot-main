@@ -85,10 +85,10 @@ include(YCMBootstrap)
 
 # Superbuild phase - include asibot-openrave-models
 include(FindOrBuildPackage)
-find_or_build_package(AsibotOpenRAVEModels)
+find_or_build_package(ASIBOT_OPENRAVE_MODELS)
 
 # Install downloaded package.
-if(NOT USE_SYSTEM_ASIBOTOPENRAVEMODELS)
+if(NOT USE_SYSTEM_ASIBOT_OPENRAVE_MODELS)
     install(DIRECTORY ${CMAKE_BINARY_DIR}/install/ DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif()
 
