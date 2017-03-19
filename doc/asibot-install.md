@@ -39,4 +39,4 @@ Optional dependencies:
 - [Install CWiiD](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-cwiid.md)
 - [Install GLib](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-glib.md)
 - [Install OpenCV](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-opencv.md)
-- [Install Travis](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-travis.md)
+- [Install Travis](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-travislib.md)
