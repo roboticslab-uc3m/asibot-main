@@ -75,22 +75,14 @@ include(YCMBootstrap)
 # Superbuild phase - include asibot-openrave-models
 include(FindOrBuildPackage)
 find_or_build_package(ASIBOT_OPENRAVE_MODELS)
-find_or_build_package(ROBOTICSLAB_OPENRAVE_YARP_PLUGINS)
-find_or_build_package(ROBOTICSLAB_KINEMATICS_DYNAMICS)
+#find_or_build_package(ROBOTICSLAB_OPENRAVE_YARP_PLUGINS)
+#find_or_build_package(ROBOTICSLAB_KINEMATICS_DYNAMICS)
 
 # Install downloaded packages.
-if(NOT (USE_SYSTEM_TEO_SOFTWARE_MANUAL
-        AND USE_SYSTEM_TEO_HARDWARE_MANUAL
-        AND USE_SYSTEM_TEO_OPENRAVE_MODELS
-        AND USE_SYSTEM_ROBOTICSLAB_BEST_PRACTICES
-        AND USE_SYSTEM_ROBOTICSLAB_PROJECT_GENERATOR
-        AND USE_SYSTEM_ROBOTICSLAB_INSTALLATION_GUIDES
+if(NOT (USE_SYSTEM_ASIBOT_OPENRAVE_MODELS
         AND USE_SYSTEM_ROBOTICSLAB_OPENRAVE_YARP_PLUGINS
-        AND USE_SYSTEM_ROBOTICSLAB_KINEMATICS_DYNAMICS
-        AND USE_SYSTEM_ROBOTICSLAB_VISION
-        AND USE_SYSTEM_ROBOTICSLAB_SPEECH
-        AND USE_SYSTEM_ROBOTICSLAB_TOOLS))
-    install(DIRECTORY ${CMAKE_BINARY_DIR}/install/ DESTINATION ${CMAKE_INSTALL_PREFIX})
+        AND USE_SYSTEM_ROBOTICSLAB_KINEMATICS_DYNAMICS))
+    #install(DIRECTORY ${CMAKE_BINARY_DIR}/install/ DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif()
 
 set(ASIBOT_INCLUDE_DIRS CACHE INTERNAL "appended header dirs" FORCE)
@@ -100,7 +92,7 @@ set(ASIBOT_LIBRARIES CACHE INTERNAL "appended libraries" FORCE)
 # add main contents
 add_subdirectory(share)
 add_subdirectory(doc)
-add_subdirectory(src)
+#add_subdirectory(src)
 
 if(ENABLE_tests)            # flag will exist
     add_subdirectory(test)  # once tests exist
