@@ -14,4 +14,3 @@ yarp_install(FILES ymanager.ini DESTINATION ${ASIBOT_DATA_INSTALL_DIR})  # Clean
 add_subdirectory(testRaveBot)
 add_subdirectory(cartesianServer)
 add_subdirectory(webInterface)
-add_subdirectory(kinematics)
