@@ -74,9 +74,11 @@ include(YCMBootstrap)
 
 # Superbuild phase - include asibot-openrave-models
 include(FindOrBuildPackage)
+
+find_or_build_package(COLOR_DEBUG)
 find_or_build_package(ASIBOT_OPENRAVE_MODELS)
-#find_or_build_package(ROBOTICSLAB_OPENRAVE_YARP_PLUGINS)
-#find_or_build_package(ROBOTICSLAB_KINEMATICS_DYNAMICS)
+find_or_build_package(ROBOTICSLAB_OPENRAVE_YARP_PLUGINS)
+find_or_build_package(ROBOTICSLAB_KINEMATICS_DYNAMICS)
 
 # Install downloaded packages.
 if(NOT (USE_SYSTEM_ASIBOT_OPENRAVE_MODELS
