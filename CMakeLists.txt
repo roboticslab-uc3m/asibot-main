@@ -26,7 +26,6 @@ option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FA
 option(ENABLE_colorDepth "Choose if you want to compile colorDepth" FALSE)
 option(ENABLE_colorSegmentor "Choose if you want to compile colorSegmentor" FALSE)
 option(ENABLE_kinectPxToReal "Choose if you want to compile kinectPxToReal" FALSE)
-option(ENABLE_pointAtObjectServer "Choose if you want to compile pointAtObjectServer" FALSE)
 option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_robotDraw "Choose if you want to compile robotDraw" FALSE)
 option(ENABLE_taskServer "Choose if you want to compile taskServer" FALSE)
