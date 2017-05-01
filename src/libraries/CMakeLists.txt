@@ -1,7 +1,6 @@
 # Copyright: Universidad Carlos III de Madrid (C) 2010
 # Authors: Juan G. Victores
 
-add_subdirectory(CartesianClientLib)
 add_subdirectory(CartesianServerLib)
 add_subdirectory(ColorClientLib)
 

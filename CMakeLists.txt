@@ -9,7 +9,6 @@ cmake_minimum_required(VERSION 2.8.9)
 project(ASIBOT)
 
 ### options: cpp libraries
-option(ENABLE_CartesianClientLib "Choose if you want to compile CartesianClientLib" TRUE)
 option(ENABLE_CartesianServerLib "Choose if you want to compile CartesianServerLib" TRUE)
 option(ENABLE_ColorClientLib "Choose if you want to compile ColorClientLib" TRUE)
 option(ENABLE_TaskLib "Choose if you want to compile TaskLib" TRUE)
