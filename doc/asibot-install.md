@@ -17,7 +17,7 @@ cd  # go home
 mkdir -p repos; cd repos  # make $HOME/repos if it does not exist; then, enter it
 git clone https://github.com/roboticslab-uc3m/asibot-main.git  # download asibot-main software from the repository
 cd asibot-main; mkdir build; cd build
-cmake .. -DENABLE_cartesianServer=ON -DENABLE_RlPlugins_cartesianbot=ON -DENABLE_RlPlugins_ravebot=ON
+cmake .. -DENABLE_cartesianServer=ON -DENABLE_RlPlugins_cartesianbot=ON
 make -j3; sudo make install; cd  # go home
 ```
 
