@@ -4,13 +4,6 @@
 
 // ------------------ IVelocity Related ----------------------------------------
 
-bool RaveBot::setVelocityMode() {
-    bool ok = true;
-    for (unsigned int i=0; i<numMotors; i++)
-        ok &= setVelocityMode(i);
-    return ok;
-}
-
 bool RaveBot::velocityMove(int j, double sp) {  // velExposed = sp;
     if (!indexWithinRange(j)) return false;
     if(vModePosVel[j]!=VOCAB_CM_VELOCITY) {  // Check if we are in velocity mode.

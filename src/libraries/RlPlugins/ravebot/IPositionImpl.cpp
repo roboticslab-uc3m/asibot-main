@@ -4,13 +4,6 @@
 
 // ------------------- IPositionControl Related --------------------------------
 
-bool RaveBot::setPositionMode() {
-    bool ok = true;
-    for (unsigned int i=0; i<numMotors; i++)
-        ok &= setPositionMode(i);
-    return ok;
-}
-
 bool RaveBot::getAxes(int *ax) {
     *ax = numMotors;
     printf("[RaveBot] getAxes reporting %d axes are present\n", *ax);
