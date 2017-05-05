@@ -13,6 +13,5 @@ add_subdirectory(taskServer)
 add_subdirectory(robotDraw)
 add_subdirectory(visionDepth)
 add_subdirectory(visionSegmentor)
-add_subdirectory(webInterface)
 add_subdirectory(wiimoteServer)
 

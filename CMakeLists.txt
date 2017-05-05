@@ -25,7 +25,6 @@ option(ENABLE_taskServer "Choose if you want to compile taskServer" FALSE)
 option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
 option(ENABLE_visionDepth "Choose if you want to compile visionDepth" FALSE)
 option(ENABLE_visionSegmentor "Choose if you want to compile visionSegmentor" FALSE)
-option(ENABLE_webInterface "Choose if you want to compile webInterface" FALSE)
 option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
 
 ### options: misc
@@ -104,12 +103,3 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ASIBOTConfigUninstall
 
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ASIBOTConfigUninstall.cmake)
-
-# configure setup.py
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/setup.py.in"
-               "${CMAKE_CURRENT_BINARY_DIR}/setup.py")
-
-# run setup.py (install rule)
-if(ENABLE_webInterface)
-    install(CODE "execute_process(COMMAND python ${CMAKE_CURRENT_BINARY_DIR}/setup.py install)")
-endif()
