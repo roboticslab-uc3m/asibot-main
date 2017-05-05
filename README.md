@@ -1,4 +1,4 @@
-[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/dox-asibot-main) [![Latest Release](https://img.shields.io/github/tag/roboticslab-uc3m/asibot-main.svg?label=Latest Release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
+[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/dox-asibot-main) [![Latest Release](https://img.shields.io/github/tag/roboticslab-uc3m/asibot-main.svg?label=Latest%20Release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
 
 Main ASIBOT assistive robot source code intended for use on any PC.
 
@@ -25,7 +25,7 @@ Installation instructions for installing from source can be found [here](doc/asi
 
 ## Status
 
-[![Build Status (Linux/OSX)](https://img.shields.io/travis/roboticslab-uc3m/asibot-main/master.svg?label=Build Status (Linux/OSX))](https://travis-ci.org/roboticslab-uc3m/asibot-main)
+[![Build Status (Linux/OSX)](https://travis-ci.org/roboticslab-uc3m/asibot-main.svg?branch=develop)](https://travis-ci.org/roboticslab-uc3m/asibot-main)
 
 [![Coverage Status](https://coveralls.io/repos/roboticslab-uc3m/asibot-main/badge.svg)](https://coveralls.io/r/roboticslab-uc3m/asibot-main)
 
