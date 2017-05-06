@@ -1,4 +1,7 @@
 include(YCMEPHelper)
+include(FindOrBuildPackage)
+
+find_or_build_package(COLOR_DEBUG QUIET)
 
 ycm_ep_helper(ROBOTICSLAB_OPENRAVE_YARP_PLUGINS TYPE GIT
               STYLE GITHUB
