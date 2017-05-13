@@ -26,8 +26,8 @@ bool RaveBot::setControlMode(const int j, const int mode) {
             return setImpedancePositionMode(j);
         case VOCAB_CM_IMPEDANCE_VEL:
             return setImpedanceVelocityMode(j);
-        case VOCAB_CM_OPENLOOP:
-            return setOpenLoopMode(j);
+        //case VOCAB_CM_OPENLOOP:
+        //    return setOpenLoopMode(j);
         default:
             return false; // unrecognized/unsupported
     }
