@@ -154,6 +154,15 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
 
+        } else if (in.get(1).asString()=="mv") {
+            KinBodyPtr objPtr = pEnv->GetKinBody(in.get(2).asString().c_str());
+            Transform T = objPtr->GetTransform();
+            T.trans.x = in.get(3).asDouble();  // [m]
+            T.trans.y = in.get(4).asDouble();  // [m]
+            T.trans.z = in.get(5).asDouble();  // [m]
+            objPtr->SetTransform(T);
+            out.addVocab(VOCAB_OK);
+
         } else if ((in.get(1).asString()=="del")&&(in.get(2).asString()=="all")) {
             for (unsigned int i=0;i<boxKinBodyPtrs.size();i++) {
                 pEnv->Remove(boxKinBodyPtrs[i]);
