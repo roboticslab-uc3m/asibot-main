@@ -13,7 +13,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name), world whereis tcp, world draw 0/1 (radius r g b).");
+        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world mk mesh (no params yet), world mk obj (absolute path), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name), world whereis tcp, world draw 0/1 (radius r g b).");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -142,7 +142,18 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 meshKinBodyPtrs.push_back(meshKinBodyPtr);
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
+
+            } else if (in.get(2).asString() == "obj") {
+                { // lock the environment!           
+                OpenRAVE::EnvironmentMutex::scoped_lock lock(pEnv->GetMutex());
+                KinBodyPtr objKinBodyPtr = RaveCreateKinBody(pEnv,"");
+                pEnv->ReadKinBodyXMLFile(objKinBodyPtr, in.get(3).asString().c_str());
+                pEnv->Add(objKinBodyPtr,true);
+                objKinBodyPtrs.push_back(objKinBodyPtr);
+                }  // the environment is not locked anymore
+                out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
+
         } else if ((in.get(1).asString()=="del")&&(in.get(2).asString()=="all")) {
             for (unsigned int i=0;i<boxKinBodyPtrs.size();i++) {
                 pEnv->Remove(boxKinBodyPtrs[i]);
@@ -164,6 +175,10 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 pEnv->Remove(meshKinBodyPtrs[i]);
             }
             meshKinBodyPtrs.clear();
+            for (unsigned int i=0;i<objKinBodyPtrs.size();i++) {
+                pEnv->Remove(objKinBodyPtrs[i]);
+            }
+            objKinBodyPtrs.clear();
             out.addVocab(VOCAB_OK);
         } else if (in.get(1).asString()=="grab") {
             if(in.get(2).asString()=="box") {
