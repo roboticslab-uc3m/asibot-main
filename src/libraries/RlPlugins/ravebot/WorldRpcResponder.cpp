@@ -13,7 +13,7 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
     ConstString choice = in.get(0).asString();
     if (in.get(0).getCode() != BOTTLE_TAG_STRING) choice="";
     if (choice=="help") {  ///////////////////////////////// help /////////////////////////////////
-        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world mk mesh (no params yet), world mk obj (absolute path), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name), world whereis tcp, world draw 0/1 (radius r g b).");
+        out.addString("Available commands: help, world del all, world mk box/sbox (three params for size) (three params for pos), world mk ssph (radius) (three params for pos), world mk scyl (radius height) (three params for pos), world mk mesh (no params yet), world mk obj (absolute path), world mv (name) (three params for pos), world grab (obj) (num) 0/1, world grab obj (name) 0/1, world whereis obj (name), world whereis tcp, world draw 0/1 (radius r g b).");
         out.write(*returnToSender);
         return true;
     } else if (choice=="world") {
@@ -153,6 +153,15 @@ bool WorldRpcResponder::read(ConnectionReader& connection) {
                 }  // the environment is not locked anymore
                 out.addVocab(VOCAB_OK);
             } else out.addVocab(VOCAB_FAILED);
+
+        } else if (in.get(1).asString()=="mv") {
+            KinBodyPtr objPtr = pEnv->GetKinBody(in.get(2).asString().c_str());
+            Transform T = objPtr->GetTransform();
+            T.trans.x = in.get(3).asDouble();  // [m]
+            T.trans.y = in.get(4).asDouble();  // [m]
+            T.trans.z = in.get(5).asDouble();  // [m]
+            objPtr->SetTransform(T);
+            out.addVocab(VOCAB_OK);
 
         } else if ((in.get(1).asString()=="del")&&(in.get(2).asString()=="all")) {
             for (unsigned int i=0;i<boxKinBodyPtrs.size();i++) {
