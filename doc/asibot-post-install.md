@@ -22,7 +22,7 @@ You should get a window similar to the one depicted on Figure 1.
 
 <p align="center">
 <img src="/doc/fig/ravebot-300px.png">
-<p>Fig. 1 - An instance of the cartesianServer module.</p>
+<p align="center">Fig. 1 - An instance of the cartesianServer module.</p>
 </p>
 
 ### Changing parameters
