@@ -23,7 +23,6 @@ option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_robotDraw "Choose if you want to compile robotDraw" FALSE)
 option(ENABLE_taskServer "Choose if you want to compile taskServer" FALSE)
 option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
-option(ENABLE_visionDepth "Choose if you want to compile visionDepth" FALSE)
 option(ENABLE_visionSegmentor "Choose if you want to compile visionSegmentor" FALSE)
 option(ENABLE_wiimoteServer "Choose if you want to compile wiimoteServer" FALSE)
 
