@@ -16,8 +16,6 @@ option(ENABLE_TravisLib "Choose if you want to compile TravisLib" TRUE)
 ### options: cpp modules
 option(ENABLE_asibotTasks "Choose if you want to compile asibotTasks" FALSE)
 option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FALSE)
-option(ENABLE_colorDepth "Choose if you want to compile colorDepth" FALSE)
-option(ENABLE_colorSegmentor "Choose if you want to compile colorSegmentor" FALSE)
 option(ENABLE_kinectPxToReal "Choose if you want to compile kinectPxToReal" FALSE)
 option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_robotDraw "Choose if you want to compile robotDraw" FALSE)
