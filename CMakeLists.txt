@@ -9,9 +9,7 @@ cmake_minimum_required(VERSION 2.8.9)
 project(ASIBOT)
 
 ### options: cpp libraries
-option(ENABLE_ColorClientLib "Choose if you want to compile ColorClientLib" TRUE)
 option(ENABLE_TaskLib "Choose if you want to compile TaskLib" TRUE)
-option(ENABLE_TravisLib "Choose if you want to compile TravisLib" TRUE)
 
 ### options: cpp modules
 option(ENABLE_asibotTasks "Choose if you want to compile asibotTasks" FALSE)
