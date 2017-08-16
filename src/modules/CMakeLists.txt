@@ -4,11 +4,8 @@
 # Order may be important here
 
 add_subdirectory(asibotTasks)
-add_subdirectory(cartesianServer)
 add_subdirectory(kinectPxToReal)
 add_subdirectory(premultH)
 add_subdirectory(taskServer)
 add_subdirectory(robotDraw)
 add_subdirectory(visionSegmentor)
-add_subdirectory(wiimoteServer)
-
