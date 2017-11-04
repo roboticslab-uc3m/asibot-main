@@ -2,10 +2,10 @@
 
 
 First install the dependencies:
-- [Install CMake](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-cmake.md)
-- [Install YARP](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-yarp.md)
-- [Install OpenCV](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-opencv.md)
-- [Install Travis](https://github.com/roboticslab-uc3m/installation-guides/blob/develop/install-travis.md)
+- [Install CMake](https://github.com/roboticslab-uc3m/installation-guides/blob/master/install-cmake.md)
+- [Install YARP](https://github.com/roboticslab-uc3m/installation-guides/blob/master/install-yarp.md)
+- [Install OpenCV](https://github.com/roboticslab-uc3m/installation-guides/blob/master/install-opencv.md)
+- [Install Travis](https://github.com/roboticslab-uc3m/installation-guides/blob/master/install-travis.md)
   
 For Kinect support, install OpenNI, and then type:
 

@@ -28,7 +28,7 @@ class CartesianClient:
         miOutput.clear()
         miOutput.addVocab(VOCAB_STAT)
         self.p.write(miOutput, miInput)
-        data = miInput.get(0).asList()
+        data = miInput.get(1).asList()
         del res[:]
         for elem in range(0,data.size()):
             res.append(data.get(elem).asDouble())

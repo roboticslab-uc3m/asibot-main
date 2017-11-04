@@ -21,8 +21,8 @@ The simulator we use for ASIBOT is versatile and multi-layered. You'll learn how
 You should get a window similar to the one depicted on Figure 1.
 
 <p align="center">
-<img src="http://robots.uc3m.es/dox-asibot-main/ravebot-300px.png">
-<div align="center">Fig. 1 - An instance of the cartesianServer module.</div>
+<img src="/doc/fig/ravebot-300px.png">
+<p align="center">Fig. 1 - An instance of the cartesianServer module.</p>
 </p>
 
 ### Changing parameters
@@ -42,7 +42,7 @@ Let's say, for example, our graphic card supports offscreen rendering and we wan
 This specific environment contains simulated cameras that Figure 2. You can learn how to make the connections in the  <a href="http://robots.uc3m.es/dox-asibot-main/group__testRaveBot.html#testRaveBot_interfacing">testRaveBot</a> documentation.
 
 <p align="center">
-<img src="http://robots.uc3m.es/dox-asibot-main/ravebotCompare.png">
+<img src="/doc/fig/ravebotCompare.png">
 </p>
 
 We can actually see the default parameters, and the final selected ones, with the <b>--help</b> parameter:
