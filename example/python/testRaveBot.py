@@ -18,6 +18,7 @@ pos = dd.viewIPositionControl()
 vel = dd.viewIVelocityControl()
 enc = dd.viewIEncoders()
 mode = dd.viewIControlMode()
+ll = dd.viewIControlLimits()
 
 axes = enc.getAxes()
 
@@ -32,6 +33,10 @@ yarp.Time.delay(5)
 v = yarp.DVector(axes)
 enc.getEncoders(v)
 print v[2]
+
+min = yarp.DVector(1)
+max = yarp.DVector(1)
+ll.getLimits(0,min,max)
 
 for i in range(1,axes): mode.setVelocityMode(i-1)
 print "test velocityMove(0,10)"
