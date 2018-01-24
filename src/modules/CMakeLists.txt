@@ -8,4 +8,4 @@ add_subdirectory(kinectPxToReal)
 add_subdirectory(premultH)
 add_subdirectory(taskServer)
 add_subdirectory(robotDraw)
-add_subdirectory(visionSegmentor)
+
