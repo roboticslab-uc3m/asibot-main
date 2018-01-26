@@ -15,11 +15,8 @@ option(ENABLE_TaskLib "Choose if you want to compile TaskLib" TRUE)
 option(ENABLE_asibotTasks "Choose if you want to compile asibotTasks" FALSE)
 option(ENABLE_cartesianServer "Choose if you want to compile cartesianServer" FALSE)
 option(ENABLE_kinectPxToReal "Choose if you want to compile kinectPxToReal" FALSE)
-option(ENABLE_premultH "Choose if you want to compile premultH" FALSE)
 option(ENABLE_robotDraw "Choose if you want to compile robotDraw" FALSE)
 option(ENABLE_taskServer "Choose if you want to compile taskServer" FALSE)
-option(ENABLE_testRlPlugins "Choose if you want to compile testRlPlugins" FALSE)
-option(ENABLE_visionSegmentor "Choose if you want to compile visionSegmentor" FALSE)
 
 ### options: misc
 option(GENERATE_doc_html "Choose if you want to generate HTML documentation through Doxygen" FALSE)
