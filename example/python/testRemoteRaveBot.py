@@ -67,7 +67,7 @@ v = yarp.DVector(axes)  # create a YARP vector of doubles the size of the number
 enc.getEncoders(v)  # read the encoder values and put them into 'v'
 print 'v[1] is: ' + str(v[1])  # print element 1 of 'v', note that motors and encoders start at 0
 
-for i in range(1,axes): mode.setVelocityMode(i-1)  # use the object to set the device to velocity mode (as opposed to position mode)
+for i in range(axes): mode.setVelocityMode(i)  # use the object to set the device to velocity mode (as opposed to position mode)
 print 'test velocityMove(0,10) -> moves motor 0 (start count at motor 0) at 10 degrees per second'
 vel.velocityMove(0,10)
 
