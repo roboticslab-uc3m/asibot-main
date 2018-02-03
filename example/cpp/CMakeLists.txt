@@ -21,15 +21,3 @@ link_directories(${ASIBOT_LINK_DIRS})
 add_executable(testTaskLib testTaskLib.cpp)
 target_link_libraries(testTaskLib ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
 
-add_executable(testTinyMath testTinyMath.cpp)
-target_link_libraries(testTinyMath ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
-
-add_executable(testRemoteRaveBot testRemoteRaveBot.cpp)
-target_link_libraries(testRemoteRaveBot ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
-
-add_executable(testRemoteCartesianServer testRemoteCartesianServer.cpp)
-target_link_libraries(testRemoteCartesianServer ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
-
-add_executable(testRemoteColor testRemoteColor.cpp)
-target_link_libraries(testRemoteColor ${YARP_LIBRARIES} ${ASIBOT_LIBRARIES})
-
