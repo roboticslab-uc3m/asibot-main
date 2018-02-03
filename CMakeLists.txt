@@ -39,3 +39,6 @@ if(NOT (USE_SYSTEM_ASIBOT_CONFIGURATION_FILES
         AND USE_SYSTEM_ROBOTICSLAB_OPENRAVE_YARP_PLUGINS))
     install(DIRECTORY ${CMAKE_BINARY_DIR}/install/ DESTINATION ${CMAKE_INSTALL_PREFIX})
 endif()
+
+# Configure and create uninstall target.
+include(AddUninstallTarget)
