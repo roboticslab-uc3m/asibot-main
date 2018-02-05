@@ -21,6 +21,7 @@ include(YCMBootstrap)
 # Superbuild phase.
 include(FindOrBuildPackage)
 
+# Pull remote packages if not found on system.
 find_or_build_package(ASIBOT_CONFIGURATION_FILES)
 find_or_build_package(ASIBOT_HMI)
 find_or_build_package(ASIBOT_OPENRAVE_MODELS)
@@ -30,17 +31,12 @@ find_or_build_package(ROBOTICSLAB_KINEMATICS_DYNAMICS)
 find_or_build_package(ROBOTICSLAB_OPENRAVE_YARP_PLUGINS)
 find_or_build_package(ROBOTICSLAB_YARP_DEVICES)
 
+# Prepare install/ directory (might be empty).
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
+
 # Install downloaded packages.
-if(NOT (USE_SYSTEM_ASIBOT_CONFIGURATION_FILES
-        AND USE_SYSTEM_ASIBOT_HMI
-        AND USE_SYSTEM_ASIBOT_OPENRAVE_MODELS
-        AND USE_SYSTEM_ROBOTICSLAB_DEVELOPER_MANUAL
-        AND USE_SYSTEM_ROBOTICSLAB_INSTALLATION_GUIDES
-        AND USE_SYSTEM_ROBOTICSLAB_KINEMATICS_DYNAMICS
-        AND USE_SYSTEM_ROBOTICSLAB_OPENRAVE_YARP_PLUGINS
-        AND USE_SYSTEM_ROBOTICSLAB_YARP_DEVICES))
-    install(DIRECTORY ${CMAKE_BINARY_DIR}/install/ DESTINATION ${CMAKE_INSTALL_PREFIX})
-endif()
+install(DIRECTORY ${CMAKE_BINARY_DIR}/install/
+        DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 # Configure and create uninstall target.
 include(AddUninstallTarget)
