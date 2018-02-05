@@ -24,6 +24,9 @@ before_install:
   - sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev # libfcl-dev not on Trusty used in this travis
   - sudo apt-get install libsoqt4-dev libcoin80-dev
 
+  #-- Install ROBOTICSLAB deps
+  - sudo apt-get install libspnav-dev libxwiimote-dev
+
 install:
   #-- Install YARP
   - git clone https://github.com/robotology/yarp
