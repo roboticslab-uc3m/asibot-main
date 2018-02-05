@@ -10,19 +10,19 @@ compiler:
   - clang
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update; fi
+  - sudo apt-get -qq update
 
   #-- Configure Git (needed by YCM)
   - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
   - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
 
   #-- Install YARP and KDL deps
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libeigen3-dev; fi  # Needed for creating YARP lib_math
+  - sudo apt-get install libeigen3-dev # Needed for creating YARP lib_math
 
   #-- Install OpenRAVE deps
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libboost-all-dev; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev; fi # libfcl-dev not on Trusty used in this travis
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libsoqt4-dev libcoin80-dev; fi
+  - sudo apt-get install libboost-all-dev
+  - sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev # libfcl-dev not on Trusty used in this travis
+  - sudo apt-get install libsoqt4-dev libcoin80-dev
 
 install:
   #-- Install YARP
