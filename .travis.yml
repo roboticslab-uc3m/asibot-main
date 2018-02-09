@@ -1,0 +1,65 @@
+language: cpp
+dist: trusty
+sudo: required
+
+os:
+  - linux
+
+compiler:
+  - gcc
+  - clang
+
+before_install:
+  - sudo apt-get -qq update
+
+  #-- Configure Git (needed by YCM)
+  - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
+  - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
+
+  #-- Install YARP and KDL deps
+  - sudo apt-get install libeigen3-dev # Needed for creating YARP lib_math
+
+  #-- Install OpenRAVE deps
+  - sudo apt-get install libboost-all-dev
+  - sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev # libfcl-dev not on Trusty used in this travis
+  - sudo apt-get install libsoqt4-dev libcoin80-dev
+
+  #-- Install ROBOTICSLAB deps
+  - sudo apt-get install libspnav-dev libxwiimote-dev
+
+install:
+  #-- Install YARP
+  - git clone https://github.com/robotology/yarp
+  - cd yarp && mkdir build && cd "$_"
+  - cmake .. -DSKIP_ACE=ON -DCREATE_LIB_MATH=ON
+  - make -j$(nproc)
+  - sudo make install
+  - cd ../..
+
+  #-- Install KDL
+  - git clone https://github.com/orocos/orocos_kinematics_dynamics
+  - cd orocos_kinematics_dynamics/orocos_kdl && mkdir build && cd "$_"
+  - cmake ..
+  - make -j$(nproc)
+  - sudo make install
+  - cd ../../..
+
+  #-- Install OpenRAVE
+  - git clone --branch latest_stable https://github.com/rdiankov/openrave.git
+  - cd openrave && mkdir build && cd "$_"
+  - cmake .. -DOPENRAVE_PLUGIN_FCLRAVE=OFF
+  - make -j$(nproc)
+  - sudo make install
+  - cd ../..
+
+before_script:
+  - mkdir build && cd "$_"
+  - cmake ..
+
+script:
+  - make
+  - sudo make install
+  - sudo ldconfig
+
+after_success:
+  - sudo make uninstall
