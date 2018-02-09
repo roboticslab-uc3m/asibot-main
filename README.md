@@ -4,7 +4,7 @@ A potential super/meta repository for the [ASIBOT assistive robot](http://roboti
 
 ## Installation
 
-Installation instructions for installing from source can be found [here](doc/asibot-install.md).
+Installation instructions for installing from source can be found [here](doc/asibot-main-install.md).
 
 ## Contributing
 
