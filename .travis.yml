@@ -58,8 +58,7 @@ before_script:
 
 script:
   - make
-  - sudo make install
-  - sudo ldconfig
 
 after_success:
+  - sudo make install
   - sudo make uninstall
