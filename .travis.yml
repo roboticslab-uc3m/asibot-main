@@ -45,7 +45,7 @@ install:
   - cd ../../..
 
   #-- Install OpenRAVE
-  - git clone --branch latest_stable https://github.com/rdiankov/openrave.git
+  - git clone https://github.com/rdiankov/openrave.git
   - cd openrave && mkdir build && cd "$_"
   - cmake .. -DOPENRAVE_PLUGIN_FCLRAVE=OFF
   - make -j$(nproc)
