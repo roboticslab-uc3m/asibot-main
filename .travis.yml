@@ -26,14 +26,6 @@ install:
   #-- Install ROBOTICSLAB deps
   - sudo apt-get install libspnav-dev libxwiimote-dev
 
-  #-- Install OpenRAVE
-  - git clone https://github.com/rdiankov/openrave.git
-  - cd openrave && mkdir build && cd "$_"
-  - cmake .. -DOPENRAVE_PLUGIN_FCLRAVE=OFF
-  - make -j$(nproc)
-  - sudo make install
-  - cd ../..
-
 before_script:
   - mkdir build && cd "$_"
   - cmake ..
