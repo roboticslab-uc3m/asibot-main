@@ -1,4 +1,4 @@
-[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/index.php/ASIBOT) [![Latest Release](https://img.shields.io/github/tag/roboticslab-uc3m/asibot-main.svg?label=Latest%20Release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
+[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/index.php/ASIBOT) [![Latest Release](https://img.shields.io/github/release/roboticslab-uc3m/asibot-main.svg?label=Latest%20Release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
 
 A potential super/meta repository for the [ASIBOT assistive robot](http://roboticslab.uc3m.es/roboticslab/robot/asibot).
 
