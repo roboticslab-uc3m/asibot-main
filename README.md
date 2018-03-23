@@ -1,6 +1,10 @@
-[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/index.php/ASIBOT) [![Latest Release](https://img.shields.io/github/release/roboticslab-uc3m/asibot-main.svg?label=Latest%20Release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
+[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/index.php/ASIBOT)
+[![Latest Release](https://img.shields.io/github/release/roboticslab-uc3m/asibot-main.svg?label=Latest%20Release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
+![Travis branch (master)](https://img.shields.io/travis/roboticslab-uc3m/asibot-main/master.svg?label=master)
+![Travis branch (develop)](https://img.shields.io/travis/roboticslab-uc3m/asibot-main/master.svg?label=develop)
+[![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/asibot-main.svg?label=Issues)](https://github.com/roboticslab-uc3m/asibot-main/issues)
 
-A potential super/meta repository for the [ASIBOT assistive robot](http://roboticslab.uc3m.es/roboticslab/robot/asibot).
+A super/meta repository for the [ASIBOT assistive robot](http://roboticslab.uc3m.es/roboticslab/robot/asibot).
 
 ## Installation
 
@@ -20,9 +24,3 @@ Installation instructions for installing from source can be found [here](doc/asi
 3. Commit your changes
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
-
-## Status
-
-[![Build Status (Linux/OSX)](https://travis-ci.org/roboticslab-uc3m/asibot-main.svg?branch=develop)](https://travis-ci.org/roboticslab-uc3m/asibot-main)
-
-[![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/asibot-main.svg?label=Issues)](https://github.com/roboticslab-uc3m/asibot-main/issues)
