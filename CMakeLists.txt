@@ -4,7 +4,7 @@
 # Contrib: Lorenzo Natale (author of iCub/main/CMakeLists.txt)
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 project(ASIBOT_MAIN)
 
@@ -12,10 +12,7 @@ project(ASIBOT_MAIN)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
                               ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
 
-# Bootstrap YCM. Stick to v0.2.2 because of:
-# https://github.com/robotology/ycm/issues/118
-# ...and to keep YCM itself compatible with cmake_minimum_required().
-set(YCM_TAG v0.2.2)
+# Bootstrap YCM. Keep it compatible with cmake_minimum_required().
 include(YCMBootstrap)
 
 # Superbuild phase.
