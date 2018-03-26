@@ -12,6 +12,10 @@ project(ASIBOT_MAIN)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
                               ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
 
+# Uses YCM's unmerged ExternalProject.cmake module, which handles an
+# additional CONFIGURE_SOURCE_DIR option (see Buildorocos_kdl.cmake).
+set(YCM_USE_CMAKE_PROPOSED ON)
+
 # Bootstrap YCM. Keep it compatible with cmake_minimum_required().
 include(YCMBootstrap)
 
