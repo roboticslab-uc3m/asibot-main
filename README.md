@@ -4,7 +4,7 @@
 ![Travis branch (develop)](https://img.shields.io/travis/roboticslab-uc3m/asibot-main/master.svg?label=develop)
 [![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/asibot-main.svg?label=issues)](https://github.com/roboticslab-uc3m/asibot-main/issues)
 
-A super/meta repository for the [ASIBOT assistive robot](http://roboticslab.uc3m.es/roboticslab/robot/asibot).
+[ASIBOT assistive robot](http://roboticslab.uc3m.es/roboticslab/robot/asibot): super/meta repository.
 
 ## Installation
 
