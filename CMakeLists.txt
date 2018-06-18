@@ -6,7 +6,7 @@
 
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(ASIBOT_MAIN)
+project(ASIBOT_MAIN LANGUAGES NONE)
 
 # Pick up our CMake modules.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
