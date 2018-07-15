@@ -7,32 +7,39 @@ compiler:
   - gcc
   - clang
 
-before_install:
-  - sudo apt-get -qq update
+addons:
+  apt:
+    packages:
+    # YARP and KDL
+    - libeigen3-dev
 
+    # OpenRAVE
+    - libboost-all-dev
+    - libqt4-dev
+    - qt4-dev-tools
+    - libxml2-dev
+    - libode-dev
+    - libsoqt4-dev
+    - libcoin80-dev
+
+    # ROBOTICSLAB
+    - libspnav-dev
+
+before_install:
   #-- Configure Git (needed by YCM)
   - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
   - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
 
 install:
-  #-- Install YARP and KDL deps
-  - sudo apt-get install libeigen3-dev # Needed for creating YARP lib_math
-
-  #-- Install OpenRAVE deps
-  - sudo apt-get install libboost-all-dev
-  - sudo apt-get install libqt4-dev qt4-dev-tools libxml2-dev libode-dev # libfcl-dev not on Trusty used in this travis
-  - sudo apt-get install libsoqt4-dev libcoin80-dev
-
   #-- Install ROBOTICSLAB deps
-  - sudo apt-get install libspnav-dev libxwiimote-dev
+  - sudo apt-get install libxwiimote-dev
 
 before_script:
   - mkdir build && cd "$_"
-  - cmake ..
+  - cmake .. -DCMAKE_INSTALL_PREFIX="$PWD/install-system"
 
 script:
-  - make
+  - make install
 
 after_success:
-  - sudo make install
-  - sudo make uninstall
+  - make uninstall
