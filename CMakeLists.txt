@@ -12,8 +12,10 @@ project(ASIBOT_MAIN LANGUAGES NONE)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake
                               ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
 
-# Uses YCM's unmerged ExternalProject.cmake module, which handles an
-# additional CONFIGURE_SOURCE_DIR option (see Buildorocos_kdl.cmake).
+# Find this YCM version on system, bootstrap it if not available.
+set(YCM_MINIMUM_VERSION 0.10)
+
+# Uses YCM's unmerged ExternalProject.cmake module.
 set(YCM_USE_CMAKE_PROPOSED ON)
 
 # Bootstrap YCM. Keep it compatible with cmake_minimum_required().
@@ -31,13 +33,6 @@ find_or_build_package(ROBOTICSLAB_INSTALLATION_GUIDES)
 find_or_build_package(ROBOTICSLAB_KINEMATICS_DYNAMICS)
 find_or_build_package(ROBOTICSLAB_OPENRAVE_YARP_PLUGINS)
 find_or_build_package(ROBOTICSLAB_YARP_DEVICES)
-
-# Prepare install/ directory (might be empty).
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/install)
-
-# Install downloaded packages.
-install(DIRECTORY ${CMAKE_BINARY_DIR}/install/
-        DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 # Configure and create uninstall target.
 include(AddUninstallTarget)
