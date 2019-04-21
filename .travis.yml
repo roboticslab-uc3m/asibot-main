@@ -1,5 +1,5 @@
 language: cpp
-dist: trusty
+dist: xenial
 os: linux
 
 compiler:
@@ -23,12 +23,13 @@ addons:
 
     # ROBOTICSLAB
     - libspnav-dev
-
-install:
-  #-- Install ROBOTICSLAB deps
-  - sudo apt-get install libxwiimote-dev
+    - libxwiimote-dev
 
 before_script:
+  # Reduce build log verbosity
+  - export CFLAGS="-w"
+  - export CXXFLAGS="-w"
+
   - mkdir build && cd "$_"
   - cmake .. -DCMAKE_INSTALL_PREFIX="$PWD/install-system" -DNON_INTERACTIVE_BUILD=ON
 
