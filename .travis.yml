@@ -24,7 +24,6 @@ addons:
     - libode-dev
     - libsoqt4-dev
     - libcoin80-dev
-    - rapidjson-dev
 
     # ROBOTICSLAB
     - libspnav-dev
