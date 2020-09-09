@@ -1,7 +1,6 @@
 [![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/index.php/ASIBOT)
 [![Latest Release](https://img.shields.io/github/release/roboticslab-uc3m/asibot-main.svg?label=latest%20release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
 ![Travis branch (master)](https://img.shields.io/travis/roboticslab-uc3m/asibot-main/master.svg?label=master)
-![Travis branch (develop)](https://img.shields.io/travis/roboticslab-uc3m/asibot-main/master.svg?label=develop)
 [![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/asibot-main.svg?label=issues)](https://github.com/roboticslab-uc3m/asibot-main/issues)
 
 [ASIBOT assistive robot](http://roboticslab.uc3m.es/roboticslab/robot/asibot): super/meta repository.
@@ -20,7 +19,7 @@ Installation instructions for installing from source can be found [here](doc/asi
 #### Fork & Pull Request
 
 1. [Fork the repository](https://github.com/roboticslab-uc3m/asibot-main/fork)
-2. Create your feature branch (`git checkout -b my-new-feature`) off the `develop` branch, following the [GitFlow git workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+2. Create your feature branch (`git checkout -b my-new-feature`) off the `master` branch, following the [Forking Git workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
 3. Commit your changes
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
