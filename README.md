@@ -1,6 +1,6 @@
 [![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/index.php/ASIBOT)
 [![Latest Release](https://img.shields.io/github/release/roboticslab-uc3m/asibot-main.svg?label=latest%20release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
-![Travis branch (master)](https://img.shields.io/travis/roboticslab-uc3m/asibot-main/master.svg?label=master)
+[![CI (Linux)](https://github.com/roboticslab-uc3m/asibot-main/workflows/Continuous%20Integration/badge.svg)](https://github.com/roboticslab-uc3m/asibot-main/actions)
 [![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/asibot-main.svg?label=issues)](https://github.com/roboticslab-uc3m/asibot-main/issues)
 
 [ASIBOT assistive robot](http://roboticslab.uc3m.es/roboticslab/robot/asibot): super/meta repository.
