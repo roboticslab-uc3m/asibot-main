@@ -1,4 +1,4 @@
-[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://robots.uc3m.es/index.php/ASIBOT)
+[![Asibot-main Homepage](https://img.shields.io/badge/asibot-main-orange.svg)](http://roboticslab.uc3m.es/roboticslab/robot/asibot)
 [![Latest Release](https://img.shields.io/github/release/roboticslab-uc3m/asibot-main.svg?label=latest%20release)](https://github.com/roboticslab-uc3m/asibot-main/tags)
 [![CI (Linux)](https://github.com/roboticslab-uc3m/asibot-main/workflows/Continuous%20Integration/badge.svg)](https://github.com/roboticslab-uc3m/asibot-main/actions)
 [![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/asibot-main.svg?label=issues)](https://github.com/roboticslab-uc3m/asibot-main/issues)
