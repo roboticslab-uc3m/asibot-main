@@ -1,10 +1,4 @@
-# Copyright: Universidad Carlos III de Madrid (C) 2010-2015;
-#            RobotCub Consortium (C) 2009
-# Authors: Juan G. Victores
-# Contrib: Lorenzo Natale (author of iCub/main/CMakeLists.txt)
-# CopyPolicy: Released under the terms of the GNU GPL v2.0.
-
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.16)
 
 project(ASIBOT_MAIN LANGUAGES NONE)
 
@@ -12,7 +6,7 @@ project(ASIBOT_MAIN LANGUAGES NONE)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
 
 # Find this YCM version on system, bootstrap it if not available.
-set(YCM_MINIMUM_VERSION 0.12)
+set(YCM_MINIMUM_VERSION 0.16)
 
 # Uses YCM's unmerged ExternalProject.cmake module.
 set(YCM_USE_CMAKE_PROPOSED ON)

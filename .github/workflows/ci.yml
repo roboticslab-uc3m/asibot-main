@@ -15,7 +15,7 @@ jobs:
     outputs:
       should_skip: ${{steps.skip_check.outputs.should_skip}}
     steps:
-    - uses: fkirc/skip-duplicate-actions@master
+    - uses: fkirc/skip-duplicate-actions@v5
       id: skip_check
       with:
         cancel_others: 'true'
@@ -27,7 +27,7 @@ jobs:
 
     steps:
     - name: Check out asibot-main
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Install dependencies via apt
       run: sudo apt-get update && sudo apt-get install -qq ccache libeigen3-dev libboost-regex-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-iostreams-dev libboost-date-time-dev libxml2-dev libopencv-dev libpcl-dev intltool libglib2.0-dev libusb-1.0-0-dev libspnav-dev libxwiimote-dev
