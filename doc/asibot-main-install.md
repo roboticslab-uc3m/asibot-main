@@ -1,9 +1,9 @@
 ## Simulation and Basic Control: Installation from Source Code
 
 First install the dependencies:
-- [Install CMake 3.5+](https://github.com/roboticslab-uc3m/installation-guides/blob/master/install-cmake.md)
+- [Install CMake 3.5+](https://github.com/roboticslab-uc3m/installation-guides/blob/master/docs/install-cmake.md)
 
-Additionally, this project depends on YCM to download and build external packages. Although this process is intended to run automatically during the CMake configuration phase, you may still want to install YCM and said packages by yourself. In that respect, refer to [Install YCM](https://github.com/roboticslab-uc3m/installation-guides/blob/master/install-ycm.md) and to the installation guides of any package listed below:
+Additionally, this project depends on YCM to download and build external packages. Although this process is intended to run automatically during the CMake configuration phase, you may still want to install YCM and said packages by yourself. In that respect, refer to [Install YCM](https://github.com/roboticslab-uc3m/installation-guides/blob/master/docs/install-ycm.md) and to the installation guides of any package listed below:
 
 - [asibot-configuration-files](https://github.com/roboticslab-uc3m/asibot-configuration-files)
 - [asibot-hmi](https://github.com/roboticslab-uc3m/asibot-hmi)
