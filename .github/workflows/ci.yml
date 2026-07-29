@@ -9,6 +9,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  CMAKE_C_COMPILER_LAUNCHER: ccache
+  CMAKE_CXX_COMPILER_LAUNCHER: ccache
+  CMAKE_BUILD_TYPE: Debug
+  CFLAGS: -w
+  CXXFLAGS: -w
+
 jobs:
   maybe_skip:
     runs-on: ubuntu-latest
@@ -34,13 +41,6 @@ jobs:
 
     - name: Set up Ccache
       uses: hendrikmuhs/ccache-action@v1
-
-    - name: Set environment variables
-      run: |
-        echo "CFLAGS=-w" >> $GITHUB_ENV
-        echo "CXXFLAGS=-w" >> $GITHUB_ENV
-        echo "CMAKE_C_COMPILER_LAUNCHER=ccache" >> $GITHUB_ENV
-        echo "CMAKE_CXX_COMPILER_LAUNCHER=ccache" >> $GITHUB_ENV
 
     - name: Configure asibot-main
       run: cmake -S . -B build -DCMAKE_INSTALL_PREFIX="$PWD/build/install-system" -DNON_INTERACTIVE_BUILD=ON

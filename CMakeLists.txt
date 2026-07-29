@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.19)
 
 project(ASIBOT_MAIN LANGUAGES NONE)
 
@@ -8,11 +8,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/ycm-modules)
 # Find this YCM version on system, bootstrap it if not available.
 set(YCM_MINIMUM_VERSION 0.18)
 
-# Uses YCM's unmerged ExternalProject.cmake module.
-set(YCM_USE_CMAKE_PROPOSED ON)
-
 # Bootstrap YCM. Keep it compatible with cmake_minimum_required().
-include(YCMBootstrap)
+include(YCMBootstrapFetch)
 
 # Superbuild phase.
 include(FindOrBuildPackage)
