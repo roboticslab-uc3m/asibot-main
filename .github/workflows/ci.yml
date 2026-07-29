@@ -27,10 +27,10 @@ jobs:
 
     steps:
     - name: Check out asibot-main
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Install dependencies via apt
-      run: sudo apt-get update && sudo apt-get install -qq ccache libeigen3-dev libboost-regex-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-iostreams-dev libboost-date-time-dev libxml2-dev libopencv-dev libpcl-dev intltool libglib2.0-dev libusb-1.0-0-dev libspnav-dev libxwiimote-dev
+      run: sudo apt-get update && sudo apt-get install -qq ccache liborocos-kdl-dev libboost-regex-dev libboost-filesystem-dev libboost-thread-dev libboost-iostreams-dev libboost-date-time-dev libxml2-dev libopencv-dev libpcl-dev intltool libglib2.0-dev libusb-1.0-0-dev libspnav-dev libxwiimote-dev
 
     - name: Set up Ccache
       uses: hendrikmuhs/ccache-action@v1
